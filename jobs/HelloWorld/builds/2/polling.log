@@ -1,0 +1,8 @@
+Started on 2017-12-28 22:47:00
+Using strategy: Default
+ > C:\Program Files\Git\bin\git.exe --version # timeout=10
+ > C:\Program Files\Git\bin\git.exe ls-remote -h https://github.com/AndSze/HelloWorld.git # timeout=10
+Found 1 remote heads on https://github.com/AndSze/HelloWorld.git
+[poll] Latest remote head revision on refs/heads/master is: 67a010929a9d69bd2a82f0d2075e74afcff24a3e
+Done. Took 1,1 sek
+Changes found

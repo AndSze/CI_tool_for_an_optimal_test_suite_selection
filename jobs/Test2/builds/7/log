@@ -1,0 +1,11 @@
+Started by upstream project "[8mha:////4OvI0SVbmmpaymXe57HkAqIyAVesP8RDqWMobuZcFcADAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/az8JP2Q1OISQ30AoEHvwMAAAAA=[0mTest1" build number [8mha:////4DuMgjt6/sHnqikLhNz8KAUFUd5heKC2aCkmF0ch+XQ/AAAAmR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgZe/az8JP2Q1OISQ31DUwCT67umwgAAAA==[0m15
+originally caused by:
+ Started by remote host 0:0:0:0:0:0:0:1
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\Test2
+[Test2] $ cmd /c call C:\Users\Dell\AppData\Local\Temp\jenkins1022427391787306710.bat
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\Test2>cd .. 
+
+E:\Jenkins\JenkinsHomeDirectory\workspace>exit 0 
+Triggering a new build of [8mha:////4FUk+dQ6zMCzATIrgz2IX1qLgph/AazPCNJHgxV9o8XsAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/az8JP2Q1OISY30AIiPZ8sAAAAA=[0mTest3
+Finished: SUCCESS

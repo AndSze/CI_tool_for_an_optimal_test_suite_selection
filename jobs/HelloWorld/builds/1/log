@@ -1,0 +1,22 @@
+Started by user [8mha:////4NHkpqR9qr86qL55gqKkn/E4LCfXzAVZ0exoieqbD6C0AAAAmB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAyBEgYe/dLi1CL9xLyU4qpUAEI7WnvBAAAA[0mAndrzej Szewczyk
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\HelloWorld
+[HelloWorld] $ cmd /c call C:\Users\Dell\AppData\Local\Temp\jenkins4526232547692094822.bat
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\HelloWorld>E:
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\HelloWorld>cd E:\Java_workspace 
+
+E:\Java_workspace>java -classpath . Hello 
+Hello World ... 0
+Hello World ... 1
+Hello World ... 2
+Hello World ... 3
+Hello World ... 4
+Hello World ... 5
+Hello World ... 6
+Hello World ... 7
+Hello World ... 8
+Hello World ... 9
+
+E:\Java_workspace>exit 0 
+Finished: SUCCESS

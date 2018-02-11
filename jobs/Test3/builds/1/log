@@ -1,0 +1,14 @@
+Started by upstream project "[8mha:////4LvVvMbA3Prh5FZ0mSM4hAHbJLXXt3Gnczr8TusYBWnNAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/az8JP2Q1OISI30AYxLC68AAAAA=[0mTest2" build number [8mha:////4AruAf2031MG45uBbGWbnWJGHdMKu+2psMwY8fL5q8OGAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLQIwSBh79rPwk/ZDU4hIjfSMAIgbHZ8EAAAA=[0m2
+originally caused by:
+ Started by upstream project "[8mha:////4OvI0SVbmmpaymXe57HkAqIyAVesP8RDqWMobuZcFcADAAAAlx+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzWEgZu/az8JP2Q1OISQ30AoEHvwMAAAAA=[0mTest1" build number [8mha:////4E25A3haWyGsztgf9sbLUo1C0PhNnJWCnrZDGq0sskdvAAAAmR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgZe/az8JP2Q1OISQ31DAwAcH9HWwgAAAA==[0m10
+ originally caused by:
+  Started by remote host 0:0:0:0:0:0:0:1
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\Test3
+[Test3] $ cmd /c call C:\Users\Dell\AppData\Local\Temp\jenkins6454324685514740514.bat
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\Test3>cd Desktop 
+System nie mo¾e odnale«† okre˜lonej ˜cie¾ki.
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\Test3>exit 1 
+Build step 'Execute Windows batch command' marked build as failure
+Finished: FAILURE

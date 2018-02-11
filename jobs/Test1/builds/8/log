@@ -1,0 +1,34 @@
+Started by remote host 0:0:0:0:0:0:0:1
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\Test1
+[Test1] $ cmd /c call C:\Users\Dell\AppData\Local\Temp\jenkins8320185659389861750.bat
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\Test1>ipconfig
+
+Konfiguracja IP systemu Windows
+
+
+Karta bezprzewodowej sieci LAN Poˆ¥czenie sieci bezprzewodowej 2:
+
+   Sufiks DNS konkretnego poˆ¥czenia : 
+   Adres IPv6 poˆ¥czenia lokalnego . : fe80::b924:f4b8:ff5c:f7b1%17
+   Adres IPv4. . . . . . . . . . . . . : 192.168.2.10
+   Maska podsieci. . . . . . . . . . : 255.255.255.0
+   Brama domy˜lna. . . . . . . . . . : 192.168.2.1
+
+Karta Ethernet Poˆ¥czenie sieciowe Bluetooth 2:
+
+   Stan no˜nika . . . .  . . . . . . .: No˜nik odˆ¥czony
+   Sufiks DNS konkretnego poˆ¥czenia : 
+
+Karta Ethernet Poˆ¥czenie lokalne:
+
+   Stan no˜nika . . . .  . . . . . . .: No˜nik odˆ¥czony
+   Sufiks DNS konkretnego poˆ¥czenia : 
+
+Karta tunelowa isatap.{91D6E869-E3B4-4487-9CEF-BFCD366FCC03}:
+
+   Stan no˜nika . . . .  . . . . . . .: No˜nik odˆ¥czony
+   Sufiks DNS konkretnego poˆ¥czenia : 
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\Test1>exit 0 
+Finished: SUCCESS

@@ -1,0 +1,35 @@
+Uruchomione przez zmianê w repozytorium kodu
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\HelloWorld
+ > C:\Program Files\Git\bin\git.exe rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > C:\Program Files\Git\bin\git.exe config remote.origin.url https://github.com/AndSze/HelloWorld.git # timeout=10
+Fetching upstream changes from https://github.com/AndSze/HelloWorld.git
+ > C:\Program Files\Git\bin\git.exe --version # timeout=10
+ > C:\Program Files\Git\bin\git.exe fetch --tags --progress https://github.com/AndSze/HelloWorld.git +refs/heads/*:refs/remotes/origin/*
+ > C:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
+ > C:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/origin/master^{commit}" # timeout=10
+Checking out Revision 7808239bfbe42ad325086b7da95faae050ba5902 (refs/remotes/origin/master)
+ > C:\Program Files\Git\bin\git.exe config core.sparsecheckout # timeout=10
+ > C:\Program Files\Git\bin\git.exe checkout -f 7808239bfbe42ad325086b7da95faae050ba5902
+Commit message: "new file added"
+ > C:\Program Files\Git\bin\git.exe rev-list --no-walk 67a010929a9d69bd2a82f0d2075e74afcff24a3e # timeout=10
+[HelloWorld] $ cmd /c call C:\Users\Dell\AppData\Local\Temp\jenkins3388565336145969123.bat
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\HelloWorld>E:
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\HelloWorld>cd E:\Java_workspace 
+
+E:\Java_workspace>java -classpath . Hello 
+Hello World ... 0
+Hello World ... 1
+Hello World ... 2
+Hello World ... 3
+Hello World ... 4
+Hello World ... 5
+Hello World ... 6
+Hello World ... 7
+Hello World ... 8
+Hello World ... 9
+
+E:\Java_workspace>exit 0 
+Finished: SUCCESS

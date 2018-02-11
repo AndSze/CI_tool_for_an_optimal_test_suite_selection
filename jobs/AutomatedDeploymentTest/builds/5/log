@@ -1,0 +1,14 @@
+Started by user [8mha:////4NHkpqR9qr86qL55gqKkn/E4LCfXzAVZ0exoieqbD6C0AAAAmB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAyBEgYe/dLi1CL9xLyU4qpUAEI7WnvBAAAA[0mAndrzej Szewczyk
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\AutomatedDeploymentTest
+[AutomatedDeploymentTest] $ cmd /c call C:\Users\Dell\AppData\Local\Temp\jenkins4521853886341404801.bat
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\AutomatedDeploymentTest>java -version 
+java version "1.8.0_151"
+Java(TM) SE Runtime Environment (build 1.8.0_151-b12)
+Java HotSpot(TM) 64-Bit Server VM (build 25.151-b12, mixed mode)
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\AutomatedDeploymentTest>exit 0 
+Deploying E:\Jenkins\JenkinsHomeDirectory\workspace\AutomatedDeploymentTest\sample.war to container Tomcat 8.x Remote with context sample.war
+  [E:\Jenkins\JenkinsHomeDirectory\workspace\AutomatedDeploymentTest\sample.war] is not deployed. Doing a fresh deployment.
+  Deploying [E:\Jenkins\JenkinsHomeDirectory\workspace\AutomatedDeploymentTest\sample.war]
+Finished: SUCCESS

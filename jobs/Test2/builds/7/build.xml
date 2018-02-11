@@ -1,0 +1,34 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<build>
+  <actions>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <hudson.model.Cause_-UpstreamCause>
+            <upstreamProject>Test1</upstreamProject>
+            <upstreamUrl>job/Test1/</upstreamUrl>
+            <upstreamBuild>15</upstreamBuild>
+            <upstreamCauses>
+              <hudson.model.Cause_-RemoteCause>
+                <addr>0:0:0:0:0:0:0:1</addr>
+              </hudson.model.Cause_-RemoteCause>
+            </upstreamCauses>
+          </hudson.model.Cause_-UpstreamCause>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+  </actions>
+  <queueId>27</queueId>
+  <timestamp>1514461426752</timestamp>
+  <startTime>1514461426754</startTime>
+  <result>SUCCESS</result>
+  <duration>316</duration>
+  <charset>windows-1250</charset>
+  <keepLog>false</keepLog>
+  <builtOn></builtOn>
+  <workspace>E:\Jenkins\JenkinsHomeDirectory\workspace\Test2</workspace>
+  <hudsonVersion>2.89.1</hudsonVersion>
+  <scm class="hudson.scm.NullChangeLogParser"/>
+  <culprits class="com.google.common.collect.EmptyImmutableSortedSet"/>
+</build>

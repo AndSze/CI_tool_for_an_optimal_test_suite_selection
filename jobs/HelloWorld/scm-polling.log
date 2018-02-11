@@ -1,0 +1,42 @@
+Started on 2018-01-09 20:35:00
+Using strategy: Default
+[poll] Last Built Revision: Revision 7808239bfbe42ad325086b7da95faae050ba5902 (refs/remotes/origin/master)
+ > C:\Program Files\Git\bin\git.exe --version # timeout=10
+ > C:\Program Files\Git\bin\git.exe ls-remote -h https://github.com/AndSze/HelloWorld.git # timeout=10
+FATAL: hudson.plugins.git.GitException: Error performing command: C:\Program Files\Git\bin\git.exe ls-remote -h https://github.com/AndSze/HelloWorld.git
+[8mha:////4IaGe9/wNoAxkkQnSB6tVF4+TmiuwQ6YjACKxOgxjpUKAAAAVx+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P08vOT+vOD8nVc8DzHWtSE4tKMnMz/PLL0mV3NWzufebKBsTA0NFEYMUmgZnCA1SyAABjCCFBQC2xNaiYAAAAA==[0mjava.io.IOException: CreateProcess error=2, Nie mo¿na odnaleŸæ okreœlonego pliku
+	at java.lang.ProcessImpl.create(Native Method)
+	at java.lang.ProcessImpl.<init>(ProcessImpl.java:386)
+	at java.lang.ProcessImpl.start(ProcessImpl.java:137)
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1029)
+Caused: java.io.IOException: Cannot run program "C:\Program Files\Git\bin\git.exe": CreateProcess error=2, Nie mo¿na odnaleŸæ okreœlonego pliku
+	at java.lang.ProcessBuilder.start(ProcessBuilder.java:1048)
+	at hudson.Proc$LocalProc.<init>(Proc.java:249)
+	at hudson.Proc$LocalProc.<init>(Proc.java:218)
+	at hudson.Launcher$LocalLauncher.launch(Launcher.java:930)
+	at hudson.Launcher$ProcStarter.start(Launcher.java:450)
+	at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.launchCommandIn(CliGitAPIImpl.java:1986)
+Caused: hudson.plugins.git.GitException: Error performing command: C:\Program Files\Git\bin\git.exe ls-remote -h https://github.com/AndSze/HelloWorld.git
+	at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.launchCommandIn(CliGitAPIImpl.java:1997)
+	at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.launchCommandWithCredentials(CliGitAPIImpl.java:1709)
+	at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.launchCommandWithCredentials(CliGitAPIImpl.java:1620)
+	at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.launchCommandWithCredentials(CliGitAPIImpl.java:1611)
+	at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.getHeadRev(CliGitAPIImpl.java:2772)
+	at hudson.plugins.git.GitSCM.compareRemoteRevisionWithImpl(GitSCM.java:672)
+	at hudson.plugins.git.GitSCM.compareRemoteRevisionWith(GitSCM.java:631)
+Caused: java.io.IOException
+	at hudson.plugins.git.GitSCM.compareRemoteRevisionWith(GitSCM.java:633)
+	at hudson.scm.SCM.compareRemoteRevisionWith(SCM.java:391)
+	at hudson.scm.SCM.poll(SCM.java:408)
+	at hudson.model.AbstractProject._poll(AbstractProject.java:1384)
+	at hudson.model.AbstractProject.poll(AbstractProject.java:1287)
+	at hudson.triggers.SCMTrigger$Runner.runPolling(SCMTrigger.java:594)
+	at hudson.triggers.SCMTrigger$Runner.run(SCMTrigger.java:640)
+	at hudson.util.SequentialExecutionQueue$QueueEntry.run(SequentialExecutionQueue.java:119)
+	at java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:511)
+	at java.util.concurrent.FutureTask.run(FutureTask.java:266)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1149)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:624)
+	at java.lang.Thread.run(Thread.java:748)
+Done. Took 4 ms
+No changes
