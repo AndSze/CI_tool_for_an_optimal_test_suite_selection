@@ -32,7 +32,7 @@ class DataConnection extends Thread {
 			in = new DataInputStream(clientSocket.getInputStream());
 			out = new DataOutputStream(clientSocket.getOutputStream());
 			System.out.println("Connection established");
-			this.start();
+			this.run();
 		}
 		catch (IOException e) {
 			System.out.println("Connection:" + e.getMessage());
