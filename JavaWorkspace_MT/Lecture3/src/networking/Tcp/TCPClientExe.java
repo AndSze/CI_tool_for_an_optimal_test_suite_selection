@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.util.concurrent.TimeUnit;
 
+//https://coderanch.com/t/95928/engineering/JUnit-Sockets
+
 public class TCPClientExe {
 	public static void main(String args[]) throws IOException, InterruptedException {
 		// arguments supply a message and a hostname
@@ -31,3 +33,4 @@ public class TCPClientExe {
 		}
 	}
 }
+
