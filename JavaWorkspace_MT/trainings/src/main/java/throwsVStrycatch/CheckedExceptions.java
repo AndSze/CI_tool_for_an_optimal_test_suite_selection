@@ -19,7 +19,7 @@ public class CheckedExceptions {
         	try {
         	    numberOfSeconds = instance.getNumberOfSeconds(hours);
         	}
-        	catch (ArithmeticException | IllegalArgumentException exception) {
+        	catch (IllegalArgumentException exception) {
         	    numberOfSeconds = instance.getNumberOfSeconds(hours * -1);
         	}
         	System.out.println(numberOfSeconds);
