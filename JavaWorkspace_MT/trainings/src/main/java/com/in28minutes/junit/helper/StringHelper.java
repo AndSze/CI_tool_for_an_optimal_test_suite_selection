@@ -4,6 +4,14 @@ public class StringHelper {
 
 	private int ID;
 	
+	public double substract(double a, double b) {
+		return (a - b);
+	}
+	
+	public double add(double a, double b) {
+		return (a + b);
+	}
+	
 	public StringHelper(int ID) {
 		this.ID = ID;
 	}
