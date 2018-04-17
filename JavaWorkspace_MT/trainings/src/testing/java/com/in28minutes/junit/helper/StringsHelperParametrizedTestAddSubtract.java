@@ -39,7 +39,7 @@ public class StringsHelperParametrizedTestAddSubtract {
         });
     }
 
-	@Test
+	@Test 
 	public void testAdd() {
 		// AACD => CD ACD => CD CDEF => CDEF CDAA => CDAA
 		Assume.assumeTrue(type == Type.ADD); // org.junit.AssumptionViolatedException: got: <false>, expected: is <true>

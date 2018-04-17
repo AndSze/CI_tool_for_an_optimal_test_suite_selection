@@ -12,9 +12,17 @@ public class TodoBusinessImpl {
 	// class attribute
 	private TodoService todoService;
 
-	// constructor
-	public TodoBusinessImpl(TodoService todoService) {
+	public TodoBusinessImpl() {
+	}
+	
+	// overwrite
+	public void setToDos(TodoService todoService) {
 		this.todoService = todoService;
+	}
+	
+	// overwrite
+	public TodoService getToDos() {
+		return this.todoService;
 	}
 	
 	// class public methods
