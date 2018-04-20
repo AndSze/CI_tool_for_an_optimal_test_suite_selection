@@ -1,5 +1,5 @@
 
-package org.psu.acmchapter.networking.ip.multithreaded;
+package udpServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -8,17 +8,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import static org.psu.acmchapter.networking.ip.multithreaded.SingleThreadEchoServerDemo.processingDelay;
 
-
-public class MessageProcessorRunnable implements Runnable{
+public class TCPEchoMessagesHandler implements Runnable{
 
     protected Socket clientSocket = null;
     protected String serverText   = null;
 
-    public MessageProcessorRunnable(Socket clientSocket, String serverText) {
+    public TCPEchoMessagesHandler(Socket clientSocket, String serverText) {
         this.clientSocket = clientSocket;
         this.serverText   = serverText;
     }
@@ -36,10 +32,9 @@ public class MessageProcessorRunnable implements Runnable{
             message = bufferedReader.readLine();
             
             System.out.println("message received from client: \n\t"+message);
-            processingDelay(3000);
+            processingDelay(1000);
             System.out.println("Send back the same message "+message);  
             
-
             output.write(message.getBytes());
             output.close();
             input.close();

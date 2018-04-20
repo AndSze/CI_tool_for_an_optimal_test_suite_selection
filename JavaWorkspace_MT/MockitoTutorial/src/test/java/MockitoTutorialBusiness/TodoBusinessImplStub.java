@@ -9,10 +9,15 @@ import MockitoTutorialSrc.TodoService;
 import MockitoTutorialSrc.TodoServiceStub;
 
 public class TodoBusinessImplStub {
+	
+	TodoService todoServiceStub;
+	TodoBusinessImpl todoBusinessImpl;
 
 	@Before
 	public void setUp() throws Exception {
-	}
+		todoServiceStub = new TodoServiceStub();
+		todoBusinessImpl = new TodoBusinessImpl();
+	} 
 
 	@After
 	public void tearDown() throws Exception {
@@ -20,10 +25,8 @@ public class TodoBusinessImplStub {
 
 	@Test
 	public void testRetrieveTodosRelatedToSpring_usingAStub() {
-		TodoService todoServiceStub = new TodoServiceStub();
-		TodoBusinessImpl todoBusinessImpl = new TodoBusinessImpl(
-				todoServiceStub);
-		
+	
+		todoBusinessImpl.setToDos(todoServiceStub);
 		List<String> filteredTodos = todoBusinessImpl
 				.retrieveTodosRelatedToSpring("Dummy");
 		
@@ -32,9 +35,7 @@ public class TodoBusinessImplStub {
 	
 	@Test
 	public void testRetrieveTodosRelatedToSpring_usingBStub() {
-		TodoService todoServiceStub = new TodoServiceStub();
-		TodoBusinessImpl todoBusinessImpl = new TodoBusinessImpl(
-				todoServiceStub);
+		todoBusinessImpl.setToDos(todoServiceStub);
 		
 		List<String> filteredTodos = todoBusinessImpl
 				.retrieveTodosRelatedToSpring("Dummy");

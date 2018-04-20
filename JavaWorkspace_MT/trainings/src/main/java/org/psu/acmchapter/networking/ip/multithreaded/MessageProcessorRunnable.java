@@ -36,7 +36,7 @@ public class MessageProcessorRunnable implements Runnable{
             message = bufferedReader.readLine();
             
             System.out.println("message received from client: \n\t"+message);
-            processingDelay(3000);
+            processingDelay(1000);
             System.out.println("Send back the same message "+message);  
             
 

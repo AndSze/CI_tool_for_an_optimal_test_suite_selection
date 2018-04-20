@@ -10,6 +10,16 @@ public class TodoServiceStub implements TodoService{
 		return Arrays.asList("Learn Spring MVC", "Learn Spring", "Learn to Dance");
 	}
 
+	public void setToDos(TodoService todoService) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public TodoService getToDos() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
 
 // Problems that arise with using Stubs:
