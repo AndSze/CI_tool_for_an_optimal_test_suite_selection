@@ -1,4 +1,4 @@
-package udpClient;
+package tcpClient;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -48,7 +48,7 @@ public class TCPclient{
 		}
 	}
 	
-	public void closeClientr(Socket clientSocket, int port) {
+	public void closeClient(Socket clientSocket, int port) {
 		try {
 			if(clientSocket != null){
 				clientSocket.close();
@@ -78,11 +78,10 @@ public class TCPclient{
 		boolean success = false;
 		try {
 			t0 = clientmanager.sendMessage(message);
-			Thread.sleep(2000);
-			message_read = clientmanager.receiveMessage(t0);
-			if (message_read != null) {
-				success = true;
-			}
+			//Thread.sleep(2000);\
+			Thread.sleep(1000);
+			clientmanager.receiveMessage(t0);
+
 		} catch (IOException IOEx) {
 	    	System.out.println("Error: The client cannot send the following message: "+message);
 	    	IOEx.printStackTrace();

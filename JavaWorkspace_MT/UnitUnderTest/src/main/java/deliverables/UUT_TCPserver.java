@@ -1,8 +1,7 @@
 package deliverables;
 
 import java.io.IOException;
-import java.rmi.RemoteException;
-import udpServer.TCPserver;
+import tcpServer.TCPserver;
 
 public class UUT_TCPserver {
 	

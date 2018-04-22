@@ -1,7 +1,7 @@
 package deliverables;
 
 import java.io.IOException;
-import udpClient.TCPclient;
+import tcpClient.TCPclient;
 
 public class UUT_TCPclient {
 
@@ -23,9 +23,9 @@ public class UUT_TCPclient {
 	            
             //if(!INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(),message)) break;
 	        INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(),message);
-	        Thread.sleep(3000);
+	        //Thread.sleep(100);
         }
-		INSTANCE.closeClientr(INSTANCE.getClientSocket(), port);
+		INSTANCE.closeClient(INSTANCE.getClientSocket(), port);
         System.out.println("Mission Completed");
      }
 }

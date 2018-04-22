@@ -60,7 +60,7 @@ public class SingleThreadEchoServerDemo {
             message = bufferedReader.readLine();
             
             System.out.println("message received from client: \n\t"+message);
-            processingDelay(1000);
+            processingDelay(3000);
             System.out.println("Send back the same message "+message);       
             printStream.println(message+"\n");
             printStream.close();

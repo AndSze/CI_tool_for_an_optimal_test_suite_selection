@@ -7,7 +7,6 @@ import java.io.PrintStream;
 import java.net.Socket;
 import java.util.Scanner;
 
-
 public class EchoClientDemo {
     
     public static void main(String args[]) throws IOException, InterruptedException { 
@@ -37,21 +36,21 @@ public class EchoClientDemo {
             InputStreamReader inputStream = new InputStreamReader(clientSocket.getInputStream());
             System.out.println("Sending message "+i);
             String message = i+"\n";
-            long t0 = System.currentTimeMillis();
+            String server_mesage = null;
+            long t0, t1 = 0;
+            t0 = System.currentTimeMillis();
             printStream.print(message);
 
-            Thread.sleep(1000);
+            //Thread.sleep(3000);
             BufferedReader bufferedReader = new BufferedReader(inputStream);
-            message = bufferedReader.readLine();
-            long t1 = System.currentTimeMillis();
-            System.out.printf("message {%s} received from server after %d msec \n",message,(t1-t0));
+            server_mesage = bufferedReader.readLine();
+            t1 = System.currentTimeMillis();
+            System.out.printf("message {%s} received from server after %d msec \n",server_mesage,(t1-t0));
             clientSocket.close();
         }
         System.out.println("Mission Completed");
          
      }
-    
-    
 }
 
 /* EDITED
@@ -126,3 +125,5 @@ public class EchoClientDemo {
     }
 }
 */
+
+

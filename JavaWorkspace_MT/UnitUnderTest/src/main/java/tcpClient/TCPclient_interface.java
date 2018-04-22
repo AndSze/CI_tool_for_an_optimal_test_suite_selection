@@ -1,4 +1,4 @@
-package udpClient;
+package tcpClient;
 
 public interface TCPclient_interface {
 	

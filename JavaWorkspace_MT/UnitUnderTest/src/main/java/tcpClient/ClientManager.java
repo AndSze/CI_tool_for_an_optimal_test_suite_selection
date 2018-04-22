@@ -1,4 +1,4 @@
-package udpClient;
+package tcpClient;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,12 +23,38 @@ public class ClientManager implements TCPclient_interface{
         return (t0);
 	}
 	
-	public String receiveMessage(long t0) throws IOException {
+	public void receiveMessage(long t0) throws IOException, InterruptedException {
 		BufferedReader bufferedReader = new BufferedReader(inputStream);
-        String message = bufferedReader.readLine();
-        long t1 = System.currentTimeMillis();
-        System.out.printf("message {%s} received from server after %d msec \n",message,(t1-t0));
-        return message;
+		String message;
+		int timeout = 0;
+		
+		while(bufferedReader.ready())
+        {
+			message = bufferedReader.readLine();
+    		//String message = bufferedReader.readLine();
+	        long t1 = System.currentTimeMillis();
+	        System.out.printf("message {%s} received from server after %d msec \n",message,(t1-t0));
+        }
+		/*
+		while(timeout < 5)
+	    {
+	    	if (bufferedReader.ready()) {
+	
+	    		message = bufferedReader.readLine();
+	    		//String message = bufferedReader.readLine();
+		        long t1 = System.currentTimeMillis();
+		        System.out.printf("message {%s} received from server after %d msec \n",message,(t1-t0));
+	    	}
+	    	else
+	    	{
+	    		Thread.sleep(210);
+	        	//System.out.println(timeout);
+	    		timeout++;
+	    	}
+	    	
+	    }
+        System.out.println("Client while loop ended with timeout: " + timeout);
+	       */
 	}
 	
 

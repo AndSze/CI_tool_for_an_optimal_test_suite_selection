@@ -1,7 +1,8 @@
-package udpServer;
+package tcpServer;
 
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.SocketException;
 
 public class TCPserver {
@@ -31,7 +32,9 @@ public class TCPserver {
 		    serverSocket.setReuseAddress(true);
 		    serverSocket.bind(new java.net.InetSocketAddress(port));
 		    System.out.println("ECHO server created and bound on port = "+port);
-		    new ComputeEngine(serverSocket, true);
+		    
+		    listenThePort(serverSocket);
+		    
 	    } catch (SocketException socketEx) {
 	    	System.out.println("Error: The server with port="+port+" returns the SocketException if there is an issue in the underlying protocol, such as a TCP error");
 	    	socketEx.printStackTrace();
@@ -75,6 +78,42 @@ public class TCPserver {
 			System.out.println("Error: The server with port="+port+" cannot be closed");
 			IOEx.printStackTrace();
 		}
-		
+	}
+	
+	public void listenThePort(ServerSocket serverSocket) {
+		while(true)
+		{
+			Socket clientSocket = null;
+			
+			try {
+                //start listening to incoming client request (blocking function)
+                System.out.println("[ECHO Server] waiting for the incoming request ...");
+                clientSocket = serverSocket.accept();
+			} catch (IOException IOe) {
+	            System.out.println("Error: cannot accept client request. Exit program");
+	            break;
+            }
+            try {
+                //create a new thread for each incoming message
+            	//System.out.println(Thread.currentThread().getName());
+
+            	new Thread(new ComputeEngine(clientSocket, "Multithreaded Server")).run();
+            	//System.out.println(Thread.currentThread().getName());
+            	
+            } catch (ClassNotFoundException CNFex) {
+	            System.out.println("Error: when attempted to create new ComputeEngine() instance");
+            	System.out.println(CNFex.getMessage());
+            	break;
+            } catch (IllegalThreadStateException ITSex) {
+	            System.out.println("Error: when new Thread with MessageProcessorRunnable created");
+            	System.out.println(ITSex.getMessage());
+	            break;
+			} catch (IOException IOe) {
+	            System.out.println("Error: when attempted to open input/stream for ComputeEngine()");
+	            System.out.println(IOe.getMessage());
+	            break;
+	        }
+
+		}
 	}
 }
