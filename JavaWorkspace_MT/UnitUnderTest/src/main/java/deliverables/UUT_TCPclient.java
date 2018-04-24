@@ -8,11 +8,12 @@ public class UUT_TCPclient {
     //create the port number
     static int port = 9876;
     static String serverHostName = "localhost";
-	private static TCPclient INSTANCE;
+	private TCPclient INSTANCE;
 	
 	public static void main(String []args) throws IOException, InterruptedException{
 		
-		INSTANCE = TCPclient.getInstance();
+		TCPclient INSTANCE =  new TCPclient();
+		
 		INSTANCE.initClient(serverHostName, port);
 		
 		
@@ -22,10 +23,11 @@ public class UUT_TCPclient {
 	         String message = Integer.toString(i)+"\n";
 	            
             //if(!INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(),message)) break;
-	        INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(),message);
+	        INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(), message, INSTANCE.getClientManager());
 	        //Thread.sleep(100);
         }
 		INSTANCE.closeClient(INSTANCE.getClientSocket(), port);
         System.out.println("Mission Completed");
      }
+	
 }

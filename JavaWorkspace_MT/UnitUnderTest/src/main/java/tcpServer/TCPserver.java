@@ -9,6 +9,7 @@ public class TCPserver {
 	
     //declare a TCP socket object and initialize it to null
 	private ServerSocket serverSocket;
+	// we can have only a single server, thus INSTANCE is a static variable
 	private static TCPserver INSTANCE;
 	
 	// default constructor

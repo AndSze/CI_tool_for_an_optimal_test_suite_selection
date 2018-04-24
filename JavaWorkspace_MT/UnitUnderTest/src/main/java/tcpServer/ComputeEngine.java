@@ -20,7 +20,7 @@ public class ComputeEngine implements TCPserver_interface, Runnable {
 	public ComputeEngine(Socket clientSocket, String serverText) throws ClassNotFoundException, IOException  {
 		super();
 		inputStream = new InputStreamReader(clientSocket.getInputStream());
-    	outputStream = new PrintStream(clientSocket.getOutputStream());
+    	outputStream = new PrintStream(clientSocket.getOutputStream(), true);
 		this.serverText   = serverText;
     	System.out.println(Thread.currentThread().getName());
 
@@ -33,16 +33,23 @@ public class ComputeEngine implements TCPserver_interface, Runnable {
        	
             BufferedReader bufferedReader = new BufferedReader(inputStream);
             String message = null;
+            timeout = 0;
             
-            while(true)
+            while(timeout<1010)
             {
     			if(bufferedReader.ready())
     			{
 	            	long time = System.currentTimeMillis();
 	            	message = bufferedReader.readLine();
 	            	Echo(outputStream, message, time);
+	            	timeout = 0;
     			}
-    			processingDelay(10);
+    			else
+    			{
+    				timeout = timeout+1;
+    				processingDelay(10);
+    			}
+    			//processingDelay(10);
             }
             
         } catch (IOException e) {
@@ -70,12 +77,12 @@ public class ComputeEngine implements TCPserver_interface, Runnable {
 		String server_message = null;
 		
         System.out.println("message received from cliennnt: \n\t"+message);
-        processingDelay(1000);
+        //processingDelay(1000);
         server_message = "Let's try "+message;
         
         System.out.println("Send back the following message: "+server_message);
         
-        outputStream.print(server_message);
+        outputStream.println(server_message);
         System.out.println("Request processed: " + time);
 	}
 
