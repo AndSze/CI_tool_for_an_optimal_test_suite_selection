@@ -1,19 +1,14 @@
 package tcpClient;
 
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.net.Socket;
 import java.net.SocketException;
 
 public class TCPclient{
 
+	// we can have multiple clients, hence Socket and ClientManager are not a static variable and they are unique for each TCPclient
     private Socket clientSocket;
     private ClientManager CLIENTMANAGER;
-    // we can have multiple clients, thus INSTANCE is not a static variable
-    //private TCPclient INSTANCE;
-    private int numberOfMsgsSent = 0;
-    private int numberOfMsgsReceived = 0;
     
     // default constructor 
     public TCPclient() {
@@ -23,7 +18,7 @@ public class TCPclient{
     }
     
     // overloaded constructor
-    protected TCPclient(Socket clientSocket, ClientManager CLIENTMANAGER, String serverHostName, int port) throws ClassNotFoundException{
+    private TCPclient(Socket clientSocket, ClientManager CLIENTMANAGER, String serverHostName, int port) throws ClassNotFoundException{
     	
     	// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
 	    super();
@@ -36,7 +31,7 @@ public class TCPclient{
 	    	//clientmanager = new ClientManager(clientSocket);
 	    	//this.outputStream = clientmanager.getOutputStream();
 	    	//this.inputStream = clientmanager.getInputStream();
-	    	System.out.println("Client Manager created with outputsteam = "+ CLIENTMANAGER.getOutputStream() +" and input stream = "+ CLIENTMANAGER.getInputStream());
+	    	System.out.println("Client Manager created with outputsteam and input stream");
 	    	//setClientManager(clientmanager);
 	    	
 	    } catch (SocketException socketEx) {
@@ -60,45 +55,40 @@ public class TCPclient{
 	}
 	
 	public void closeClient(Socket clientSocket, int port) {
-		try {
-			if(clientSocket != null){
-				clientSocket.close();
+		
+		if(clientSocket != null){
+			CLIENTMANAGER.closeOutStream();
+			try {
+				CLIENTMANAGER.closeInStream();
+			} catch (IOException IOEx ){
+				 System.out.println("Error: when attempted to close InputStreamReader inputStream on the server side");
+				IOEx.printStackTrace();
 			}
-		}
-		catch (IOException IOEx ){
-			System.out.println("Error: The client with port="+port+" cannot be closed");
-			IOEx.printStackTrace();
+			try {
+				clientSocket.close();
+			} catch (IOException IOEx ){
+				System.out.println("Error: The client socket with port="+port+" cannot be closed on the server side");
+				IOEx.printStackTrace();
+			}
 		}
 	}
 	
-	/*public static TCPclient getInstance() throws RemoteException
-	{
-	    synchronized (TCPclient.class) 
-	    {
-	    	if (INSTANCE == null)
-	    	{
-	    		INSTANCE = new TCPclient();
-	    	}
-	        return INSTANCE;
-	    }
-	}*/
-	
-	public void EchoMessageHandler(Socket clientSocket, String message, ClientManager clientmanager) throws InterruptedException {
-		long t0, t1;
-		String message_read;
-		boolean success = false;
+	public void EchoMessageHandler(Socket clientSocket, String message) {
+		
+		// time point when the clients sends its message to the server
+		long t0 = 0;
 		try {
-			//clientmanager.setInputStream(inputStream);
-			//clientmanager.setOutputStream(outputStream);
 			//System.out.println("Client Manager that is processed by the TCPclient has outputsteam = "+CLIENTMANAGER.getOutputStream() +" and input stream = "+ CLIENTMANAGER.getInputStream());
-			t0 = clientmanager.sendMessage(message, clientSocket);
+			t0 = CLIENTMANAGER.sendMessage(message, clientSocket);
 			//Thread.sleep(1000);
-			setNumberOfMsgsSent(numberOfMsgsSent+1);
-			clientmanager.receiveMessage(t0, clientSocket, numberOfMsgsSent, numberOfMsgsReceived);
-			setNumberOfMsgsSent(numberOfMsgsReceived+1);
-
 		} catch (IOException IOEx) {
 	    	System.out.println("Error: The client cannot send the following message: "+message);
+	    	IOEx.printStackTrace();
+		}
+		try {
+			CLIENTMANAGER.receiveMessage(t0, clientSocket);
+		} catch (IOException IOEx) {
+	    	System.out.println("Error: The client cannot receive srever's response for the following message sent: "+message);
 	    	IOEx.printStackTrace();
 	    }
 		//return success;
@@ -106,30 +96,6 @@ public class TCPclient{
 	
 	public Socket getClientSocket() {
 		return this.clientSocket;
-	}
-
-	public int getNumberOfMsgsSent() {
-		return numberOfMsgsSent;
-	}
-
-	public void setNumberOfMsgsSent(int numberOfMsgsSent) {
-		this.numberOfMsgsSent = numberOfMsgsSent;
-	}
-
-	public int getNumberOfMsgsReceived() {
-		return numberOfMsgsReceived;
-	}
-
-	public void setNumberOfMsgsReceived(int numberOfMsgsReceived) {
-		this.numberOfMsgsReceived = numberOfMsgsReceived;
-	}
-	
-	public ClientManager getClientManager() {
-		return this.CLIENTMANAGER;
-	}
-
-	public void setClientManager(ClientManager CLIENTMANAGER) {
-		this.CLIENTMANAGER = CLIENTMANAGER;
 	}
 
 }

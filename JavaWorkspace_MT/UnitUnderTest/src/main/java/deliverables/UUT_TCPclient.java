@@ -23,7 +23,7 @@ public class UUT_TCPclient {
 	         String message = Integer.toString(i)+"\n";
 	            
             //if(!INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(),message)) break;
-	        INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(), message, INSTANCE.getClientManager());
+	        INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(), message);
 	        //Thread.sleep(100);
         }
 		INSTANCE.closeClient(INSTANCE.getClientSocket(), port);

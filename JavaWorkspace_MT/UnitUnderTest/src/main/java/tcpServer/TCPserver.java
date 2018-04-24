@@ -1,6 +1,7 @@
 package tcpServer;
 
 import java.io.IOException;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -24,7 +25,7 @@ public class TCPserver {
 	};
 	
 	 // overloaded constructor
-	protected  TCPserver (ServerSocket serverSocket, int port) throws ClassNotFoundException{
+	private  TCPserver (ServerSocket serverSocket, int port) throws ClassNotFoundException{
 		
 		// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
 	    super();
@@ -36,7 +37,10 @@ public class TCPserver {
 		    
 		    listenThePort(serverSocket);
 		    
-	    } catch (SocketException socketEx) {
+	    } catch (BindException BindEx) {
+			System.out.println("Error: The server with port: "+port+" already exists and cannot be bound to the requested port ");
+			BindEx.printStackTrace();
+		} catch (SocketException socketEx) {
 	    	System.out.println("Error: The server with port="+port+" returns the SocketException if there is an issue in the underlying protocol, such as a TCP error");
 	    	socketEx.printStackTrace();
 	    } catch (IOException IOEx) {
@@ -82,6 +86,7 @@ public class TCPserver {
 	}
 	
 	public void listenThePort(ServerSocket serverSocket) {
+		int computeEnginesRunningID = 0;
 		while(true)
 		{
 			Socket clientSocket = null;
@@ -90,6 +95,7 @@ public class TCPserver {
                 //start listening to incoming client request (blocking function)
                 System.out.println("[ECHO Server] waiting for the incoming request ...");
                 clientSocket = serverSocket.accept();
+                computeEnginesRunningID += 1;
 			} catch (IOException IOe) {
 	            System.out.println("Error: cannot accept client request. Exit program");
 	            break;
@@ -98,7 +104,9 @@ public class TCPserver {
                 //create a new thread for each incoming message
             	//System.out.println(Thread.currentThread().getName());
 
-            	new Thread(new ComputeEngine(clientSocket, "Multithreaded Server")).run();
+            	new Thread(new ComputeEngine(clientSocket, computeEnginesRunningID)).start();
+                System.out.println("[ECHO Compute engine] Multithreaded Server no: "+ computeEnginesRunningID + " has been started");
+
             	//System.out.println(Thread.currentThread().getName());
             	
             } catch (ClassNotFoundException CNFex) {

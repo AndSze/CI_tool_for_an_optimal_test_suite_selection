@@ -12,102 +12,105 @@ import java.net.Socket;
 
 public class ComputeEngine implements TCPserver_interface, Runnable {
 	
-    protected String serverText   = null;
-    protected PrintStream outputStream = null;
-    protected InputStreamReader inputStream = null;
-    protected int timeout = 0;
+    private int computeEnginesRunningID   = 0;
+    private PrintStream outputStream = null;
+    private InputStreamReader inputStream = null;
+    private int timeout = 0;
+    final Object Echo = new Object();
 	
-	public ComputeEngine(Socket clientSocket, String serverText) throws ClassNotFoundException, IOException  {
+	public ComputeEngine(Socket clientSocket, int computeEnginesRunningID) throws ClassNotFoundException, IOException  {
 		super();
 		inputStream = new InputStreamReader(clientSocket.getInputStream());
     	outputStream = new PrintStream(clientSocket.getOutputStream(), true);
-		this.serverText   = serverText;
+		this.computeEnginesRunningID   = computeEnginesRunningID;
     	System.out.println(Thread.currentThread().getName());
 
 	}
 
     public void run() {
-        try {
-        	System.out.println(Thread.currentThread().getName());
-        	
-       	
-            BufferedReader bufferedReader = new BufferedReader(inputStream);
+      
+    	//synchronized (Echo) {
+    		
+    		try {
+    		BufferedReader bufferedReader = new BufferedReader(inputStream);
             String message = null;
             timeout = 0;
             
-            while(timeout<1010)
+            while(timeout<10)
             {
     			if(bufferedReader.ready())
     			{
 	            	long time = System.currentTimeMillis();
 	            	message = bufferedReader.readLine();
-	            	Echo(outputStream, message, time);
+	            	EchoResponse(outputStream, message, time);
 	            	timeout = 0;
     			}
     			else
     			{
     				timeout = timeout+1;
-    				processingDelay(10);
+    				processingDelay(1000);
     			}
     			//processingDelay(10);
-            }
-            
-        } catch (IOException e) {
-            //report exception somewhere.
-            e.printStackTrace();
-        }
-        finally {
-        	closeOutStream(outputStream);
+            }  
+        } catch (IOException IOex) {
+        	System.out.println("Error: when attempted to read bufferedReaderinputStream on the client side");
+        	IOex.printStackTrace();
+        } finally {
+        		closeOutStream();
         	try {
-				closeInStream(inputStream);
+				closeInStream();
 			} catch (IOException IOex) {
-			    System.out.println("Error: when attempted to close InputStreamReader inputStream");
-            	System.out.println(IOex.getMessage());
+			    System.out.println("Error: when attempted to close InputStreamReader inputStream on the client side");
+			    IOex.printStackTrace();
 			}
-        }
+          }
+    	//}
     }
     
 
-	public void processClinetMessage() {
-		// TODO Auto-generated method stub
-		
-	}
-	public synchronized void Echo(PrintStream outputStream, String message, long time) {
+	public /*synchronized*/ void EchoResponse(PrintStream outputStream, String message, long time) {
 
 		String server_message = null;
 		
         System.out.println("message received from cliennnt: \n\t"+message);
         //processingDelay(1000);
-        server_message = "Let's try "+message;
+        server_message =  Integer.toString(computeEnginesRunningID*Integer.parseInt(message));
+        server_message = "Let's try ComputerEngine ID: " + computeEnginesRunningID+ " that resends: "+server_message;
         
         System.out.println("Send back the following message: "+server_message);
         
         outputStream.println(server_message);
         System.out.println("Request processed: " + time);
 	}
-
-	public void sendMessage() {
-		// TODO Auto-generated method stub
-	}
 	
-	public void closeOutStream(PrintStream outputStream) {
+	public void closeOutStream() {
 		if (outputStream!=null) {
 			outputStream.close();
 		}
 	}
 	
-	public void closeInStream(InputStreamReader inputStream) throws IOException {
+	public void closeInStream() throws IOException {
 		if (inputStream!=null) {
 			inputStream.close();
 		}
 	}
 	
-		static void processingDelay(int msec) {
-        try {
-            Thread.sleep(msec);
-        } catch (InterruptedException ex) {
-            
-        }
+	static void processingDelay(int msec) {
+	    try {
+	        Thread.sleep(msec);
+	    } catch (InterruptedException ex) {
+	        
+	    }
     }
+
+	public void processClinetMessage() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void sendMessage() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

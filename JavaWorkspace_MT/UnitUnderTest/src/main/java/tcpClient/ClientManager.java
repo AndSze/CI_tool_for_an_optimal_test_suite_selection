@@ -8,45 +8,52 @@ import java.net.Socket;
 
 public class ClientManager implements TCPclient_interface{
 
-	protected PrintStream outputStream = null;
-	protected InputStreamReader inputStream = null;
+	private PrintStream outputStream = null;
+	private InputStreamReader inputStream = null;
 	
-	protected ClientManager(PrintStream outputStream, InputStreamReader inputStream) throws ClassNotFoundException{
-		this.outputStream = outputStream;
-        this.inputStream = inputStream;
-	}
-	
+	// default constructor 
 	public ClientManager() {
 		super();
 	}
 	
+	// overloaded constructor
+	private ClientManager(PrintStream outputStream, InputStreamReader inputStream) throws ClassNotFoundException{
+		this.outputStream = outputStream;
+        this.inputStream = inputStream;
+	}
+
+	
 	public void initClientManager(Socket clientSocket) {
 		try {
-		System.out.println("Client Manager created");
-		outputStream = new PrintStream(clientSocket.getOutputStream());
-        inputStream = new InputStreamReader(clientSocket.getInputStream());
-        new ClientManager(outputStream, inputStream);
-		} catch (IOException IOEx) {
-	    	System.out.println("Error: The client manager cannot be created for output Steam: "+ outputStream+" and input Steam: "+ inputStream);
-	    	IOEx.printStackTrace();
-		} catch (ClassNotFoundException CNFex) {
-			//will be executed when the server cannot be created
-			System.out.println("Error: Application tries to load in a class through its string name using "+clientSocket.getClass().getName()+" ,but no definition for the class with the specified name could be found.");
-			CNFex.printStackTrace();
-		}
+			
+			System.out.println("Client Manager created");
+			outputStream = new PrintStream(clientSocket.getOutputStream());
+	        inputStream = new InputStreamReader(clientSocket.getInputStream());
+	        new ClientManager(outputStream, inputStream);
+	        
+			} catch (IOException IOEx) {
+		    	System.out.println("Error: The client manager cannot be created for output Steam: "+ outputStream+" and input Steam: "+ inputStream);
+		    	IOEx.printStackTrace();
+			} catch (ClassNotFoundException CNFex) {
+				//will be executed when the server cannot be created
+				System.out.println("Error: Application tries to load in a class through its string name using "+clientSocket.getClass().getName()+" ,but no definition for the class with the specified name could be found.");
+				CNFex.printStackTrace();
+			}
 	}
 
 	public long sendMessage(String message, Socket clientSocket) throws IOException {
+		
         long t0 = System.currentTimeMillis();
         // it activates serverSocket.accept() on the server side
         outputStream.print(message); 
         return (t0);
+        
 	}
 	
-	public void receiveMessage(long t0, Socket clientSocket, int numberOfMsgsSent, int numberOfMsgsReceived) throws IOException, InterruptedException {
+	public void receiveMessage(long t0, Socket clientSocket) throws IOException {
+		
 		BufferedReader bufferedReader = new BufferedReader(inputStream);
 		String message;
-		int timeout = 0;
 		
 		while(true)
         {
@@ -55,31 +62,23 @@ public class ClientManager implements TCPclient_interface{
 				message = bufferedReader.readLine();
 	    		//String message = bufferedReader.readLine();
 		        long t1 = System.currentTimeMillis();
-		        System.out.printf("message {%s} received from server after %d msec \n",message,(t1-t0));
+		        System.out.printf("message {%s} after %d msec \n",message,(t1-t0));
 		        //Thread.sleep(10);
 		        break;
 			}
         }
-		/*
-		while(timeout < 5)
-	    {
-	    	if (bufferedReader.ready()) {
+	}
 	
-	    		message = bufferedReader.readLine();
-	    		//String message = bufferedReader.readLine();
-		        long t1 = System.currentTimeMillis();
-		        System.out.printf("message {%s} received from server after %d msec \n",message,(t1-t0));
-	    	}
-	    	else
-	    	{
-	    		Thread.sleep(210);
-	        	//System.out.println(timeout);
-	    		timeout++;
-	    	}
-	    	
-	    }
-        System.out.println("Client while loop ended with timeout: " + timeout);
-	       */
+	public void closeOutStream() {
+		if (outputStream!=null) {
+			outputStream.close();
+		}
+	}
+	
+	public void closeInStream() throws IOException {
+		if (inputStream!=null) {
+			inputStream.close();
+		}
 	}
 	
 
@@ -102,17 +101,6 @@ public class ClientManager implements TCPclient_interface{
 		return this.outputStream;
 	}
 
-	public void setOutputStream(PrintStream outputStream) {
-		this.outputStream = outputStream;
-	}
-	
-	public InputStreamReader getInputStream() {
-		return this.inputStream;
-	}
-
-	public void setInputStream(InputStreamReader inputStream) {
-		this.inputStream = inputStream;
-	}
 
 
 }
