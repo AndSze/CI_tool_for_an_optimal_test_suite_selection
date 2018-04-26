@@ -13,53 +13,34 @@ public class TCPserver {
     //declare a TCP socket object and initialize it to null
 	private ServerSocket serverSocket;
 	// we can have only a single server, thus INSTANCE is a static variable
-	private static TCPserver INSTANCE;
+	private static TCPserver INSTANCE = null;
 	//  determine the maximum number of threads running at the same time
 	private final ExecutorService clientProcessingPool = Executors.newFixedThreadPool(10);
 	private boolean isStopped = false;
 	private Thread serverThread = null;
 	
 	// default constructor
-	public TCPserver() {
-		try {
+	public TCPserver() throws IOException{
 		//create the TCP socket server
 		serverSocket = new ServerSocket();
-		} catch (IOException IOEx) {
-			System.out.println("Error: The server socket cannot be created");
-			IOEx.printStackTrace();
-		}
+		isStopped = false;
 	};
 	
 	 // overloaded constructor
-	private TCPserver (ServerSocket serverSocket, int port) throws ClassNotFoundException{
+	private TCPserver (ServerSocket serverSocket, int port) throws ClassNotFoundException, IOException{
 		
 		// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
 	    super();
 	    
-	    try {
-		    serverSocket.setReuseAddress(true);
-		    serverSocket.bind(new java.net.InetSocketAddress(port));
-		    System.out.println("ECHO server created and bound at port = "+port);
-		    
-		    startServer(serverSocket);
-		    
-	    } catch (RuntimeException RTEx) {
-			System.out.println("Error: The server with port: "+port+" cannot process the client messages and throws the runtime exception ");
-			RTEx.printStackTrace();
-	    } catch (BindException BindEx) {
-			System.out.println("Error: The server with port: "+port+" already exists and cannot be bound to the requested port ");
-			BindEx.printStackTrace();
-		} catch (SocketException socketEx) {
-	    	System.out.println("Error: The server with port="+port+" returns the SocketException if there is an issue in the underlying protocol, such as a TCP error");
-	    	socketEx.printStackTrace();
-	    } catch (IOException IOEx) {
-	    	System.out.println("Error: The server with port="+port+" returns the IOException if the bind operation fails, or if the socket is already bound.");
-	    	IOEx.printStackTrace();
-	    }
+	    serverSocket.setReuseAddress(true);
+	    serverSocket.bind(new java.net.InetSocketAddress(port));
+	    System.out.println("ECHO server created and bound at port = "+port);
 	    
+	    startServer(serverSocket);
+		    
 	};
 
-	public void initServer(int port) {
+	public void initServer(int port) throws IOException {
 		try {
 			System.out.println("ECHO server created");
 			new TCPserver (serverSocket, port);
@@ -70,8 +51,7 @@ public class TCPserver {
 		}
 	}
 	
-	public static TCPserver getInstance()
-	{
+	public static TCPserver getInstance() throws IOException {
 	    synchronized (TCPserver.class) 
 	    {
 	    	if (INSTANCE == null)
@@ -86,21 +66,17 @@ public class TCPserver {
 		return this.isStopped;
 	}
 
-	public synchronized void closeServer(int port) {
+	public synchronized void closeServer(int port) throws IOException{
+		
 		this.isStopped = true;
-		try {
-			if(serverSocket != null){
-				serverSocket.close();
-				System.out.println("Socket for the server with port: "+port+" is being closed successfully");
-			}
-		}
-		catch (IOException IOEx ){
-			System.out.println("Error: The server with port="+port+" cannot be closed");
-			IOEx.printStackTrace();
+		TCPserver.INSTANCE = null;
+		if(serverSocket != null){
+			serverSocket.close();
+			System.out.println("Socket for the server with port: "+port+" is being closed successfully");
 		}
 	}
 	
-	public void startServer(final ServerSocket serverSocket) {
+	public void startServer(final ServerSocket serverSocket){
 		
 		serverThread = new Thread(new Runnable() {
 		//Runnable serverTask = new Runnable() {
@@ -118,15 +94,13 @@ public class TCPserver {
 			                clientSocket = serverSocket.accept();
 			                //new Thread(new ComputeEngine(clientSocket, computeEnginesRunningID)).start();
 			                //computeEnginesRunningID += 1;
-						} catch (IOException IOe) {
-							if(isStopped()) {
-								System.out.println("Server Stopped.") ;
-				                break;
-							}
+						} catch (SocketException Sockex) {
+							// this exception is beign thrown to exit the while loop and call the exception handler from startServer()
+							//throw new RuntimeException("Error accepting client connection", Sockex);
 							serverThread.interrupt();
-							throw new RuntimeException("Error accepting client connection", IOe);
-							
-						}
+							System.out.println("Server Thread Stopped.");
+							break;
+						} 
 		                
 		                clientProcessingPool.submit((new ComputeEngine(clientSocket)));
 					}	
@@ -151,4 +125,5 @@ public class TCPserver {
 	public ServerSocket getServerSocket() {
 		return this.serverSocket;
 	}
+	
 }

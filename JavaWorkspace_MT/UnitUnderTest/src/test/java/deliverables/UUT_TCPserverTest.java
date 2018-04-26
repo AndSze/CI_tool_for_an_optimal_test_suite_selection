@@ -2,6 +2,7 @@ package deliverables;
 
 import static org.junit.Assert.*;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.net.SocketException;
 
 import org.junit.After;
@@ -33,26 +34,49 @@ public class UUT_TCPserverTest {
 		
 	}
 	
-	@Test(expected=SocketException.class)
-	public void Test_2(){
+	
+	@Test
+	public void Test_1() throws IOException{
 		System.out.println("This test verifies that the server can be created successfully at any port");
 		//assertEquals("This test verifies that the server can be created successfully at any port", outContent.toString());
 		
-		UUT_TCPserver uut_TCPserver1 = new UUT_TCPserver(9876);
+		UUT_TCPserver uut_TCPserver1 = new UUT_TCPserver(port);
 		
 		UUT_TCPserver.runTheServer(uut_TCPserver1.getINSTANCE(), uut_TCPserver1.getPort());
 		
-		UUT_TCPserver uut_TCPserver2 = new UUT_TCPserver(9877);
+		//UUT_TCPserver uut_TCPserver2 = new UUT_TCPserver(9877);
 		
-		UUT_TCPserver.runTheServer(uut_TCPserver2.getINSTANCE(), uut_TCPserver1.getPort());
+		//UUT_TCPserver.runTheServer(uut_TCPserver2.getINSTANCE(), uut_TCPserver1.getPort());
 		
-		assertNotEquals(uut_TCPserver1.getPort(),uut_TCPserver2.getPort());
-		assertEquals(uut_TCPserver1.getINSTANCE(),uut_TCPserver2.getINSTANCE());
+		assertEquals(uut_TCPserver1.getPort(),port);
+		assertNotEquals(uut_TCPserver1.getINSTANCE(),null);
+		
+		uut_TCPserver1.getINSTANCE().closeServer(port);
+		
+		int a = 0;
 	}
 	
+	/*@Test()
+	public void Test_2() throws IOException{
+		System.out.println("This test verifies that the server can be created successfully at any port");
+		//assertEquals("This test verifies that the server can be created successfully at any port", outContent.toString());
+		
+		UUT_TCPserver uut_TCPserver1 = new UUT_TCPserver(port+1);
+		
+		UUT_TCPserver.runTheServer(uut_TCPserver1.getINSTANCE(), uut_TCPserver1.getPort());
+		
+		//UUT_TCPserver uut_TCPserver2 = new UUT_TCPserver(9877);
+		
+		//UUT_TCPserver.runTheServer(uut_TCPserver2.getINSTANCE(), uut_TCPserver1.getPort());
+		
+		assertEquals(uut_TCPserver1.getPort(),port+1);
+		assertNotEquals(uut_TCPserver1.getINSTANCE(),null);
+	}
+	*/
+	
    @After
-    public void teardown(){
-	   TCPserver.getInstance().closeServer(port);
+    public void teardown() throws IOException{
+	   //TCPserver.getInstance().closeServer(port);
     }
 
 }
