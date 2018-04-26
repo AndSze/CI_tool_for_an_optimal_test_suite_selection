@@ -12,18 +12,19 @@ import java.net.Socket;
 
 public class ComputeEngine implements TCPserver_interface, Runnable {
 	
-    private int computeEnginesRunningID   = 0;
+    private static int computeEnginesRunningID   = 0;
     private PrintStream outputStream = null;
     private InputStreamReader inputStream = null;
     private int timeout = 0;
     final Object Echo = new Object();
 	
-	public ComputeEngine(Socket clientSocket, int computeEnginesRunningID) throws ClassNotFoundException, IOException  {
+	public ComputeEngine(Socket clientSocket) throws ClassNotFoundException, IOException  {
 		super();
 		inputStream = new InputStreamReader(clientSocket.getInputStream());
     	outputStream = new PrintStream(clientSocket.getOutputStream(), true);
-		this.computeEnginesRunningID   = computeEnginesRunningID;
+    	ComputeEngine.computeEnginesRunningID  += 1;
     	System.out.println(Thread.currentThread().getName());
+        System.out.println("[ECHO Compute engine] Multithreaded Server no: "+ ComputeEngine.computeEnginesRunningID + " has been started");
 
 	}
 
