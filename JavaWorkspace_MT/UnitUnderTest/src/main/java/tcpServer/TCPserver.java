@@ -1,7 +1,6 @@
 package tcpServer;
 
 import java.io.IOException;
-import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -42,11 +41,10 @@ public class TCPserver {
 
 	public void initServer(int port) throws IOException {
 		try {
-			System.out.println("ECHO server created");
 			new TCPserver (serverSocket, port);
 		} catch (ClassNotFoundException CNFex) {
 			//will be executed when the server cannot be created
-			System.out.println("Error: Application tries to load in a class through its string name using "+serverSocket.getClass().getName()+" ,but no definition for the class with the specified name could be found.");
+			System.out.println("Error: Application tries to load in a TCPserver class through its string name ,but no definition for the class with the specified name could be found.");
 			CNFex.printStackTrace();
 		}
 	}
@@ -62,18 +60,22 @@ public class TCPserver {
 	    }
 	}
 	
-	private synchronized boolean isStopped() {
+	synchronized boolean isStopped() {
 		return this.isStopped;
+	}
+	
+	synchronized TCPserver tcpServerInstance() {
+		return TCPserver.INSTANCE;
 	}
 
 	public synchronized void closeServer(int port) throws IOException{
 		
 		this.isStopped = true;
 		TCPserver.INSTANCE = null;
-		if(serverSocket != null){
-			serverSocket.close();
-			System.out.println("Socket for the server with port: "+port+" is being closed successfully");
-		}
+	
+		serverSocket.close();
+		System.out.println("Socket for the server with port: "+port+" closed successfully");
+		
 	}
 	
 	public void startServer(final ServerSocket serverSocket){
@@ -104,9 +106,6 @@ public class TCPserver {
 		                
 		                clientProcessingPool.submit((new ComputeEngine(clientSocket)));
 					}	
-	            } catch (ClassNotFoundException CNFex) {
-		            System.out.println("Error: when attempted to create new ComputeEngine() instance");
-	            	System.out.println(CNFex.getMessage());
 	            } catch (IllegalThreadStateException ITSex) {
 		            System.out.println("Error: when new Thread with MessageProcessorRunnable created");
 	            	System.out.println(ITSex.getMessage());

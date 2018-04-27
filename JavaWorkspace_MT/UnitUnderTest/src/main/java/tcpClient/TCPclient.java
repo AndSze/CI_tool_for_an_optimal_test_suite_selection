@@ -2,7 +2,6 @@ package tcpClient;
 
 import java.io.IOException;
 import java.net.Socket;
-import java.net.SocketException;
 
 public class TCPclient{
 
@@ -18,58 +17,46 @@ public class TCPclient{
     }
     
     // overloaded constructor
-    private TCPclient(Socket clientSocket, ClientManager CLIENTMANAGER, String serverHostName, int port) throws ClassNotFoundException{
+    private TCPclient(Socket clientSocket, ClientManager CLIENTMANAGER, String serverHostName, int port) throws ClassNotFoundException, IOException{
     	
     	// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
 	    super();
 	    
-	    try {
-	    	clientSocket = new Socket(serverHostName, port);
-	    	System.out.println("Client ECHO Socket created on port = "+port);
+	    
+    	clientSocket = new Socket(serverHostName, port);
+    	System.out.println("Client ECHO Socket created on port = "+port);
+    	
+    	CLIENTMANAGER.initClientManager(clientSocket);
+    	//clientmanager = new ClientManager(clientSocket);
+    	//this.outputStream = clientmanager.getOutputStream();
+    	//this.inputStream = clientmanager.getInputStream();
+    	System.out.println("Client Manager created with outputsteam and input stream");
+    	//setClientManager(clientmanager);
 	    	
-	    	CLIENTMANAGER.initClientManager(clientSocket);
-	    	//clientmanager = new ClientManager(clientSocket);
-	    	//this.outputStream = clientmanager.getOutputStream();
-	    	//this.inputStream = clientmanager.getInputStream();
-	    	System.out.println("Client Manager created with outputsteam and input stream");
-	    	//setClientManager(clientmanager);
-	    	
-	    } catch (SocketException socketEx) {
-	    	System.out.println("Error: The client with port="+port+" returns the SocketException if there is an issue in the underlying protocol, such as a TCP error");
-	    	socketEx.printStackTrace();
-	    } catch (IOException IOEx) {
-	    	System.out.println("Error: The client with port="+port+" returns the IOException if the bind operation fails, or if the socket is already bound.");
-	    	IOEx.printStackTrace();
-	    }
     }
 	
-	public void initClient(String serverHostName, int port) {
+	public void initClient(String serverHostName, int port) throws IOException{
 		try {
 			System.out.println("ECHO Client created");
 			new TCPclient (clientSocket, CLIENTMANAGER, serverHostName, port);
 		} catch (ClassNotFoundException CNFex) {
 			//will be executed when the server cannot be created
-			System.out.println("Error: Application tries to load in a class through its string name using "+clientSocket.getClass().getName()+" ,but no definition for the class with the specified name could be found.");
+			System.out.println("Error: Application tries to load in a class TCPserver through its string name ,but no definition for the class with the specified name could be found.");
 			CNFex.printStackTrace();
 		}
 	}
 	
-	public void closeClient(Socket clientSocket, int port) {
+	public void closeClient(Socket clientSocket, int port) throws IOException{
+		
 		
 		if(clientSocket != null){
+			
 			CLIENTMANAGER.closeOutStream();
-			try {
-				CLIENTMANAGER.closeInStream();
-			} catch (IOException IOEx ){
-				 System.out.println("Error: when attempted to close InputStreamReader inputStream on the server side");
-				IOEx.printStackTrace();
-			}
-			try {
-				clientSocket.close();
-			} catch (IOException IOEx ){
-				System.out.println("Error: The client socket with port="+port+" cannot be closed on the server side");
-				IOEx.printStackTrace();
-			}
+			CLIENTMANAGER.closeInStream();
+			
+			clientSocket.close();
+			System.out.println("Socket for the client with port: "+port+" closed successfully");
+			
 		}
 	}
 	
@@ -86,7 +73,8 @@ public class TCPclient{
 	    	IOEx.printStackTrace();
 		}
 		try {
-			CLIENTMANAGER.receiveMessage(t0, clientSocket);
+			ReceivedMessage receivedMessage = CLIENTMANAGER.receiveMessage(t0, clientSocket);
+	        System.out.printf("message {%s} after %d msec \n",receivedMessage.getMessage(),(receivedMessage.getTimestamp()-t0));
 		} catch (IOException IOEx) {
 	    	System.out.println("Error: The client cannot receive srever's response for the following message sent: "+message);
 	    	IOEx.printStackTrace();

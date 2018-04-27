@@ -2,12 +2,8 @@ package tcpServer;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
 import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.net.ServerSocket;
 import java.net.Socket;
 
 public class ComputeEngine implements TCPserver_interface, Runnable {
@@ -18,13 +14,13 @@ public class ComputeEngine implements TCPserver_interface, Runnable {
     private int timeout = 0;
     final Object Echo = new Object();
 	
-	public ComputeEngine(Socket clientSocket) throws ClassNotFoundException, IOException  {
+	public ComputeEngine(Socket clientSocket) throws IOException  {
 		super();
 		inputStream = new InputStreamReader(clientSocket.getInputStream());
     	outputStream = new PrintStream(clientSocket.getOutputStream(), true);
     	ComputeEngine.computeEnginesRunningID  += 1;
     	System.out.println(Thread.currentThread().getName());
-        System.out.println("[ECHO Compute engine] Multithreaded Server no: "+ ComputeEngine.computeEnginesRunningID + " has been started");
+        System.out.println("[ECHO Compute engine] Multithreaded Server Service for processing Client Request no: "+ ComputeEngine.computeEnginesRunningID + " has been started");
 
 	}
 

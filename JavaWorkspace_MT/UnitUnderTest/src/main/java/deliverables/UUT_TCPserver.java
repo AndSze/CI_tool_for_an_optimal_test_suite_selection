@@ -70,9 +70,9 @@ public class UUT_TCPserver {
 			
 			INSTANCE.closeServer(port);
 			
-		} catch (RuntimeException RTEx ){
-			System.out.println("Catched Runtime Exception that is caused by the fact that the server socket has been closed ");
-			RTEx.printStackTrace();
+		}  catch (SocketException socketEx ){
+			System.out.println("Error: The server with port= "+port+" returns the SocketException if there was an attempt to close a socket that runs a thread currently blocked in accept()");
+			socketEx.printStackTrace();
 		} catch (IOException IOEx ){
 			System.out.println("Error: The server with port="+port+" cannot be closed");
 			IOEx.printStackTrace();

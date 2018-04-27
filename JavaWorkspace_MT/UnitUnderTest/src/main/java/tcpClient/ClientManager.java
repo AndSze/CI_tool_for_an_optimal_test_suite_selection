@@ -23,20 +23,15 @@ public class ClientManager implements TCPclient_interface{
 	}
 
 	
-	public void initClientManager(Socket clientSocket) {
+	public void initClientManager(Socket clientSocket) throws IOException{
 		try {
 			
-			System.out.println("Client Manager created");
 			outputStream = new PrintStream(clientSocket.getOutputStream());
 	        inputStream = new InputStreamReader(clientSocket.getInputStream());
 	        new ClientManager(outputStream, inputStream);
 	        
-			} catch (IOException IOEx) {
-		    	System.out.println("Error: The client manager cannot be created for output Steam: "+ outputStream+" and input Steam: "+ inputStream);
-		    	IOEx.printStackTrace();
 			} catch (ClassNotFoundException CNFex) {
-				//will be executed when the server cannot be created
-				System.out.println("Error: Application tries to load in a class through its string name using "+clientSocket.getClass().getName()+" ,but no definition for the class with the specified name could be found.");
+				System.out.println("Error: Application tries to load in a ClientManager class through its string name ,but no definition for the class with the specified name could be found.");
 				CNFex.printStackTrace();
 			}
 	}
@@ -50,23 +45,26 @@ public class ClientManager implements TCPclient_interface{
         
 	}
 	
-	public void receiveMessage(long t0, Socket clientSocket) throws IOException {
+	public ReceivedMessage receiveMessage(long t0, Socket clientSocket) throws IOException {
 		
 		BufferedReader bufferedReader = new BufferedReader(inputStream);
-		String message;
+		ReceivedMessage receivedMessage = null;
+		String message = null;
+		long t1 = 0;
 		
 		while(true)
         {
 			if(bufferedReader.ready())
 			{
 				message = bufferedReader.readLine();
+				t1 = System.currentTimeMillis();
+				receivedMessage = new ReceivedMessage(message, t1);
 	    		//String message = bufferedReader.readLine();
-		        long t1 = System.currentTimeMillis();
-		        System.out.printf("message {%s} after %d msec \n",message,(t1-t0));
 		        //Thread.sleep(10);
 		        break;
 			}
         }
+		return receivedMessage;
 	}
 	
 	public void closeOutStream() {
