@@ -1,13 +1,14 @@
 package deliverables;
 
 import java.io.IOException;
+import java.net.ConnectException;
 import java.net.SocketException;
 import tcpClient.TCPclient;
 
 public class UUT_TCPclient {
 
     //create the port number
-    static int port = 9876;
+    static int port = 9877;
     static String serverHostName = "localhost";
 	
 	public static void main(String []args) throws IOException, InterruptedException{
@@ -65,6 +66,10 @@ public class UUT_TCPclient {
 	public static void runTheClient(TCPclient INSTANCE, int port, String serverHostName){
 		try {
 			INSTANCE.initClient(serverHostName, port);
+			
+		} catch (ConnectException connectEx) {
+	    	System.out.println("Error: The client with port= "+port+" returns the ConnectException while attempting to connect a socket to a remote address and port. Typically, the connection was refused remotely");
+	    	connectEx.printStackTrace();
 		} catch (SocketException socketEx) {
 	    	System.out.println("Error: The client with port="+port+" returns the SocketException if there is an issue in the underlying protocol, such as a TCP error");
 	    	socketEx.printStackTrace();

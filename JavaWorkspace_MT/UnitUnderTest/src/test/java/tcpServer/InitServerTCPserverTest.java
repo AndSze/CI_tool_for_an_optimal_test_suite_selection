@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import java.io.IOException;
 import java.net.BindException;
+import java.net.ServerSocket;
 
 /*
  * 1) Verify that the server can be created successfully at any port
@@ -22,40 +23,45 @@ public class InitServerTCPserverTest {
 	TCPserver tcpserver_2 = null;
 
 	
-	String[] testPurpose = { 	"1) Verify that the server can be created successfully at any port",
-			 					"2) Verify that the Bind Exception is returned if there was an attempt to create the server at the same port twice",
-			 					"3) Verify that multiple servers can be created successfully at different ports"};
-	int testID = 0;
+	String[] testPurpose = { 	"Verify that the server can be created successfully at any port",
+			 					"Verify that the Bind Exception is returned if there was an attempt to create the server at the same port twice",
+			 					"Verify that multiple servers can be created successfully at different ports"};
+	static int testID = 1;
 	
 	
-	public void incrementTestID() {
-		this.testID += 1;
+	
+	public static void incrementTestID() {
+		InitServerTCPserverTest.testID += 1;
 	}
 	
 	
 	@Before
 	public void before() throws IOException {
 		tcpserver_1 = new TCPserver();
-		System.out.println(testPurpose[testID]);
+		tcpserver_2 = new TCPserver();
+
+		System.out.println("\t\tTest Run "+InitServerTCPserverTest.testID+" Purpose:");
+		System.out.println(testPurpose[(InitServerTCPserverTest.testID-1)]);
+		System.out.println("\t\tTest Run "+InitServerTCPserverTest.testID+" Logic:");
 	}
 	
 
 	@Test
-	public void test_1() throws IOException {
+	public void test_run_1() throws IOException {
 
-		tcpserver_1.initServer(port_1);
-		assertNotEquals(tcpserver_1.getServerSocket(),null);
+		tcpserver_1 = tcpserver_1.initServer(port_1);
+		assertTrue(tcpserver_1.isServerRunning());
 		
 	}
 	
 	@Test(expected = BindException.class)
-	public void test_2() throws IOException {
+	public void test_run_2() throws IOException {
 
-		tcpserver_1.initServer(port_1);
-		assertNotEquals(tcpserver_1.getServerSocket(),null);
+		tcpserver_1 = tcpserver_1.initServer(port_1);
+		assertTrue(tcpserver_1.isServerRunning());
 		
 		tcpserver_2 = new TCPserver();
-		tcpserver_2.initServer(port_1);
+		tcpserver_2 = tcpserver_2.initServer(port_1);
 		
 		// To prove that exception's stack trace reported by JUnit caught the BindException
 		assertTrue(false);
@@ -63,30 +69,37 @@ public class InitServerTCPserverTest {
 	}
 	
 	@Test
-	public void test_3() throws IOException {
+	public void test_run_3() throws IOException {
 
-		tcpserver_1.initServer(port_1);
-		assertNotEquals(tcpserver_1.getServerSocket(),null);
+		tcpserver_1 = tcpserver_1.initServer(port_1);
+		assertTrue(tcpserver_1.isServerRunning());
 		
-		tcpserver_2 = new TCPserver();
-		tcpserver_2.initServer(port_2);
-		assertNotEquals(tcpserver_2.getServerSocket(),null);
+		tcpserver_2 = tcpserver_2.initServer(port_2);
+		assertTrue(tcpserver_2.isServerRunning());
 		
-		assertNotEquals(tcpserver_1.getServerSocket(),tcpserver_2.getServerSocket());
 	}
 	
    @After
     public void teardown() throws IOException, InterruptedException{
 	   
+	   System.out.println("\t\tTest Run "+InitServerTCPserverTest.testID+" teardown section:");
+	   
+	   if(tcpserver_1 != null) {
+		   if(tcpserver_1.isServerRunning()){
+			   tcpserver_1.closeServer(tcpserver_1, port_1);
+		   }
+		   
+	   }
+	   if(tcpserver_2 != null){
+		   if(tcpserver_2.isServerRunning()){
+			   tcpserver_2.closeServer(tcpserver_2, port_2);
+		   
+		   }
+	   }
+	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(1000);
 	   
-	   if(tcpserver_1!=null) {
-		   tcpserver_1.closeServer(port_1);
-	   }
-	   if(tcpserver_2!=null) {
-		   tcpserver_2.closeServer(port_2);
-	   }
 	   System.out.println("");
 	   incrementTestID();
     }

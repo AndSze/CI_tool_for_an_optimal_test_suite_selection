@@ -11,70 +11,58 @@ public class TCPserver {
 	
     //declare a TCP socket object and initialize it to null
 	private ServerSocket serverSocket;
-	// we can have only a single server, thus INSTANCE is a static variable
-	private static TCPserver INSTANCE = null;
 	//  determine the maximum number of threads running at the same time
 	private final ExecutorService clientProcessingPool = Executors.newFixedThreadPool(10);
-	private boolean isStopped = false;
+	private boolean serverRunning = false;
 	private Thread serverThread = null;
 	
 	// default constructor
 	public TCPserver() throws IOException{
-		//create the TCP socket server
-		serverSocket = new ServerSocket();
-		isStopped = false;
+		super();
 	};
 	
 	 // overloaded constructor
-	private TCPserver (ServerSocket serverSocket, int port) throws ClassNotFoundException, IOException{
+	private TCPserver (int port) throws IOException{
 		
 		// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
-	    super();
-	    
+		serverSocket = new ServerSocket();
 	    serverSocket.setReuseAddress(true);
 	    serverSocket.bind(new java.net.InetSocketAddress(port));
 	    System.out.println("ECHO server created and bound at port = "+port);
 	    
+	    ServerRunning(true);
+	    
 	    startServer(serverSocket);
-		    
+
 	};
 
-	public void initServer(int port) throws IOException {
-		try {
-			new TCPserver (serverSocket, port);
-		} catch (ClassNotFoundException CNFex) {
-			//will be executed when the server cannot be created
-			System.out.println("Error: Application tries to load in a TCPserver class through its string name ,but no definition for the class with the specified name could be found.");
-			CNFex.printStackTrace();
-		}
-	}
-	
-	public static TCPserver getInstance() throws IOException {
-	    synchronized (TCPserver.class) 
-	    {
-	    	if (INSTANCE == null)
-	    	{
-	    		INSTANCE = new TCPserver();
-	    	}
-	        return INSTANCE;
-	    }
-	}
-	
-	synchronized boolean isStopped() {
-		return this.isStopped;
-	}
-	
-	synchronized TCPserver tcpServerInstance() {
-		return TCPserver.INSTANCE;
-	}
-
-	public synchronized void closeServer(int port) throws IOException{
+	public TCPserver initServer(int port) throws IOException {
 		
-		this.isStopped = true;
-		TCPserver.INSTANCE = null;
+		return (new TCPserver(port));
+	}
 	
-		serverSocket.close();
-		System.out.println("Socket for the server with port: "+port+" closed successfully");
+	
+	synchronized boolean isServerRunning() {
+		return this.serverRunning;
+	}
+	
+	synchronized void ServerRunning(boolean isServerRunning) {
+	    this.serverRunning = isServerRunning;
+	}
+	
+	public void closeServer(TCPserver INSTANCE, int port) throws IOException{
+	
+		if (INSTANCE.getServerSocket()!= null){
+			
+			INSTANCE.getServerSocket().close();
+			System.out.println("Socket for the server with port: "+port+" closed successfully");
+			
+			// reinitialize serverRunning to false
+			this.serverRunning = false;
+		} 
+		else {
+			throw new IllegalArgumentException();
+		}
 		
 	}
 	
@@ -89,7 +77,9 @@ public class TCPserver {
 	            try {
 	            	Socket clientSocket = null;
 				
-					while(! isStopped()) {
+					System.out.println("Server Thread Started.");
+					
+					while(isServerRunning()) {
 						try {
 			                //start listening to incoming client request (blocking function)
 			                System.out.println("[ECHO Server] waiting for the incoming request ...");
