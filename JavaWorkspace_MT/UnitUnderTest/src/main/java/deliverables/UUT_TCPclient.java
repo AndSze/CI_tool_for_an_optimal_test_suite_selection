@@ -8,14 +8,29 @@ import tcpClient.TCPclient;
 public class UUT_TCPclient {
 
     //create the port number
-    static int port = 9877;
-    static String serverHostName = "localhost";
-	
+    private int port = 0;
+    final String serverHostName = "localhost";
+    private TCPclient INSTANCE = null;
+    
+    UUT_TCPclient(int port) throws IOException {
+    	super();
+    	this.port = port;
+    	this.INSTANCE = new TCPclient();
+    }
+    
 	public static void main(String []args) throws IOException, InterruptedException{
 		
-		TCPclient INSTANCE =  new TCPclient();
+		int temp_port = 9876;
+		UUT_TCPclient uut1_TCPclient = null;
 		
-		runTheClient(INSTANCE,port, serverHostName);
+		try {
+			uut1_TCPclient = new UUT_TCPclient(temp_port);
+		} catch (IOException IOEx) {
+			System.out.println("Error: Instance for the TCP client at port: "+temp_port+" cannot be created");
+			IOEx.printStackTrace();
+		}
+		
+		uut1_TCPclient.setINSTANCE(runTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort(), uut1_TCPclient.getServerHostName()));
 		
 		for (int i=0;i<5;i++){
 			
@@ -23,49 +38,49 @@ public class UUT_TCPclient {
 	         String message = Integer.toString(i)+"\n";
 	            
             //if(!INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(),message)) break;
-	        INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(), message);
+	         uut1_TCPclient.getINSTANCE().EchoMessageHandler(uut1_TCPclient.getINSTANCE().getClientSocket(), message);
 	        //Thread.sleep(100);
         }
 		
-		closeTheClient(INSTANCE, port);
+		uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
         System.out.println("Mission Completed");
         
-        runTheClient(INSTANCE,port, serverHostName);
+		uut1_TCPclient.setINSTANCE(runTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort(), uut1_TCPclient.getServerHostName()));
 		
 		for (int i=0;i<5;i++){
 			
 			 System.out.println("2 Sending message "+i*i);
 	         String message = Integer.toString(i*i)+"\n";
 	            
-            //if(!INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(),message)) break;
-	        INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(), message);
-	        //Thread.sleep(100);
+	       //if(!INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(),message)) break;
+	         uut1_TCPclient.getINSTANCE().EchoMessageHandler(uut1_TCPclient.getINSTANCE().getClientSocket(), message);
+	        //Thread.sleep(100);00);
         }
 		
-		closeTheClient(INSTANCE, port);
+		uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
         System.out.println("Mission Completed");
         
-        runTheClient(INSTANCE,port, serverHostName);
+		uut1_TCPclient.setINSTANCE(runTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort(), uut1_TCPclient.getServerHostName()));
 		
 		for (int i=0;i<5;i++){
 			
 			 System.out.println("3 Sending message "+i*i*i);
 	         String message = Integer.toString(i*i*i)+"\n";
 	            
-            //if(!INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(),message)) break;
-	        INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(), message);
-	        //Thread.sleep(100);
+	       //if(!INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(),message)) break;
+	         uut1_TCPclient.getINSTANCE().EchoMessageHandler(uut1_TCPclient.getINSTANCE().getClientSocket(), message);
+	        //Thread.sleep(100);;
         }
 		
 		System.out.println("Mission Completed");
 		
-		closeTheClient(INSTANCE, port);
+		uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
         
      }
 
-	public static void runTheClient(TCPclient INSTANCE, int port, String serverHostName){
+	public static TCPclient runTheClient(TCPclient INSTANCE, int port, String serverHostName){
 		try {
-			INSTANCE.initClient(serverHostName, port);
+			INSTANCE = INSTANCE.initClient(serverHostName, port);
 			
 		} catch (ConnectException connectEx) {
 	    	System.out.println("Error: The client with port= "+port+" returns the ConnectException while attempting to connect a socket to a remote address and port. Typically, the connection was refused remotely");
@@ -77,14 +92,33 @@ public class UUT_TCPclient {
 	    	System.out.println("Error: The client with port="+port+" returns the IOException if the bind operation fails, or if the socket is already bound.");
 	    	IOEx.printStackTrace();
 	    }
+		return INSTANCE;
 	}
 	
-	public static void closeTheClient(TCPclient INSTANCE, int port){	
+	public static TCPclient closeTheClient(TCPclient INSTANCE, int port){	
 		try {
 			INSTANCE.closeClient(INSTANCE.getClientSocket(), port);
 		} catch (IOException IOEx ){
 			System.out.println("Error: The client socket with port="+port+" cannot be closed on the server side");
 			IOEx.printStackTrace();
 		}
+		return INSTANCE;
 	}	
+	
+	
+	public int getPort() {
+		return this.port;
+	}
+	
+	public String getServerHostName() {
+		return this.serverHostName;
+	}
+
+	public TCPclient getINSTANCE() {
+		return this.INSTANCE;
+	}
+	
+	public void setINSTANCE(TCPclient INSTANCE) {
+		this.INSTANCE = INSTANCE;
+	}
 }

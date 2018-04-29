@@ -17,23 +17,18 @@ public class ClientManager implements TCPclient_interface{
 	}
 	
 	// overloaded constructor
-	private ClientManager(PrintStream outputStream, InputStreamReader inputStream) throws ClassNotFoundException{
+	private ClientManager(PrintStream outputStream, InputStreamReader inputStream){
 		this.outputStream = outputStream;
         this.inputStream = inputStream;
 	}
 
 	
-	public void initClientManager(Socket clientSocket) throws IOException{
-		try {
-			
+	public ClientManager initClientManager(Socket clientSocket) throws IOException{
+	
 			outputStream = new PrintStream(clientSocket.getOutputStream());
 	        inputStream = new InputStreamReader(clientSocket.getInputStream());
-	        new ClientManager(outputStream, inputStream);
-	        
-			} catch (ClassNotFoundException CNFex) {
-				System.out.println("Error: Application tries to load in a ClientManager class through its string name ,but no definition for the class with the specified name could be found.");
-				CNFex.printStackTrace();
-			}
+	        return (new ClientManager(outputStream, inputStream));
+	       
 	}
 
 	public long sendMessage(String message, Socket clientSocket) throws IOException {
@@ -99,6 +94,8 @@ public class ClientManager implements TCPclient_interface{
 		return this.outputStream;
 	}
 
-
+	public InputStreamReader getInputReaderStream() {
+		return this.inputStream;
+	}
 
 }

@@ -17,12 +17,17 @@ public class ServerSocketTCPserverTest {
 	int port_2 = 9877;
 	TCPserver tcpserver_2 = null;
 	Thread testThread = null;
-
+	ServerSocket serverSocket_1 = null;
+	ServerSocket serverSocket_2 = null;
 	
 	String[] testPurpose = { 	"Verify that once the server is created, its socket is being bound to the server port",
 								"Verify that once the server is created, its indicator for getReuseAddress is set to true",
 								"Verify that if a server instance at some port was closed, in case the new server instance at this port is created, it will have different socket ID",
-								"Verify that there is the SocketException returned if there was an attempt to close a socket that runs a thread currently blocked in serverSocket.accept()"};
+								"Verify that there is the SocketException returned if there was an attempt to close a socket that runs a thread currently blocked in serverSocket.accept()",
+								"Verify that there is the SocketException returned if there was an attempt to bind a server socket to the same port even if the server socket has been closed",
+								"Verify that there is the SocketException returned if there was an attempt to bind a server socket to different port",
+								"Verify that there is the SocketException returned if there was an attempt to bind a server socket to a port, to which a different server socket has been bound"};
+
 	static int testID = 1;
 	
 	public static void incrementTestID() {
@@ -34,8 +39,13 @@ public class ServerSocketTCPserverTest {
 	public void before() throws IOException {
 		tcpserver_1 = new TCPserver();
 		tcpserver_2 = new TCPserver();
-		testThread = new Thread();
-
+		if(ServerSocketTCPserverTest.testID == 4) {
+			testThread = new Thread();
+		}
+		if(ServerSocketTCPserverTest.testID > 4) {
+			serverSocket_1 = new ServerSocket();
+			serverSocket_2 = new ServerSocket();
+		}
 		System.out.println("\t\tTest Run "+ServerSocketTCPserverTest.testID+" Purpose:");
 		System.out.println(testPurpose[(ServerSocketTCPserverTest.testID-1)]);
 		System.out.println("\t\tTest Run "+ServerSocketTCPserverTest.testID+" Logic:");
@@ -76,7 +86,7 @@ public class ServerSocketTCPserverTest {
 		
 		ServerSocket newSocket = tcpserver_1.getServerSocket();
 
-		assertNotEquals(oldSocket,newSocket);
+		assertNotEquals(oldSocket,	newSocket);
 
 	}
 
@@ -107,6 +117,41 @@ public class ServerSocketTCPserverTest {
 					
 	}
 	
+	@Test(expected = SocketException.class)
+	public void test_run_5() throws IOException {
+		
+		serverSocket_1.bind(new java.net.InetSocketAddress(port_1));
+	    
+	    assertTrue(serverSocket_1.isBound());
+	    
+	    serverSocket_1.close();
+	    serverSocket_1.bind(new java.net.InetSocketAddress(port_1));
+
+	}
+	
+	@Test(expected = SocketException.class)
+	public void test_run_6() throws IOException {
+		
+		serverSocket_1.bind(new java.net.InetSocketAddress(port_1));
+	    
+	    assertTrue(serverSocket_1.isBound());
+	    
+	    serverSocket_1.bind(new java.net.InetSocketAddress(port_2));
+
+
+	}
+	
+	@Test(expected = SocketException.class)
+	public void test_run_7() throws IOException {
+
+	    serverSocket_1.bind(new java.net.InetSocketAddress(port_2));
+	    
+	    assertTrue(serverSocket_1.isBound());
+	    
+	    serverSocket_2.bind(new java.net.InetSocketAddress(port_2));
+
+	}
+	
    @After
     public void teardown() throws IOException, InterruptedException{
 	  
@@ -126,6 +171,12 @@ public class ServerSocketTCPserverTest {
 			   tcpserver_2.closeServer(tcpserver_2, port_2);
 		   
 		   }
+	   }
+	   if(serverSocket_1 != null){
+		   serverSocket_1.close();
+	   }
+	   if(serverSocket_2 != null){
+		   serverSocket_2.close();
 	   }
 	   
 	   incrementTestID();

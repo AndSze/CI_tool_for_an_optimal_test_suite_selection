@@ -4,15 +4,19 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 public class TCPserver {
 	
     //declare a TCP socket object and initialize it to null
 	private ServerSocket serverSocket;
 	//  determine the maximum number of threads running at the same time
-	private final ExecutorService clientProcessingPool = Executors.newFixedThreadPool(10);
+	//private final ExecutorService clientProcessingPool = Executors.newFixedThreadPool(10);
+	private final ThreadPoolExecutor clientProcessingPool = new ThreadPoolExecutor(8, 8, 0L, 
+			TimeUnit.MILLISECONDS,
+            new LinkedBlockingQueue<Runnable>());
 	private boolean serverRunning = false;
 	private Thread serverThread = null;
 	
@@ -68,7 +72,7 @@ public class TCPserver {
 	
 	public void startServer(final ServerSocket serverSocket){
 		
-		serverThread = new Thread(new Runnable() {
+		this.serverThread = new Thread(new Runnable() {
 		//Runnable serverTask = new Runnable() {
 	        public void run() {
 	        	/*synchronized(this){
@@ -87,14 +91,14 @@ public class TCPserver {
 			                //new Thread(new ComputeEngine(clientSocket, computeEnginesRunningID)).start();
 			                //computeEnginesRunningID += 1;
 						} catch (SocketException Sockex) {
-							// this exception is beign thrown to exit the while loop and call the exception handler from startServer()
+							// this exception is being thrown to exit the while loop and call the exception handler from startServer()
 							//throw new RuntimeException("Error accepting client connection", Sockex);
 							serverThread.interrupt();
 							System.out.println("Server Thread Stopped.");
 							break;
 						} 
-		                
-		                clientProcessingPool.submit((new ComputeEngine(clientSocket)));
+						System.out.println("Number of Active Threads: "+clientProcessingPool.getActiveCount());
+		                clientProcessingPool.execute((new ComputeEngine(clientSocket)));
 					}	
 	            } catch (IllegalThreadStateException ITSex) {
 		            System.out.println("Error: when new Thread with MessageProcessorRunnable created");
@@ -111,8 +115,16 @@ public class TCPserver {
 	    serverThread.start();
 	}
 	
-	public ServerSocket getServerSocket() {
+	synchronized ServerSocket getServerSocket() {
 		return this.serverSocket;
+	}
+	
+	synchronized Thread getServerThread() {
+		return this.serverThread;
+	}
+	
+	synchronized ThreadPoolExecutor getThreadPoolExecutor() {
+		return this.clientProcessingPool;
 	}
 	
 }

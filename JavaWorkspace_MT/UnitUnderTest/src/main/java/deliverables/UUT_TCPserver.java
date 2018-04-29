@@ -21,12 +21,13 @@ public class UUT_TCPserver {
 	
 	public static void main(String []args) throws InterruptedException{
 		
+		int temp_port = 9876;
 		UUT_TCPserver uut1_TCPserver = null;
 		UUT_TCPserver uut2_TCPserver = null;
 		try {
-			uut1_TCPserver = new UUT_TCPserver(9877);
+			uut1_TCPserver = new UUT_TCPserver(temp_port);
 		} catch (IOException IOEx) {
-			System.out.println("Error: Instance for the TCP server cannot be created");
+			System.out.println("Error: Instance for the TCP server at port: "+temp_port+" cannot be created");
 			IOEx.printStackTrace();
 		}
 		
@@ -34,14 +35,14 @@ public class UUT_TCPserver {
 		
 		Thread.sleep(100);
 
-		uut1_TCPserver.setINSTANCE(closeTheServer(uut1_TCPserver.getINSTANCE(), 9877));
+		uut1_TCPserver.setINSTANCE(closeTheServer(uut1_TCPserver.getINSTANCE(), temp_port));
 		
 		Thread.sleep(100);
 		
 		try {
-			uut2_TCPserver = new UUT_TCPserver(9877);
+			uut2_TCPserver = new UUT_TCPserver(temp_port);
 		} catch (IOException IOEx) {
-			System.out.println("Error: Instance for the TCP server cannot be created");
+			System.out.println("Error: Instance for the TCP server at port: "+temp_port+" cannot be created");
 			IOEx.printStackTrace();
 		}
 		

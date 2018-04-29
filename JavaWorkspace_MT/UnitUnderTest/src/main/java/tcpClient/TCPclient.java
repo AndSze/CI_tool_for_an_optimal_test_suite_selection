@@ -6,24 +6,23 @@ import java.net.Socket;
 public class TCPclient{
 
 	// we can have multiple clients, hence Socket and ClientManager are not a static variable and they are unique for each TCPclient
-    private Socket clientSocket;
-    private ClientManager CLIENTMANAGER;
+    private Socket clientSocket = null;
+    private ClientManager CLIENTMANAGER = null;
     
     // default constructor 
     public TCPclient() {
     	//create the TCP socket server
 		clientSocket = new Socket();
-		CLIENTMANAGER = new ClientManager();
     }
     
     // overloaded constructor
-    private TCPclient(Socket clientSocket, ClientManager CLIENTMANAGER, String serverHostName, int port) throws ClassNotFoundException, IOException{
+    private TCPclient(Socket clientSocket, String serverHostName, int port) throws IOException{
     	
     	// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
 	    super();
 	    
-	    
     	clientSocket = new Socket(serverHostName, port);
+    	CLIENTMANAGER = new ClientManager();
     	System.out.println("Client ECHO Socket created on port = "+port);
     	
     	CLIENTMANAGER.initClientManager(clientSocket);
@@ -35,15 +34,9 @@ public class TCPclient{
 	    	
     }
 	
-	public void initClient(String serverHostName, int port) throws IOException{
-		try {
-			System.out.println("ECHO Client created");
-			new TCPclient (clientSocket, CLIENTMANAGER, serverHostName, port);
-		} catch (ClassNotFoundException CNFex) {
-			//will be executed when the server cannot be created
-			System.out.println("Error: Application tries to load in a class TCPserver through its string name ,but no definition for the class with the specified name could be found.");
-			CNFex.printStackTrace();
-		}
+	public TCPclient initClient(String serverHostName, int port) throws IOException{
+
+		return (new TCPclient (clientSocket, serverHostName, port));
 	}
 	
 	public void closeClient(Socket clientSocket, int port) throws IOException{

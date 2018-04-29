@@ -19,7 +19,6 @@ public class ComputeEngine implements TCPserver_interface, Runnable {
 		inputStream = new InputStreamReader(clientSocket.getInputStream());
     	outputStream = new PrintStream(clientSocket.getOutputStream(), true);
     	ComputeEngine.computeEnginesRunningID  += 1;
-    	System.out.println(Thread.currentThread().getName());
         System.out.println("[ECHO Compute engine] Multithreaded Server Service for processing Client Request no: "+ ComputeEngine.computeEnginesRunningID + " has been started");
 
 	}
