@@ -9,7 +9,6 @@ import org.junit.Test;
 
 public class CloseServerTCPserverTest {
 
-	
 	int port_1 = 9876;
 	TCPserver tcpserver_1 = null;
 	int port_2 = 9877;
@@ -30,8 +29,11 @@ public class CloseServerTCPserverTest {
 	@Before
 	public void before() throws IOException {
 		tcpserver_1 = new TCPserver();
-		tcpserver_2 = new TCPserver();
-
+		
+		if(CloseServerTCPserverTest.testID == 2) {
+			tcpserver_2 = new TCPserver();
+		}
+		
 		System.out.println("\t\tTest Run "+CloseServerTCPserverTest.testID+" Purpose:");
 		System.out.println(testPurpose[(CloseServerTCPserverTest.testID-1)]);
 		System.out.println("\t\tTest Run "+CloseServerTCPserverTest.testID+" Logic:");

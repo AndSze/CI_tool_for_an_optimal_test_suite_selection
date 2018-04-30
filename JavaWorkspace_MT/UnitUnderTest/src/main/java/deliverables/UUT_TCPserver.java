@@ -78,9 +78,9 @@ public class UUT_TCPserver {
 			
 			INSTANCE.closeServer(INSTANCE, port);
 		
-		}  catch (IllegalArgumentException nullPTREx ){
-			System.out.println("Error: The server with port= "+port+" returns the IllegalArgumentException if there was an attempt to close a socket that has not been initialized");
-			nullPTREx.printStackTrace();
+		}  catch (IllegalArgumentException illPTREx ){
+			System.out.println("Error: The server with port= "+port+" returns the IllegalArgumentException if there was an attempt to close a server socket that has not been initialized");
+			illPTREx.printStackTrace();
 		}  catch (SocketException socketEx ){
 			System.out.println("Error: The server with port= "+port+" returns the SocketException if there was an attempt to close a socket that runs a thread currently blocked in accept()");
 			socketEx.printStackTrace();

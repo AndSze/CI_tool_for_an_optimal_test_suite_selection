@@ -7,30 +7,26 @@ public class TCPclient{
 
 	// we can have multiple clients, hence Socket and ClientManager are not a static variable and they are unique for each TCPclient
     private Socket clientSocket = null;
-    private ClientManager CLIENTMANAGER = null;
-    
+    private ClientManager clientManager = null;
+	private boolean clientRunning = false;
+	
     // default constructor 
     public TCPclient() {
-    	//create the TCP socket server
-		clientSocket = new Socket();
+    	// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
+    	super();
     }
     
     // overloaded constructor
     private TCPclient(Socket clientSocket, String serverHostName, int port) throws IOException{
-    	
-    	// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
-	    super();
 	    
-    	clientSocket = new Socket(serverHostName, port);
-    	CLIENTMANAGER = new ClientManager();
-    	System.out.println("Client ECHO Socket created on port = "+port);
+	    setClientSocket(new Socket(serverHostName, port));
+	    System.out.println("Client ECHO Socket created on port = "+port);
+	    
+	    clientManager = new ClientManager();   	
+    	setClientManager(clientManager.initClientManager(getClientSocket()));
     	
-    	CLIENTMANAGER.initClientManager(clientSocket);
-    	//clientmanager = new ClientManager(clientSocket);
-    	//this.outputStream = clientmanager.getOutputStream();
-    	//this.inputStream = clientmanager.getInputStream();
     	System.out.println("Client Manager created with outputsteam and input stream");
-    	//setClientManager(clientmanager);
+    	clientRunning(true);
 	    	
     }
 	
@@ -39,17 +35,32 @@ public class TCPclient{
 		return (new TCPclient (clientSocket, serverHostName, port));
 	}
 	
-	public void closeClient(Socket clientSocket, int port) throws IOException{
+	public void closeClient(TCPclient INSTANCE, int port) throws IOException{
 		
-		
-		if(clientSocket != null){
-			
-			CLIENTMANAGER.closeOutStream();
-			CLIENTMANAGER.closeInStream();
-			
-			clientSocket.close();
+		if(INSTANCE.getClientSocket() != null){
+
+			INSTANCE.getClientSocket().close();
 			System.out.println("Socket for the client with port: "+port+" closed successfully");
 			
+			// reinitialize clientRunning to false
+			clientRunning(false);
+		} 
+		else {
+			throw new IllegalArgumentException();
+		}
+	}
+	
+	public void closeClientManager(TCPclient INSTANCE, int port) throws IOException{
+		
+		if(INSTANCE.getClientManager() != null){
+				
+			INSTANCE.getClientManager().closeOutStream();
+			INSTANCE.getClientManager().closeInStream();
+			
+			System.out.println("ClientManager for the client with port: "+port+" closed successfully");
+		} 
+		else {
+			throw new IllegalArgumentException();
 		}
 	}
 	
@@ -59,14 +70,14 @@ public class TCPclient{
 		long t0 = 0;
 		try {
 			//System.out.println("Client Manager that is processed by the TCPclient has outputsteam = "+CLIENTMANAGER.getOutputStream() +" and input stream = "+ CLIENTMANAGER.getInputStream());
-			t0 = CLIENTMANAGER.sendMessage(message, clientSocket);
+			t0 = getClientManager().sendMessage(message, clientSocket);
 			//Thread.sleep(1000);
 		} catch (IOException IOEx) {
 	    	System.out.println("Error: The client cannot send the following message: "+message);
 	    	IOEx.printStackTrace();
 		}
 		try {
-			ReceivedMessage receivedMessage = CLIENTMANAGER.receiveMessage(t0, clientSocket);
+			ReceivedMessage receivedMessage = getClientManager().receiveMessage(t0, clientSocket);
 	        System.out.printf("message {%s} after %d msec \n",receivedMessage.getMessage(),(receivedMessage.getTimestamp()-t0));
 		} catch (IOException IOEx) {
 	    	System.out.println("Error: The client cannot receive srever's response for the following message sent: "+message);
@@ -75,8 +86,28 @@ public class TCPclient{
 		//return success;
 	}
 	
-	public Socket getClientSocket() {
+	public synchronized Socket getClientSocket() {
 		return this.clientSocket;
+	}
+	
+	synchronized void setClientSocket(Socket clientSocket) {
+		this.clientSocket = clientSocket;
+	}
+	
+	public synchronized ClientManager getClientManager() {
+		return this.clientManager;
+	}
+	
+	synchronized void setClientManager(ClientManager clientManager) {
+		this.clientManager = clientManager;
+	}
+	
+	synchronized boolean isClientRunning() {
+		return this.clientRunning;
+	}
+	
+	synchronized void clientRunning(boolean isClientRunning) {
+	    this.clientRunning = isClientRunning;
 	}
 
 }

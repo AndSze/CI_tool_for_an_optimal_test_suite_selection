@@ -2,19 +2,13 @@ package tcpServer;
 
 import static org.junit.Assert.*;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import tcpClient.ClientManager;
-import tcpClient.TCPclient;
-
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;;
 
@@ -46,10 +40,12 @@ public class StartServerTCPserverTest {
 	@Before
 	public void before() throws IOException {
 		tcpserver_1 = new TCPserver();
-		tcpserver_2 = new TCPserver();
 		serverSocket_1 = new ServerSocket();
-		serverSocket_2 = new ServerSocket();
 		
+		if(StartServerTCPserverTest.testID == 2) {
+		tcpserver_2 = new TCPserver();
+		serverSocket_2 = new ServerSocket();
+		}
 		if(StartServerTCPserverTest.testID > 4) {
 			mockClinetManagerTest = mock(ClientManager.class);
 		}
@@ -192,65 +188,7 @@ public class StartServerTCPserverTest {
 		
 		assertEquals(8,	tcpserver_1.getThreadPoolExecutor().getActiveCount());
 	}
-/*
-@Test
-public void test_run_2() throws IOException {
-	
-	tcpserver_1 = tcpserver_1.initServer(port_1);
-	assertTrue(tcpserver_1.isServerRunning());
-	assertTrue(tcpserver_1.getServerSocket().getReuseAddress());
-}
 
-@Test
-public void test_run_3() throws IOException {
-	
-	tcpserver_1 = tcpserver_1.initServer(port_1);
-	assertTrue(tcpserver_1.isServerRunning());
-	assertFalse(tcpserver_1.getServerSocket().isClosed());
-
-	ServerSocket oldSocket = tcpserver_1.getServerSocket();
-	
-	tcpserver_1.closeServer(tcpserver_1, port_1);
-	assertFalse(tcpserver_1.isServerRunning());
-	assertTrue(tcpserver_1.getServerSocket().isClosed());
-	
-	tcpserver_1 = tcpserver_1.initServer(port_1);
-	assertTrue(tcpserver_1.isServerRunning());
-	assertFalse(tcpserver_1.getServerSocket().isClosed());
-	
-	ServerSocket newSocket = tcpserver_1.getServerSocket();
-
-	assertNotEquals(oldSocket,newSocket);
-
-}
-
-@Test()
-public void test_run_4() throws IOException, InterruptedException {
-	
-	tcpserver_1 = tcpserver_1.initServer(port_1);
-	assertTrue(tcpserver_1.isServerRunning());
-	assertFalse(tcpserver_1.getServerSocket().isClosed());
-	
-	testThread = new Thread(new Runnable() {
-		//Runnable serverTask = new Runnable() {
-	        public void run() {
-	        	try {
-	        		tcpserver_1.getServerSocket().accept();
-	        	} catch (SocketException Sockex) {
-	        		testThread.interrupt();
-	        		assertTrue(testThread.isInterrupted());
-
-	        	} catch (IOException IOex) {
-	        		assertTrue(false);
-	        	}
-	        }
-	});
-	testThread.start();
-	
-	tcpserver_1.closeServer(tcpserver_1, port_1);
-				
-}
-*/
 	@After
 	public void teardown() throws IOException, InterruptedException{
 	  

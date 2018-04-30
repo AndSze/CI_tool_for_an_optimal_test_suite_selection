@@ -18,7 +18,8 @@ public class InitServerTCPserverTest {
 	
 	String[] testPurpose = { 	"Verify that the server can be created successfully at any port",
 			 					"Verify that the Bind Exception is returned if there was an attempt to create the server at the same port twice",
-			 					"Verify that multiple servers can be created successfully at different ports"};
+			 					"Verify that multiple servers can be created successfully at different ports",
+			 					"Verify that there is NO Connect Exception if there was an attempt to create the server at an invalid address on local machine, or port that is not valid on remote machine"};
 	static int testID = 1;
 	
 	
@@ -31,8 +32,14 @@ public class InitServerTCPserverTest {
 	@Before
 	public void before() throws IOException {
 		tcpserver_1 = new TCPserver();
-		tcpserver_2 = new TCPserver();
-
+		
+		if(InitServerTCPserverTest.testID == 2 || InitServerTCPserverTest.testID == 3) {
+			tcpserver_2 = new TCPserver();
+		}
+		if(InitServerTCPserverTest.testID == 4 ) {
+			port_1 = 0;
+		}
+		
 		System.out.println("\t\tTest Run "+InitServerTCPserverTest.testID+" Purpose:");
 		System.out.println(testPurpose[(InitServerTCPserverTest.testID-1)]);
 		System.out.println("\t\tTest Run "+InitServerTCPserverTest.testID+" Logic:");
@@ -69,6 +76,14 @@ public class InitServerTCPserverTest {
 		
 		tcpserver_2 = tcpserver_2.initServer(port_2);
 		assertTrue(tcpserver_2.isServerRunning());
+		
+	}
+	
+	@Test
+	public void test_run_4() throws IOException {
+
+		tcpserver_1 = tcpserver_1.initServer(port_1);
+		assertTrue(tcpserver_1.isServerRunning());
 		
 	}
 	

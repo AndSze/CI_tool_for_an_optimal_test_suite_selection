@@ -15,7 +15,6 @@ public class ServerSocketTCPserverTest {
 	int port_1 = 9876;
 	TCPserver tcpserver_1 = null;
 	int port_2 = 9877;
-	TCPserver tcpserver_2 = null;
 	Thread testThread = null;
 	ServerSocket serverSocket_1 = null;
 	ServerSocket serverSocket_2 = null;
@@ -38,7 +37,7 @@ public class ServerSocketTCPserverTest {
 	@Before
 	public void before() throws IOException {
 		tcpserver_1 = new TCPserver();
-		tcpserver_2 = new TCPserver();
+		
 		if(ServerSocketTCPserverTest.testID == 4) {
 			testThread = new Thread();
 		}
@@ -46,6 +45,7 @@ public class ServerSocketTCPserverTest {
 			serverSocket_1 = new ServerSocket();
 			serverSocket_2 = new ServerSocket();
 		}
+		
 		System.out.println("\t\tTest Run "+ServerSocketTCPserverTest.testID+" Purpose:");
 		System.out.println(testPurpose[(ServerSocketTCPserverTest.testID-1)]);
 		System.out.println("\t\tTest Run "+ServerSocketTCPserverTest.testID+" Logic:");
@@ -138,7 +138,6 @@ public class ServerSocketTCPserverTest {
 	    
 	    serverSocket_1.bind(new java.net.InetSocketAddress(port_2));
 
-
 	}
 	
 	@Test(expected = SocketException.class)
@@ -165,12 +164,6 @@ public class ServerSocketTCPserverTest {
 			   tcpserver_1.closeServer(tcpserver_1, port_1);
 		   }
 		   
-	   }
-	   if(tcpserver_2 != null){
-		   if(tcpserver_2.isServerRunning()){
-			   tcpserver_2.closeServer(tcpserver_2, port_2);
-		   
-		   }
 	   }
 	   if(serverSocket_1 != null){
 		   serverSocket_1.close();

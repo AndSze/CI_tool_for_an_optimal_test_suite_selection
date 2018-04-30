@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 public class TCPserver {
 	
     //declare a TCP socket object and initialize it to null
-	private ServerSocket serverSocket;
+	private ServerSocket serverSocket = null;
 	//  determine the maximum number of threads running at the same time
 	//private final ExecutorService clientProcessingPool = Executors.newFixedThreadPool(10);
 	private final ThreadPoolExecutor clientProcessingPool = new ThreadPoolExecutor(8, 8, 0L, 
@@ -22,13 +22,13 @@ public class TCPserver {
 	
 	// default constructor
 	public TCPserver() throws IOException{
+		// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
 		super();
 	};
 	
 	 // overloaded constructor
 	private TCPserver (int port) throws IOException{
 		
-		// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
 		serverSocket = new ServerSocket();
 	    serverSocket.setReuseAddress(true);
 	    serverSocket.bind(new java.net.InetSocketAddress(port));
@@ -45,15 +45,6 @@ public class TCPserver {
 		return (new TCPserver(port));
 	}
 	
-	
-	synchronized boolean isServerRunning() {
-		return this.serverRunning;
-	}
-	
-	synchronized void ServerRunning(boolean isServerRunning) {
-	    this.serverRunning = isServerRunning;
-	}
-	
 	public void closeServer(TCPserver INSTANCE, int port) throws IOException{
 	
 		if (INSTANCE.getServerSocket()!= null){
@@ -62,7 +53,7 @@ public class TCPserver {
 			System.out.println("Socket for the server with port: "+port+" closed successfully");
 			
 			// reinitialize serverRunning to false
-			this.serverRunning = false;
+			ServerRunning(false);
 		} 
 		else {
 			throw new IllegalArgumentException();
@@ -115,16 +106,26 @@ public class TCPserver {
 	    serverThread.start();
 	}
 	
-	synchronized ServerSocket getServerSocket() {
+	public synchronized ServerSocket getServerSocket() {
 		return this.serverSocket;
 	}
 	
-	synchronized Thread getServerThread() {
+	public synchronized Thread getServerThread() {
 		return this.serverThread;
 	}
 	
 	synchronized ThreadPoolExecutor getThreadPoolExecutor() {
 		return this.clientProcessingPool;
 	}
+	
+	
+	public synchronized boolean isServerRunning() {
+		return this.serverRunning;
+	}
+	
+	synchronized void ServerRunning(boolean isServerRunning) {
+	    this.serverRunning = isServerRunning;
+	}
+	
 	
 }
