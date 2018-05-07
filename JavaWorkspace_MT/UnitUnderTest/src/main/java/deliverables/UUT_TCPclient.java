@@ -3,8 +3,9 @@ package deliverables;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
-
 import tcpClient.TCPclient;
+import watchdog.ClientWatchdog;
+
 
 public class UUT_TCPclient {
 
@@ -12,11 +13,13 @@ public class UUT_TCPclient {
     private int port = 0;
     final String serverHostName = "localhost";
     private TCPclient INSTANCE = null;
+    private static ClientWatchdog clientWatchdog_INSTANCE = null;
     
     UUT_TCPclient(int port) throws IOException {
     	super();
     	this.port = port;
     	this.INSTANCE = new TCPclient();
+    	UUT_TCPclient.clientWatchdog_INSTANCE = ClientWatchdog.getInstance();
     }
     
 	public static void main(String []args) throws IOException, InterruptedException{
@@ -43,6 +46,10 @@ public class UUT_TCPclient {
 	        //Thread.sleep(100);
         }
 		
+		System.out.println("ClientWatchdog TimeFromLastFeed: " + clientWatchdog_INSTANCE.getTimeFromLastFeed());
+		System.out.println("ClientWatchdog TimeLeftBeforeExpiration: " + clientWatchdog_INSTANCE.getTimeLeftBeforeExpiration());
+		clientWatchdog_INSTANCE.feed();
+		
 		uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
 		uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
         System.out.println("Mission Completed");
@@ -58,6 +65,10 @@ public class UUT_TCPclient {
 	         uut1_TCPclient.getINSTANCE().EchoMessageHandler(uut1_TCPclient.getINSTANCE().getClientSocket(), message);
 	        //Thread.sleep(100);00);
         }
+		
+		System.out.println("ClientWatchdog TimeFromLastFeed: " + clientWatchdog_INSTANCE.getTimeFromLastFeed());
+		System.out.println("ClientWatchdog TimeLeftBeforeExpiration: " + clientWatchdog_INSTANCE.getTimeLeftBeforeExpiration());
+		clientWatchdog_INSTANCE.feed();
 		
 		uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
 		uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
@@ -77,6 +88,9 @@ public class UUT_TCPclient {
 		
 		System.out.println("Mission Completed");
 		
+		System.out.println("ClientWatchdog TimeFromLastFeed: " + clientWatchdog_INSTANCE.getTimeFromLastFeed());
+		System.out.println("ClientWatchdog TimeLeftBeforeExpiration: " + clientWatchdog_INSTANCE.getTimeLeftBeforeExpiration());
+		
 		uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
 		uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
 
@@ -85,7 +99,7 @@ public class UUT_TCPclient {
 
 	public static TCPclient runTheClient(TCPclient INSTANCE, int port, String serverHostName){
 		try {
-			INSTANCE = INSTANCE.initClient(serverHostName, port);
+			INSTANCE = INSTANCE.initClient(serverHostName, port, clientWatchdog_INSTANCE);
 			
 		} catch (UnknownHostException unHostEx) {
 	    	System.out.println("Error: The client with port="+port+" returns the UnknownHostException if if the IP address of the host could not be determined");

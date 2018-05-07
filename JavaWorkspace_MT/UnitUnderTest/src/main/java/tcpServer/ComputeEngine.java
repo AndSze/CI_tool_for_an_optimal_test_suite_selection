@@ -1,10 +1,15 @@
 package tcpServer;
 
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
+import java.rmi.RemoteException;
 
 public class ComputeEngine implements TCPserver_interface, Runnable {
 	
@@ -98,6 +103,39 @@ public class ComputeEngine implements TCPserver_interface, Runnable {
 	        
 	    }
     }
+	
+	public boolean serialize(Object obj, String path) throws RemoteException, ClassNotFoundException
+	{
+		try {
+			FileOutputStream fileOut = new FileOutputStream(path);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(obj);
+			out.close();
+			fileOut.close();
+			System.out.println("Serialized data is saved in " + path);
+			return true;
+		} catch (IOException i) {
+			i.printStackTrace();
+			return false;
+		}
+	}
+
+	public Object deserialize(String path) throws RemoteException, ClassNotFoundException
+	{
+		Object obj = null;
+		try {
+			FileInputStream fileIn = new FileInputStream(path);
+			ObjectInputStream in = new ObjectInputStream(fileIn);
+			obj = in.readObject();
+			in.close();
+			fileIn.close();
+			//System.out.println("Serialized data is retrieved from " + path);
+			return obj;
+		} catch (IOException i) {
+			i.printStackTrace();
+			return obj;
+		}
+	}
 
 	public void processClinetMessage() {
 		// TODO Auto-generated method stub

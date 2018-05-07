@@ -8,6 +8,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
+import watchdog.ServerWatchdog;
+
 public class TCPserver {
 	
     //declare a TCP socket object and initialize it to null
@@ -27,7 +29,7 @@ public class TCPserver {
 	};
 	
 	 // overloaded constructor
-	private TCPserver (int port) throws IOException{
+	private TCPserver (int port, ServerWatchdog serverWatchdog_INSTANCE) throws IOException{
 		
 		serverSocket = new ServerSocket();
 	    serverSocket.setReuseAddress(true);
@@ -35,14 +37,15 @@ public class TCPserver {
 	    System.out.println("ECHO server created and bound at port = "+port);
 	    
 	    ServerRunning(true);
+	    serverWatchdog_INSTANCE.setEnabled(isServerRunning());
 	    
 	    startServer(serverSocket);
 
 	};
 
-	public TCPserver initServer(int port) throws IOException {
+	public TCPserver initServer(int port, ServerWatchdog serverWatchdog_INSTANCE) throws IOException {
 		
-		return (new TCPserver(port));
+		return (new TCPserver(port, serverWatchdog_INSTANCE));
 	}
 	
 	public void closeServer(TCPserver INSTANCE, int port) throws IOException{

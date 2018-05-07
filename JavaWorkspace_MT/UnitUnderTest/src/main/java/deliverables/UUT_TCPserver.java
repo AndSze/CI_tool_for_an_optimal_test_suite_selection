@@ -5,18 +5,21 @@ import java.net.BindException;
 import java.net.SocketException;
 
 import tcpServer.TCPserver;
+import watchdog.ServerWatchdog;
 
 public class UUT_TCPserver {
 	
     //create the port number
     private int port = 0;
     //Arraylist<TCPserver> servers = null;
-    private TCPserver INSTANCE = null;
+    private TCPserver TCPserver_INSTANCE = null;
+    private static ServerWatchdog serverWatchdog_INSTANCE = null;
     
     UUT_TCPserver(int port) throws IOException {
     	super();
     	this.port = port;
-    	this.INSTANCE = new TCPserver();
+    	this.TCPserver_INSTANCE = new TCPserver();
+    	UUT_TCPserver.serverWatchdog_INSTANCE = ServerWatchdog.getInstance();
     }
 	
 	public static void main(String []args) throws InterruptedException{
@@ -34,9 +37,14 @@ public class UUT_TCPserver {
 		uut1_TCPserver.setINSTANCE(runTheServer(uut1_TCPserver.getINSTANCE(), uut1_TCPserver.getPort()));
 		
 		Thread.sleep(100);
+		System.out.println("ServerWatchdog TimeFromLastFeed: " + serverWatchdog_INSTANCE.getTimeFromLastFeed());
+		System.out.println("ServerWatchdog TimeLeftBeforeExpiration: " + serverWatchdog_INSTANCE.getTimeLeftBeforeExpiration());
 
 		uut1_TCPserver.setINSTANCE(closeTheServer(uut1_TCPserver.getINSTANCE(), temp_port));
 		
+		System.out.println("ServerWatchdog TimeFromLastFeed: " + serverWatchdog_INSTANCE.getTimeFromLastFeed());
+		System.out.println("ServerWatchdog TimeLeftBeforeExpiration: " + serverWatchdog_INSTANCE.getTimeLeftBeforeExpiration());
+		serverWatchdog_INSTANCE.feed();
 		Thread.sleep(100);
 		
 		try {
@@ -48,16 +56,18 @@ public class UUT_TCPserver {
 		
 		uut2_TCPserver.setINSTANCE(runTheServer(uut2_TCPserver.getINSTANCE(), uut2_TCPserver.getPort()));
 		
-		Thread.sleep(100);
+		Thread.sleep(1000);
+		
+		System.out.println("ServerWatchdog TimeFromLastFeed: " + serverWatchdog_INSTANCE.getTimeFromLastFeed());
+		System.out.println("ServerWatchdog TimeLeftBeforeExpiration: " + serverWatchdog_INSTANCE.getTimeLeftBeforeExpiration());
 
 
 	}
 
-	public static TCPserver runTheServer(TCPserver INSTANCE, int port){
+	public static TCPserver runTheServer(TCPserver TCPserver_INSTANCE, int port){
 		try {
 			
-			INSTANCE = INSTANCE.initServer(port);
-			
+			TCPserver_INSTANCE = TCPserver_INSTANCE.initServer(port, serverWatchdog_INSTANCE);
 		} catch (BindException BindEx) { // exception happens if program was started more than once
 			System.out.println("Error: The server with port: "+port+" already exists and cannot be bound to the requested port ");
 			BindEx.printStackTrace();
@@ -68,15 +78,15 @@ public class UUT_TCPserver {
 	    	System.out.println("Error: The server with port="+port+" returns the IOException if the bind operation fails, or if the socket is already bound.");
 	    	IOEx.printStackTrace();
 	    } 
-		return INSTANCE;
+		return TCPserver_INSTANCE;
 		
 	}
 	
-	public static TCPserver closeTheServer(TCPserver INSTANCE, int port)
+	public static TCPserver closeTheServer(TCPserver TCPserver_INSTANCE, int port)
 	{	
 		try {
 			
-			INSTANCE.closeServer(INSTANCE, port);
+			TCPserver_INSTANCE.closeServer(TCPserver_INSTANCE, port);
 		
 		}  catch (IllegalArgumentException illPTREx ){
 			System.out.println("Error: The server with port= "+port+" returns the IllegalArgumentException if there was an attempt to close a server socket that has not been initialized");
@@ -88,7 +98,7 @@ public class UUT_TCPserver {
 			System.out.println("Error: The server with port="+port+" cannot be closed");
 			IOEx.printStackTrace();
 		} 
-		return INSTANCE;
+		return TCPserver_INSTANCE;
 	}
 	
 	
@@ -97,11 +107,11 @@ public class UUT_TCPserver {
 	}
 
 	public TCPserver getINSTANCE() {
-		return this.INSTANCE;
+		return this.TCPserver_INSTANCE;
 	}
 	
-	public void setINSTANCE(TCPserver INSTANCE) {
-		this.INSTANCE = INSTANCE;
+	public void setINSTANCE(TCPserver TCPserver_INSTANCE) {
+		this.TCPserver_INSTANCE = TCPserver_INSTANCE;
 	}
 }
     

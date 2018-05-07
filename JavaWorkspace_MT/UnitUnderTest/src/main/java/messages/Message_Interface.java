@@ -3,7 +3,7 @@ package messages;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public abstract class Message_Interface extends Interface{
+public abstract class Message_Interface extends Message{
 	
 	// class attributes
 	protected String timestamp;

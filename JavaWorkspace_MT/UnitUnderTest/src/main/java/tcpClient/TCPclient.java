@@ -2,6 +2,7 @@ package tcpClient;
 
 import java.io.IOException;
 import java.net.Socket;
+import watchdog.ClientWatchdog;
 
 public class TCPclient{
 
@@ -17,7 +18,7 @@ public class TCPclient{
     }
     
     // overloaded constructor
-    private TCPclient(Socket clientSocket, String serverHostName, int port) throws IOException{
+    private TCPclient(Socket clientSocket, String serverHostName, int port, ClientWatchdog serverWatchdog_INSTANCE) throws IOException{
 	    
 	    setClientSocket(new Socket(serverHostName, port));
 	    System.out.println("Client ECHO Socket created on port = "+port);
@@ -27,12 +28,13 @@ public class TCPclient{
     	
     	System.out.println("Client Manager created with outputsteam and input stream");
     	clientRunning(true);
+    	serverWatchdog_INSTANCE.setEnabled(isClientRunning());
 	    	
     }
 	
-	public TCPclient initClient(String serverHostName, int port) throws IOException{
+	public TCPclient initClient(String serverHostName, int port, ClientWatchdog serverWatchdog_INSTANCE) throws IOException{
 
-		return (new TCPclient (clientSocket, serverHostName, port));
+		return (new TCPclient (clientSocket, serverHostName, port, serverWatchdog_INSTANCE));
 	}
 	
 	public void closeClient(TCPclient INSTANCE, int port) throws IOException{
