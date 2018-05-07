@@ -1,7 +1,5 @@
 package tcpServer;
 
-import java.io.IOException;
-import java.net.ServerSocket;
 
 public interface TCPserver_interface {
 	
