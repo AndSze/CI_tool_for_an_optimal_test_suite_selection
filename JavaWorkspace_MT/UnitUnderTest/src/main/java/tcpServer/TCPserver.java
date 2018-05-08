@@ -4,10 +4,13 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-
+import sensor.MeasurementData;
+import sensor.SensorImpl;
 import watchdog.ServerWatchdog;
 
 public class TCPserver {
@@ -21,6 +24,12 @@ public class TCPserver {
             new LinkedBlockingQueue<Runnable>());
 	private boolean serverRunning = false;
 	private Thread serverThread = null;
+	protected static ArrayList<SensorImpl> Sensors_LIST= new ArrayList<>();
+	protected static ArrayList<MeasurementData[]> MeasurementHistory_LIST = new ArrayList<>();
+	// reset this list after each 24 measurements
+	protected static ArrayList<MeasurementData> MeasurementData_LIST= new ArrayList<>();
+	protected static String Sensors_PATH = "files\\Sensors";
+	private int numberOfSensors = 0;
 	
 	// default constructor
 	public TCPserver() throws IOException{
@@ -128,6 +137,14 @@ public class TCPserver {
 	
 	synchronized void ServerRunning(boolean isServerRunning) {
 	    this.serverRunning = isServerRunning;
+	}
+
+	public int getNumberOfSensors() {
+		return numberOfSensors;
+	}
+
+	public void setNumberOfSensors(int numberOfSensors) {
+		this.numberOfSensors = numberOfSensors;
 	}
 	
 	
