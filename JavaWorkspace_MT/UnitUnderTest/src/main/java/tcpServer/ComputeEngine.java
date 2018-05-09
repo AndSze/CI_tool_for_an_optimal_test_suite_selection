@@ -10,10 +10,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.net.Socket;
-import java.rmi.RemoteException;
 import java.util.ArrayList;
 import sensor.MeasurementData;
-import sensor.MeasurementHistory;
 import sensor.SensorImpl;
 
 public class ComputeEngine extends TCPserver implements TCPserver_interface, Runnable {
@@ -27,6 +25,14 @@ public class ComputeEngine extends TCPserver implements TCPserver_interface, Run
 		super();
 		inputStream = new InputStreamReader(clientSocket.getInputStream());
     	outputStream = new PrintStream(clientSocket.getOutputStream(), true);
+    	// create lists for objects that are already saved in the server directory
+    	
+    	try {
+			setSerializedObjectList(Server_Sensors_LIST, MeasurementData_LIST, MeasurementHistory_LIST);
+        } catch (ClassNotFoundException CNFex) {
+            System.out.println("Error: when new ComputeEngine failed due to class of a deserialized object cannot be found");
+        	System.out.println(CNFex.getMessage());
+        }
     	ComputeEngine.computeEnginesRunningID  += 1;
         System.out.println("[ECHO Compute engine] Multithreaded Server Service for processing Client Request no: "+ ComputeEngine.computeEnginesRunningID + " has been started");
 
@@ -120,7 +126,7 @@ public class ComputeEngine extends TCPserver implements TCPserver_interface, Run
 	}
 	
 	@Override
-	public void setSerializedObjectList(ArrayList<SensorImpl> sensors_list, ArrayList<MeasurementData> mes_data_list, ArrayList<MeasurementData[]> mes_hist_list) throws ClassNotFoundException {
+	public void setSerializedObjectList(ArrayList<SensorImpl> Server_Sensors_LIST, ArrayList<MeasurementData> mes_data_list, ArrayList<MeasurementData[]> mes_hist_list) throws ClassNotFoundException {
 		// Create a directory where Single Events will be saved on the server side
 		boolean success = (new File(TCPserver.Sensors_PATH)).mkdirs();
 		if (!success) 
@@ -136,7 +142,7 @@ public class ComputeEngine extends TCPserver implements TCPserver_interface, Run
             		String sensor_data_path = TCPserver.Sensors_PATH + "\\" + file;
             		if ((file.substring(file.toString().length() - 11)).equals("sensor_info")){
             			SensorImpl new_sensor = (SensorImpl) deserialize(sensor_data_path);
-            			sensors_list.add(new_sensor);
+            			Server_Sensors_LIST.add(new_sensor);
             		}
             		else if ((file.substring(file.toString().length() - 16)).equals("measurement_data")){
             			MeasurementData new_mes_data = (MeasurementData) deserialize(sensor_data_path);
@@ -166,7 +172,7 @@ public class ComputeEngine extends TCPserver implements TCPserver_interface, Run
 
 	@Override
 	public void saveSensorInfo(SensorImpl sensor){
-		TCPserver.Sensors_LIST.add(sensor);
+		TCPserver.Server_Sensors_LIST.add(sensor);
 		serialize(sensor, getSensorPath(sensor));
 	}
 	

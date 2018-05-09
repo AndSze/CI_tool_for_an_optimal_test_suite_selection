@@ -3,7 +3,6 @@ package tcpServer;
 import java.io.File;
 import java.util.ArrayList;
 import sensor.MeasurementData;
-import sensor.MeasurementHistory;
 import sensor.SensorImpl;
 
 	/*
@@ -49,7 +48,6 @@ public interface TCPserver_interface {
     
     // Retrieve data from a serialized file
     Object deserialize(String path) throws ClassNotFoundException;
-    
     
 	
 }

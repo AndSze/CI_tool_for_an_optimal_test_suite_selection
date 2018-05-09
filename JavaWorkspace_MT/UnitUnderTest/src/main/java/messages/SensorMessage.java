@@ -2,10 +2,9 @@ package messages;
 
 public enum SensorMessage {
 
-	DATA (0),
-	ACK (1),
-	REQUEST (2),
-	SENSOR_INFO (3);
+	SENSOR_INFO (0),
+	DATA (1),
+	HISTORY (2);
 
 	private int sensorMessage;
 

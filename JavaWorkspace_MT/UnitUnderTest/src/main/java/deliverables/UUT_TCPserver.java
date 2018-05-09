@@ -3,15 +3,13 @@ package deliverables;
 import java.io.IOException;
 import java.net.BindException;
 import java.net.SocketException;
-
 import tcpServer.TCPserver;
 import watchdog.ServerWatchdog;
 
-public class UUT_TCPserver {
+public class UUT_TCPserver{
 	
     //create the port number
     private int port = 0;
-    //Arraylist<TCPserver> servers = null;
     private TCPserver TCPserver_INSTANCE = null;
     private static ServerWatchdog serverWatchdog_INSTANCE = null;
     
@@ -25,8 +23,10 @@ public class UUT_TCPserver {
 	public static void main(String []args) throws InterruptedException{
 		
 		int temp_port = 9876;
+		
 		UUT_TCPserver uut1_TCPserver = null;
 		UUT_TCPserver uut2_TCPserver = null;
+		
 		try {
 			uut1_TCPserver = new UUT_TCPserver(temp_port);
 		} catch (IOException IOEx) {
@@ -100,7 +100,6 @@ public class UUT_TCPserver {
 		} 
 		return TCPserver_INSTANCE;
 	}
-	
 	
 	public int getPort() {
 		return this.port;

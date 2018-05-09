@@ -1,11 +1,11 @@
 package tcpServer;
 
+import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
@@ -24,12 +24,13 @@ public class TCPserver {
             new LinkedBlockingQueue<Runnable>());
 	private boolean serverRunning = false;
 	private Thread serverThread = null;
-	protected static ArrayList<SensorImpl> Sensors_LIST= new ArrayList<>();
+	protected static ArrayList<SensorImpl> Server_Sensors_LIST= new ArrayList<>();
 	protected static ArrayList<MeasurementData[]> MeasurementHistory_LIST = new ArrayList<>();
 	// reset this list after each 24 measurements
 	protected static ArrayList<MeasurementData> MeasurementData_LIST= new ArrayList<>();
 	protected static String Sensors_PATH = "files\\Sensors";
-	private int numberOfSensors = 0;
+	private int numberOfSensors = 8;
+	private float[][] sensor_coordinates_array = { {1.0f, 1.0f}, {2.0f, 1.0f}, {1.5f, 2.0f}, {2.5f, 0.5f}, {3.0f, 3.5f}, {1.0f, 3.5f}, {2.5f, 0.5f}, {0.5f, 2.5f}};
 	
 	// default constructor
 	public TCPserver() throws IOException{
@@ -47,6 +48,11 @@ public class TCPserver {
 	    
 	    ServerRunning(true);
 	    serverWatchdog_INSTANCE.setEnabled(isServerRunning());
+	    
+	    // create instances of sensors on the server side and add them to the Server_Sensors_LIST
+ 		for (int i = 1; i <= numberOfSensors; i++) {	
+ 			Server_Sensors_LIST = updateServerSensorList(new SensorImpl(1,new Point2D.Float(sensor_coordinates_array[i-1][0],sensor_coordinates_array[i-1][1]),"Release 1"));
+ 		}
 	    
 	    startServer(serverSocket);
 
@@ -101,6 +107,7 @@ public class TCPserver {
 							break;
 						} 
 						System.out.println("Number of Active Threads: "+clientProcessingPool.getActiveCount());
+		
 		                clientProcessingPool.execute((new ComputeEngine(clientSocket)));
 					}	
 	            } catch (IllegalThreadStateException ITSex) {
@@ -116,6 +123,29 @@ public class TCPserver {
 		// create new thread for the object defined in the runnable interface and then start run() method for that object
 		//Thread serverThread = new Thread(serverTask);
 	    serverThread.start();
+	}
+	
+	public static ArrayList<SensorImpl> updateServerSensorList(SensorImpl sensor){
+		int itemIndex = 0;
+		if (Server_Sensors_LIST.size() == 0) {
+			Server_Sensors_LIST.add(sensor);
+		}
+		else {
+			for (SensorImpl s : Server_Sensors_LIST) {
+				if (s.getSensorID() == sensor.getSensorID()) {
+					Server_Sensors_LIST.set(itemIndex, sensor);
+					break;
+				} 
+				else {
+					itemIndex++; 
+				}
+			}
+			if(itemIndex == (Server_Sensors_LIST.size())) {
+				Server_Sensors_LIST.add(sensor);
+			}
+		}
+		return Server_Sensors_LIST;
+		
 	}
 	
 	public synchronized ServerSocket getServerSocket() {

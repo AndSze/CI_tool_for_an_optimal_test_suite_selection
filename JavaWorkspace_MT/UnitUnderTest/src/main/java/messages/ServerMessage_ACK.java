@@ -10,12 +10,14 @@ public class ServerMessage_ACK extends Message_Interface implements Serializable
 	// class attributes
 	protected int sensorID;
 	protected ServerMessage sensorMessage;
+	protected ServerACKType ack_type;
 	
 	// ServerMessage_ACK class constructor
-	public ServerMessage_ACK(int sensorID) {
+	public ServerMessage_ACK(int sensorID, ServerACKType ack_type) {
 		super();
 		this.sensorID = sensorID;
 		this.sensorMessage = ServerMessage.ACK;
+		this.ack_type = ack_type;
 	}
 
 }

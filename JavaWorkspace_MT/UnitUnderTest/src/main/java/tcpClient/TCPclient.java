@@ -2,6 +2,9 @@ package tcpClient;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+
+import sensor.SensorImpl;
 import watchdog.ClientWatchdog;
 
 public class TCPclient{
@@ -10,6 +13,7 @@ public class TCPclient{
     private Socket clientSocket = null;
     private ClientManager clientManager = null;
 	private boolean clientRunning = false;
+	protected static ArrayList<SensorImpl> Client_Sensors_LIST= new ArrayList<>();
 	
     // default constructor 
     public TCPclient() {

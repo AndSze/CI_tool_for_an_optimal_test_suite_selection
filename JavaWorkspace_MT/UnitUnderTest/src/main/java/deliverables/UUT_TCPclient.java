@@ -4,13 +4,12 @@ import java.io.IOException;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-
 import sensor.SensorImpl;
 import tcpClient.TCPclient;
 import watchdog.ClientWatchdog;
 
 
-public class UUT_TCPclient {
+public class UUT_TCPclient extends TCPclient{
 
     //create the port number
     private int port = 0;
@@ -28,7 +27,13 @@ public class UUT_TCPclient {
 	public static void main(String []args) throws IOException, InterruptedException{
 		
 		int temp_port = 9876;
+		int no_of_sensors = 8;
 		UUT_TCPclient uut1_TCPclient = null;
+		
+		// create instances of sensors on the client side and add them to the Client_Sensors_LIST
+		for (int i = 1; i <= no_of_sensors; i++) {
+			Client_Sensors_LIST = updateClientSensorList(new SensorImpl(i));
+		}
 		
 		try {
 			uut1_TCPclient = new UUT_TCPclient(temp_port);
@@ -142,6 +147,29 @@ public class UUT_TCPclient {
 		}
 		return INSTANCE;
 	}	
+	
+	public static ArrayList<SensorImpl> updateClientSensorList(SensorImpl sensor){
+		int itemIndex = 0;
+		if (Client_Sensors_LIST.size() == 0) {
+			Client_Sensors_LIST.add(sensor);
+		}
+		else {
+			for (SensorImpl s : Client_Sensors_LIST) {
+				if (s.getSensorID() == sensor.getSensorID()) {
+					Client_Sensors_LIST.set(itemIndex, sensor);
+					break;
+				} 
+				else {
+					itemIndex++; 
+				}
+			}
+			if(itemIndex == (Client_Sensors_LIST.size())) {
+				Client_Sensors_LIST.add(sensor);
+			}
+		}
+		return Client_Sensors_LIST;
+		
+	}
 	
 	
 	public int getPort() {

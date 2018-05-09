@@ -6,22 +6,26 @@ import messages.SensorState;
 public class SensorImpl extends MeasurementData{
 	
 	// class attributes
-	protected int sensorID;
-	protected Point2D.Float coordinates;
-	protected String softwareImageID;
-	protected SensorState sensorState;
-	protected MeasurementData[] sensor_m_history;
 	private final int sensor_m_history_array_size = 24;
+	protected int sensorID;
+	protected Point2D.Float coordinates = null;
+	protected String softwareImageID = null;
+	protected SensorState sensorState = SensorState.PRE_OPERATIONAL;
+	protected MeasurementData[] sensor_m_history= new MeasurementData[sensor_m_history_array_size];
 	protected int numberOfMeasurements = 0;
+	
+	// Default SensorImpl class constructor - for the client side
+	public SensorImpl(int sensorID) {
+		super();
+		this.sensorID = sensorID;
+	}
 
-	// SensorImpl class constructor
+	// Overloaded SensorImpl class constructor - for the server side
 	public SensorImpl(int sensorID, Point2D.Float coordinates, String softwareImageID) {
 		super();
 		this.sensorID = sensorID;
 		this.coordinates = coordinates;
 		this.softwareImageID = softwareImageID;
-		this.sensorState = SensorState.PRE_OPERATIONAL;
-		this.sensor_m_history = new MeasurementData[this.sensor_m_history_array_size];
 	}
 	
 	public void resetSensor() {
