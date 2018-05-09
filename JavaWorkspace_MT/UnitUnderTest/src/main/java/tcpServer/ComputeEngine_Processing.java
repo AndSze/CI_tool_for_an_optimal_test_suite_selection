@@ -1,110 +1,23 @@
 package tcpServer;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
-import java.net.Socket;
 import java.util.ArrayList;
 import sensor.MeasurementData;
 import sensor.SensorImpl;
 
-public class ComputeEngine extends TCPserver implements TCPserver_interface, Runnable {
+public class ComputeEngine_Processing extends TCPserver implements TCPserver_interface {
 	
-    private static int computeEnginesRunningID   = 0;
-    private PrintStream outputStream = null;
-    private InputStreamReader inputStream = null;
-    private int timeout = 0;
 	
-	public ComputeEngine(Socket clientSocket) throws IOException  {
-		super();
-		inputStream = new InputStreamReader(clientSocket.getInputStream());
-    	outputStream = new PrintStream(clientSocket.getOutputStream(), true);
+	public ComputeEngine_Processing () throws IOException, ClassNotFoundException  {
     	// create lists for objects that are already saved in the server directory
-    	
-    	try {
-			setSerializedObjectList(Server_Sensors_LIST, MeasurementData_LIST, MeasurementHistory_LIST);
-        } catch (ClassNotFoundException CNFex) {
-            System.out.println("Error: when new ComputeEngine failed due to class of a deserialized object cannot be found");
-        	System.out.println(CNFex.getMessage());
-        }
-    	ComputeEngine.computeEnginesRunningID  += 1;
-        System.out.println("[ECHO Compute engine] Multithreaded Server Service for processing Client Request no: "+ ComputeEngine.computeEnginesRunningID + " has been started");
-
+    	setSerializedObjectList(Server_Sensors_LIST, MeasurementData_LIST, MeasurementHistory_LIST);
 	}
 
-    public void run() {
-      
-    	//synchronized (Echo) {
-    		
-    		try {
-    		BufferedReader bufferedReader = new BufferedReader(inputStream);
-            String message = null;
-            timeout = 0;
-            
-            while(timeout<10)
-            {
-    			if(bufferedReader.ready())
-    			{
-	            	long time = System.currentTimeMillis();
-	            	message = bufferedReader.readLine();
-	            	EchoResponse(outputStream, message, time);
-	            	timeout = 0;
-    			}
-    			else
-    			{
-    				timeout = timeout+1;
-    				processingDelay(1000);
-    			}
-    			//processingDelay(10);
-            }  
-        } catch (IOException IOex) {
-        	System.out.println("Error: when attempted to read bufferedReaderinputStream on the client side");
-        	IOex.printStackTrace();
-        } finally {
-        		closeOutStream();
-        	try {
-				closeInStream();
-			} catch (IOException IOex) {
-			    System.out.println("Error: when attempted to close InputStreamReader inputStream on the client side");
-			    IOex.printStackTrace();
-			}
-          }
-    	//}
-    }
-    
-
-	public /*synchronized*/ void EchoResponse(PrintStream outputStream, String message, long time) {
-
-		String server_message = null;
-		
-        System.out.println("message received from cliennnt: \n\t"+message);
-        //processingDelay(1000);
-        server_message =  Integer.toString(computeEnginesRunningID*Integer.parseInt(message));
-        server_message = "Let's try ComputerEngine ID: " + computeEnginesRunningID+ " that resends: "+server_message;
-        
-        System.out.println("Send back the following message: "+server_message);
-        
-        outputStream.println(server_message);
-        System.out.println("Request processed: " + time);
-	}
-	
-	public void closeOutStream() {
-		if (outputStream!=null) {
-			outputStream.close();
-		}
-	}
-	
-	public void closeInStream() throws IOException {
-		if (inputStream!=null) {
-			inputStream.close();
-		}
-	}
 	
 	static void processingDelay(int msec) {
 	    try {
@@ -136,7 +49,7 @@ public class ComputeEngine extends TCPserver implements TCPserver_interface, Run
             for (String sensor_path : MySensors)
             {
             	ArrayList<String> MySensorsData = getObjectList(new File(sensor_path));
-            	setNumberOfSensors(getNumberOfSensors() + 1);
+            	
             	
             	for (String file : MySensorsData){
             		String sensor_data_path = TCPserver.Sensors_PATH + "\\" + file;
@@ -153,6 +66,7 @@ public class ComputeEngine extends TCPserver implements TCPserver_interface, Run
             			mes_hist_list.add(new_mes_hist);
             		}
             	}
+            	setNumberOfSensors(getNumberOfSensors() + 1);
             }
             if(getNumberOfSensors() != 0)
             {
@@ -171,20 +85,20 @@ public class ComputeEngine extends TCPserver implements TCPserver_interface, Run
 	}
 
 	@Override
-	public void saveSensorInfo(SensorImpl sensor){
-		TCPserver.Server_Sensors_LIST.add(sensor);
+	public void saveSensorInfo(SensorImpl sensor) throws IOException{
+		//dTCPserver.Server_Sensors_LIST.add(sensor);
 		serialize(sensor, getSensorPath(sensor));
 	}
 	
 
 	@Override
-	public void saveMeasurementDataInfo(SensorImpl sensor, MeasurementData m_data) {
+	public void saveMeasurementDataInfo(SensorImpl sensor, MeasurementData m_data) throws IOException{
 			TCPserver.MeasurementData_LIST.add(m_data);
 			serialize(m_data, getMeasurementDataPath(sensor, m_data));
 	}
 	
 	@Override
-	public void saveMeasurementHistoryInfo(SensorImpl sensor, MeasurementData[] m_history) {
+	public void saveMeasurementHistoryInfo(SensorImpl sensor, MeasurementData[] m_history) throws IOException{
 			TCPserver.MeasurementHistory_LIST.add(m_history);
 			serialize(m_history, getMeasurementHistoryPath(sensor, m_history));
 	}
@@ -253,6 +167,10 @@ public class ComputeEngine extends TCPserver implements TCPserver_interface, Run
 		String sensor_path = null;
 		String sensor_serialized_file_path = null;
 		sensor_path = TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID();
+		boolean success = (new File(sensor_path)).mkdirs();
+		if(!success) {
+			System.out.println("New folder for a sensor instance created");
+		}
 		sensor_serialized_file_path = sensor_path + "\\" + "sensor_" + sensor.getSensorID() + ".sensor_info";
 		return sensor_serialized_file_path;
 	}
@@ -315,19 +233,14 @@ public class ComputeEngine extends TCPserver implements TCPserver_interface, Run
 	}
 	
 	@Override
-	public boolean serialize(Object obj, String path){
-		try {
-			FileOutputStream fileOut = new FileOutputStream(path);
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(obj);
-			out.close();
-			fileOut.close();
-			System.out.println("Serialized data is saved in " + path);
-			return true;
-		} catch (IOException i) {
-			i.printStackTrace();
-			return false;
-		}
+	public boolean serialize(Object obj, String path) throws IOException {
+		FileOutputStream fileOut = new FileOutputStream(path);
+		ObjectOutputStream out = new ObjectOutputStream(fileOut);
+		out.writeObject(obj);
+		out.close();
+		fileOut.close();
+		System.out.println("Serialized data is saved in " + path);
+		return true;
 	}
 
 	@Override
@@ -346,4 +259,29 @@ public class ComputeEngine extends TCPserver implements TCPserver_interface, Run
 			return obj;
 		}
 	}
+	
+	@Override
+	public ArrayList<SensorImpl> updateServerSensorList(SensorImpl sensor){
+		int itemIndex = 0;
+		if (Server_Sensors_LIST.size() == 0) {
+			Server_Sensors_LIST.add(sensor);
+		}
+		else {
+			for (SensorImpl s : Server_Sensors_LIST) {
+				if (s.getSensorID() == sensor.getSensorID()) {
+					Server_Sensors_LIST.set(itemIndex, sensor);
+					break;
+				} 
+				else {
+					itemIndex++; 
+				}
+			}
+			if(itemIndex == (Server_Sensors_LIST.size())) {
+				Server_Sensors_LIST.add(sensor);
+			}
+		}
+		return Server_Sensors_LIST;
+		
+	}
+
 }

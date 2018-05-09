@@ -1,7 +1,9 @@
 package tcpServer;
 
 import java.awt.geom.Point2D;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.NotSerializableException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -11,7 +13,8 @@ import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import sensor.MeasurementData;
 import sensor.SensorImpl;
-import watchdog.ServerWatchdog;
+import watchdog._1h_Watchdog;
+import watchdog._24h_Watchdog;
 
 public class TCPserver {
 	
@@ -24,43 +27,73 @@ public class TCPserver {
             new LinkedBlockingQueue<Runnable>());
 	private boolean serverRunning = false;
 	private Thread serverThread = null;
+	
+    private static _1h_Watchdog _1hWatchdog_INSTANCE = null;
+    private static _24h_Watchdog _24hWatchdog_INSTANCE = null;
+    
 	protected static ArrayList<SensorImpl> Server_Sensors_LIST= new ArrayList<>();
 	protected static ArrayList<MeasurementData[]> MeasurementHistory_LIST = new ArrayList<>();
+
 	// reset this list after each 24 measurements
 	protected static ArrayList<MeasurementData> MeasurementData_LIST= new ArrayList<>();
 	protected static String Sensors_PATH = "files\\Sensors";
-	private int numberOfSensors = 8;
+	private int numberOfSensors = 0;
 	private float[][] sensor_coordinates_array = { {1.0f, 1.0f}, {2.0f, 1.0f}, {1.5f, 2.0f}, {2.5f, 0.5f}, {3.0f, 3.5f}, {1.0f, 3.5f}, {2.5f, 0.5f}, {0.5f, 2.5f}};
+	private static ComputeEngine_Processing processing_engine; 
 	
 	// default constructor
 	public TCPserver() throws IOException{
 		// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
 		super();
+		TCPserver._1hWatchdog_INSTANCE = _1h_Watchdog.getInstance();
+		TCPserver._24hWatchdog_INSTANCE = _24h_Watchdog.getInstance();
 	};
 	
 	 // overloaded constructor
-	private TCPserver (int port, ServerWatchdog serverWatchdog_INSTANCE) throws IOException{
+	private TCPserver (int port) throws IOException{
 		
+		// communication stuff
 		serverSocket = new ServerSocket();
 	    serverSocket.setReuseAddress(true);
 	    serverSocket.bind(new java.net.InetSocketAddress(port));
 	    System.out.println("ECHO server created and bound at port = "+port);
 	    
 	    ServerRunning(true);
-	    serverWatchdog_INSTANCE.setEnabled(isServerRunning());
+	    TCPserver._1hWatchdog_INSTANCE.setEnabled(isServerRunning());
+	    TCPserver._24hWatchdog_INSTANCE.setEnabled(isServerRunning());
 	    
+	    // data processing stuff 
 	    // create instances of sensors on the server side and add them to the Server_Sensors_LIST
- 		for (int i = 1; i <= numberOfSensors; i++) {	
- 			Server_Sensors_LIST = updateServerSensorList(new SensorImpl(1,new Point2D.Float(sensor_coordinates_array[i-1][0],sensor_coordinates_array[i-1][1]),"Release 1"));
+	    
+	    try {
+	    	processing_engine = new ComputeEngine_Processing();
+	    } catch (ClassNotFoundException CNFex) {
+            System.out.println("Error: when new ComputeEngine failed due to class of a deserialized object cannot be found");
+        	System.out.println(CNFex.getMessage());
+        }
+	    
+	    
+    	for (int i = 1; i <= sensor_coordinates_array.length; i++) {
+    		try {
+	    		SensorImpl temp_sensor = new SensorImpl(i,new Point2D.Float(sensor_coordinates_array[i-1][0],sensor_coordinates_array[i-1][1]),"Release 1");
+	    		processing_engine.saveSensorInfo(temp_sensor);
+	    		Server_Sensors_LIST = processing_engine.updateServerSensorList(temp_sensor);
+    		} catch (FileNotFoundException FNFex) {
+                System.out.println("Error: when there was an attempt to serialize a sensor instance in the path that cannot be found by the system");
+            	System.out.println(FNFex.getMessage());
+            } catch (NotSerializableException NonSerex) {
+                System.out.println("Error: when there was an attempt to serialize a class instance - this class instance is not serializable");
+            	System.out.println(NonSerex.getMessage());
+            }	
  		}
 	    
 	    startServer(serverSocket);
 
 	};
 
-	public TCPserver initServer(int port, ServerWatchdog serverWatchdog_INSTANCE) throws IOException {
+	public TCPserver initServer(int port) throws IOException {
 		
-		return (new TCPserver(port, serverWatchdog_INSTANCE));
+		return (new TCPserver(port));
 	}
 	
 	public void closeServer(TCPserver INSTANCE, int port) throws IOException{
@@ -108,7 +141,7 @@ public class TCPserver {
 						} 
 						System.out.println("Number of Active Threads: "+clientProcessingPool.getActiveCount());
 		
-		                clientProcessingPool.execute((new ComputeEngine(clientSocket)));
+		                clientProcessingPool.execute((new ComputeEngine_Runnable(clientSocket)));
 					}	
 	            } catch (IllegalThreadStateException ITSex) {
 		            System.out.println("Error: when new Thread with MessageProcessorRunnable created");
@@ -123,29 +156,6 @@ public class TCPserver {
 		// create new thread for the object defined in the runnable interface and then start run() method for that object
 		//Thread serverThread = new Thread(serverTask);
 	    serverThread.start();
-	}
-	
-	public static ArrayList<SensorImpl> updateServerSensorList(SensorImpl sensor){
-		int itemIndex = 0;
-		if (Server_Sensors_LIST.size() == 0) {
-			Server_Sensors_LIST.add(sensor);
-		}
-		else {
-			for (SensorImpl s : Server_Sensors_LIST) {
-				if (s.getSensorID() == sensor.getSensorID()) {
-					Server_Sensors_LIST.set(itemIndex, sensor);
-					break;
-				} 
-				else {
-					itemIndex++; 
-				}
-			}
-			if(itemIndex == (Server_Sensors_LIST.size())) {
-				Server_Sensors_LIST.add(sensor);
-			}
-		}
-		return Server_Sensors_LIST;
-		
 	}
 	
 	public synchronized ServerSocket getServerSocket() {
@@ -175,6 +185,22 @@ public class TCPserver {
 
 	public void setNumberOfSensors(int numberOfSensors) {
 		this.numberOfSensors = numberOfSensors;
+	}
+	
+	public static _1h_Watchdog get_1hWatchdog_INSTANCE() {
+		return _1hWatchdog_INSTANCE;
+	}
+
+	public static void set_1hWatchdog_INSTANCE(_1h_Watchdog _1hWatchdog_INSTANCE) {
+		TCPserver._1hWatchdog_INSTANCE = _1hWatchdog_INSTANCE;
+	}
+
+	public static _24h_Watchdog get_24hWatchdog_INSTANCE() {
+		return _24hWatchdog_INSTANCE;
+	}
+
+	public static void set_24hWatchdog_INSTANCE(_24h_Watchdog _24hWatchdog_INSTANCE) {
+		TCPserver._24hWatchdog_INSTANCE = _24hWatchdog_INSTANCE;
 	}
 	
 	

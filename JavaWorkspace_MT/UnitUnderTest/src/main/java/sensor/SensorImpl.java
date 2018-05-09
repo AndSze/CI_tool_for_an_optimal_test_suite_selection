@@ -1,10 +1,15 @@
 package sensor;
 
 import java.awt.geom.Point2D;
+import java.io.Serializable;
+
 import messages.SensorState;
 
-public class SensorImpl extends MeasurementData{
+public class SensorImpl extends MeasurementData implements Serializable {
 	
+	// Explicit declaration of serialVersionUID, hence InvalidClassExceptions will never be thrown during deserialization
+	private static final long serialVersionUID = 1L;
+		
 	// class attributes
 	private final int sensor_m_history_array_size = 24;
 	protected int sensorID;

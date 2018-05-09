@@ -21,46 +21,46 @@ import java.util.concurrent.locks.ReentrantLock;
  */ 
 
 /*
- * serverWatchdog timer class. 
- * The serverWatchdog timer is designed to keep the robots safe. The idea is that the robot program must 
- * constantly "feed" the serverWatchdog otherwise it will shut down all the motor outputs. That way if a 
+ * _1h_Watchdog timer class. 
+ * The _1h_Watchdog timer is designed to keep the robots safe. The idea is that the robot program must 
+ * constantly "feed" the _1h_Watchdog otherwise it will shut down all the motor outputs. That way if a 
  * program breaks, rather than having the robot continue to operate at the last known speed, the 
  * motors will be shut down. 
  * 
- * This is serious business.  Don't just disable the serverWatchdog.  You can't afford it! 
+ * This is serious business.  Don't just disable the _1h_Watchdog.  You can't afford it! 
  * 
  * http://thedailywtf.com/Articles/_0x2f__0x2f_TODO_0x3a__Uncomment_Later.aspx 
  */ 
 
-public class ServerWatchdog implements Runnable { 
+public class _1h_Watchdog implements Runnable { 
  
-    private static ServerWatchdog m_instance; 
+    private static _1h_Watchdog m_instance; 
     private long millisecondsLeftUntilExpiration; 
-    private Thread serverWatchdogThread; 
+    private Thread _1h_WatchdogThread; 
     private Lock expirationDateLock; 
-    // ServerWatchdog expiration time is given in seconds
-    private double serverWatchdogExpiration = 100; 
-    // ServerWatchdog expiration time decrementation timeIntervals in milliseconds
-    private int timeIntervals = 100; 
+    // _1h_Watchdog expiration time is given in seconds
+    private final int _1h_WatchdogExpiration = 3600; 
+    // _1h_Watchdog expiration time decrementation timeIntervals in milliseconds (its value is decremented every second)
+    private int timeIntervals = 1000; 
     private boolean isPaused = false; 
  
     /*
-     * The ServerserverWatchdog is born. 
+     * The _1h_Watchdog is born. 
      */ 
-    protected ServerWatchdog() {            
+    protected _1h_Watchdog() {            
         expirationDateLock = new ReentrantLock(); 
-        millisecondsLeftUntilExpiration = (long) (serverWatchdogExpiration*1000); 
-        serverWatchdogThread = new Thread(this, "ServerWatchdog Thread"); 
-        serverWatchdogThread.start(); 
+        millisecondsLeftUntilExpiration = (long) (_1h_WatchdogExpiration*1000); 
+        _1h_WatchdogThread = new Thread(this, "_1h_Watchdog Thread"); 
+        _1h_WatchdogThread.start(); 
     } 
  
     /*
-     *  Get an instance of the ServerserverWatchdog 
-     * @return an instance of the ServerserverWatchdog 
+     *  Get an instance of the _1h_Watchdog 
+     * @return an instance of the _1h_Watchdog 
      */ 
-    public static synchronized ServerWatchdog getInstance() { 
+    public static synchronized _1h_Watchdog getInstance() { 
         if (m_instance == null) { 
-            m_instance = new ServerWatchdog(); 
+            m_instance = new _1h_Watchdog(); 
         } 
         return m_instance; 
     } 
@@ -77,58 +77,49 @@ public class ServerWatchdog implements Runnable {
      */ 
     public void feed() { 
 		expirationDateLock.lock(); 
-		millisecondsLeftUntilExpiration = (long) (serverWatchdogExpiration * 1000); 
+		millisecondsLeftUntilExpiration = (long) (_1h_WatchdogExpiration * 1000); 
 		expirationDateLock.unlock(); 
     } 
  
     /*
-     * Put the ServerserverWatchdog out of its misery. 
+     * Put the _1h_Watchdog out of its misery. 
      * 
      * Don't wait for your dying robot to starve when there is a problem. 
      * Kill it quickly, cleanly, and humanely. 
      */ 
     public void kill() { 
-    	serverWatchdogThread.interrupt(); 
+    	_1h_WatchdogThread.interrupt(); 
     } 
  
     /*
-     * Read the remaining time for the ServerWatchgod unless it will be fed
+     * Read the remaining time for the _1h_Watchdog unless it will be fed
      * 
-     * @return The number of seconds left to ServerWatchgod expiration. 
+     * @return The number of seconds left to _1h_Watchdog expiration. 
      */ 
     public double getTimeLeftBeforeExpiration() { 
         return millisecondsLeftUntilExpiration / 1000.0; 
     } 
     
     /*
-     * Read how long it has been since the serverWatchdog was last fed. 
+     * Read how long it has been since the _1h_Watchdog was last fed. 
      * 
      * @return The number of seconds since last meal. 
      */ 
     public double getTimeFromLastFeed() { 
-        return (serverWatchdogExpiration - (millisecondsLeftUntilExpiration / 1000.0)); 
+        return (_1h_WatchdogExpiration - (millisecondsLeftUntilExpiration / 1000.0)); 
     } 
  
     /*
      * Read what the current expiration is. 
      * 
-     * @return The number of seconds before starvation following a meal (serverWatchdog starves if it doesn't eat this often). 
+     * @return The number of seconds before starvation following a meal (_1h_Watchdog starves if it doesn't eat this often). 
      */ 
     public double getExpiration() { 
-        return serverWatchdogExpiration; 
+        return _1h_WatchdogExpiration; 
     } 
 
     /*
-     * Configure how many seconds your serverWatchdog can be neglected before it starves to death. 
-     * 
-     * @param expiration The number of seconds before starvation following a meal (serverWatchdog starves if it doesn't eat this often). 
-     */ 
-    public void setExpiration(double expiration) { 
-        serverWatchdogExpiration = expiration; 
-    } 
- 
-    /*
-     * Find out if the serverWatchdog is currently enabled or disabled (mortal or immortal). 
+     * Find out if the _1h_Watchdog is currently enabled or disabled (mortal or immortal). 
      * 
      * @return Enabled or disabled. 
      */ 
@@ -137,16 +128,16 @@ public class ServerWatchdog implements Runnable {
     } 
  
     /*
-     * Enable or disable the serverWatchdog timer. 
+     * Enable or disable the _1h_Watchdog timer. 
      * 
-     * When enabled, you must keep feeding the serverWatchdog timer to 
-     * keep the serverWatchdog active, and hence the dangerous parts 
+     * When enabled, you must keep feeding the _1h_Watchdog timer to 
+     * keep the _1h_Watchdog active, and hence the dangerous parts 
      * (motor outputs, etc.) can keep functioning. 
-     * When disabled, the serverWatchdog is immortal and will remain active 
+     * When disabled, the _1h_Watchdog is immortal and will remain active 
      * even without being fed.  It will also ignore any kill commands 
      * while disabled. 
      * 
-     * @param enabled Enable or disable the serverWatchdog. 
+     * @param enabled Enable or disable the _1h_Watchdog. 
      */ 
     public void setEnabled(final boolean enabled) { 
 		expirationDateLock.lock(); 
@@ -155,19 +146,19 @@ public class ServerWatchdog implements Runnable {
     } 
  
     /*
-     * Check in on the serverWatchdog and make sure he's still kicking. 
+     * Check in on the _1h_Watchdog and make sure he's still kicking. 
      * 
-     * This indicates that your serverWatchdog is allowing the system to operate. 
+     * This indicates that your _1h_Watchdog is allowing the system to operate. 
      * It is still possible that the network communications is not allowing the 
      * system to run, but you can check this to make sure it's not your fault. 
      * Check isSystemActive() for overall system status. 
      * 
-     * If the serverWatchdog is disabled, then your serverWatchdog is immortal. 
+     * If the _1h_Watchdog is disabled, then your _1h_Watchdog is immortal. 
      * 
-     * @return Is the serverWatchdog still alive? 
+     * @return Is the _1h_Watchdog still alive? 
      */ 
     public boolean isAlive() { 
-    	return serverWatchdogThread.isAlive(); 
+    	return _1h_WatchdogThread.isAlive(); 
     } 
  
     /*
@@ -178,9 +169,9 @@ public class ServerWatchdog implements Runnable {
     public boolean isSystemActive() { 
         return true; 
     } 
-    
+	 
     /*
-     * ServerWatchdog is decremented every 100 milliseconds
+     * _1h_Watchdog is decremented every 100 milliseconds
      */ 
     public void run() { 
     	while(millisecondsLeftUntilExpiration > 0) { 
@@ -191,10 +182,10 @@ public class ServerWatchdog implements Runnable {
     			} 
     			expirationDateLock.unlock(); 
     			Thread.sleep(timeIntervals); 
-    		} catch(InterruptedException IntEx) { 
-    			System.out.println("Error: when attempted to interrupt the ServerWatchdog when the thread is waiting, sleeping, or otherwise occupied");
+    		} catch(InterruptedException IntEx) {
+    			System.out.println("Error: when attempted to interrupt the _1h_Watchdog when the thread is waiting, sleeping, or otherwise occupied");
 	            System.out.println(IntEx.getMessage());
-	            break;
+    			break; 
     		} 
     	} 
     }

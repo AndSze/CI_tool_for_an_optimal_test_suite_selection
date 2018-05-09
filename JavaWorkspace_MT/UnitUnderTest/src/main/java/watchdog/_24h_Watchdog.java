@@ -21,46 +21,46 @@ import java.util.concurrent.locks.ReentrantLock;
  */ 
 
 /*
- * clientWatchdog timer class. 
- * The clientWatchdog timer is designed to keep the robots safe. The idea is that the robot program must 
- * constantly "feed" the clientWatchdog otherwise it will shut down all the motor outputs. That way if a 
+ * _24h_Watchdog timer class. 
+ * The _24h_Watchdog timer is designed to keep the robots safe. The idea is that the robot program must 
+ * constantly "feed" the _24h_Watchdog otherwise it will shut down all the motor outputs. That way if a 
  * program breaks, rather than having the robot continue to operate at the last known speed, the 
  * motors will be shut down. 
  * 
- * This is serious business.  Don't just disable the clientWatchdog.  You can't afford it! 
+ * This is serious business.  Don't just disable the _24h_Watchdog.  You can't afford it! 
  * 
  * http://thedailywtf.com/Articles/_0x2f__0x2f_TODO_0x3a__Uncomment_Later.aspx 
  */ 
 
-public class ClientWatchdog implements Runnable { 
+public class _24h_Watchdog implements Runnable { 
  
-    private static ClientWatchdog m_instance; 
+    private static _24h_Watchdog m_instance; 
     private long millisecondsLeftUntilExpiration; 
-    private Thread clientWatchdogThread; 
+    private Thread _24h_WatchdogThread; 
     private Lock expirationDateLock; 
-    // ClientWatchdog expiration time is given in seconds
-    private double clientWatchdogExpiration = 65; 
-    // ClientWatchdog expiration time decrementation timeIntervals in milliseconds
-    private int timeIntervals = 100; 
+    // _24h_Watchdog expiration time is given in seconds
+    private final int _24h_WatchdogExpiration = 86400; 
+    // _24h_Watchdog expiration time decrementation timeIntervals in milliseconds (its value is decremented every minute)
+    private int timeIntervals = 60000; 
     private boolean isPaused = false; 
  
     /*
-     * The ClientWatchdog is born. 
+     * The Server_24h_Watchdog is born. 
      */ 
-    protected ClientWatchdog() {            
+    protected _24h_Watchdog() {            
         expirationDateLock = new ReentrantLock(); 
-        millisecondsLeftUntilExpiration = (long) (clientWatchdogExpiration*1000); 
-        clientWatchdogThread = new Thread(this, "ClientWatchdog Thread"); 
-        clientWatchdogThread.start(); 
+        millisecondsLeftUntilExpiration = (long) (_24h_WatchdogExpiration*1000); 
+        _24h_WatchdogThread = new Thread(this, "_24h_Watchdog Thread"); 
+        _24h_WatchdogThread.start(); 
     } 
  
     /*
-     *  Get an instance of the ClientWatchdog 
-     * @return an instance of the ClientWatchdog 
+     *  Get an instance of the Server_24h_Watchdog 
+     * @return an instance of the Server_24h_Watchdog 
      */ 
-    public static synchronized ClientWatchdog getInstance() { 
+    public static synchronized _24h_Watchdog getInstance() { 
         if (m_instance == null) { 
-            m_instance = new ClientWatchdog(); 
+            m_instance = new _24h_Watchdog(); 
         } 
         return m_instance; 
     } 
@@ -77,58 +77,49 @@ public class ClientWatchdog implements Runnable {
      */ 
     public void feed() { 
 		expirationDateLock.lock(); 
-		millisecondsLeftUntilExpiration = (long) (clientWatchdogExpiration * 1000); 
+		millisecondsLeftUntilExpiration = (long) (_24h_WatchdogExpiration * 1000); 
 		expirationDateLock.unlock(); 
     } 
  
     /*
-     * Put the ClientWatchdog out of its misery. 
+     * Put the Server_24h_Watchdog out of its misery. 
      * 
      * Don't wait for your dying robot to starve when there is a problem. 
      * Kill it quickly, cleanly, and humanely. 
      */ 
     public void kill() { 
-    	clientWatchdogThread.interrupt(); 
+    	_24h_WatchdogThread.interrupt(); 
     } 
  
     /*
-     * Read the remaining time for the ClientWatchdog unless it will be fed
+     * Read the remaining time for the ServerWatchgod unless it will be fed
      * 
-     * @return The number of seconds left to ClientWatchdog expiration. 
+     * @return The number of seconds left to ServerWatchgod expiration. 
      */ 
     public double getTimeLeftBeforeExpiration() { 
         return millisecondsLeftUntilExpiration / 1000.0; 
     } 
     
     /*
-     * Read how long it has been since the ClientWatchdog was last fed. 
+     * Read how long it has been since the _24h_Watchdog was last fed. 
      * 
      * @return The number of seconds since last meal. 
      */ 
     public double getTimeFromLastFeed() { 
-        return (clientWatchdogExpiration - (millisecondsLeftUntilExpiration / 1000.0)); 
+        return (_24h_WatchdogExpiration - (millisecondsLeftUntilExpiration / 1000.0)); 
     } 
  
     /*
      * Read what the current expiration is. 
      * 
-     * @return The number of seconds before starvation following a meal (clientWatchdog starves if it doesn't eat this often). 
+     * @return The number of seconds before starvation following a meal (_24h_Watchdog starves if it doesn't eat this often). 
      */ 
     public double getExpiration() { 
-        return clientWatchdogExpiration; 
-    } 
-
-    /*
-     * Configure how many seconds your clientWatchdog can be neglected before it starves to death. 
-     * 
-     * @param expiration The number of seconds before starvation following a meal (clientWatchdog starves if it doesn't eat this often). 
-     */ 
-    public void setExpiration(double expiration) { 
-        clientWatchdogExpiration = expiration; 
+        return _24h_WatchdogExpiration; 
     } 
  
     /*
-     * Find out if the clientWatchdog is currently enabled or disabled (mortal or immortal). 
+     * Find out if the _24h_Watchdog is currently enabled or disabled (mortal or immortal). 
      * 
      * @return Enabled or disabled. 
      */ 
@@ -137,16 +128,16 @@ public class ClientWatchdog implements Runnable {
     } 
  
     /*
-     * Enable or disable the clientWatchdog timer. 
+     * Enable or disable the _24h_Watchdog timer. 
      * 
-     * When enabled, you must keep feeding the clientWatchdog timer to 
-     * keep the clientWatchdog active, and hence the dangerous parts 
+     * When enabled, you must keep feeding the _24h_Watchdog timer to 
+     * keep the _24h_Watchdog active, and hence the dangerous parts 
      * (motor outputs, etc.) can keep functioning. 
-     * When disabled, the clientWatchdog is immortal and will remain active 
+     * When disabled, the _24h_Watchdog is immortal and will remain active 
      * even without being fed.  It will also ignore any kill commands 
      * while disabled. 
      * 
-     * @param enabled Enable or disable the clientWatchdog. 
+     * @param enabled Enable or disable the _24h_Watchdog. 
      */ 
     public void setEnabled(final boolean enabled) { 
 		expirationDateLock.lock(); 
@@ -155,19 +146,19 @@ public class ClientWatchdog implements Runnable {
     } 
  
     /*
-     * Check in on the clientWatchdog and make sure he's still kicking. 
+     * Check in on the _24h_Watchdog and make sure he's still kicking. 
      * 
-     * This indicates that your clientWatchdog is allowing the system to operate. 
+     * This indicates that your _24h_Watchdog is allowing the system to operate. 
      * It is still possible that the network communications is not allowing the 
      * system to run, but you can check this to make sure it's not your fault. 
      * Check isSystemActive() for overall system status. 
      * 
-     * If the clientWatchdog is disabled, then your clientWatchdog is immortal. 
+     * If the _24h_Watchdog is disabled, then your _24h_Watchdog is immortal. 
      * 
-     * @return Is the clientWatchdog still alive? 
+     * @return Is the _24h_Watchdog still alive? 
      */ 
     public boolean isAlive() { 
-    	return clientWatchdogThread.isAlive(); 
+    	return _24h_WatchdogThread.isAlive(); 
     } 
  
     /*
@@ -178,9 +169,9 @@ public class ClientWatchdog implements Runnable {
     public boolean isSystemActive() { 
         return true; 
     } 
-	 
+    
     /*
-     * ClientWatchdog is decremented every 100 milliseconds
+     * _24h_Watchdog is decremented every 6000 milliseconds
      */ 
     public void run() { 
     	while(millisecondsLeftUntilExpiration > 0) { 
@@ -191,10 +182,10 @@ public class ClientWatchdog implements Runnable {
     			} 
     			expirationDateLock.unlock(); 
     			Thread.sleep(timeIntervals); 
-    		} catch(InterruptedException IntEx) {
-    			System.out.println("Error: when attempted to interrupt the ClientWatchdog when the thread is waiting, sleeping, or otherwise occupied");
+    		} catch(InterruptedException IntEx) { 
+    			System.out.println("Error: when attempted to interrupt the _24h_Watchdog when the thread is waiting, sleeping, or otherwise occupied");
 	            System.out.println(IntEx.getMessage());
-    			break; 
+	            break;
     		} 
     	} 
     }
