@@ -3,96 +3,73 @@ package deliverables;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.UnknownHostException;
-import java.util.ArrayList;
-import sensor.SensorImpl;
+import messages.SensorState;
 import tcpClient.TCPclient;
+import watchdog._1h_Watchdog;
 
 public class UUT_TCPclient extends TCPclient{
 
     //create the port number
-    private int port = 0;
+    private int port;
     final String serverHostName = "localhost";
     private TCPclient INSTANCE = null;
     
-    UUT_TCPclient(int port) throws IOException {
+    UUT_TCPclient(int sensor_ID, int port) throws IOException {
     	super();
     	this.port = port;
     	this.INSTANCE = new TCPclient();
+    	this.INSTANCE.setSensor_ID(sensor_ID);
     }
     
 	public static void main(String []args) throws IOException, InterruptedException{
 		
 		int temp_port = 9876;
-		int no_of_sensors = 8;
+		int temp_sensor_ID = 1;
+		
+		SensorState current_sensor_state = SensorState.DEAD;
+		SensorState previous_sensor_state = SensorState.DEAD;
+		
 		UUT_TCPclient uut1_TCPclient = null;
 		
-		// create instances of sensors on the client side and add them to the Client_Sensors_LIST
-		for (int i = 1; i <= no_of_sensors; i++) {
-			Client_Sensors_LIST = updateClientSensorList(new SensorImpl(i));
-		}
-		
 		try {
-			uut1_TCPclient = new UUT_TCPclient(temp_port);
+			uut1_TCPclient = new UUT_TCPclient(temp_sensor_ID, temp_port);
 		} catch (IOException IOEx) {
 			System.out.println("Error: Instance for the TCP client at port: "+temp_port+" cannot be created");
 			IOEx.printStackTrace();
 		}
 		
+		// client gets the configuration from the server and goes to the operational state
 		uut1_TCPclient.setINSTANCE(runTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort(), uut1_TCPclient.getServerHostName()));
 		
-		for (int i=0;i<5;i++){
-			
-			 System.out.println("Sending message "+i);
-	         String message = Integer.toString(i)+"\n";
-	            
-            //if(!INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(),message)) break;
-	         uut1_TCPclient.getINSTANCE().EchoMessageHandler(uut1_TCPclient.getINSTANCE().getClientSocket(), message);
-	        //Thread.sleep(100);
-        }
-		
+		// close the client socket and the client manager, it will be opened again once the watchdog reaches its threshold
 		uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
 		uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
-        System.out.println("Mission Completed");
-        
-		uut1_TCPclient.setINSTANCE(runTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort(), uut1_TCPclient.getServerHostName()));
 		
-		for (int i=0;i<5;i++){
+		
+		while (true) {
+			current_sensor_state = searchInClientSensorList(temp_sensor_ID).getSensorState();
+			if ((_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() < 120) && (current_sensor_state == SensorState.OPERATIONAL)) {
+				
+				// opens the client socket activates the client manager (out/in object streams)
+				uut1_TCPclient.setINSTANCE(runTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort(), uut1_TCPclient.getServerHostName()));
+			}
+			current_sensor_state = searchInClientSensorList(temp_sensor_ID).getSensorState();
 			
-			 System.out.println("2 Sending message "+i*i);
-	         String message = Integer.toString(i*i)+"\n";
-	            
-	       //if(!INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(),message)) break;
-	         uut1_TCPclient.getINSTANCE().EchoMessageHandler(uut1_TCPclient.getINSTANCE().getClientSocket(), message);
-	        //Thread.sleep(100);00);
-        }
-		
-		uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
-		uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
-        System.out.println("Mission Completed");
-        
-		uut1_TCPclient.setINSTANCE(runTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort(), uut1_TCPclient.getServerHostName()));
-		
-		for (int i=0;i<5;i++){
+			if ((current_sensor_state == SensorState.PRE_OPERATIONAL) && (previous_sensor_state == SensorState.OPERATIONAL)){
+				// sensors gets go to pre_operational message once it received the ack server message what means that the watchdog has been kicked
+				// hence close the client socket and the client manager, it will be opened again once the watchdog reaches its threshold
+				uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
+				uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
+			}
 			
-			 System.out.println("3 Sending message "+i*i*i);
-	         String message = Integer.toString(i*i*i)+"\n";
-	            
-	       //if(!INSTANCE.EchoMessageHandler(INSTANCE.getClientSocket(),message)) break;
-	         uut1_TCPclient.getINSTANCE().EchoMessageHandler(uut1_TCPclient.getINSTANCE().getClientSocket(), message);
-	        //Thread.sleep(100);;
-        }
+			previous_sensor_state = searchInClientSensorList(temp_sensor_ID).getSensorState();
+		}
 		
-		System.out.println("Mission Completed");
-		
-		uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
-		uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
-
-        
      }
 
 	public static TCPclient runTheClient(TCPclient INSTANCE, int port, String serverHostName){
 		try {
-			INSTANCE = INSTANCE.initClient(serverHostName, port);
+			INSTANCE = INSTANCE.initClient(INSTANCE.getSensor_ID(), serverHostName, port);
 			
 		} catch (UnknownHostException unHostEx) {
 	    	System.out.println("Error: The client with port="+port+" returns the UnknownHostException if if the IP address of the host could not be determined");
@@ -132,31 +109,7 @@ public class UUT_TCPclient extends TCPclient{
 		}
 		return INSTANCE;
 	}	
-	
-	public static ArrayList<SensorImpl> updateClientSensorList(SensorImpl sensor){
-		int itemIndex = 0;
-		if (Client_Sensors_LIST.size() == 0) {
-			Client_Sensors_LIST.add(sensor);
-		}
-		else {
-			for (SensorImpl s : Client_Sensors_LIST) {
-				if (s.getSensorID() == sensor.getSensorID()) {
-					Client_Sensors_LIST.set(itemIndex, sensor);
-					break;
-				} 
-				else {
-					itemIndex++; 
-				}
-			}
-			if(itemIndex == (Client_Sensors_LIST.size())) {
-				Client_Sensors_LIST.add(sensor);
-			}
-		}
-		return Client_Sensors_LIST;
-		
-	}
-	
-	
+
 	public int getPort() {
 		return this.port;
 	}

@@ -9,7 +9,6 @@ public class ClientMessage_MeasurementData extends Message_Interface implements 
 	private static final long serialVersionUID = 1L;
 	
 	// class attributes
-	protected int sensorID;
 	protected MeasurementData measurementData;
 	protected SensorMessage sensorMessage;
 	
@@ -21,6 +20,4 @@ public class ClientMessage_MeasurementData extends Message_Interface implements 
 		this.sensorMessage = SensorMessage.DATA;
 	}
 
-
-	
 }

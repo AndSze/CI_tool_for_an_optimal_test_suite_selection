@@ -9,7 +9,6 @@ public class ServerMessage_Request_MeasurementData extends Message_Interface imp
 	private static final long serialVersionUID = 1L;
 	
 	// class attributes
-	protected int sensorID;
 	protected ServerMessage serverMessage;
 	
 	// ServerMessage_Request_MeasurementData class constructor

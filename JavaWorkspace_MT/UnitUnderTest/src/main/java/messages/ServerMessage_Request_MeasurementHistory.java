@@ -8,7 +8,6 @@ public class ServerMessage_Request_MeasurementHistory extends Message_Interface 
 	private static final long serialVersionUID = 1L;
 	
 	// class attributes
-	protected int sensorID;
 	protected ServerMessage serverMessage;
 	
 	// ServerMessage_Request_MeasurementHistory class constructor

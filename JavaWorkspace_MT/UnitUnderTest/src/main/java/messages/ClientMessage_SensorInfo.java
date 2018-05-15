@@ -9,7 +9,6 @@ public class ClientMessage_SensorInfo extends Message_Interface implements Seria
 	private static final long serialVersionUID = 1L;
 	
 	// class attributes
-	protected int sensorID;
 	protected SensorImpl sensor;
 	protected SensorMessage sensorMessage;
 	

@@ -6,8 +6,8 @@ import java.util.Calendar;
 public class MeasurementData {
 
 	// class attributes
-	protected float pm25;
-	protected float pm10;
+	protected double pm25;
+	protected double pm10;
 	protected int humidity;
 	protected int temperature;
 	protected int pressure;
@@ -19,11 +19,11 @@ public class MeasurementData {
 		this.timestamp = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(Calendar.getInstance().getTime());
 	}
 
-	public void setPm25(float pm25) {
+	public void setPm25(double pm25) {
 		this.pm25 = pm25;
 	}
 
-	public void setPm10(float pm10) {
+	public void setPm10(double pm10) {
 		this.pm10 = pm10;
 	}
 

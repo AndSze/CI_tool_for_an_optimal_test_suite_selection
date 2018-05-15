@@ -39,7 +39,7 @@ public class SensorImpl extends MeasurementData implements Serializable {
 		setSensorState(SensorState.PRE_OPERATIONAL);
 	}
 	
-	public boolean addMeasurement(float pm25, float pm10, int humidity, int temperature, int pressure) {
+	public boolean addMeasurement(double pm25, double pm10, int humidity, int temperature, int pressure) {
 		boolean success = false;
 		if (getSensorState() == SensorState.OPERATIONAL) {
 			try {

@@ -1,20 +1,27 @@
 package tcpClient;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.net.Socket;
-import java.rmi.RemoteException;
+import java.util.concurrent.ThreadLocalRandom;
+import messages.ClientMessage_MeasurementData;
+import messages.ClientMessage_MeasurementHistory;
+import messages.ClientMessage_SensorInfo;
+import messages.Message_Interface;
+import messages.ServerMessage_ACK;
+import messages.ServerMessage_Request_MeasurementData;
+import messages.ServerMessage_Request_MeasurementHistory;
+import messages.ServerMessage_SensorInfoQuerry;
+import messages.ServerMessage_SensorInfoUpdate;
+import sensor.MeasurementData;
+import sensor.SensorImpl;
 
-public class ClientManager implements TCPclient_interface{
+public class ClientManager extends TCPclient implements TCPclient_interface{
 
-	private PrintStream outputStream = null;
-	private InputStreamReader inputStream = null;
+	private ObjectOutputStream outputStream = null;
+	private ObjectInputStream inputStream = null;
+	private boolean isClientManagerRunning = false;
 	
 	// default constructor 
 	public ClientManager() {
@@ -22,52 +29,107 @@ public class ClientManager implements TCPclient_interface{
 	}
 	
 	// overloaded constructor
-	private ClientManager(PrintStream outputStream, InputStreamReader inputStream){
+	private ClientManager(ObjectOutputStream outputStream, ObjectInputStream inputStream){
 		this.outputStream = outputStream;
         this.inputStream = inputStream;
+        isClientManagerRunning = true;
 	}
 
-	
+
+
 	public ClientManager initClientManager(Socket clientSocket) throws IOException{
-	
-			outputStream = new PrintStream(clientSocket.getOutputStream());
-	        inputStream = new InputStreamReader(clientSocket.getInputStream());
-	        return (new ClientManager(outputStream, inputStream));
+		outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
+        inputStream = new ObjectInputStream(clientSocket.getInputStream());
+        return (new ClientManager(outputStream, inputStream));
 	       
 	}
 
-	public long sendMessage(String message, Socket clientSocket) throws IOException {
+	public void sendMessage(Message_Interface message) throws IOException {
 		
-        long t0 = System.currentTimeMillis();
         // it activates serverSocket.accept() on the server side
-        outputStream.print(message); 
-        return (t0);
+		getOutputStream().writeObject(message); 
         
 	}
 	
-	public ReceivedMessage receiveMessage(long t0, Socket clientSocket) throws IOException {
+	public void messagesHandler(ObjectOutputStream outputStream, ObjectInputStream inputStream) throws IOException, ClassNotFoundException, InterruptedException {
 		
-		BufferedReader bufferedReader = new BufferedReader(inputStream);
-		ReceivedMessage receivedMessage = null;
-		String message = null;
-		long t1 = 0;
+		Message_Interface receivedMessage = null;
+		boolean ack_alert = false;
 		
 		while(true)
         {
-			if(bufferedReader.ready())
-			{
-				message = bufferedReader.readLine();
-				t1 = System.currentTimeMillis();
-				receivedMessage = new ReceivedMessage(message, t1);
-	    		//String message = bufferedReader.readLine();
-		        //Thread.sleep(10);
-		        break;
+			if (isClientManagerRunning()) {
+				if( (receivedMessage = (Message_Interface) inputStream.readObject()) != null)
+				{
+					SensorImpl sensor = searchInClientSensorList(getSensor_ID());
+					if (receivedMessage instanceof ServerMessage_Request_MeasurementData) {
+						if (sensor != null) {
+							
+							double pm25 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
+							double pm10 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
+							int humidity = ThreadLocalRandom.current().nextInt(0, 101);
+							int temperature = ThreadLocalRandom.current().nextInt(0, 30);
+							int pressure = ThreadLocalRandom.current().nextInt(960, 1030);
+							sensor.addMeasurement(pm25, pm10, humidity, temperature, pressure);
+							
+							MeasurementData mes_data = sensor.readLastMeasurementData();
+							if (sensor.getNumberOfMeasurements() == 23) {
+								ack_alert = true;
+							}
+							
+							sendMessage(new ClientMessage_MeasurementData(getSensor_ID(), mes_data));
+							
+						}
+					}
+					else if (receivedMessage instanceof ServerMessage_Request_MeasurementHistory) {
+						if (sensor != null) {
+							
+							MeasurementData[] mes_data = sensor.readMeasurementHistory();
+							sendMessage(new ClientMessage_MeasurementHistory(getSensor_ID(), mes_data));
+							
+							// to clear the measurement history and set number of measurement to 0
+							sensor.resetSensor();
+							updateClientSensorList(sensor);
+							
+							ack_alert = false;
+							
+							break;
+						}
+					}
+					else if (receivedMessage instanceof ServerMessage_SensorInfoQuerry) {
+						if (sensor != null) {
+							sendMessage(new ClientMessage_SensorInfo(sensor));
+						}
+					}
+					else if (receivedMessage instanceof ServerMessage_SensorInfoUpdate) {
+						if (sensor != null) {
+							SensorImpl new_sensor = new SensorImpl(receivedMessage.getSensorID(), 
+																((ServerMessage_SensorInfoUpdate) receivedMessage).getCoordinates(), 
+																((ServerMessage_SensorInfoUpdate) receivedMessage).getSoftwareImageID());
+							updateClientSensorList(new_sensor);
+							new_sensor.resetSensor();
+							
+							new_sensor.setSensorState(((ServerMessage_SensorInfoUpdate) receivedMessage).getSensorState());
+							
+							setClientManagerRunning(false);
+							break;
+						}
+					}
+					else if (receivedMessage instanceof ServerMessage_ACK) {
+						if(!ack_alert) {
+							break;
+						}
+					}
+			        Thread.sleep(10);
+				}
+			} 
+			else {
+				break;
 			}
         }
-		return receivedMessage;
 	}
 	
-	public void closeOutStream() {
+	public void closeOutStream() throws IOException {
 		if (outputStream!=null) {
 			outputStream.close();
 		}
@@ -79,62 +141,20 @@ public class ClientManager implements TCPclient_interface{
 		}
 	}
 	
-	public PrintStream getOutputStream() {
+	public ObjectOutputStream getOutputStream() {
 		return this.outputStream;
 	}
 
-	public InputStreamReader getInputReaderStream() {
+	public ObjectInputStream getInputReaderStream() {
 		return this.inputStream;
 	}
 	
-	public boolean serialize(Object obj, String path) throws RemoteException, ClassNotFoundException
-	{
-		try {
-			FileOutputStream fileOut = new FileOutputStream(path);
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(obj);
-			out.close();
-			fileOut.close();
-			System.out.println("Serialized data is saved in " + path);
-			return true;
-		} catch (IOException i) {
-			i.printStackTrace();
-			return false;
-		}
+	public synchronized boolean isClientManagerRunning() {
+		return isClientManagerRunning;
 	}
 
-	public Object deserialize(String path) throws RemoteException, ClassNotFoundException
-	{
-		Object obj = null;
-		try {
-			FileInputStream fileIn = new FileInputStream(path);
-			ObjectInputStream in = new ObjectInputStream(fileIn);
-			obj = in.readObject();
-			in.close();
-			fileIn.close();
-			//System.out.println("Serialized data is retrieved from " + path);
-			return obj;
-		} catch (IOException i) {
-			i.printStackTrace();
-			return obj;
-		}
+	public synchronized void setClientManagerRunning(boolean isClientManagerRunning) {
+		this.isClientManagerRunning = isClientManagerRunning;
 	}
-	
-
-	public void hadleIncomingMessage() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void sendMessage() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void triggerComputeEngine() {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 }

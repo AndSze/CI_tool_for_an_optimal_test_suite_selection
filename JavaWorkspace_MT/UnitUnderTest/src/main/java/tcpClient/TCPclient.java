@@ -3,6 +3,7 @@ package tcpClient;
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import messages.ClientMessage_BootUp;
 import sensor.SensorImpl;
 
 public class TCPclient{
@@ -11,31 +12,57 @@ public class TCPclient{
     private Socket clientSocket = null;
     private ClientManager clientManager = null;
 	private boolean clientRunning = false;
-	protected static ArrayList<SensorImpl> Client_Sensors_LIST= new ArrayList<>();
-	
-    // default constructor 
+	protected static ArrayList<SensorImpl> Client_Sensors_LIST;
+	private int sensor_ID;
+
+	// default constructor 
     public TCPclient() {
     	// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
     	super();
+    	
+    	try {
+    		Client_Sensors_LIST.size();
+    	} catch (NullPointerException NPEx) {
+    		Client_Sensors_LIST= new ArrayList<>();
+    	}
     }
     
     // overloaded constructor
-    private TCPclient(Socket clientSocket, String serverHostName, int port) throws IOException{
+    private TCPclient(int sensor_ID, Socket clientSocket, String serverHostName, int port) throws IOException {
 	    
 	    setClientSocket(new Socket(serverHostName, port));
+	    setSensor_ID(sensor_ID);
 	    System.out.println("Client ECHO Socket created on port = "+port);
 	    
 	    clientManager = new ClientManager();   	
+	    
+	    // and add the instance of sensor on the client side to the Client_Sensors_LIST
+	 	Client_Sensors_LIST = updateClientSensorList(new SensorImpl(getSensor_ID()));
+	 	
+	 		
+	 	// since client managers are different objects for each TCPclient instance, all clientManager functions are called via TCPclient attribute setter (setClientManager)
     	setClientManager(clientManager.initClientManager(getClientSocket()));
+    	
+    	// send BootUp message
+    	clientManager.sendMessage(new ClientMessage_BootUp(getSensor_ID()));
     	
     	System.out.println("Client Manager created with outputsteam and input stream");
     	clientRunning(true);
-	    	
+    	
+    	try {
+    		clientManager.messagesHandler(clientManager.getOutputStream(), clientManager.getInputReaderStream());
+    	} catch (ClassNotFoundException CNFEx) {
+	    	System.out.println("Error: The client for sensor ID: "+getSensor_ID()+" returns the ClassNotFoundException when class of a serialized object cannot be read by the ObjectInputStream.");
+	    	CNFEx.printStackTrace();
+	    } catch (InterruptedException intEx) {
+	    	System.out.println("Error: The client for sensor ID: "+getSensor_ID()+" returns the InterruptedException when a thread is waiting, sleeping, or otherwise occupied, and the thread is interrupted.");
+	    	intEx.printStackTrace();
+	    }
     }
 	
-	public TCPclient initClient(String serverHostName, int port) throws IOException{
+	public TCPclient initClient(int sensor_ID, String serverHostName, int port) throws IOException{
 
-		return (new TCPclient (clientSocket, serverHostName, port));
+		return (new TCPclient (sensor_ID, clientSocket, serverHostName, port));
 	}
 	
 	public void closeClient(TCPclient INSTANCE, int port) throws IOException{
@@ -67,7 +94,7 @@ public class TCPclient{
 		}
 	}
 	
-	public void EchoMessageHandler(Socket clientSocket, String message) {
+	/*public void EchoMessageHandler(Socket clientSocket, String message) {
 		
 		// time point when the clients sends its message to the server
 		long t0 = 0;
@@ -87,6 +114,39 @@ public class TCPclient{
 	    	IOEx.printStackTrace();
 	    }
 		//return success;
+	}*/
+	
+	public static synchronized ArrayList<SensorImpl> updateClientSensorList(SensorImpl sensor){
+		int itemIndex = 0;
+		if (Client_Sensors_LIST.size() == 0) {
+			Client_Sensors_LIST.add(sensor);
+		}
+		else {
+			for (SensorImpl s : Client_Sensors_LIST) {
+				if (s.getSensorID() == sensor.getSensorID()) {
+					Client_Sensors_LIST.set(itemIndex, sensor);
+					break;
+				} 
+				else {
+					itemIndex++; 
+				}
+			}
+			if(itemIndex == (Client_Sensors_LIST.size())) {
+				Client_Sensors_LIST.add(sensor);
+			}
+		}
+		return Client_Sensors_LIST;
+		
+	}
+	public static synchronized SensorImpl searchInClientSensorList(int sensor_ID){
+		SensorImpl temp_sens = null;
+		for (SensorImpl sens : Client_Sensors_LIST) {
+			if( sens.getSensorID() == sensor_ID) {
+				temp_sens = sens;
+				break;
+			}
+		}
+		return temp_sens;
 	}
 	
 	public synchronized Socket getClientSocket() {
@@ -111,6 +171,14 @@ public class TCPclient{
 	
 	synchronized void clientRunning(boolean isClientRunning) {
 	    this.clientRunning = isClientRunning;
+	}
+	
+	public synchronized int getSensor_ID() {
+		return sensor_ID;
+	}
+
+	public synchronized void setSensor_ID(int sensor_ID) {
+		this.sensor_ID = sensor_ID;
 	}
 
 }

@@ -8,7 +8,6 @@ public class ServerMessage_SensorInfoQuerry extends Message_Interface implements
 	private static final long serialVersionUID = 1L;
 	
 	// class attributes
-	protected int sensorID;
 	protected ServerMessage sensorMessage;
 	
 	// ServerMessage_SensorInfoQuerry class constructor

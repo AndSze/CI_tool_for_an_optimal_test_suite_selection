@@ -11,7 +11,6 @@ public class ClientMessage_MeasurementHistory extends Message_Interface implemen
 	private static final long serialVersionUID = 1L;
 	
 	// class attributes
-	protected int sensorID;
 	protected SensorMessage sensorMessage;
 	protected MeasurementData[] mes_history = new MeasurementData[24];
 	

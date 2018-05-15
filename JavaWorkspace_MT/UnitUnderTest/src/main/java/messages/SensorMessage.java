@@ -4,7 +4,8 @@ public enum SensorMessage {
 
 	SENSOR_INFO (0),
 	DATA (1),
-	HISTORY (2);
+	HISTORY (2),
+	BOOT_UP (3);
 
 	private int sensorMessage;
 

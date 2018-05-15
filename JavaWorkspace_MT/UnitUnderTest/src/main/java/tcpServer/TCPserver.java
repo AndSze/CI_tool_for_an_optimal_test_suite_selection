@@ -58,7 +58,10 @@ public class TCPserver {
 	    serverSocket.bind(new java.net.InetSocketAddress(port));
 	    System.out.println("ECHO server created and bound at port = "+port);
 	    
+	    // set TCPserver running flag to True
 	    ServerRunning(true);
+	    
+	    // start watchdogs
 	    TCPserver._1hWatchdog_INSTANCE.setEnabled(isServerRunning());
 	    TCPserver._24hWatchdog_INSTANCE.setEnabled(isServerRunning());
 	    
@@ -87,6 +90,7 @@ public class TCPserver {
             }	
  		}
 	    
+    	// server starts to listen messages from sensors
 	    startServer(serverSocket);
 
 	};
