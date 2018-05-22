@@ -39,7 +39,32 @@ public class MeasurementData {
 		this.pressure = pressure;
 	}
 
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
+	}
+
 	public String getTimestamp() {
 		return timestamp;
 	}
+	
+	public double getPm25() {
+		return pm25;
+	}
+
+	public double getPm10() {
+		return pm10;
+	}
+	
+	public int getHumidity() {
+		return humidity;
+	}
+	
+	public int getTemperature() {
+		return temperature;
+	}
+	
+	public int getPressure() {
+		return pressure;
+	}
+	
 }

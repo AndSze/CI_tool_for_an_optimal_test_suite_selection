@@ -261,7 +261,7 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 	}
 	
 	@Override
-	public ArrayList<SensorImpl> updateServerSensorList(SensorImpl sensor){
+	public synchronized ArrayList<SensorImpl> updateServerSensorList(SensorImpl sensor){
 		int itemIndex = 0;
 		if (Server_Sensors_LIST.size() == 0) {
 			Server_Sensors_LIST.add(sensor);
@@ -282,6 +282,19 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 		}
 		return Server_Sensors_LIST;
 		
+	}
+	
+	@Override
+	public synchronized SensorImpl searchInServerSensorList(int sensor_ID){
+		SensorImpl temp_sens = null;
+		for (SensorImpl sens : Server_Sensors_LIST) {
+			System.out.println("Sensors stored in the sensors list on the server side, sensor ID: " + sens.getSensorID());
+			if( sens.getSensorID() == sensor_ID) {
+				temp_sens = sens;
+				break;
+			}
+		}
+		return temp_sens;
 	}
 
 }

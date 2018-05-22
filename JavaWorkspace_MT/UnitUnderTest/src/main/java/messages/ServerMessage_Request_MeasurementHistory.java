@@ -12,8 +12,7 @@ public class ServerMessage_Request_MeasurementHistory extends Message_Interface 
 	
 	// ServerMessage_Request_MeasurementHistory class constructor
 	public ServerMessage_Request_MeasurementHistory(int sensorID) {
-		super();
-		this.sensorID = sensorID;
+		super(sensorID);
 		this.serverMessage = ServerMessage.REQUEST_MEASUREMENT_HISOTRY;
 	}
 

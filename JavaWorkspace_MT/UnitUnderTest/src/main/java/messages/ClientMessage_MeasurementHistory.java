@@ -13,13 +13,16 @@ public class ClientMessage_MeasurementHistory extends Message_Interface implemen
 	// class attributes
 	protected SensorMessage sensorMessage;
 	protected MeasurementData[] mes_history = new MeasurementData[24];
-	
+
 	// ClientMessage_MeasurementHistory class constructor
 	public ClientMessage_MeasurementHistory(int sensorID, MeasurementData[] mes_history) {
-		super();
-		this.sensorID = sensorID;
+		super(sensorID);
 		this.sensorMessage = SensorMessage.HISTORY;
 		this.mes_history = mes_history;
+	}
+	
+	public MeasurementData[] getMes_history() {
+		return mes_history;
 	}
 
 }

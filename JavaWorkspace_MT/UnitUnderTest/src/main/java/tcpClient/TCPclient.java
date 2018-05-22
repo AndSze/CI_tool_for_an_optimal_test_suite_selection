@@ -17,18 +17,17 @@ public class TCPclient{
 
 	// default constructor 
     public TCPclient() {
+    
     	// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
     	super();
     	
-    	try {
-    		Client_Sensors_LIST.size();
-    	} catch (NullPointerException NPEx) {
-    		Client_Sensors_LIST= new ArrayList<>();
+    	if (Client_Sensors_LIST == null) {
+    		Client_Sensors_LIST = new ArrayList<>();
     	}
     }
     
     // overloaded constructor
-    private TCPclient(int sensor_ID, Socket clientSocket, String serverHostName, int port) throws IOException {
+    private TCPclient(int sensor_ID, String serverHostName, int port) throws IOException {
 	    
 	    setClientSocket(new Socket(serverHostName, port));
 	    setSensor_ID(sensor_ID);
@@ -36,18 +35,17 @@ public class TCPclient{
 	    
 	    clientManager = new ClientManager();   	
 	    
-	    // and add the instance of sensor on the client side to the Client_Sensors_LIST
+	    // add the instance of sensor on the client side to the Client_Sensors_LIST
 	 	Client_Sensors_LIST = updateClientSensorList(new SensorImpl(getSensor_ID()));
 	 	
-	 		
 	 	// since client managers are different objects for each TCPclient instance, all clientManager functions are called via TCPclient attribute setter (setClientManager)
-    	setClientManager(clientManager.initClientManager(getClientSocket()));
+    	setClientManager(clientManager.initClientManager(getClientSocket(), getSensor_ID()));
+    	System.out.println("Client Manager created with outputsteam and input stream");
+    	clientRunning(true);
     	
     	// send BootUp message
     	clientManager.sendMessage(new ClientMessage_BootUp(getSensor_ID()));
-    	
-    	System.out.println("Client Manager created with outputsteam and input stream");
-    	clientRunning(true);
+    	System.out.println("Boot Up message send by the Client");
     	
     	try {
     		clientManager.messagesHandler(clientManager.getOutputStream(), clientManager.getInputReaderStream());
@@ -62,7 +60,7 @@ public class TCPclient{
 	
 	public TCPclient initClient(int sensor_ID, String serverHostName, int port) throws IOException{
 
-		return (new TCPclient (sensor_ID, clientSocket, serverHostName, port));
+		return (new TCPclient (sensor_ID, serverHostName, port));
 	}
 	
 	public void closeClient(TCPclient INSTANCE, int port) throws IOException{
@@ -86,6 +84,7 @@ public class TCPclient{
 				
 			INSTANCE.getClientManager().closeOutStream();
 			INSTANCE.getClientManager().closeInStream();
+			INSTANCE.getClientManager().setClientManagerRunning(false);
 			
 			System.out.println("ClientManager for the client with port: "+port+" closed successfully");
 		} 
@@ -138,9 +137,11 @@ public class TCPclient{
 		return Client_Sensors_LIST;
 		
 	}
+	
 	public static synchronized SensorImpl searchInClientSensorList(int sensor_ID){
 		SensorImpl temp_sens = null;
 		for (SensorImpl sens : Client_Sensors_LIST) {
+			System.out.println("Sensors stored in the sensors list on the client side, sensor ID: " + sens.getSensorID());
 			if( sens.getSensorID() == sensor_ID) {
 				temp_sens = sens;
 				break;

@@ -28,8 +28,9 @@ public class TCPserver {
 	private boolean serverRunning = false;
 	private Thread serverThread = null;
 	
-    private static _1h_Watchdog _1hWatchdog_INSTANCE = null;
-    private static _24h_Watchdog _24hWatchdog_INSTANCE = null;
+	private static _1h_Watchdog _1hWatchdog_INSTANCE = null;
+	private static _24h_Watchdog _24hWatchdog_INSTANCE = null;
+	private static ComputeEngine_Processing processing_engine; 
     
 	protected static ArrayList<SensorImpl> Server_Sensors_LIST= new ArrayList<>();
 	protected static ArrayList<MeasurementData[]> MeasurementHistory_LIST = new ArrayList<>();
@@ -39,8 +40,8 @@ public class TCPserver {
 	protected static String Sensors_PATH = "files\\Sensors";
 	private int numberOfSensors = 0;
 	private float[][] sensor_coordinates_array = { {1.0f, 1.0f}, {2.0f, 1.0f}, {1.5f, 2.0f}, {2.5f, 0.5f}, {3.0f, 3.5f}, {1.0f, 3.5f}, {2.5f, 0.5f}, {0.5f, 2.5f}};
-	private static ComputeEngine_Processing processing_engine; 
-	
+
+
 	// default constructor
 	public TCPserver() throws IOException{
 		// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
@@ -205,6 +206,10 @@ public class TCPserver {
 
 	public static void set_24hWatchdog_INSTANCE(_24h_Watchdog _24hWatchdog_INSTANCE) {
 		TCPserver._24hWatchdog_INSTANCE = _24hWatchdog_INSTANCE;
+	}
+	
+	public static ComputeEngine_Processing getProcessing_engine() {
+		return processing_engine;
 	}
 	
 	

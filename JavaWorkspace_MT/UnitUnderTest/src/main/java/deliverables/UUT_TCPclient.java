@@ -53,17 +53,19 @@ public class UUT_TCPclient extends TCPclient{
 				// opens the client socket activates the client manager (out/in object streams)
 				uut1_TCPclient.setINSTANCE(runTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort(), uut1_TCPclient.getServerHostName()));
 			}
-			current_sensor_state = searchInClientSensorList(temp_sensor_ID).getSensorState();
+			//current_sensor_state = searchInClientSensorList(temp_sensor_ID).getSensorState();
 			
-			if ((current_sensor_state == SensorState.PRE_OPERATIONAL) && (previous_sensor_state == SensorState.OPERATIONAL)){
+			if ((uut1_TCPclient.getINSTANCE().getClientManager().isClientManagerRunning() == false) && (previous_sensor_state == SensorState.OPERATIONAL)){
 				// sensors gets go to pre_operational message once it received the ack server message what means that the watchdog has been kicked
 				// hence close the client socket and the client manager, it will be opened again once the watchdog reaches its threshold
-				uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
 				uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
+				uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
 			}
 			
-			previous_sensor_state = searchInClientSensorList(temp_sensor_ID).getSensorState();
+			//previous_sensor_state = searchInClientSensorList(temp_sensor_ID).getSensorState();
+			Thread.sleep(10);
 		}
+		
 		
      }
 

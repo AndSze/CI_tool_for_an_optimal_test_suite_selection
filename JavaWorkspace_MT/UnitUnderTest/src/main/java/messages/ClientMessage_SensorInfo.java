@@ -14,9 +14,12 @@ public class ClientMessage_SensorInfo extends Message_Interface implements Seria
 	
 	// ClientMessage_SensorInfo class constructor
 	public ClientMessage_SensorInfo(SensorImpl sensor) {
-		super();
-		this.sensorID = sensor.getSensorID();
+		super(sensor.getSensorID());
 		this.sensor = sensor;
 		this.sensorMessage = SensorMessage.SENSOR_INFO;
+	}
+	
+	public SensorImpl getSensor() {
+		return sensor;
 	}
 }

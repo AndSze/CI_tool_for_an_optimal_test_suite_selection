@@ -4,7 +4,7 @@ public enum SensorState {
 
 	OPERATIONAL (0),
 	PRE_OPERATIONAL (1),
-	DAMAGED (2),
+	MAINTENANCE (2),
 	DEAD (3);
 
 	private int state;

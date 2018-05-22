@@ -13,8 +13,7 @@ public class ServerMessage_Request_MeasurementData extends Message_Interface imp
 	
 	// ServerMessage_Request_MeasurementData class constructor
 	public ServerMessage_Request_MeasurementData(int sensorID) {
-		super();
-		this.sensorID = sensorID;
+		super(sensorID);
 		this.serverMessage = ServerMessage.REQUEST_MEASUREMENT_DATA;
 	}
 

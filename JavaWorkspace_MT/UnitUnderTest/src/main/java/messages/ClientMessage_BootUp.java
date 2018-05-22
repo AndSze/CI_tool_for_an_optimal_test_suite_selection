@@ -12,8 +12,7 @@ public class ClientMessage_BootUp extends Message_Interface implements Serializa
 	
 	// ClientMessage_BootUp class constructor
 	public ClientMessage_BootUp(int sensorID) {
-		super();
-		this.sensorID = sensorID;
+		super(sensorID);
 		this.sensorMessage = SensorMessage.BOOT_UP;
 	}
 

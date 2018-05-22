@@ -15,10 +15,8 @@ public class ServerMessage_SensorInfoUpdate extends Message_Interface implements
 	protected SensorState sensorState;
 	
 	// ServerMessage_SensorInfoUpdate class constructor
-	public ServerMessage_SensorInfoUpdate(int sensorID, ServerMessage sensorMessage,
-			Point2D.Float coordinates, String softwareImageID, SensorState sensorState) {
-		super();
-		this.sensorID = sensorID;
+	public ServerMessage_SensorInfoUpdate(int sensorID, Point2D.Float coordinates, String softwareImageID, SensorState sensorState) {
+		super(sensorID);
 		this.coordinates = coordinates;
 		this.softwareImageID = softwareImageID;
 		this.sensorState = sensorState;

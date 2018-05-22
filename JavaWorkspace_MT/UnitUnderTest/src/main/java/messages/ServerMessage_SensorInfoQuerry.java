@@ -12,8 +12,7 @@ public class ServerMessage_SensorInfoQuerry extends Message_Interface implements
 	
 	// ServerMessage_SensorInfoQuerry class constructor
 	public ServerMessage_SensorInfoQuerry(int sensorID) {
-		super();
-		this.sensorID = sensorID;
+		super(sensorID);
 		this.sensorMessage = ServerMessage.SENSOR_INFO_QUERY;
 	}
 

@@ -22,7 +22,6 @@ public class UUT_TCPserver{
 		int temp_port = 9876;
 		
 		UUT_TCPserver uut1_TCPserver = null;
-		UUT_TCPserver uut2_TCPserver = null;
 		
 		try {
 			uut1_TCPserver = new UUT_TCPserver(temp_port);
@@ -32,7 +31,7 @@ public class UUT_TCPserver{
 		}
 		
 		uut1_TCPserver.setINSTANCE(runTheServer(uut1_TCPserver.getINSTANCE(), uut1_TCPserver.getPort()));
-		
+/*		
 		Thread.sleep(100);
 		uut1_TCPserver.getINSTANCE();
 		System.out.println("_24hWatchdog_INSTANCE TimeFromLastFeed: " + TCPserver.get_24hWatchdog_INSTANCE().getTimeFromLastFeed());
@@ -40,7 +39,7 @@ public class UUT_TCPserver{
 		System.out.println("_1hWatchdog_INSTANCE TimeFromLastFeed: " + TCPserver.get_1hWatchdog_INSTANCE().getTimeFromLastFeed());
 		System.out.println("_1hWatchdog_INSTANCE TimeLeftBeforeExpiration: " + TCPserver.get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
 
-		uut1_TCPserver.setINSTANCE(closeTheServer(uut1_TCPserver.getINSTANCE(), temp_port));
+		//uut1_TCPserver.setINSTANCE(closeTheServer(uut1_TCPserver.getINSTANCE(), temp_port));
 		
 		System.out.println("_24hWatchdog_INSTANCE TimeFromLastFeed: " + TCPserver.get_24hWatchdog_INSTANCE().getTimeFromLastFeed());
 		System.out.println("_24hWatchdog_INSTANCE TimeLeftBeforeExpiration: " + TCPserver.get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
@@ -50,22 +49,13 @@ public class UUT_TCPserver{
 		TCPserver.get_1hWatchdog_INSTANCE().feed();
 		Thread.sleep(100);
 		
-		try {
-			uut2_TCPserver = new UUT_TCPserver(temp_port);
-		} catch (IOException IOEx) {
-			System.out.println("Error: Instance for the TCP server at port: "+temp_port+" cannot be created");
-			IOEx.printStackTrace();
-		}
-		
-		uut2_TCPserver.setINSTANCE(runTheServer(uut2_TCPserver.getINSTANCE(), uut2_TCPserver.getPort()));
-		
 		Thread.sleep(1000);
 		
 		System.out.println("_24hWatchdog_INSTANCE TimeFromLastFeed: " + TCPserver.get_24hWatchdog_INSTANCE().getTimeFromLastFeed());
 		System.out.println("_24hWatchdog_INSTANCE TimeLeftBeforeExpiration: " + TCPserver.get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
 		System.out.println("_1hWatchdog_INSTANCE TimeFromLastFeed: " + TCPserver.get_1hWatchdog_INSTANCE().getTimeFromLastFeed());
 		System.out.println("_1hWatchdog_INSTANCE TimeLeftBeforeExpiration: " + TCPserver.get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
-
+*/
 	}
 
 	public static TCPserver runTheServer(TCPserver TCPserver_INSTANCE, int port){

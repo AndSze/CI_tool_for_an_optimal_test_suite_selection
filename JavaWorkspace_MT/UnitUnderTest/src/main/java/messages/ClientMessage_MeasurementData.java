@@ -14,10 +14,13 @@ public class ClientMessage_MeasurementData extends Message_Interface implements 
 	
 	// ClientMessage_MeasurementData class constructor
 	public ClientMessage_MeasurementData(int sensorID, MeasurementData measurementData) {
-		super();
-		this.sensorID = sensorID;
+		super(sensorID);
 		this.measurementData = measurementData;
 		this.sensorMessage = SensorMessage.DATA;
+	}
+	
+	public MeasurementData getMeasurementData() {
+		return measurementData;
 	}
 
 }

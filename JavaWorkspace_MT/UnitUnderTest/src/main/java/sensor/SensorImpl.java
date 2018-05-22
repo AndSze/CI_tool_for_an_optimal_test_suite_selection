@@ -58,8 +58,8 @@ public class SensorImpl extends MeasurementData implements Serializable {
 				// Measurements is successful
 				success = true;
 			} catch (ArrayIndexOutOfBoundsException AIOOBex) {
-				System.out.println("Error: Sensor Measurement History has exceeded it allowed size, Sensor goes to the DAMAGED state");
-				setSensorState(SensorState.DAMAGED);
+				System.out.println("Error: Sensor Measurement History has exceeded it allowed size, Sensor goes to the DEAD state");
+				setSensorState(SensorState.DEAD);
 				AIOOBex.printStackTrace();
 			}
 		} else {

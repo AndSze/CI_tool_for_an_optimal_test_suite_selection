@@ -101,6 +101,14 @@ public class _1h_Watchdog implements Runnable {
     } 
     
     /*
+     * Set the remaining time for the _1h_Watchdog 
+     * It should be called only once to trigger the socket creation on the server side
+     */ 
+    public void setTimeLeftBeforeExpiration(double _1h_WatchdogExpiration) { 
+    	 millisecondsLeftUntilExpiration = (long) (_1h_WatchdogExpiration*1000); 
+    } 
+    
+    /*
      * Read how long it has been since the _1h_Watchdog was last fed. 
      * 
      * @return The number of seconds since last meal. 
