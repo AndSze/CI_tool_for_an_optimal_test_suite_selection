@@ -34,9 +34,6 @@ public class TCPclient{
 	    System.out.println("Client ECHO Socket created on port = "+port);
 	    
 	    clientManager = new ClientManager();   	
-	    
-	    // add the instance of sensor on the client side to the Client_Sensors_LIST
-	 	Client_Sensors_LIST = updateClientSensorList(new SensorImpl(getSensor_ID()));
 	 	
 	 	// since client managers are different objects for each TCPclient instance, all clientManager functions are called via TCPclient attribute setter (setClientManager)
     	setClientManager(clientManager.initClientManager(getClientSocket(), getSensor_ID()));
@@ -44,8 +41,14 @@ public class TCPclient{
     	clientRunning(true);
     	
     	// send BootUp message
-    	clientManager.sendMessage(new ClientMessage_BootUp(getSensor_ID()));
-    	System.out.println("Boot Up message send by the Client");
+    	if (searchInClientSensorList(getSensor_ID()) == null) {
+    	
+		    // add the instance of sensor on the client side to the Client_Sensors_LIST
+		 	Client_Sensors_LIST = updateClientSensorList(new SensorImpl(getSensor_ID()));
+    	}
+    	
+	 	clientManager.sendMessage(new ClientMessage_BootUp(getSensor_ID()));
+	 	System.out.println("Boot Up message send by the Client");
     	
     	try {
     		clientManager.messagesHandler(clientManager.getOutputStream(), clientManager.getInputReaderStream());
@@ -141,7 +144,7 @@ public class TCPclient{
 	public static synchronized SensorImpl searchInClientSensorList(int sensor_ID){
 		SensorImpl temp_sens = null;
 		for (SensorImpl sens : Client_Sensors_LIST) {
-			System.out.println("Sensors stored in the sensors list on the client side, sensor ID: " + sens.getSensorID());
+			//System.out.println("Sensors stored in the sensors list on the client side, sensor ID: " + sens.getSensorID());
 			if( sens.getSensorID() == sensor_ID) {
 				temp_sens = sens;
 				break;

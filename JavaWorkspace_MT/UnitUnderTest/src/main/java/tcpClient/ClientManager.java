@@ -5,6 +5,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.ThreadLocalRandom;
+
+import messages.ClientMessage_ACK;
 import messages.ClientMessage_BootUp;
 import messages.ClientMessage_MeasurementData;
 import messages.ClientMessage_MeasurementHistory;
@@ -18,6 +20,8 @@ import messages.ServerMessage_SensorInfoQuerry;
 import messages.ServerMessage_SensorInfoUpdate;
 import sensor.MeasurementData;
 import sensor.SensorImpl;
+import watchdog._1h_Watchdog;
+import watchdog._24h_Watchdog;
 
 public class ClientManager implements TCPclient_interface{
 
@@ -40,9 +44,8 @@ public class ClientManager implements TCPclient_interface{
         isClientManagerRunning = true;
 	}
 
-
-
 	public ClientManager initClientManager(Socket clientSocket, int sensor_ID) throws IOException{
+		// it activates serverSocket.accept() on the server side
 		outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         inputStream = new ObjectInputStream(clientSocket.getInputStream());
         return (new ClientManager(outputStream, inputStream, sensor_ID));
@@ -51,7 +54,7 @@ public class ClientManager implements TCPclient_interface{
 
 	public void sendMessage(Message_Interface message) throws IOException {
 		
-        // it activates serverSocket.accept() on the server side
+		// sends message from the client output stream to the server input stream
 		getOutputStream().writeObject(message); 
         
 	}
@@ -80,7 +83,7 @@ public class ClientManager implements TCPclient_interface{
 							sensor.addMeasurement(pm25, pm10, humidity, temperature, pressure);
 							
 							MeasurementData mes_data = sensor.readLastMeasurementData();
-							if (sensor.getNumberOfMeasurements() == 23) {
+							if (sensor.getNumberOfMeasurements() == 24) {
 								ack_alert = true;
 							}
 							
@@ -137,26 +140,48 @@ public class ClientManager implements TCPclient_interface{
 							else if (new_sensor.getSensorState() == SensorState.OPERATIONAL) {
 								new_sensor.resetSensor();
 								
+								// send ACK message to disable the socket on the server side
+						    	sendMessage(new ClientMessage_ACK(sensor_ID));
+								
 								// reset Sensor results in setting its state to PRE_OPERATIONAL, hence the state has to be updated to OPERATIONAL
 								new_sensor.setSensorState(SensorState.OPERATIONAL);
 							}
 							else if (new_sensor.getSensorState() == SensorState.DEAD) {
 
 								setClientManagerRunning(false);
-								break;
+							}
+							 
+							_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_SensorInfoUpdate) receivedMessage).get1h_Watchdog());
+							_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_SensorInfoUpdate) receivedMessage).get24h_Watchdog());
+							
+							if(new_sensor.getSensorState() == SensorState.OPERATIONAL && _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > 123) {
+								System.out.println("[ClientManager] NEW CONDITION if OPERATIONAL AND STATE TO setClientManagerRunning(false) - _1h_Watchdog: " + _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
+								setClientManagerRunning(false);
 							}
 							
 							TCPclient.updateClientSensorList(new_sensor);
 							
+							System.out.println("[ClientManager] ServerMessage_SensorInfoUpdate has the following SensorState: " + new_sensor.getSensorState());
+							System.out.println("[ClientManager] ServerMessage_SensorInfoUpdate received when _1h_Watchdog equals: " + _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 						}
 					}
 					else if (receivedMessage instanceof ServerMessage_ACK) {
 						
 						System.out.println("[ClientManager] ServerMessage_ACK to sensor: " + sensor.getSensorID() + " has been received.");
 						System.out.println("[ClientManager] ServerMessage_ACK has the following timestamp: " + receivedMessage.getTimestamp());
+						
+						// ack_alert equals TRUE only if (sensor.getNumberOfMeasurements() == 24), hence setClientManagerRunning(false) has to be executed in the subsequent loop
+						// upon receiving ClientMessage_MeasurementHistory
+						
 						if(!ack_alert) {
 							setClientManagerRunning(false);
-							break;
+							_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_ACK) receivedMessage).get1h_Watchdog());
+							// send ACK message to disable the socket on the server side
+					    	sendMessage(new ClientMessage_ACK(sensor_ID));
+						}
+						else {
+							_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_ACK) receivedMessage).get24h_Watchdog());
+							
 						}
 					}
 			        Thread.sleep(10);

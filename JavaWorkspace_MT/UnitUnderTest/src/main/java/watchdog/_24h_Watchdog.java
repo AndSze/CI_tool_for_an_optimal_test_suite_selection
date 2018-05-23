@@ -101,6 +101,15 @@ public class _24h_Watchdog implements Runnable {
     } 
     
     /*
+     * Set the remaining time for the _24h_Watchdog 
+     * It should be called to update _24h_Watchdog on the client side respectively to the server_24h_Watchdog
+     */ 
+    public void setTimeLeftBeforeExpiration(double _1h_WatchdogExpiration) { 
+    	 millisecondsLeftUntilExpiration = (long) (_1h_WatchdogExpiration*1000); 
+    } 
+    
+    
+    /*
      * Read how long it has been since the _24h_Watchdog was last fed. 
      * 
      * @return The number of seconds since last meal. 

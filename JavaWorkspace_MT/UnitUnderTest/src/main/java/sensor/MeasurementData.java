@@ -1,10 +1,14 @@
 package sensor;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class MeasurementData {
-
+public class MeasurementData implements Serializable {
+	
+	// Explicit declaration of serialVersionUID, hence InvalidClassExceptions will never be thrown during deserialization
+	private static final long serialVersionUID = 1L;
+	
 	// class attributes
 	protected double pm25;
 	protected double pm10;
@@ -16,7 +20,7 @@ public class MeasurementData {
 	// MeasurementData class constructor
 	public MeasurementData() {
 		super();
-		this.timestamp = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss").format(Calendar.getInstance().getTime());
+		this.timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Calendar.getInstance().getTime());
 	}
 
 	public void setPm25(double pm25) {

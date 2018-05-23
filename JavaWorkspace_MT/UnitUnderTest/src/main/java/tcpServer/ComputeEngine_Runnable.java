@@ -5,6 +5,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import messages.ClientMessage_ACK;
 import messages.ClientMessage_BootUp;
 import messages.ClientMessage_MeasurementData;
 import messages.ClientMessage_MeasurementHistory;
@@ -24,11 +25,14 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
     private ObjectOutputStream outputStream = null;
     private ObjectInputStream inputStream = null;
     private SensorImpl sensor = null;
-	
+    private boolean isComputeEngine_Runnable_running = false;
+    private int delay = 100;
+
 	public ComputeEngine_Runnable(Socket clientSocket) throws IOException  {
 		super();
 		outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         inputStream = new ObjectInputStream(clientSocket.getInputStream());
+        this.isComputeEngine_Runnable_running = true;
         System.out.println("[Compute engine Runnable] Multithreaded Server Service has been started");
 	}
 	
@@ -40,151 +44,173 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	}
 
     public void run() {
-      
+        
     	//synchronized (Echo) {
     	Message_Interface receivedMessage = null;
     	try {
     		while(true) {
-	    		if( (receivedMessage = (Message_Interface) inputStream.readObject()) != null) {
-	    			
-    				sensor = getProcessing_engine().searchInServerSensorList(receivedMessage.getSensorID());
+    			if(isComputeEngine_Runnable_running()) {
 					
-	    			if (receivedMessage instanceof ClientMessage_BootUp) {
-	    										
-	    				System.out.println("[Compute engine Runnable] BootUp message from sensor: " + sensor.getSensorID() + " has been received.");
-	    				System.out.println("[Compute engine Runnable] BootUp message has the following timestamp: " + receivedMessage.getTimestamp());
-	    				// send ServerMessage_SensorInfoQuerry
-	    				sendMessage(new ServerMessage_SensorInfoQuerry(receivedMessage.getSensorID()));
-	    			}
-	    			else if (receivedMessage instanceof ClientMessage_SensorInfo) {
-	    				System.out.println("[Compute engine Runnable] ClientMessage_SensorInfo message from sensor: " + sensor.getSensorID() + " has been received.");
-	    				System.out.println("[Compute engine Runnable] ClientMessage_SensorInfo message has the following timestamp: " + receivedMessage.getTimestamp());
-	    				SensorImpl received_sensor = ((ClientMessage_SensorInfo) receivedMessage).getSensor();
-	    				
-	    				System.out.println("sensor.getCoordinates(): "+ sensor.getCoordinates() + "\t received_sensor.getCoordinates(): "+ received_sensor.getCoordinates());
-	    				System.out.println("sensor.getSoftwareImageID(): "+ sensor.getSoftwareImageID()+ "\t received_sensor.getSoftwareImageID(): "+ received_sensor.getSoftwareImageID());
-	    				System.out.println("sensor.getSensorState(): "+ sensor.getSensorState()+ "\t received_sensor.getSensorState(): "+ received_sensor.getSensorState());
-	    				
-	    				if ((sensor.getCoordinates().equals(received_sensor.getCoordinates())) &&
-	    					(sensor.getSoftwareImageID().equals(received_sensor.getSoftwareImageID())) &&
-	    					(sensor.getSensorState().equals(received_sensor.getSensorState()))){
+					if( (receivedMessage = (Message_Interface) inputStream.readObject()) != null) {
+		    			
+	    				sensor = getProcessing_engine().searchInServerSensorList(receivedMessage.getSensorID());
+						
+		    			if (receivedMessage instanceof ClientMessage_BootUp) {
+		    										
+		    				System.out.println("[Compute engine Runnable] BootUp message from sensor: " + sensor.getSensorID() + " has been received.");
+		    				System.out.println("[Compute engine Runnable] BootUp message has the following timestamp: " + receivedMessage.getTimestamp());
+		    				// send ServerMessage_SensorInfoQuerry
+		    				sendMessage(new ServerMessage_SensorInfoQuerry(receivedMessage.getSensorID()));
+		    			}
+		    			if (receivedMessage instanceof ClientMessage_ACK) {
+		    				setDelay(5000);
+		    				System.out.println("[Compute engine Runnable] received ClientMessage_ACK");
+		    				System.out.println("[Compute engine Runnable] Processing Delay set to: " + getDelay());
+		    				System.out.println("[isComputeEngine_Runnable_running = TRUE] 1h_Watchdog: " + get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
+		    			}
+		    			else if (receivedMessage instanceof ClientMessage_SensorInfo) {
+		    				System.out.println("[Compute engine Runnable] ClientMessage_SensorInfo message from sensor: " + sensor.getSensorID() + " has been received.");
+		    				System.out.println("[Compute engine Runnable] ClientMessage_SensorInfo message has the following timestamp: " + receivedMessage.getTimestamp());
+		    				SensorImpl received_sensor = ((ClientMessage_SensorInfo) receivedMessage).getSensor();
+		    				
+		    				System.out.println("sensor.getCoordinates(): "+ sensor.getCoordinates() + "\t received_sensor.getCoordinates(): "+ received_sensor.getCoordinates());
+		    				System.out.println("sensor.getSoftwareImageID(): "+ sensor.getSoftwareImageID()+ "\t received_sensor.getSoftwareImageID(): "+ received_sensor.getSoftwareImageID());
+		    				System.out.println("sensor.getSensorState(): "+ sensor.getSensorState()+ "\t received_sensor.getSensorState(): "+ received_sensor.getSensorState());
+		    				
+		    				if ((sensor.getCoordinates().equals(received_sensor.getCoordinates())) &&
+		    					(sensor.getSoftwareImageID().equals(received_sensor.getSoftwareImageID())) &&
+		    					(sensor.getSensorState().equals(received_sensor.getSensorState()))){
+		    					
+		    					// received sensor info is up to date
+		    					// send go to operational by updating the sensor state
+		    					
+		    					sensor.setSensorState(SensorState.OPERATIONAL);
+		    					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
+		    					
+		    					// serialize sensor instance and save it to file
+		    					getProcessing_engine().saveSensorInfo(sensor);
+		    					
+		    					// send ServerMessage_SensorInfoUpdate that changes only state of the sensor to SensorState.OPERATIONAL
+		    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
+		    								get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration()));
+		    					
+		        				System.out.println("[Compute engine Runnable] send go to OPERATIONAL");
+		        				//setComputeEngine_Runnable_running(false);
+		        				
+		    				}
+		    				else {
+		    					// received sensor info is out of date
+		    					// send new settings and force the sensor to reset
+		    					
+		    					sensor.setSensorState(SensorState.MAINTENANCE);
+		    					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
+		    					
+		    					// serialize sensor instance and save it to file
+		    					getProcessing_engine().saveSensorInfo(sensor);
+		    					
+		    					// set to 1hWatchdog 120 [s] to activate the client socket (out/in object streams)
+		        				get_1hWatchdog_INSTANCE().setTimeLeftBeforeExpiration(125);
+		    					
+		    					// send ServerMessage_SensorInfoUpdate that changes triggers the sensor to reset, then the sensor should send ClientMessage_BootUp
+		    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
+		    								get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration()));
+		    					
+		    					System.out.println("[Compute engine Runnable] send new setting (go to MAINTENANCE)");
+		    				}
+		    			}
+	    				else if (receivedMessage instanceof ClientMessage_MeasurementData) {
 	    					
-	    					// received sensor info is up to date
-	    					// send go to operational by updating the sensor state
+	    					sensor.addMeasurement(((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getPm25(),
+	    										((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getPm10(),
+	    										((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getHumidity(),
+	    										((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getTemperature(),
+	    										((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getPressure());
+	    							
+	    					MeasurementData mes_data = sensor.readLastMeasurementData();
 	    					
-	    					sensor.setSensorState(SensorState.OPERATIONAL);
 	    					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
 	    					
-	    					// serialize sensor instance and save it to file
-	    					getProcessing_engine().saveSensorInfo(sensor);
+	    					// serialize measurement data instance and save it to file
+	    					getProcessing_engine().saveMeasurementDataInfo(sensor, mes_data);
 	    					
-	    					// send ServerMessage_SensorInfoUpdate that changes only state of the sensor to SensorState.OPERATIONAL
-	    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState()));
-	    					
-	    					// set to 1hWatchdog 120 [s] to activate the client socket (out/in object streams)
-	        				get_1hWatchdog_INSTANCE().setTimeLeftBeforeExpiration(120);
+	    					// feed 1hWatchdog
+	        				get_1hWatchdog_INSTANCE().feed();
 	        				
-	        				System.out.println("[Compute engine Runnable] send go to OPERATIONAL");
+	    					// send ServerMessage_ACK
+	        				sendMessage(new ServerMessage_ACK(receivedMessage.getSensorID(),
+									get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration()));
 	    					
+	        				System.out.println("[Compute engine Runnable] received MeasurementData");
+	        				System.out.println("[Compute engine Runnable] MeasurementData message has the following timestamp: " + receivedMessage.getTimestamp());
+	        				setDelay(100);
+	        	
 	    				}
-	    				else {
-	    					// received sensor info is out of date
-	    					// send new settings and force the sensor to reset
+	    				else if (receivedMessage instanceof ClientMessage_MeasurementHistory) {
 	    					
-	    					sensor.setSensorState(SensorState.MAINTENANCE);
-	    					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
+	    					MeasurementData[] mes_hist = ((ClientMessage_MeasurementHistory) receivedMessage).getMes_history();
 	    					
-	    					// serialize sensor instance and save it to file
-	    					getProcessing_engine().saveSensorInfo(sensor);
+	    					System.out.println("[Compute engine Runnable] received MeasurementHistory");
+	    					System.out.println("[Compute engine Runnable] MeasurementHistory message has the following timestamp: " + receivedMessage.getTimestamp());
 	    					
-	    					// send ServerMessage_SensorInfoUpdate that changes triggers the sensor to reset, then the sensor should send ClientMessage_BootUp
-	    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState()));
+	    					if(getProcessing_engine(). compareMeasurementDataAgainstMeasurementHistory(sensor, mes_hist)) {
+	    						// serialize measurement data instance and save it to file
+	        					getProcessing_engine().saveMeasurementHistoryInfo(sensor, mes_hist);
+	        					getProcessing_engine().deleteMeasurementDataInfo(sensor);
+	        					
+	        					System.out.println("[Compute engine Runnable] MeasurementHistory matches the MeasurementData");
+	        					sensor.resetSensor();
+	        					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
+	    					}
+	    					else {
+	    						sensor.setSensorState(SensorState.DEAD);
+	        					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
+	        					
+	        					// send ServerMessage_SensorInfoUpdate that indicates that something is wrong with the sensor
+	        					// write 0 [s] to 1hWatchdog and 24hWatchdog to indicate that this sensor is dead
+	        					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),0 ,0));
+	        					setComputeEngine_Runnable_running(false);
+		        				
+	        					System.out.println("[Compute engine Runnable] MeasurementHistory does not match the MeasurementData");
+	        					System.out.println("[Compute engine Runnable] Sensor instance: " + sensor.getSensorID() + " is dead");
+	    					}
 	    					
-	    					System.out.println("[Compute engine Runnable] send new setting (go to MAINTENANCE)");
+	        				// feed 24hWatchdog
+	        				get_24hWatchdog_INSTANCE().feed();
+	        				
+	    					// send ServerMessage_ACK
+	        				sendMessage(new ServerMessage_ACK(receivedMessage.getSensorID(),
+									get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration()));
 	    				}
-	    			}
-    				else if (receivedMessage instanceof ClientMessage_MeasurementData) {
-    					
-    					sensor.addMeasurement(((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getPm25(),
-    										((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getPm10(),
-    										((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getHumidity(),
-    										((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getTemperature(),
-    										((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getPressure());
-    							
-    					MeasurementData mes_data = sensor.readLastMeasurementData();
-    					
-    					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
-    					
-    					// serialize measurement data instance and save it to file
-    					getProcessing_engine().saveMeasurementDataInfo(sensor, mes_data);
-    					
-    					// send ServerMessage_ACK
-        				sendMessage(new ServerMessage_ACK(receivedMessage.getSensorID()));
-    					
-        				System.out.println("[Compute engine Runnable] received MeasurementData");
-        				System.out.println("[Compute engine Runnable] MeasurementData message has the following timestamp: " + receivedMessage.getTimestamp());
-        				// feed 1hWatchdog
-        				get_1hWatchdog_INSTANCE().feed();
-    				}
-    				else if (receivedMessage instanceof ClientMessage_MeasurementHistory) {
-    					
-    					MeasurementData[] mes_hist = ((ClientMessage_MeasurementHistory) receivedMessage).getMes_history();
-    					
-    					System.out.println("[Compute engine Runnable] received MeasurementHistory");
-    					System.out.println("[Compute engine Runnable] MeasurementHistory message has the following timestamp: " + receivedMessage.getTimestamp());
-    					
-    					if(getProcessing_engine(). compareMeasurementDataAgainstMeasurementHistory(sensor, mes_hist)) {
-    						// serialize measurement data instance and save it to file
-        					getProcessing_engine().saveMeasurementHistoryInfo(sensor, mes_hist);
-        					getProcessing_engine().deleteMeasurementDataInfo(sensor);
-        					
-        					System.out.println("[Compute engine Runnable] MeasurementHistory matches the MeasurementData");
-        					sensor.resetSensor();
-        					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
-    					}
-    					else {
-    						sensor.setSensorState(SensorState.DEAD);
-        					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
-        					
-        					// send ServerMessage_SensorInfoUpdate that indicates that something is wrong with the sensor
-        					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState()));
-        					
-        					System.out.println("[Compute engine Runnable] MeasurementHistory does not match the MeasurementData");
-        					System.out.println("[Compute engine Runnable] Sensor instance: " + sensor.getSensorID() + " is dead");
-    					}
-    					
-    					// send ServerMessage_ACK
-        				sendMessage(new ServerMessage_ACK(receivedMessage.getSensorID()));
-    					
-        				// feed 1hWatchdog
-        				get_24hWatchdog_INSTANCE().feed();
-    				}
-		    		
-	    		}
-	    		if (get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration() < 120) {
-	    			if (sensor.getSensorID() != 0) {
-	    				// send ServerMessage_Request_MeasurementData
-	    				sendMessage(new ServerMessage_Request_MeasurementData(sensor.getSensorID()));
-	    			}
-	    			else {
-	    				throw new IllegalArgumentException("sensor_ID is not specified for ComputeEngine_Runnable (ServerMessage_Request_MeasurementData)");
-	    			}
-	    		}
-	    		else if (get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration() < 120) {
-	    			if (sensor.getSensorID() != 0) {
-	    				// send ServerMessage_Request_MeasurementData
-	    				sendMessage(new ServerMessage_Request_MeasurementHistory(sensor.getSensorID()));
-	    			}
-	    			else {
-	    				throw new IllegalArgumentException("sensor_ID is not specified for ComputeEngine_Runnable (ServerMessage_Request_MeasurementHistory)");
-	    			}
-	    		}
-	    		// else statement forces the loop to stop - however it should be never executed since the ComputeEngine_Runnable starts upon receiving ClientMessage_BootUp
-	    		else {
-						processingDelay(1000);
-						System.out.println("1h_Watchdog: " + get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
-						System.out.println("24h_Watchdog: " + get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
-		   		} 
+		    		}
+					processingDelay(getDelay());
+					if (get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration() < 120) {
+		    			if (sensor.getSensorID() != 0) {
+		    				// send ServerMessage_Request_MeasurementData
+		    				sendMessage(new ServerMessage_Request_MeasurementData(sensor.getSensorID()));
+		    				
+		    				System.out.println("[Compute engine Runnable] setComputeEngine_Runnable_running set to: " + isComputeEngine_Runnable_running());
+		    				
+		    			}
+		    			else {
+		    				throw new IllegalArgumentException("sensor_ID is not specified for ComputeEngine_Runnable (ServerMessage_Request_MeasurementData)");
+		    			}
+		    		}
+		    		else if (get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration() < 120) {
+		    			if (sensor.getSensorID() != 0) {
+		    				// send ServerMessage_Request_MeasurementData
+		    				sendMessage(new ServerMessage_Request_MeasurementHistory(sensor.getSensorID()));
+		    			}
+		    			else {
+		    				throw new IllegalArgumentException("sensor_ID is not specified for ComputeEngine_Runnable (ServerMessage_Request_MeasurementHistory)");
+		    			}
+		    		}
+		    		else if (getDelay() == 5000 ) {
+		    			setComputeEngine_Runnable_running(false);
+		    		}
+				}
+    			else {
+    				break;
+    			}
     		}
 		} catch (IOException IOex) {
         	System.out.println("Error: when attempted to read Object from inputStream or write Object to outputStream on the server side");
@@ -284,5 +310,22 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	        
 	    }
     }
+	
+	public synchronized boolean isComputeEngine_Runnable_running() {
+		return isComputeEngine_Runnable_running;
+	}
+
+	public synchronized void setComputeEngine_Runnable_running(boolean isComputeEngine_Runnable_running) {
+		this.isComputeEngine_Runnable_running = isComputeEngine_Runnable_running;
+	}
+	
+
+	public int getDelay() {
+		return delay;
+	}
+
+	public void setDelay(int delay) {
+		this.delay = delay;
+	}
 }
 

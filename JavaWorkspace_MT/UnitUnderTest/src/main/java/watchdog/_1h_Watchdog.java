@@ -102,7 +102,7 @@ public class _1h_Watchdog implements Runnable {
     
     /*
      * Set the remaining time for the _1h_Watchdog 
-     * It should be called only once to trigger the socket creation on the server side
+     * It should be called to update _1h_Watchdog on the client side respectively to the _1h_Watchdog
      */ 
     public void setTimeLeftBeforeExpiration(double _1h_WatchdogExpiration) { 
     	 millisecondsLeftUntilExpiration = (long) (_1h_WatchdogExpiration*1000); 

@@ -77,7 +77,7 @@ public class SensorImpl extends MeasurementData implements Serializable {
 	}
 	
 	public MeasurementData readLastMeasurementData() {
-		int temp_numberOfMeasurements = getNumberOfMeasurements();
+		int temp_numberOfMeasurements = getNumberOfMeasurements() - 1;
 		return sensor_m_history[temp_numberOfMeasurements];
 	}
 	

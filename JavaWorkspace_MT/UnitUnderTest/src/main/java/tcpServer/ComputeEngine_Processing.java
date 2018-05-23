@@ -288,7 +288,7 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 	public synchronized SensorImpl searchInServerSensorList(int sensor_ID){
 		SensorImpl temp_sens = null;
 		for (SensorImpl sens : Server_Sensors_LIST) {
-			System.out.println("Sensors stored in the sensors list on the server side, sensor ID: " + sens.getSensorID());
+			//System.out.println("Sensors stored in the sensors list on the server side, sensor ID: " + sens.getSensorID());
 			if( sens.getSensorID() == sensor_ID) {
 				temp_sens = sens;
 				break;
