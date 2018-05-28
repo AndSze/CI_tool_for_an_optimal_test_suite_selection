@@ -13,8 +13,10 @@ import tcpServer.TCPserver;
 public class CloseClientTCPclientTest {
 
 	int port_1 = 9876;
+	int sensor_ID_1 = 1;
 	TCPclient tcpclient_1 = null;
 	int port_2 = 9877;
+	int sensor_ID_2 = 2;
 	TCPclient tcpclient_2 = null;
 	final String serverHostName = "localhost";
 	TCPserver mockTCPserverTest_1 = null;
@@ -61,7 +63,7 @@ public class CloseClientTCPclientTest {
 		
 		mockTCPserverTest_1.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		
-		tcpclient_1 = tcpclient_1.initClient(serverHostName, port_1);
+		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
 		assertTrue(tcpclient_1.isClientRunning());
 		assertFalse(tcpclient_1.getClientSocket().isClosed());
 
@@ -69,7 +71,7 @@ public class CloseClientTCPclientTest {
 		assertFalse(tcpclient_1.isClientRunning());
 		assertTrue(tcpclient_1.getClientSocket().isClosed());
 		
-		tcpclient_1 = tcpclient_1.initClient(serverHostName, port_1);
+		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
 		assertTrue(tcpclient_1.isClientRunning());
 		assertFalse(tcpclient_1.getClientSocket().isClosed());
 	}
@@ -80,11 +82,11 @@ public class CloseClientTCPclientTest {
 		mockTCPserverTest_1.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest_2.getServerSocket().bind(new java.net.InetSocketAddress(port_2));
 		 
-		tcpclient_1 = tcpclient_1.initClient(serverHostName, port_1);
+		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
 		assertTrue(tcpclient_1.isClientRunning());
 		assertFalse(tcpclient_1.getClientSocket().isClosed());
 		
-		tcpclient_2 = tcpclient_2.initClient(serverHostName, port_2);
+		tcpclient_2 = tcpclient_2.initClient(sensor_ID_2, serverHostName, port_2);
 		assertTrue(tcpclient_2.isClientRunning());
 		assertFalse(tcpclient_2.getClientSocket().isClosed());
 
@@ -101,7 +103,7 @@ public class CloseClientTCPclientTest {
 	
 		mockTCPserverTest_1.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 
-		tcpclient_1 = tcpclient_1.initClient(serverHostName, port_1);
+		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
 		assertTrue(tcpclient_1.isClientRunning());
 		assertFalse(tcpclient_1.getClientSocket().isClosed());
 

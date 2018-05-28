@@ -5,7 +5,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.concurrent.ThreadLocalRandom;
-
 import messages.ClientMessage_ACK;
 import messages.ClientMessage_BootUp;
 import messages.ClientMessage_MeasurementData;

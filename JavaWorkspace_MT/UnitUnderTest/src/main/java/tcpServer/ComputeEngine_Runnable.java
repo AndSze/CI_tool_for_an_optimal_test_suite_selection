@@ -187,7 +187,6 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    			if (sensor.getSensorID() != 0) {
 		    				// send ServerMessage_Request_MeasurementData
 		    				sendMessage(new ServerMessage_Request_MeasurementData(sensor.getSensorID()));
-		    				
 		    				System.out.println("[Compute engine Runnable] setComputeEngine_Runnable_running set to: " + isComputeEngine_Runnable_running());
 		    				
 		    			}

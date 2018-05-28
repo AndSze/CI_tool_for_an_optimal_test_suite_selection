@@ -2,7 +2,7 @@ package tcpServer;
 
 import static org.junit.Assert.*;
 import java.io.IOException;
-import java.io.PrintStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import org.junit.After;
@@ -126,22 +126,22 @@ public class StartServerTCPserverTest {
 	    	// there is no need to do the below object initialization in its class constructor !!!
 	        //when(mockClinetManagerTest.initClientManager(clientSocket)).thenReturn(new ClientManager ());
 	        //when(mockClinetManagerTest.getInputReaderStream()).thenReturn(new InputStreamReader(clientSocket.getInputStream()));
-	        when(mockClinetManagerTest.getOutputStream()).thenReturn(new PrintStream(clientSocket.getOutputStream()));
+	        when(mockClinetManagerTest.getOutputStream()).thenReturn(new ObjectOutputStream(clientSocket.getOutputStream()));
 	    } catch (IOException e) {
 	        fail(e.getMessage());
 	    }
-		mockClinetManagerTest.getOutputStream().print("message 1 to be sent"); 
+		mockClinetManagerTest.getOutputStream().writeObject("message 1 to be sent"); 
 		Thread.sleep(100);
 		
 		assertEquals(1,	tcpserver_1.getThreadPoolExecutor().getActiveCount());
 		
 		clientSocket = new Socket(serverHostName, port_1);
 	    try {
-	        when(mockClinetManagerTest.getOutputStream()).thenReturn(new PrintStream(clientSocket.getOutputStream()));
+	        when(mockClinetManagerTest.getOutputStream()).thenReturn(new ObjectOutputStream(clientSocket.getOutputStream()));
 	    } catch (IOException e) {
 	        fail(e.getMessage());
 	    }
-		mockClinetManagerTest.getOutputStream().print("message 2 to be sent"); 
+		mockClinetManagerTest.getOutputStream().writeObject("message 2 to be sent"); 
 		Thread.sleep(100);
 		
 		assertEquals(2,	tcpserver_1.getThreadPoolExecutor().getActiveCount());
@@ -156,11 +156,11 @@ public class StartServerTCPserverTest {
 		tcpserver_1.startServer(serverSocket_1);			
 		clientSocket = new Socket(serverHostName, port_1);
 	    try {
-	        when(mockClinetManagerTest.getOutputStream()).thenReturn(new PrintStream(clientSocket.getOutputStream()));
+	        when(mockClinetManagerTest.getOutputStream()).thenReturn(new ObjectOutputStream(clientSocket.getOutputStream()));
 	    } catch (IOException e) {
 	        fail(e.getMessage());
 	    }
-		mockClinetManagerTest.getOutputStream().print("message 1 to be sent"); 
+		mockClinetManagerTest.getOutputStream().writeObject("message 1 to be sent"); 
 		Thread.sleep(100);
 		
 		assertEquals(1,	tcpserver_1.getThreadPoolExecutor().getActiveCount());
@@ -168,22 +168,22 @@ public class StartServerTCPserverTest {
 		for (int i = 2; i < 9 ; i++) {
 			clientSocket = new Socket(serverHostName, port_1);
 		    try {
-		        when(mockClinetManagerTest.getOutputStream()).thenReturn(new PrintStream(clientSocket.getOutputStream()));
+		        when(mockClinetManagerTest.getOutputStream()).thenReturn(new ObjectOutputStream(clientSocket.getOutputStream()));
 		    } catch (IOException e) {
 		        fail(e.getMessage());
 		    }
-			mockClinetManagerTest.getOutputStream().print("message "+i+" to be sent");
+			mockClinetManagerTest.getOutputStream().writeObject("message "+i+" to be sent");
 			Thread.sleep(100);
 		}
 		assertEquals(8,	tcpserver_1.getThreadPoolExecutor().getActiveCount());
 		
 		clientSocket = new Socket(serverHostName, port_1);
 	    try {
-	        when(mockClinetManagerTest.getOutputStream()).thenReturn(new PrintStream(clientSocket.getOutputStream()));
+	        when(mockClinetManagerTest.getOutputStream()).thenReturn(new ObjectOutputStream(clientSocket.getOutputStream()));
 	    } catch (IOException e) {
 	        fail(e.getMessage());
 	    }
-		mockClinetManagerTest.getOutputStream().print("message 9 to be sent");
+		mockClinetManagerTest.getOutputStream().writeObject("message 9 to be sent");
 		Thread.sleep(100);
 		
 		assertEquals(8,	tcpserver_1.getThreadPoolExecutor().getActiveCount());

@@ -57,7 +57,7 @@ public class TCPserver {
 		serverSocket = new ServerSocket();
 	    serverSocket.setReuseAddress(true);
 	    serverSocket.bind(new java.net.InetSocketAddress(port));
-	    System.out.println("ECHO server created and bound at port = "+port);
+	    System.out.println("[TCPserver] server created and bound at port = "+port);
 	    
 	    // set TCPserver running flag to True
 	    ServerRunning(true);
@@ -106,7 +106,7 @@ public class TCPserver {
 		if (INSTANCE.getServerSocket()!= null){
 			
 			INSTANCE.getServerSocket().close();
-			System.out.println("Socket for the server with port: "+port+" closed successfully");
+			System.out.println("[TCPserver] Socket for the server with port: "+port+" closed successfully");
 			
 			// reinitialize serverRunning to false
 			ServerRunning(false);
@@ -128,12 +128,12 @@ public class TCPserver {
 	            try {
 	            	Socket clientSocket = null;
 				
-					System.out.println("Server Thread Started.");
+					System.out.println("[TCPserver] Server Thread Started.");
 					
 					while(isServerRunning()) {
 						try {
 			                //start listening to incoming client request (blocking function)
-			                System.out.println("[ECHO Server] waiting for the incoming request ...");
+			                System.out.println("[TCPserver] waiting for the incoming request ...");
 			                clientSocket = serverSocket.accept();
 			                //new Thread(new ComputeEngine(clientSocket, computeEnginesRunningID)).start();
 			                //computeEnginesRunningID += 1;
@@ -144,7 +144,7 @@ public class TCPserver {
 							System.out.println("Server Thread Stopped.");
 							break;
 						} 
-						System.out.println("Number of Active Threads: "+clientProcessingPool.getActiveCount());
+						System.out.println("[TCPserver] Number of Active Threads: "+clientProcessingPool.getActiveCount());
 		
 		                clientProcessingPool.execute((new ComputeEngine_Runnable(clientSocket)));
 					}	
@@ -180,7 +180,7 @@ public class TCPserver {
 		return this.serverRunning;
 	}
 	
-	synchronized void ServerRunning(boolean isServerRunning) {
+	public synchronized void ServerRunning(boolean isServerRunning) {
 	    this.serverRunning = isServerRunning;
 	}
 

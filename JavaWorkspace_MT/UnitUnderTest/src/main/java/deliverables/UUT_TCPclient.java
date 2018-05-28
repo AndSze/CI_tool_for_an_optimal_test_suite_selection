@@ -11,23 +11,22 @@ public class UUT_TCPclient extends TCPclient{
 
     //create the port number
     private int port;
-    final String serverHostName = "localhost";
+    private int sensor_ID;
+	final String serverHostName = "localhost";
     private TCPclient INSTANCE = null;
     
     UUT_TCPclient(int sensor_ID, int port) throws IOException {
     	super();
     	this.port = port;
+    	this.sensor_ID = sensor_ID;
     	this.INSTANCE = new TCPclient();
     	this.INSTANCE.setSensor_ID(sensor_ID);
     }
     
-	public static void main(String []args) throws IOException, InterruptedException{
+    public static void main(String []args) throws IOException, InterruptedException{
 		
 		int temp_port = 9876;
-		int temp_sensor_ID = 2;
-		
-		SensorState current_sensor_state = SensorState.DEAD;
-		SensorState previous_sensor_state = SensorState.DEAD;
+		int temp_sensor_ID = 1;
 		
 		UUT_TCPclient uut1_TCPclient = null;
 		
@@ -38,32 +37,46 @@ public class UUT_TCPclient extends TCPclient{
 			IOEx.printStackTrace();
 		}
 		
+		
+		SensorState current_sensor_state = SensorState.DEAD;
+		SensorState previous_sensor_state = SensorState.DEAD;
+		
 		// client gets the configuration from the server and goes to the operational state
 		uut1_TCPclient.setINSTANCE(runTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort(), uut1_TCPclient.getServerHostName()));
 		
-		// close the client socket and the client manager, it will be opened again once the watchdog reaches its threshold
-		uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
-		uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
+		while(true) {
+			if(uut1_TCPclient.getINSTANCE().getClientThread().isAlive() != true ) {
+				// close the client socket and the client manager, it will be opened again once the watchdog reaches its threshold
+				uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
+				uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
+				break;
+			}
+			else {
+				Thread.sleep(100);
+			}
+			
+		}
+		
 		
 		
 		while (true) {
-			current_sensor_state = searchInClientSensorList(temp_sensor_ID).getSensorState();
-			if ((_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() < 122) && (current_sensor_state == SensorState.OPERATIONAL)) {
+			current_sensor_state = searchInClientSensorList(uut1_TCPclient.getSensor_ID()).getSensorState();
+			if ((_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() < 122) && (current_sensor_state == SensorState.OPERATIONAL) && (uut1_TCPclient.getINSTANCE().isClientRunning() == false)) {
 				
 				// opens the client socket activates the client manager (out/in object streams)
 				uut1_TCPclient.setINSTANCE(runTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort(), uut1_TCPclient.getServerHostName()));
 			}
 			//current_sensor_state = searchInClientSensorList(temp_sensor_ID).getSensorState();
 			
-			if ((uut1_TCPclient.getINSTANCE().getClientManager().isClientManagerRunning() == false) && (previous_sensor_state == SensorState.OPERATIONAL)){
+			if ((uut1_TCPclient.getINSTANCE().getClientManager().isClientManagerRunning() == false) && (previous_sensor_state == SensorState.OPERATIONAL) && (uut1_TCPclient.getINSTANCE().isClientRunning() == true)){
 				// sensors gets go to pre_operational message once it received the ack server message what means that the watchdog has been kicked
 				// hence close the client socket and the client manager, it will be opened again once the watchdog reaches its threshold
 				uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
-				uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
+				uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));                                                                                                                                                                            
 			}
 			
 			if ((_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > 1000)) {
-				System.out.println("Sensor ID: " + temp_sensor_ID +"\t [TCPClient Main] _1h_Watchdog: "+ _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
+				System.out.println("Sensor ID: " + uut1_TCPclient.getSensor_ID() +"\t [TCPClient Main] _1h_Watchdog: "+ _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 				Thread.sleep(5000);
 				
 			}
@@ -81,6 +94,10 @@ public class UUT_TCPclient extends TCPclient{
 		try {
 			INSTANCE = INSTANCE.initClient(INSTANCE.getSensor_ID(), serverHostName, port);
 			
+			Thread temp = new Thread(INSTANCE);
+			temp.start();
+			INSTANCE.setClientThread(temp);
+			
 		} catch (UnknownHostException unHostEx) {
 	    	System.out.println("Error: The client with port="+port+" returns the UnknownHostException if if the IP address of the host could not be determined");
 	    	unHostEx.printStackTrace();
@@ -97,6 +114,9 @@ public class UUT_TCPclient extends TCPclient{
 	public static TCPclient closeTheClient(TCPclient INSTANCE, int port){	
 		try {
 			INSTANCE.closeClient(INSTANCE, port);
+			
+			INSTANCE.getClientThread().interrupt();
+			
 		} catch (IllegalArgumentException illPTREx ){
 			System.out.println("Error: The client with port= "+port+" returns the IllegalArgumentException if there was an attempt to close a client socket that has not been initialized");
 			illPTREx.printStackTrace();
@@ -134,5 +154,9 @@ public class UUT_TCPclient extends TCPclient{
 	
 	public void setINSTANCE(TCPclient INSTANCE) {
 		this.INSTANCE = INSTANCE;
+	}
+	
+    public int getSensor_ID() {
+		return sensor_ID;
 	}
 }

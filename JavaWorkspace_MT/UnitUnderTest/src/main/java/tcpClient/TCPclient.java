@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import messages.ClientMessage_BootUp;
 import sensor.SensorImpl;
 
-public class TCPclient{
+public class TCPclient implements Runnable {
 
 	// we can have multiple clients, hence Socket and ClientManager are not a static variable and they are unique for each TCPclient
     private Socket clientSocket = null;
@@ -14,6 +14,7 @@ public class TCPclient{
 	private boolean clientRunning = false;
 	protected static ArrayList<SensorImpl> Client_Sensors_LIST;
 	private int sensor_ID;
+	private Thread clientThread = null;
 
 	// default constructor 
     public TCPclient() {
@@ -31,26 +32,42 @@ public class TCPclient{
 	    
 	    setClientSocket(new Socket(serverHostName, port));
 	    setSensor_ID(sensor_ID);
-	    System.out.println("Client ECHO Socket created on port = "+port);
+	    System.out.println("[TCPclient] Client Socket created on port = "+port);
 	    
 	    clientManager = new ClientManager();   	
 	 	
 	 	// since client managers are different objects for each TCPclient instance, all clientManager functions are called via TCPclient attribute setter (setClientManager)
     	setClientManager(clientManager.initClientManager(getClientSocket(), getSensor_ID()));
-    	System.out.println("Client Manager created with outputsteam and input stream");
+    	System.out.println("[TCPclient] Client Manager created with outputsteam and input stream");
     	clientRunning(true);
     	
-    	// send BootUp message
+    	
     	if (searchInClientSensorList(getSensor_ID()) == null) {
     	
 		    // add the instance of sensor on the client side to the Client_Sensors_LIST
 		 	Client_Sensors_LIST = updateClientSensorList(new SensorImpl(getSensor_ID()));
+		 	
+		 	System.out.println("[TCPclient] Client_Sensors_LIST is updated with sensor instace with ID: " + getSensor_ID());
     	}
-    	
-	 	clientManager.sendMessage(new ClientMessage_BootUp(getSensor_ID()));
-	 	System.out.println("Boot Up message send by the Client");
-    	
-    	try {
+    }
+	
+	public TCPclient initClient(int sensor_ID, String serverHostName, int port) throws IOException{
+
+		return (new TCPclient (sensor_ID, serverHostName, port));
+	}
+	
+	public void run() {
+
+    	// send BootUp message
+	 	try {
+			clientManager.sendMessage(new ClientMessage_BootUp(getSensor_ID()));
+		 	System.out.println("[TCPclient]  Boot Up message send by the Client");
+		} catch (IOException IOex) {
+			System.out.println("Error: The client for sensor ID: "+getSensor_ID()+" returns the IOException when attempted to send Boot Up message");
+			IOex.printStackTrace();
+		}
+	
+        try {
     		clientManager.messagesHandler(clientManager.getOutputStream(), clientManager.getInputReaderStream());
     	} catch (ClassNotFoundException CNFEx) {
 	    	System.out.println("Error: The client for sensor ID: "+getSensor_ID()+" returns the ClassNotFoundException when class of a serialized object cannot be read by the ObjectInputStream.");
@@ -58,12 +75,11 @@ public class TCPclient{
 	    } catch (InterruptedException intEx) {
 	    	System.out.println("Error: The client for sensor ID: "+getSensor_ID()+" returns the InterruptedException when a thread is waiting, sleeping, or otherwise occupied, and the thread is interrupted.");
 	    	intEx.printStackTrace();
+	    } catch (IOException IOex) {
+	    	System.out.println("Error: The client for sensor ID: "+getSensor_ID()+" returns the IOException when any of the usual Input/Output related exceptions take place, e.g. "
+	    			+ "Something is wrong with a class used by serialization, Control information in the stream is inconsistent or Primitive data was found in the stream instead of objects");
+	    	IOex.printStackTrace();
 	    }
-    }
-	
-	public TCPclient initClient(int sensor_ID, String serverHostName, int port) throws IOException{
-
-		return (new TCPclient (sensor_ID, serverHostName, port));
 	}
 	
 	public void closeClient(TCPclient INSTANCE, int port) throws IOException{
@@ -169,11 +185,11 @@ public class TCPclient{
 		this.clientManager = clientManager;
 	}
 	
-	synchronized boolean isClientRunning() {
+	public synchronized boolean isClientRunning() {
 		return this.clientRunning;
 	}
 	
-	synchronized void clientRunning(boolean isClientRunning) {
+	public synchronized void clientRunning(boolean isClientRunning) {
 	    this.clientRunning = isClientRunning;
 	}
 	
@@ -184,5 +200,15 @@ public class TCPclient{
 	public synchronized void setSensor_ID(int sensor_ID) {
 		this.sensor_ID = sensor_ID;
 	}
+	
+	
+	public synchronized Thread getClientThread() {
+		return clientThread;
+	}
+
+	public synchronized void setClientThread(Thread clientThread) {
+		this.clientThread = clientThread;
+	}
+
 
 }
