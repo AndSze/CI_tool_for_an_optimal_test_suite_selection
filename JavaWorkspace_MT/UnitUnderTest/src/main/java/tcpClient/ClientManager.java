@@ -58,7 +58,7 @@ public class ClientManager implements TCPclient_interface{
         
 	}
 	
-	public void messagesHandler(ObjectOutputStream outputStream, ObjectInputStream inputStream) throws IOException, ClassNotFoundException, InterruptedException {
+	public void messagesHandler(ObjectOutputStream outputStream, ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
 		
 		Message_Interface receivedMessage = null;
 		boolean ack_alert = false;
@@ -146,14 +146,16 @@ public class ClientManager implements TCPclient_interface{
 								new_sensor.setSensorState(SensorState.OPERATIONAL);
 							}
 							else if (new_sensor.getSensorState() == SensorState.DEAD) {
-
+								sendMessage(new ClientMessage_ACK(sensor_ID));
 								setClientManagerRunning(false);
+								System.out.println("[ClientManager] ServerMessage_SensorInfoUpdate has the following SensorState: " + new_sensor.getSensorState());
+								System.out.println("[ClientManager] SensorState.DEAD causes the sensor ID: " + sensor_ID + " to stop communicating with the server"); 
 							}
 							 
 							_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_SensorInfoUpdate) receivedMessage).get1h_Watchdog());
 							_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_SensorInfoUpdate) receivedMessage).get24h_Watchdog());
 							
-							if(new_sensor.getSensorState() == SensorState.OPERATIONAL && _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > 123) {
+							if(new_sensor.getSensorState() == SensorState.OPERATIONAL && _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > 12) {
 								System.out.println("[ClientManager] NEW CONDITION if OPERATIONAL AND STATE TO setClientManagerRunning(false) - _1h_Watchdog: " + _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 								setClientManagerRunning(false);
 							}
@@ -183,7 +185,6 @@ public class ClientManager implements TCPclient_interface{
 							
 						}
 					}
-			        Thread.sleep(10);
 				}
 			} 
 			else {

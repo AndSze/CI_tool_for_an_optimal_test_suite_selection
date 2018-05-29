@@ -39,9 +39,9 @@ public class _1h_Watchdog implements Runnable {
     private Thread _1h_WatchdogThread; 
     private Lock expirationDateLock; 
     // _1h_Watchdog expiration time is given in seconds
-    private final int _1h_WatchdogExpiration = 3600; 
+    private final int _1h_WatchdogExpiration = 36; 
     // _1h_Watchdog expiration time decrementation timeIntervals in milliseconds (its value is decremented every second)
-    private int timeIntervals = 1000; 
+    private int timeIntervals = 100; 
     private boolean isPaused = false; 
  
     /*
@@ -75,9 +75,9 @@ public class _1h_Watchdog implements Runnable {
      * By the way, it's not cool to ask the neighbor (some random task) to 
      * feed your dog for you.  He's your responsibility! 
      */ 
-    public void feed() { 
+    public void feed(double offset_factor) { 
 		expirationDateLock.lock(); 
-		millisecondsLeftUntilExpiration = (long) (_1h_WatchdogExpiration * 1000); 
+		millisecondsLeftUntilExpiration = (long) (_1h_WatchdogExpiration * 1000 + offset_factor); 
 		expirationDateLock.unlock(); 
     } 
  

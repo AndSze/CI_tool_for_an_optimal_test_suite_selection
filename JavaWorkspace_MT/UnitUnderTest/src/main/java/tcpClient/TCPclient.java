@@ -72,9 +72,6 @@ public class TCPclient implements Runnable {
     	} catch (ClassNotFoundException CNFEx) {
 	    	System.out.println("Error: The client for sensor ID: "+getSensor_ID()+" returns the ClassNotFoundException when class of a serialized object cannot be read by the ObjectInputStream.");
 	    	CNFEx.printStackTrace();
-	    } catch (InterruptedException intEx) {
-	    	System.out.println("Error: The client for sensor ID: "+getSensor_ID()+" returns the InterruptedException when a thread is waiting, sleeping, or otherwise occupied, and the thread is interrupted.");
-	    	intEx.printStackTrace();
 	    } catch (IOException IOex) {
 	    	System.out.println("Error: The client for sensor ID: "+getSensor_ID()+" returns the IOException when any of the usual Input/Output related exceptions take place, e.g. "
 	    			+ "Something is wrong with a class used by serialization, Control information in the stream is inconsistent or Primitive data was found in the stream instead of objects");

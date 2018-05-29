@@ -6,6 +6,7 @@ import java.net.UnknownHostException;
 import messages.SensorState;
 import tcpClient.TCPclient;
 import watchdog._1h_Watchdog;
+import watchdog._24h_Watchdog;
 
 public class UUT_TCPclient extends TCPclient{
 
@@ -26,7 +27,7 @@ public class UUT_TCPclient extends TCPclient{
     public static void main(String []args) throws IOException, InterruptedException{
 		
 		int temp_port = 9876;
-		int temp_sensor_ID = 1;
+		int temp_sensor_ID = 3;
 		
 		UUT_TCPclient uut1_TCPclient = null;
 		
@@ -39,7 +40,9 @@ public class UUT_TCPclient extends TCPclient{
 		
 		
 		SensorState current_sensor_state = SensorState.DEAD;
-		SensorState previous_sensor_state = SensorState.DEAD;
+		SensorState previous_sensor_state = SensorState.DEAD;		
+		
+		System.out.println("Client_Sensors_LIST size: "+ Client_Sensors_LIST.size());
 		
 		// client gets the configuration from the server and goes to the operational state
 		uut1_TCPclient.setINSTANCE(runTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort(), uut1_TCPclient.getServerHostName()));
@@ -61,9 +64,11 @@ public class UUT_TCPclient extends TCPclient{
 		
 		while (true) {
 			current_sensor_state = searchInClientSensorList(uut1_TCPclient.getSensor_ID()).getSensorState();
-			if ((_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() < 122) && (current_sensor_state == SensorState.OPERATIONAL) && (uut1_TCPclient.getINSTANCE().isClientRunning() == false)) {
-				
+			uut1_TCPclient.getINSTANCE();
+			if ((_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() < 12) && (current_sensor_state == SensorState.OPERATIONAL) && (uut1_TCPclient.getINSTANCE().isClientRunning() == false)) {
+																			
 				// opens the client socket activates the client manager (out/in object streams)
+				System.out.println("[UUT_TCPclient] Sensor ID: " + uut1_TCPclient.getSensor_ID() + "\t runTheClient() is being called");
 				uut1_TCPclient.setINSTANCE(runTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort(), uut1_TCPclient.getServerHostName()));
 			}
 			//current_sensor_state = searchInClientSensorList(temp_sensor_ID).getSensorState();
@@ -71,19 +76,28 @@ public class UUT_TCPclient extends TCPclient{
 			if ((uut1_TCPclient.getINSTANCE().getClientManager().isClientManagerRunning() == false) && (previous_sensor_state == SensorState.OPERATIONAL) && (uut1_TCPclient.getINSTANCE().isClientRunning() == true)){
 				// sensors gets go to pre_operational message once it received the ack server message what means that the watchdog has been kicked
 				// hence close the client socket and the client manager, it will be opened again once the watchdog reaches its threshold
+				System.out.println("[UUT_TCPclient] Sensor ID: " + uut1_TCPclient.getSensor_ID() + "\t closeTheClientManager() & closeTheClient() are being called");
+				
+				// closeTheClientManager closes input/output object stremas for the ClientManager that has been already closed
 				uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE()));
-				uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE()));                                                                                                                                                                            
+				uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE()));            
+				System.out.println("[UUT_TCPclient] Sensor ID: " + uut1_TCPclient.getSensor_ID() +"\t _24h_Watchdog: "+ _24h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 			}
 			
-			if ((_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > 1000)) {
-				System.out.println("Sensor ID: " + uut1_TCPclient.getSensor_ID() +"\t [TCPClient Main] _1h_Watchdog: "+ _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
+			if ((_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > 20)) {
+				System.out.println("[UUT_TCPclient] Sensor ID: " + uut1_TCPclient.getSensor_ID() +"\t _1h_Watchdog: "+ _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 				Thread.sleep(5000);
+				
+			}
+			else if ((_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > 10)) {
+				System.out.println("[UUT_TCPclient] Sensor ID: " + uut1_TCPclient.getSensor_ID() +"\t _1h_Watchdog: "+ _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
+				Thread.sleep(1000);
 				
 			}
 			else {
 				Thread.sleep(10);
 			}
-			//previous_sensor_state = searchInClientSensorList(temp_sensor_ID).getSensorState();
+			previous_sensor_state = searchInClientSensorList(temp_sensor_ID).getSensorState();
 			
 		}
 		
