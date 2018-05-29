@@ -26,6 +26,10 @@ public class TCPserver {
 			TimeUnit.MILLISECONDS,
             new LinkedBlockingQueue<Runnable>());
 	private boolean serverRunning = false;
+	
+	// interface for testing purposes -> in tests it should be set to false to avoid hanging the execution in inputStream.readObject() in ComputeEngine_Runnable
+	private boolean computeEngineRunning = true;
+	
 	private Thread serverThread = null;
 	
 	private static _1h_Watchdog _1hWatchdog_INSTANCE = null;
@@ -146,7 +150,7 @@ public class TCPserver {
 						} 
 						System.out.println("[TCPserver] Number of Active Threads: "+clientProcessingPool.getActiveCount());
 		
-		                clientProcessingPool.execute((new ComputeEngine_Runnable(clientSocket)));
+		                clientProcessingPool.execute((new ComputeEngine_Runnable(clientSocket, isComputeEngineRunning())));
 					}	
 	            } catch (IllegalThreadStateException ITSex) {
 		            System.out.println("Error: when new Thread with MessageProcessorRunnable created");
@@ -210,6 +214,14 @@ public class TCPserver {
 	
 	public static ComputeEngine_Processing getProcessing_engine() {
 		return processing_engine;
+	}
+	
+	public synchronized boolean isComputeEngineRunning() {
+		return this.computeEngineRunning;
+	}
+	
+	public synchronized void ComputeEngineRunning(boolean computeEngineRunning) {
+	    this.computeEngineRunning = computeEngineRunning;
 	}
 	
 	

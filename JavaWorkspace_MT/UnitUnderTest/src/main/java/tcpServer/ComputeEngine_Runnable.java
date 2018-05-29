@@ -28,11 +28,11 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
     private boolean isComputeEngine_Runnable_running = false;
     private int delay = 100;
 
-	public ComputeEngine_Runnable(Socket clientSocket) throws IOException  {
+	public ComputeEngine_Runnable(Socket clientSocket, boolean isComputeEngine_Runnable_running) throws IOException  {
 		super();
 		outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         inputStream = new ObjectInputStream(clientSocket.getInputStream());
-        this.isComputeEngine_Runnable_running = true;
+        this.isComputeEngine_Runnable_running = isComputeEngine_Runnable_running;
         System.out.println("[Compute engine Runnable] Multithreaded Server Service has been started");
 	}
 	

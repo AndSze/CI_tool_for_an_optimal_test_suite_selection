@@ -82,12 +82,12 @@ public class TCPclient implements Runnable {
 	    }
 	}
 	
-	public void closeClient(TCPclient INSTANCE, int port) throws IOException{
+	public void closeClient(TCPclient INSTANCE) throws IOException{
 		
 		if(INSTANCE.getClientSocket() != null){
 
 			INSTANCE.getClientSocket().close();
-			System.out.println("Socket for the client with port: "+port+" closed successfully");
+			System.out.println("[TCPclient] Socket for the client with socket ID: " + getSensor_ID() + " closed successfully");
 			
 			// reinitialize clientRunning to false
 			clientRunning(false);
@@ -97,7 +97,7 @@ public class TCPclient implements Runnable {
 		}
 	}
 	
-	public void closeClientManager(TCPclient INSTANCE, int port) throws IOException{
+	public void closeClientManager(TCPclient INSTANCE) throws IOException{
 		
 		if(INSTANCE.getClientManager() != null){
 				
@@ -105,7 +105,7 @@ public class TCPclient implements Runnable {
 			INSTANCE.getClientManager().closeInStream();
 			INSTANCE.getClientManager().setClientManagerRunning(false);
 			
-			System.out.println("ClientManager for the client with port: "+port+" closed successfully");
+			System.out.println("[TCPclient] ClientManager for the client with socket ID: " + getSensor_ID() + " closed successfully");
 		} 
 		else {
 			throw new IllegalArgumentException();

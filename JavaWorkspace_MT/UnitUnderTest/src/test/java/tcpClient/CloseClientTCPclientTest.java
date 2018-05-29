@@ -5,9 +5,22 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Matchers;
+import org.mockito.Mockito;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
+
+import tcpServer.ComputeEngine_Runnable;
 import tcpServer.TCPserver;
 
 public class CloseClientTCPclientTest {
@@ -19,11 +32,20 @@ public class CloseClientTCPclientTest {
 	int sensor_ID_2 = 2;
 	TCPclient tcpclient_2 = null;
 	final String serverHostName = "localhost";
-	TCPserver mockTCPserverTest_1 = null;
-	ServerSocket tempServerSocket_1 = null;
-	TCPserver mockTCPserverTest_2 = null;
-	ServerSocket tempServerSocket_2 = null;
 
+	// to mock TCPserver instances with ServerSocket mocks
+	TCPserver mockTCPserverTest = null;
+	ServerSocket tempServerSocket_1 = null;
+	ServerSocket tempServerSocket_2 = null;
+	
+	// to mock Client Socket instance in the mockClientSocket = servSocket.accept() statement
+	Socket mockClientSocket = null;
+	
+	// to mock server threads
+	Thread mockServerThread = null;
+	ComputeEngine_Runnable mockComputeEngine_Runnable = null;
+	ExecutorService executor = Executors.newSingleThreadExecutor();
+	private final ThreadPoolExecutor auxiliaryServerThreadExecutor = new ThreadPoolExecutor(8, 8, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
 	
 	String[] testPurpose = { 	"Verify that once the previously initialized client is closed, the new client instance can be initialized at the same port as previous",
 								"Verify that if a client instance at some port was closed, the other clients at different ports are not being closed",
@@ -41,16 +63,50 @@ public class CloseClientTCPclientTest {
 		tcpclient_1 = new TCPclient();
 		
 		// mock Server Socket to enable the Client Socket to establish connection
-		mockTCPserverTest_1 = mock(TCPserver.class);
-		tempServerSocket_1 = new ServerSocket();
-		when(mockTCPserverTest_1.getServerSocket()).thenReturn(tempServerSocket_1);
+		mockTCPserverTest = mock(TCPserver.class);
+		mockClientSocket = mock(Socket.class);
 		
-		if (CloseClientTCPclientTest.testID == 2) {
+		tempServerSocket_1 = new ServerSocket();
+		
+		if ( CloseClientTCPclientTest.testID == 2) {
 			tcpclient_2 = new TCPclient();
-			mockTCPserverTest_2 = mock(TCPserver.class);
 			tempServerSocket_2 = new ServerSocket();
-			when(mockTCPserverTest_2.getServerSocket()).thenReturn(tempServerSocket_2);
+			
+			when(mockTCPserverTest.getServerSocket()).thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_2).thenReturn(tempServerSocket_2)
+													 .thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_2).thenReturn(tempServerSocket_2); // teardown section
 		}
+		else {
+			when(mockTCPserverTest.getServerSocket()).thenReturn(tempServerSocket_1);
+		}
+		
+		// Mockito.doAnswer - to mock void method to do something (mock the behavior despite being void) - in this case it is used for TCPserver.startServer();
+		// the test uses this approach for the purpose of avoiding actual messages sent via TCP - it will be checked in the integration tests
+		Mockito.doAnswer(new Answer<Thread>() {
+            @Override
+            public Thread answer(InvocationOnMock invocation) throws Throwable {
+                Object[] arguments = invocation.getArguments();
+                if (arguments != null && arguments.length > 0 && arguments[0] != null ) {
+                	final ServerSocket servSocket = (ServerSocket) arguments[0];
+                	mockServerThread = new Thread(new Runnable() {
+                		public void run() {
+                			while(!servSocket.isClosed()) {
+		                		try {
+									mockClientSocket = servSocket.accept();
+									mockComputeEngine_Runnable = Mockito.spy(new ComputeEngine_Runnable(mockClientSocket, false));
+									auxiliaryServerThreadExecutor.submit(mockComputeEngine_Runnable);
+								} catch (IOException IOex) {
+									mockServerThread.interrupt();
+									System.out.println("Server Thread Stopped.");
+									System.out.println("Server" + IOex.getMessage());
+									break;
+								}
+                			}
+                		}
+                	});
+                }
+                return mockServerThread;
+            }
+		}).when(mockTCPserverTest).startServer(Matchers.any(ServerSocket.class));
 
 		System.out.println("\t\tTest Run "+CloseClientTCPclientTest.testID+" Purpose:");
 		System.out.println(testPurpose[(CloseClientTCPclientTest.testID-1)]);
@@ -61,13 +117,16 @@ public class CloseClientTCPclientTest {
 	@Test
 	public void test_run_1() throws IOException {
 		
-		mockTCPserverTest_1.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
+		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
+		
+		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
+		mockServerThread.start();
 		
 		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
 		assertTrue(tcpclient_1.isClientRunning());
 		assertFalse(tcpclient_1.getClientSocket().isClosed());
 
-		tcpclient_1.closeClient(tcpclient_1, port_1);
+		tcpclient_1.closeClient(tcpclient_1);
 		assertFalse(tcpclient_1.isClientRunning());
 		assertTrue(tcpclient_1.getClientSocket().isClosed());
 		
@@ -79,8 +138,13 @@ public class CloseClientTCPclientTest {
 	@Test
 	public void test_run_2() throws IOException {
 
-		mockTCPserverTest_1.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
-		mockTCPserverTest_2.getServerSocket().bind(new java.net.InetSocketAddress(port_2));
+		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
+		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
+		mockServerThread.start();
+		
+		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_2));
+		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
+		mockServerThread.start();
 		 
 		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
 		assertTrue(tcpclient_1.isClientRunning());
@@ -90,7 +154,7 @@ public class CloseClientTCPclientTest {
 		assertTrue(tcpclient_2.isClientRunning());
 		assertFalse(tcpclient_2.getClientSocket().isClosed());
 
-		tcpclient_1.closeClient(tcpclient_1, port_1);
+		tcpclient_1.closeClient(tcpclient_1);
 		assertFalse(tcpclient_1.isClientRunning());
 		assertTrue(tcpclient_1.getClientSocket().isClosed());
 		assertTrue(tcpclient_2.isClientRunning());
@@ -101,17 +165,20 @@ public class CloseClientTCPclientTest {
 	@Test
 	public void test_run_3() throws IOException {
 	
-		mockTCPserverTest_1.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
+		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
+		
+		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
+		mockServerThread.start();
 
 		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
 		assertTrue(tcpclient_1.isClientRunning());
 		assertFalse(tcpclient_1.getClientSocket().isClosed());
 
-		tcpclient_1.closeClient(tcpclient_1, port_1);
+		tcpclient_1.closeClient(tcpclient_1);
 		assertFalse(tcpclient_1.isClientRunning());
 		assertTrue(tcpclient_1.getClientSocket().isClosed());
 		
-		tcpclient_1.closeClient(tcpclient_1, port_1);
+		tcpclient_1.closeClient(tcpclient_1);
 		assertFalse(tcpclient_1.isClientRunning());
 		assertTrue(tcpclient_1.getClientSocket().isClosed());
 			
@@ -120,9 +187,12 @@ public class CloseClientTCPclientTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void test_run_4() throws IOException {
 		
-		mockTCPserverTest_1.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
+		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		
-		tcpclient_1.closeClient(tcpclient_1, port_1);
+		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
+		mockServerThread.start();
+		
+		tcpclient_1.closeClient(tcpclient_1);
 		
 		// To prove that exception's stack trace reported by JUnit caught the IllegalArgumentException
 		assertTrue(false);
@@ -139,25 +209,24 @@ public class CloseClientTCPclientTest {
 	   
 	   if(tcpclient_1 != null) {
 		   if(tcpclient_1.isClientRunning()){
-			   tcpclient_1.closeClient(tcpclient_1, port_1);
+			   tcpclient_1.closeClient(tcpclient_1);
 		   }
 	   }
 	   if(tcpclient_2 != null){
 		   if(tcpclient_2.isClientRunning()){
-			   tcpclient_2.closeClient(tcpclient_2, port_2);
+			   tcpclient_2.closeClient(tcpclient_2);
 		   
 		   }
 	   }
-	   if(mockTCPserverTest_1 != null){
-		   if(!mockTCPserverTest_1.getServerSocket().isClosed()) {
-			   mockTCPserverTest_1.getServerSocket().close();
+	   if(mockTCPserverTest != null){
+		   if(!mockTCPserverTest.getServerSocket().isClosed()) {
+			   mockTCPserverTest.getServerSocket().close();
+		   }
+		   if(!mockTCPserverTest.getServerSocket().isClosed()) {
+			   mockTCPserverTest.getServerSocket().close();
 		   }
 	   }
-	   if(mockTCPserverTest_2 != null){
-		   if(!mockTCPserverTest_2.getServerSocket().isClosed()) {
-			   mockTCPserverTest_2.getServerSocket().close();
-		   }
-	   }
+	   	  
 	   
 	   incrementTestID();
     }

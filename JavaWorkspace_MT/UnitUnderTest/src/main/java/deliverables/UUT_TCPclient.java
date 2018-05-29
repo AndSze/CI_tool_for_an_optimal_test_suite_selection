@@ -47,8 +47,8 @@ public class UUT_TCPclient extends TCPclient{
 		while(true) {
 			if(uut1_TCPclient.getINSTANCE().getClientThread().isAlive() != true ) {
 				// close the client socket and the client manager, it will be opened again once the watchdog reaches its threshold
-				uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
-				uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
+				uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE()));
+				uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE()));
 				break;
 			}
 			else {
@@ -71,8 +71,8 @@ public class UUT_TCPclient extends TCPclient{
 			if ((uut1_TCPclient.getINSTANCE().getClientManager().isClientManagerRunning() == false) && (previous_sensor_state == SensorState.OPERATIONAL) && (uut1_TCPclient.getINSTANCE().isClientRunning() == true)){
 				// sensors gets go to pre_operational message once it received the ack server message what means that the watchdog has been kicked
 				// hence close the client socket and the client manager, it will be opened again once the watchdog reaches its threshold
-				uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));
-				uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort()));                                                                                                                                                                            
+				uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE()));
+				uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE()));                                                                                                                                                                            
 			}
 			
 			if ((_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > 1000)) {
@@ -111,30 +111,30 @@ public class UUT_TCPclient extends TCPclient{
 		return INSTANCE;
 	}
 	
-	public static TCPclient closeTheClient(TCPclient INSTANCE, int port){	
+	public static TCPclient closeTheClient(TCPclient INSTANCE){	
 		try {
-			INSTANCE.closeClient(INSTANCE, port);
+			INSTANCE.closeClient(INSTANCE);
 			
 			INSTANCE.getClientThread().interrupt();
 			
 		} catch (IllegalArgumentException illPTREx ){
-			System.out.println("Error: The client with port= "+port+" returns the IllegalArgumentException if there was an attempt to close a client socket that has not been initialized");
+			System.out.println("Error: The client socket for sensor ID = "+ INSTANCE.getSensor_ID() +" returns the IllegalArgumentException if there was an attempt to close a client socket that has not been initialized");
 			illPTREx.printStackTrace();
 		}catch (IOException IOEx ){
-			System.out.println("Error: The client socket with port="+port+" cannot be closed on the server side");
+			System.out.println("Error: The client socket for sensor ID = "+ INSTANCE.getSensor_ID() +" cannot be closed on the client side");
 			IOEx.printStackTrace();
 		}
 		return INSTANCE;
 	}	
 	
-	public static TCPclient closeTheClientManager(TCPclient INSTANCE, int port){	
+	public static TCPclient closeTheClientManager(TCPclient INSTANCE){	
 		try {
-			INSTANCE.closeClientManager(INSTANCE, port);
+			INSTANCE.closeClientManager(INSTANCE);
 		} catch (IllegalArgumentException illPTREx ){
-			System.out.println("Error: The client with port= "+port+" returns the IllegalArgumentException if there was an attempt to close a client manager that has not been initialized");
+			System.out.println("Error: The client manager for sensor ID = "+ INSTANCE.getSensor_ID() +" returns the IllegalArgumentException if there was an attempt to close a client manager that has not been initialized");
 			illPTREx.printStackTrace();
 		}catch (IOException IOEx ){
-			System.out.println("Error: The client socket with port="+port+" cannot be closed on the server side");
+			System.out.println("Error: The client manager for sensor ID = "+ INSTANCE.getSensor_ID() +" cannot be closed on the client side");
 			IOEx.printStackTrace();
 		}
 		return INSTANCE;
