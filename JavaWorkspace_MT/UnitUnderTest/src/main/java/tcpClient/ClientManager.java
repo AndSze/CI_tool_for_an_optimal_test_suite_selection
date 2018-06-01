@@ -130,7 +130,7 @@ public class ClientManager implements TCPclient_interface{
 								
 								// send BootUp message
 						    	sendMessage(new ClientMessage_BootUp(sensor_ID));
-						    	System.out.println("Boot Up message send by the Client after processing ServerMessage_SensorInfoUpdate");
+						    	System.out.println("[ClientManager] Boot Up message send by the Client after processing ServerMessage_SensorInfoUpdate");
 								
 						    	// reset Sensor results in setting its state to PRE_OPERATIONAL, hence the state has to be updated to MAINTENANCE
 								new_sensor.setSensorState(SensorState.MAINTENANCE);
@@ -154,16 +154,17 @@ public class ClientManager implements TCPclient_interface{
 							 
 							_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_SensorInfoUpdate) receivedMessage).get1h_Watchdog());
 							_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_SensorInfoUpdate) receivedMessage).get24h_Watchdog());
+								
+							TCPclient.updateClientSensorList(new_sensor);
+							
+							System.out.println("[ClientManager] ServerMessage_SensorInfoUpdate has the following SensorState: " + new_sensor.getSensorState());
+							System.out.println("[ClientManager] ServerMessage_SensorInfoUpdate received when _1h_Watchdog equals: " + _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 							
 							if(new_sensor.getSensorState() == SensorState.OPERATIONAL && _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > 12) {
 								System.out.println("[ClientManager] NEW CONDITION if OPERATIONAL AND STATE TO setClientManagerRunning(false) - _1h_Watchdog: " + _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 								setClientManagerRunning(false);
 							}
-							
-							TCPclient.updateClientSensorList(new_sensor);
-							
-							System.out.println("[ClientManager] ServerMessage_SensorInfoUpdate has the following SensorState: " + new_sensor.getSensorState());
-							System.out.println("[ClientManager] ServerMessage_SensorInfoUpdate received when _1h_Watchdog equals: " + _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
+
 						}
 					}
 					else if (receivedMessage instanceof ServerMessage_ACK) {
@@ -188,6 +189,7 @@ public class ClientManager implements TCPclient_interface{
 				}
 			} 
 			else {
+				System.out.println("[ClientManager] is being closed for sensor ID: " + sensor_ID);
 				break;
 			}
         }

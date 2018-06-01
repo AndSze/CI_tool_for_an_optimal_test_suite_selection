@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
+
 import sensor.MeasurementData;
 import sensor.SensorImpl;
 import watchdog._1h_Watchdog;
@@ -43,8 +45,14 @@ public class TCPserver {
 	protected static ArrayList<MeasurementData> MeasurementData_LIST= new ArrayList<>();
 	protected static String Sensors_PATH = "files\\Sensors";
 	private int numberOfSensors = 0;
-	private float[][] sensor_coordinates_array = { {1.0f, 1.0f}, {2.0f, 1.0f}, {1.5f, 2.0f}, {2.5f, 0.5f}, {3.0f, 3.5f}, {1.0f, 3.5f}, {2.5f, 0.5f}, {0.5f, 2.5f}};
+	private float[][] sensor_coordinates_array = { {1.0f, 1.0f} , {2.0f, 1.0f}, {1.5f, 2.0f}};// {2.5f, 0.5f}, {3.0f, 3.5f}, {1.0f, 3.5f}, {2.5f, 0.5f}, {0.5f, 2.5f}};
 
+	private static boolean _1hWatchog_timestamp_table_initial[] = {false, false, false};
+	//private boolean _24hWatchog_timestamp_table[] = {false, false, false};
+
+    private static AtomicReference<boolean[]> _1hWatchog_timestamp_table = new AtomicReference<boolean[]>(_1hWatchog_timestamp_table_initial);
+	private static AtomicReference<boolean[]> _24hWatchog_timestamp_table = new AtomicReference<boolean[]>();
+    //_1hWatchog_timestamp_table[] = {false, false, false};
 
 	// default constructor
 	public TCPserver() throws IOException{
@@ -53,7 +61,7 @@ public class TCPserver {
 		TCPserver._1hWatchdog_INSTANCE = _1h_Watchdog.getInstance();
 		TCPserver._24hWatchdog_INSTANCE = _24h_Watchdog.getInstance();
 	};
-	
+
 	 // overloaded constructor
 	private TCPserver (int port) throws IOException{
 		
@@ -83,9 +91,12 @@ public class TCPserver {
 	    
     	for (int i = 1; i <= sensor_coordinates_array.length; i++) {
     		try {
-	    		SensorImpl temp_sensor = new SensorImpl(i,new Point2D.Float(sensor_coordinates_array[i-1][0],sensor_coordinates_array[i-1][1]),"Release 1");
+	    		SensorImpl temp_sensor = new SensorImpl(i, new Point2D.Float(sensor_coordinates_array[i-1][0], sensor_coordinates_array[i-1][1]), "Release 1");
 	    		processing_engine.saveSensorInfo(temp_sensor);
 	    		Server_Sensors_LIST = processing_engine.updateServerSensorList(temp_sensor);
+	    		
+	    		set_1hWatchog_Timestamp_tableID_value(false, i-1);
+	    		//setTimestamp_tableID_value(_24hWatchog_timestamp_table, false, i-1);
     		} catch (FileNotFoundException FNFex) {
                 System.out.println("Error: when there was an attempt to serialize a sensor instance in the path that cannot be found by the system");
             	System.out.println(FNFex.getMessage());
@@ -112,6 +123,9 @@ public class TCPserver {
 			INSTANCE.getServerSocket().close();
 			System.out.println("[TCPserver] Socket for the server with port: "+port+" closed successfully");
 			
+			// set to 1hWatchdog 30 [s] to activate the client socket when Watchdog time before expiration reaches its specified level (client-socket opening level)
+			get_1hWatchdog_INSTANCE().setTimeLeftBeforeExpiration(30);
+			
 			// reinitialize serverRunning to false
 			ServerRunning(false);
 		} 
@@ -135,6 +149,7 @@ public class TCPserver {
 					System.out.println("[TCPserver] Server Thread Started.");
 					
 					while(isServerRunning()) {
+
 						try {
 			                //start listening to incoming client request (blocking function)
 			                System.out.println("[TCPserver] waiting for the incoming request ...");
@@ -223,6 +238,67 @@ public class TCPserver {
 	public synchronized void ComputeEngineRunning(boolean computeEngineRunning) {
 	    this.computeEngineRunning = computeEngineRunning;
 	}
+
+	public static boolean areAllTrue(boolean[] array)
+	{
+		boolean returned_flag = false;
+		int i = 0;
+		for(i = 0; i < array.length; i++) {
+	    	if(!array[i]) {
+	    		returned_flag = false;
+	    		break;
+	    	}
+	    	else {
+	    		returned_flag = true;
+	    	}
+	    }
+		System.out.println("[TCPserver - areAllTrue] Have all watchdogs been kicked?: " + returned_flag);
+	    if (!returned_flag) System.out.println("[TCPserver - areAllTrue] If they haven't, the problematic ID is: " + i);
+	    return returned_flag;
+	}
 	
+	public static void set_1hWatchog_Allfalse()
+	{
+		
+	    for(int i = 0; i < get_1hWatchog_timestamp_table().get().length; i++) {
+	    	set_1hWatchog_Timestamp_tableID_value(false, i);
+	    }
+	}
 	
+	/*protected synchronized boolean[] get_1hWatchog_timestamp_table() {
+		return _1hWatchog_timestamp_table;
+	}
+
+	protected synchronized boolean[] get_24hWatchog_timestamp_table() {
+		return _24hWatchog_timestamp_table;
+	}
+*/
+	public synchronized void set_1hWatchog_timestamp_table(boolean[] updated_array) {
+		_1hWatchog_timestamp_table.set(updated_array);
+	}
+
+	public synchronized void set_24hWatchog_timestamp_table(boolean[] updated_array) {
+		_24hWatchog_timestamp_table.set(updated_array);
+	}
+
+	protected synchronized static boolean get_1hWatchog_Timestamp_table_ID_value(int ID) {
+		boolean[] temp = _1hWatchog_timestamp_table.get();
+		return temp[ID];
+	}
+
+	protected synchronized static void set_1hWatchog_Timestamp_tableID_value(boolean new_value, int ID)  {
+		boolean[] temp =  _1hWatchog_timestamp_table.get();
+		temp[ID] = new_value;
+		_1hWatchog_timestamp_table.set(temp);
+	}
+	
+    public static AtomicReference<boolean[]> get_1hWatchog_timestamp_table() {
+		return _1hWatchog_timestamp_table;
+	}
+
+	public static AtomicReference<boolean[]> get_24hWatchog_timestamp_table() {
+		return _24hWatchog_timestamp_table;
+	}
+
+
 }

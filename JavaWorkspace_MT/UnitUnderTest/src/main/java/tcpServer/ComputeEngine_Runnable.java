@@ -27,15 +27,19 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
     private SensorImpl sensor = null;
     private boolean isComputeEngine_Runnable_running = false;
     private int delay = 100;
+    double local_1h_watchdog = 0;
+    double local_24h_watchdog = 0;
 
 	public ComputeEngine_Runnable(Socket clientSocket, boolean isComputeEngine_Runnable_running) throws IOException  {
 		super();
 		outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         inputStream = new ObjectInputStream(clientSocket.getInputStream());
         this.isComputeEngine_Runnable_running = isComputeEngine_Runnable_running;
+        this.local_1h_watchdog = get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration();
+        this.local_24h_watchdog = get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration();
         System.out.println("[Compute engine Runnable] Multithreaded Server Service has been started");
 	}
-	
+
 	public void sendMessage(Message_Interface message) throws IOException {
 		
         // it sends the message via output stream
@@ -49,8 +53,10 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
     	Message_Interface receivedMessage = null;
     	try {
     		while(true) {
+    			
+    			setDelay(100);
     			if(isComputeEngine_Runnable_running()) {
-					
+    				
 					if( (receivedMessage = (Message_Interface) inputStream.readObject()) != null) {
 		    			
 	    				sensor = getProcessing_engine().searchInServerSensorList(receivedMessage.getSensorID());
@@ -63,19 +69,30 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    				sendMessage(new ServerMessage_SensorInfoQuerry(receivedMessage.getSensorID()));
 		    			}
 		    			else if (receivedMessage instanceof ClientMessage_ACK) {
-		    				setDelay(5000);
-		    				System.out.println("[Compute engine Runnable] received ClientMessage_ACK");
-		    				System.out.println("[Compute engine Runnable] Processing Delay set to: " + getDelay());
-		    				System.out.println("[isComputeEngine_Runnable_running = TRUE] 1h_Watchdog: " + get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
+		    				setDelay(2000);
+		    				System.out.println("[Compute engine Runnable] received ClientMessage_ACK from sensor: " + sensor.getSensorID() + " has been received.");
+		    				//System.out.println("[Compute engine Runnable] Processing Delay set to: " + getDelay());
+		    				System.out.println("[Compute engine Runnable] 1h_Watchdog global: \t" + get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
+		    				System.out.println("[Compute engine Runnable] 1h_Watchdog local: \t" + getLocal_1h_watchdog());
+		    				if(getLocal_1h_watchdog()<12) {
+			    				setLocal_1h_watchdog(getLocal_1h_watchdog() - (getDelay()/1000));
+			    				System.out.println("[Compute engine Runnable] 1h_Watchdog updated including the delay for ServerMessage_Request_MeasurementData: \t" + getLocal_1h_watchdog());
+		    				}
+		    				if(getLocal_24h_watchdog()<22) {
+			    				setLocal_24h_watchdog(getLocal_24h_watchdog() - (getDelay()/1000));
+			    				System.out.println("[Compute engine Runnable] 24h_Watchdog updated including the delay for ServerMessage_Request_MeasurementHistory: \t" + getLocal_1h_watchdog());
+		    				}
 		    			}
 		    			else if (receivedMessage instanceof ClientMessage_SensorInfo) {
 		    				System.out.println("[Compute engine Runnable] ClientMessage_SensorInfo message from sensor: " + sensor.getSensorID() + " has been received.");
 		    				System.out.println("[Compute engine Runnable] ClientMessage_SensorInfo message has the following timestamp: " + receivedMessage.getTimestamp());
 		    				SensorImpl received_sensor = ((ClientMessage_SensorInfo) receivedMessage).getSensor();
 		    				
+		    				/*
 		    				System.out.println("sensor.getCoordinates(): "+ sensor.getCoordinates() + "\t received_sensor.getCoordinates(): "+ received_sensor.getCoordinates());
 		    				System.out.println("sensor.getSoftwareImageID(): "+ sensor.getSoftwareImageID()+ "\t received_sensor.getSoftwareImageID(): "+ received_sensor.getSoftwareImageID());
 		    				System.out.println("sensor.getSensorState(): "+ sensor.getSensorState()+ "\t received_sensor.getSensorState(): "+ received_sensor.getSensorState());
+		    				*/
 		    				
 		    				if ((sensor.getCoordinates().equals(received_sensor.getCoordinates())) &&
 		    					(sensor.getSoftwareImageID().equals(received_sensor.getSoftwareImageID())) &&
@@ -94,7 +111,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
 		    								get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration()));
 		    					
-		        				System.out.println("[Compute engine Runnable] send go to OPERATIONAL");
+		        				System.out.println("[Compute engine Runnable] send go to OPERATIONAL to sensor: " + sensor.getSensorID());
 		        				//setComputeEngine_Runnable_running(false);
 		        				
 		    				}
@@ -109,13 +126,13 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    					getProcessing_engine().saveSensorInfo(sensor);
 		    					
 		    					// set to 1hWatchdog 120 [s] to activate the client socket (out/in object streams)
-		        				get_1hWatchdog_INSTANCE().setTimeLeftBeforeExpiration(30);
+		        				// get_1hWatchdog_INSTANCE().setTimeLeftBeforeExpiration(30);
 		    					
 		    					// send ServerMessage_SensorInfoUpdate that changes triggers the sensor to reset, then the sensor should send ClientMessage_BootUp
 		    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
 		    								get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration()));
 		    					
-		    					System.out.println("[Compute engine Runnable] send new setting (go to MAINTENANCE)");
+		    					System.out.println("[Compute engine Runnable] send new setting (go to MAINTENANCE) to sensor: " + sensor.getSensorID());
 		    				}
 		    			}
 	    				else if (receivedMessage instanceof ClientMessage_MeasurementData) {
@@ -133,23 +150,27 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	    					// serialize measurement data instance and save it to file
 	    					getProcessing_engine().saveMeasurementDataInfo(sensor, mes_data);
 	    					
-	    					// feed 1hWatchdog
-	        				get_1hWatchdog_INSTANCE().feed(get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
+	    					// feed local watchdog for the sensor
+	    					setLocal_1h_watchdog(get_1hWatchdog_INSTANCE().getExpiration());
+	        				//get_1hWatchdog_INSTANCE().feed(get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
+	    					System.out.println("[Compute engine Runnable] Local_1h_watchdog has been kicked for sensor: " + sensor.getSensorID() + " and it is equal to: " + getLocal_1h_watchdog());
 	        				
 	    					// send ServerMessage_ACK
 	        				sendMessage(new ServerMessage_ACK(receivedMessage.getSensorID(),
-									get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration()));
-	    					
-	        				System.out.println("[Compute engine Runnable] received MeasurementData");
+									getLocal_1h_watchdog(), getLocal_24h_watchdog()));
+	        				
+	        				//indicate to the TCPservet that the 1h watchdog for this sensor has been kicked
+	        				set_1hWatchog_Timestamp_tableID_value(true, receivedMessage.getSensorID() - 1);
+	        				
+	        				System.out.println("[Compute engine Runnable] MeasurementData from sensor: " + sensor.getSensorID() + " has been received.");
 	        				System.out.println("[Compute engine Runnable] MeasurementData message has the following timestamp: " + receivedMessage.getTimestamp());
-	        				setDelay(100);
 	        	
 	    				}
 	    				else if (receivedMessage instanceof ClientMessage_MeasurementHistory) {
 	    					
 	    					MeasurementData[] mes_hist = ((ClientMessage_MeasurementHistory) receivedMessage).getMes_history();
 	    					
-	    					System.out.println("[Compute engine Runnable] received MeasurementHistory");
+	    					System.out.println("[Compute engine Runnable] MeasurementHistory from sensor: " + sensor.getSensorID() + " has been received.");
 	    					System.out.println("[Compute engine Runnable] MeasurementHistory message has the following timestamp: " + receivedMessage.getTimestamp());
 	    					
 	    					if(getProcessing_engine(). compareMeasurementDataAgainstMeasurementHistory(sensor, mes_hist)) {
@@ -175,54 +196,77 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	    					}
 	    					
 	        				// feed 24hWatchdog
-	        				get_24hWatchdog_INSTANCE().feed(get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
+	        				//get_24hWatchdog_INSTANCE().feed(get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
+	    					setLocal_24h_watchdog(get_24hWatchdog_INSTANCE().getExpiration());
+	    					System.out.println("[Compute engine Runnable] Local_24h_watchdog has been kicked for sensor: " + sensor.getSensorID() + " and it is equal to: " + getLocal_24h_watchdog());
+	    					
+	    					//indicate to the TCPservet that the 24h watchdog for this sensor has been kicked
+	    					//set_2hWatchog_Timestamp_tableID_value(true, receivedMessage.getSensorID() - 1);
 	        				
 	    					// send ServerMessage_ACK
-	        				sendMessage(new ServerMessage_ACK(receivedMessage.getSensorID(),
-									get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration()));
+	    					sendMessage(new ServerMessage_ACK(receivedMessage.getSensorID(),
+									getLocal_1h_watchdog(), getLocal_24h_watchdog()));
 	    				}
 		    		}
 					processingDelay(getDelay());
-					if (get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration() < 10) {
+					System.out.println("[Compute engine Runnable] Processing Delay is set to: " + getDelay());
+    				System.out.println("[Compute engine Runnable] 1h_Watchdog local: \t" + getLocal_1h_watchdog());
+    				System.out.println("[Compute engine Runnable] 24h_Watchdog local: \t" + getLocal_24h_watchdog());
+					if (getLocal_1h_watchdog() <= 10) {
 		    			if (sensor.getSensorID() != 0) {
 		    				// send ServerMessage_Request_MeasurementData
 		    				sendMessage(new ServerMessage_Request_MeasurementData(sensor.getSensorID()));
-		    				System.out.println("[Compute engine Runnable] setComputeEngine_Runnable_running set to: " + isComputeEngine_Runnable_running());
+		    				System.out.println("[Compute engine Runnable] Request_MeasurementData is being send to sensor ID: " + sensor.getSensorID());
 		    				
 		    			}
 		    			else {
-		    				throw new IllegalArgumentException("sensor_ID is not specified for ComputeEngine_Runnable (ServerMessage_Request_MeasurementData)");
+		    				throw new IllegalArgumentException("[Compute engine Runnable] sensor_ID is not specified for ComputeEngine_Runnable (ServerMessage_Request_MeasurementData)");
 		    			}
 		    		}
-		    		else if (get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration() < 20) {
+		    		else if (getLocal_24h_watchdog() <= 20) {
 		    			if (sensor.getSensorID() != 0) {
 		    				// send ServerMessage_Request_MeasurementData
 		    				sendMessage(new ServerMessage_Request_MeasurementHistory(sensor.getSensorID()));
 		    			}
 		    			else {
-		    				throw new IllegalArgumentException("sensor_ID is not specified for ComputeEngine_Runnable (ServerMessage_Request_MeasurementHistory)");
+		    				throw new IllegalArgumentException("[Compute engine Runnable] sensor_ID is not specified for ComputeEngine_Runnable (ServerMessage_Request_MeasurementHistory)");
 		    			}
 		    		}
-		    		else if (getDelay() == 5000 ) {
+		    		else if (getDelay() == 2000 ) {
 		    			setComputeEngine_Runnable_running(false);
 		    		}
 				}
     			else {
+    				System.out.println("[Compute engine Runnable] for sensor ID: " + sensor.getSensorID() + " is being closed");
     				break;
     			}
     		}
 		} catch (IOException IOex) {
-        	System.out.println("Error: when attempted to read Object from inputStream or write Object to outputStream on the server side");
+        	System.out.println("[Compute engine Runnable] Error: when attempted to read Object from inputStream or write Object to outputStream on the server side");
         	IOex.printStackTrace();
         } catch (ClassNotFoundException CNFex) {
-        		System.out.println("Error: when attempted to servialize/deserialize objects on the server side");
+        		System.out.println("[Compute engine Runnable] Error: when attempted to servialize/deserialize objects on the server side");
         		CNFex.printStackTrace();
 		} finally {
+			// check all local watchdogs - if all have been updated - kick the 1h watchdog
+			if(areAllTrue(get_1hWatchog_timestamp_table().get())) {
+				if(get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration()<10) {
+					get_1hWatchdog_INSTANCE().feed(get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
+					System.out.println("[TCPserver] 1hWatchdog has been kicked");
+					set_1hWatchog_Allfalse();
+				}
+			}
+			//check all local watchdogs - if all have been updated - kick the watchdog
+			/*if(areAllTrue(get_24hWatchog_timestamp_table())) {
+				get_1hWatchdog_INSTANCE().feed(get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
+				System.out.println("[TCPserver] 24hWatchdog has been kicked");
+				setAllfalse(get_24hWatchog_timestamp_table());
+			}*/
         	try {
         		closeOutStream();
 				closeInStream();
 			} catch (IOException IOex) {
-			    System.out.println("Error: when attempted to close InputStreamReader inputStream on the server side");
+			    System.out.println("[Compute engine Runnable] Error: when attempted to close InputStreamReader inputStream on the server side");
 			    IOex.printStackTrace();
 			}
         }
@@ -326,5 +370,22 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	public void setDelay(int delay) {
 		this.delay = delay;
 	}
+	
+	public double getLocal_1h_watchdog() {
+		return local_1h_watchdog;
+	}
+
+	public void setLocal_1h_watchdog(double local_1h_watchdog) {
+		this.local_1h_watchdog = local_1h_watchdog;
+	}
+
+	public double getLocal_24h_watchdog() {
+		return local_24h_watchdog;
+	}
+
+	public void setLocal_24h_watchdog(double local_24h_watchdog) {
+		this.local_24h_watchdog = local_24h_watchdog;
+	}
+
 }
 

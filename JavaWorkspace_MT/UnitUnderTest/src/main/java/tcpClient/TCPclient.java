@@ -48,6 +48,14 @@ public class TCPclient implements Runnable {
 		 	Client_Sensors_LIST = updateClientSensorList(new SensorImpl(getSensor_ID()));
 		 	
 		 	System.out.println("[TCPclient] Client_Sensors_LIST is updated with sensor instace with ID: " + getSensor_ID());
+		 	
+		 	int sensor_list_counter = 1;
+		 	System.out.println("[TCPclient] Client_Sensors_LIST has the following sensor instances:");
+		 	for (SensorImpl sens : Client_Sensors_LIST) {
+		 		System.out.println("[TCPclient] loop counter: " +sensor_list_counter+ "\twith the following sensor ID: " + sens.getSensorID());
+		 		sensor_list_counter += 1;
+		 	}
+		 	
     	}
     }
 	
@@ -61,7 +69,7 @@ public class TCPclient implements Runnable {
     	// send BootUp message
 	 	try {
 			clientManager.sendMessage(new ClientMessage_BootUp(getSensor_ID()));
-		 	System.out.println("[TCPclient]  Boot Up message send by the Client");
+		 	System.out.println("[TCPclient]  Boot Up message send by the TCPClient - Client manager for sensor ID: " + getSensor_ID() + " is being launched");
 		} catch (IOException IOex) {
 			System.out.println("Error: The client for sensor ID: "+getSensor_ID()+" returns the IOException when attempted to send Boot Up message");
 			IOex.printStackTrace();

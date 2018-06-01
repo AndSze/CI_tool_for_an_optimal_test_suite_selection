@@ -35,7 +35,7 @@ import java.util.concurrent.locks.ReentrantLock;
 public class _1h_Watchdog implements Runnable { 
  
     private static _1h_Watchdog m_instance; 
-    private long millisecondsLeftUntilExpiration; 
+    private double millisecondsLeftUntilExpiration; 
     private Thread _1h_WatchdogThread; 
     private Lock expirationDateLock; 
     // _1h_Watchdog expiration time is given in seconds
@@ -49,7 +49,7 @@ public class _1h_Watchdog implements Runnable {
      */ 
     protected _1h_Watchdog() {            
         expirationDateLock = new ReentrantLock(); 
-        millisecondsLeftUntilExpiration = (long) (_1h_WatchdogExpiration*1000); 
+        millisecondsLeftUntilExpiration = (double) (_1h_WatchdogExpiration*1000); 
         _1h_WatchdogThread = new Thread(this, "_1h_Watchdog Thread"); 
         _1h_WatchdogThread.start(); 
     } 
@@ -77,7 +77,7 @@ public class _1h_Watchdog implements Runnable {
      */ 
     public void feed(double offset_factor) { 
 		expirationDateLock.lock(); 
-		millisecondsLeftUntilExpiration = (long) (_1h_WatchdogExpiration * 1000 + offset_factor); 
+		millisecondsLeftUntilExpiration = (double) (_1h_WatchdogExpiration * 1000 + offset_factor); 
 		expirationDateLock.unlock(); 
     } 
  
