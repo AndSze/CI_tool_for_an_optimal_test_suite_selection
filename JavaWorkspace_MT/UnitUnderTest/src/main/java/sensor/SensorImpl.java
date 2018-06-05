@@ -11,7 +11,7 @@ public class SensorImpl extends MeasurementData implements Serializable {
 	private static final long serialVersionUID = 1L;
 		
 	// class attributes
-	private final int sensor_m_history_array_size = 24;
+	private final int sensor_m_history_array_size = 3;
 	protected int sensorID;
 	protected Point2D.Float coordinates = null;
 	protected String softwareImageID = null;
@@ -44,6 +44,7 @@ public class SensorImpl extends MeasurementData implements Serializable {
 		if (getSensorState() == SensorState.OPERATIONAL) {
 			try {
 				int temp_numberOfMeasurements = getNumberOfMeasurements();
+				System.out.println("[SensorImpl] Sensor: \t" + sensorID + " has the following number of measurements:\t" + temp_numberOfMeasurements);
 				
 				// overwrite the MeasurementData class instance to get current timestamp
 				this.sensor_m_history[temp_numberOfMeasurements] = new MeasurementData();

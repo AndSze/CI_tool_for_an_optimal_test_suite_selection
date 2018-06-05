@@ -3,6 +3,8 @@ package watchdog;
 import java.util.concurrent.locks.Lock; 
 import java.util.concurrent.locks.ReentrantLock;
 
+import tcpServer.TCPserver;
+
 /*
  *  This file is part of frcjcss. 
  * 
@@ -39,17 +41,20 @@ public class _24h_Watchdog implements Runnable {
     private Thread _24h_WatchdogThread; 
     private Lock expirationDateLock; 
     // _24h_Watchdog expiration time is given in seconds
-    private final double _24h_WatchdogExpiration = 860; 
+    private final double _24h_WatchdogExpiration = 3600 * 3; 
     // _24h_Watchdog expiration time decrementation timeIntervals in milliseconds (its value is decremented every minute)
-    private int timeIntervals = 600; 
+    private int timeIntervals = 1000 * 3; 
     private boolean isPaused = false; 
- 
+	private double local_watchgod_scale_factor = 1.0;
+	
     /*
      * The Server_24h_Watchdog is born. 
      */ 
-    protected _24h_Watchdog() {            
+    protected _24h_Watchdog(double global_watchdogs_scale_factor) {             
         expirationDateLock = new ReentrantLock(); 
-        millisecondsLeftUntilExpiration = (double) (_24h_WatchdogExpiration*1000); 
+        setLocal_watchgod_scale_factor(global_watchdogs_scale_factor);
+       	setTimeIntervals( (int) (getTimeIntervals() * global_watchdogs_scale_factor));
+        millisecondsLeftUntilExpiration = (double) (global_watchdogs_scale_factor * (_24h_WatchdogExpiration*1000)); 
         _24h_WatchdogThread = new Thread(this, "_24h_Watchdog Thread"); 
         _24h_WatchdogThread.start(); 
     } 
@@ -60,7 +65,7 @@ public class _24h_Watchdog implements Runnable {
      */ 
     public static synchronized _24h_Watchdog getInstance() { 
         if (m_instance == null) { 
-            m_instance = new _24h_Watchdog(); 
+            m_instance = new _24h_Watchdog(TCPserver.getWatchdogs_scale_factor()); 
         } 
         return m_instance; 
     } 
@@ -75,9 +80,9 @@ public class _24h_Watchdog implements Runnable {
      * By the way, it's not cool to ask the neighbor (some random task) to 
      * feed your dog for you.  He's your responsibility! 
      */ 
-    public void feed(double offset_factor) { 
+    public void feed() { 
 		expirationDateLock.lock(); 
-		millisecondsLeftUntilExpiration = (double) (_24h_WatchdogExpiration * 1000 + offset_factor ); 
+		millisecondsLeftUntilExpiration = (double) (_24h_WatchdogExpiration * 1000  ); 
 		expirationDateLock.unlock(); 
     } 
  
@@ -104,8 +109,8 @@ public class _24h_Watchdog implements Runnable {
      * Set the remaining time for the _24h_Watchdog 
      * It should be called to update _24h_Watchdog on the client side respectively to the server_24h_Watchdog
      */ 
-    public void setTimeLeftBeforeExpiration(double _1h_WatchdogExpiration) { 
-    	 millisecondsLeftUntilExpiration = (long) (_1h_WatchdogExpiration*1000); 
+    public void setTimeLeftBeforeExpiration(double _24h_WatchdogExpiration) { 
+    	 millisecondsLeftUntilExpiration = (long) (_24h_WatchdogExpiration*1000); 
     } 
     
     
@@ -180,7 +185,7 @@ public class _24h_Watchdog implements Runnable {
     } 
     
     /*
-     * _24h_Watchdog is decremented every 6000 milliseconds
+     * _24h_Watchdog is decremented every 24000 * global_watchdogs_scale_factor [milliseconds]
      */ 
     public void run() { 
     	while(millisecondsLeftUntilExpiration > 0) { 
@@ -198,5 +203,22 @@ public class _24h_Watchdog implements Runnable {
     		} 
     	} 
     }
-    
+       
+    public int getTimeIntervals() {
+		return timeIntervals;
+	}
+
+	public void setTimeIntervals(int timeIntervals) {
+		this.timeIntervals = timeIntervals;
+	}
+	
+	 
+    public double getLocal_watchgod_scale_factor() {
+		return local_watchgod_scale_factor;
+	}
+
+	public void setLocal_watchgod_scale_factor(double local_watchgod_scale_factor) {
+		this.local_watchgod_scale_factor = local_watchgod_scale_factor;
+	}
+
 }

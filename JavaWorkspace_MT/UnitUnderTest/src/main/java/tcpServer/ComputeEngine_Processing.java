@@ -12,7 +12,8 @@ import sensor.SensorImpl;
 
 public class ComputeEngine_Processing extends TCPserver implements TCPserver_interface {
 	
-	
+	private int number_of_sensors = 0;
+
 	public ComputeEngine_Processing () throws IOException, ClassNotFoundException  {
     	// create lists for objects that are already saved in the server directory
     	setSerializedObjectList(Server_Sensors_LIST, MeasurementData_LIST, MeasurementHistory_LIST);
@@ -66,12 +67,12 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
             			mes_hist_list.add(new_mes_hist);
             		}
             	}
-            	setNumberOfSensors(getNumberOfSensors() + 1);
+            	setNumber_of_sensors(getNumber_of_sensors() + 1);
             }
-            if(getNumberOfSensors() != 0)
+            if(getNumber_of_sensors() != 0)
             {
-            	System.out.println("Copy existing " + getNumberOfSensors() + 
-            			" Sensors stored in the directory to a list that store these events");
+            	System.out.println("Copy existing " + getNumber_of_sensors() + 
+            			" Sensors stored in the directory to a list that store these sensors");
             }
             else
             {
@@ -125,14 +126,14 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 		}
 		
 		// deserialize array of  MeasurementData objects and save it to mes_hist_to_compare
-		MeasurementData[] mes_hist_to_compare = new MeasurementData[24];
+		MeasurementData[] mes_hist_to_compare = new MeasurementData[3];
 		mes_hist_to_compare = (MeasurementData[]) deserialize(getMeasurementHistoryPath(sensor, m_history));
 		int i = 0;
 		
 		for(MeasurementData m_data : mes_data_to_compare) {
 			if (m_data != mes_hist_to_compare[i]) {
 				break;
-			} else if (i==23) {
+			} else if (i==2) {
 				success = true;
 			}
 			i++;
@@ -153,7 +154,7 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 			}
 		}
 		
-		if(serialized_m_datas.size() == 24) {
+		if(serialized_m_datas.size() == 3) {
 			for (File file :  serialized_m_datas) {
 				file.delete();
 			}
@@ -168,7 +169,7 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 		String sensor_serialized_file_path = null;
 		sensor_path = TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID();
 		boolean success = (new File(sensor_path)).mkdirs();
-		if(!success) {
+		if(success) {
 			System.out.println("New folder for a sensor instance created");
 		}
 		sensor_serialized_file_path = sensor_path + "\\" + "sensor_" + sensor.getSensorID() + ".sensor_info";
@@ -295,6 +296,16 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 			}
 		}
 		return temp_sens;
+	}
+
+	
+	public int getNumber_of_sensors() {
+		return number_of_sensors;
+	}
+
+
+	public void setNumber_of_sensors(int number_of_sensors) {
+		this.number_of_sensors = number_of_sensors;
 	}
 
 }

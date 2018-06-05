@@ -82,7 +82,7 @@ public class ClientSocketTCPclientTest {
                 			while(!servSocket.isClosed()) {
 		                		try {
 									mockClientSocket = servSocket.accept();
-									mockComputeEngine_Runnable = Mockito.spy(new ComputeEngine_Runnable(mockClientSocket, false));
+									mockComputeEngine_Runnable = Mockito.spy(new ComputeEngine_Runnable(mockClientSocket, 1.0, false));
 									auxiliaryServerThreadExecutor.submit(mockComputeEngine_Runnable);
 								} catch (IOException IOex) {
 									mockServerThread.interrupt();

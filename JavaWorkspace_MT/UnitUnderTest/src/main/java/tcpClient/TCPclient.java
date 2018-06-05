@@ -148,6 +148,7 @@ public class TCPclient implements Runnable {
 			for (SensorImpl s : Client_Sensors_LIST) {
 				if (s.getSensorID() == sensor.getSensorID()) {
 					Client_Sensors_LIST.set(itemIndex, sensor);
+					System.out.println("[TCPclient] updateClientSensorList() sensor: " + sensor.getSensorID() + " instance on Client_Sensors_LIST has been updated");
 					break;
 				} 
 				else {
@@ -156,6 +157,7 @@ public class TCPclient implements Runnable {
 			}
 			if(itemIndex == (Client_Sensors_LIST.size())) {
 				Client_Sensors_LIST.add(sensor);
+				System.out.println("[TCPclient] updateClientSensorList() sensor: " + sensor.getSensorID() + " instance has been added to Client_Sensors_LIST");
 			}
 		}
 		return Client_Sensors_LIST;

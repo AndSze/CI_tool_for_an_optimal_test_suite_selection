@@ -5,6 +5,7 @@ import java.net.ConnectException;
 import java.net.UnknownHostException;
 import messages.SensorState;
 import tcpClient.TCPclient;
+import tcpServer.TCPserver;
 import watchdog._1h_Watchdog;
 import watchdog._24h_Watchdog;
 
@@ -27,7 +28,7 @@ public class UUT_TCPclient extends TCPclient{
     public static void main(String []args) throws IOException, InterruptedException{
 		
 		int temp_port = 9876;
-		int temp_sensor_ID = 3;
+		int temp_sensor_ID = 1;
 		
 		UUT_TCPclient uut1_TCPclient = null;
 		
@@ -61,11 +62,11 @@ public class UUT_TCPclient extends TCPclient{
 		}
 		
 		
-		
+		int print_loop_count = 0;
 		while (true) {
 			current_sensor_state = searchInClientSensorList(uut1_TCPclient.getSensor_ID()).getSensorState();
 			uut1_TCPclient.getINSTANCE();
-			if ((_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() < 12) && (current_sensor_state == SensorState.OPERATIONAL) && (uut1_TCPclient.getINSTANCE().isClientRunning() == false)) {
+			if ((_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() < 120 * TCPserver.getWatchdogs_scale_factor()) && (current_sensor_state == SensorState.OPERATIONAL) && (uut1_TCPclient.getINSTANCE().isClientRunning() == false)) {
 																			
 				// opens the client socket activates the client manager (out/in object streams)
 				System.out.println("[UUT_TCPclient] Sensor ID: " + uut1_TCPclient.getSensor_ID() + "\t runTheClient() is being called");
@@ -84,15 +85,34 @@ public class UUT_TCPclient extends TCPclient{
 				System.out.println("[UUT_TCPclient] Sensor ID: " + uut1_TCPclient.getSensor_ID() +"\t _24h_Watchdog: "+ _24h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 			}
 			
-			if ((_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > 20)) {
-				System.out.println("[UUT_TCPclient] Sensor ID: " + uut1_TCPclient.getSensor_ID() +"\t _1h_Watchdog: "+ _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
-				Thread.sleep(5000);
+			if (_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > (200 * TCPserver.getWatchdogs_scale_factor()) ) {
+				print_loop_count++;
+				if (print_loop_count == 10) {
+					System.out.println("[UUT_TCPclient] Sensor ID: " + uut1_TCPclient.getSensor_ID() +"\t _1h_Watchdog: "+ _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
+					print_loop_count = 0;
+				}
+				if (TCPserver.getWatchdogs_scale_factor() >= 1.0) {
+					Thread.sleep(50000);
+				}
+				else if (TCPserver.getWatchdogs_scale_factor() >= 0.1){
+					Thread.sleep(5000);
+				}
+				else {
+					Thread.sleep(500);
+				}
 				
 			}
-			else if ((_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > 10)) {
+			else if (_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > (100 * TCPserver.getWatchdogs_scale_factor())) {
 				System.out.println("[UUT_TCPclient] Sensor ID: " + uut1_TCPclient.getSensor_ID() +"\t _1h_Watchdog: "+ _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
-				Thread.sleep(1000);
-				
+				if (TCPserver.getWatchdogs_scale_factor() >= 1.0) {
+					Thread.sleep(10000);
+				}
+				else if (TCPserver.getWatchdogs_scale_factor() >= 0.1){
+					Thread.sleep(1000);
+				}
+				else {
+					Thread.sleep(100);
+				}
 			}
 			else {
 				Thread.sleep(10);
