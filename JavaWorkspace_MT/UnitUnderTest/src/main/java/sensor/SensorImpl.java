@@ -18,6 +18,7 @@ public class SensorImpl extends MeasurementData implements Serializable {
 	protected SensorState sensorState = SensorState.PRE_OPERATIONAL;
 	protected MeasurementData[] sensor_m_history= new MeasurementData[sensor_m_history_array_size];
 	protected int numberOfMeasurements = 0;
+    double sensor_watchdog_scale_factor = 1.0;
 	
 	// Default SensorImpl class constructor - for the client side
 	public SensorImpl(int sensorID) {
@@ -44,7 +45,7 @@ public class SensorImpl extends MeasurementData implements Serializable {
 		if (getSensorState() == SensorState.OPERATIONAL) {
 			try {
 				int temp_numberOfMeasurements = getNumberOfMeasurements();
-				System.out.println("[SensorImpl] Sensor: \t" + sensorID + " has the following number of measurements:\t" + temp_numberOfMeasurements);
+				//System.out.println("[SensorImpl] Sensor: \t" + sensorID + " has the following number of measurements:\t" + temp_numberOfMeasurements);
 				
 				// overwrite the MeasurementData class instance to get current timestamp
 				this.sensor_m_history[temp_numberOfMeasurements] = new MeasurementData();
@@ -78,13 +79,22 @@ public class SensorImpl extends MeasurementData implements Serializable {
 	}
 	
 	public MeasurementData readLastMeasurementData() {
+		MeasurementData returnedMeasurementData = null;
 		int temp_numberOfMeasurements = getNumberOfMeasurements() - 1;
-		return sensor_m_history[temp_numberOfMeasurements];
+		if(getNumberOfMeasurements()>0) {
+			returnedMeasurementData =  sensor_m_history[temp_numberOfMeasurements];
+		}
+		return returnedMeasurementData;
 	}
 	
 	public MeasurementData[] readMeasurementHistory() {
 		return sensor_m_history;
 	}
+	
+	public void setMeasurementHistory(MeasurementData[] sensor_m_history) {
+		this.sensor_m_history = sensor_m_history;
+	}
+	
 	
 	public int getSensorID() {
 		return sensorID;
@@ -117,6 +127,14 @@ public class SensorImpl extends MeasurementData implements Serializable {
 
 	public void setNumberOfMeasurements(int numberOfMeasurements) {
 		this.numberOfMeasurements = numberOfMeasurements;
+	}
+
+	public double getLocal_watchdog_scale_factor() {
+		return sensor_watchdog_scale_factor;
+	}
+
+	public void setSensor_watchdog_scale_factor(double local_watchdog_scale_factor) {
+		this.sensor_watchdog_scale_factor = local_watchdog_scale_factor;
 	}
 
 }

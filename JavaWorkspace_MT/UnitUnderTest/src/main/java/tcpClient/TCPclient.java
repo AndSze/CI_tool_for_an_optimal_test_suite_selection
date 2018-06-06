@@ -24,6 +24,7 @@ public class TCPclient implements Runnable {
     	
     	if (Client_Sensors_LIST == null) {
     		Client_Sensors_LIST = new ArrayList<>();
+    		System.out.println("[TCPclient " + getSensor_ID() +"] Client_Sensors_LIST created");
     	}
     }
     
@@ -32,13 +33,13 @@ public class TCPclient implements Runnable {
 	    
 	    setClientSocket(new Socket(serverHostName, port));
 	    setSensor_ID(sensor_ID);
-	    System.out.println("[TCPclient] Client Socket created on port = "+port);
+	    System.out.println("[TCPclient " + getSensor_ID() +"] Client Socket created on port = "+port);
 	    
 	    clientManager = new ClientManager();   	
 	 	
 	 	// since client managers are different objects for each TCPclient instance, all clientManager functions are called via TCPclient attribute setter (setClientManager)
     	setClientManager(clientManager.initClientManager(getClientSocket(), getSensor_ID()));
-    	System.out.println("[TCPclient] Client Manager created with outputsteam and input stream");
+    	System.out.println("[TCPclient " + getSensor_ID() +"] Client Manager created with outputsteam and input stream");
     	clientRunning(true);
     	
     	
@@ -47,12 +48,12 @@ public class TCPclient implements Runnable {
 		    // add the instance of sensor on the client side to the Client_Sensors_LIST
 		 	Client_Sensors_LIST = updateClientSensorList(new SensorImpl(getSensor_ID()));
 		 	
-		 	System.out.println("[TCPclient] Client_Sensors_LIST is updated with sensor instace with ID: " + getSensor_ID());
+		 	System.out.println("[TCPclient " + getSensor_ID() +"] Client_Sensors_LIST is updated with sensor instace with ID: " + getSensor_ID());
 		 	
 		 	int sensor_list_counter = 1;
-		 	System.out.println("[TCPclient] Client_Sensors_LIST has the following sensor instances:");
+		 	System.out.println("[TCPclient " + getSensor_ID() +"] Client_Sensors_LIST has the following sensor instances:");
 		 	for (SensorImpl sens : Client_Sensors_LIST) {
-		 		System.out.println("[TCPclient] loop counter: " +sensor_list_counter+ "\twith the following sensor ID: " + sens.getSensorID());
+		 		System.out.println("[TCPclient " + getSensor_ID() +"]\t loop counter: " +sensor_list_counter+ "\twith the following sensor ID:\t" + sens.getSensorID());
 		 		sensor_list_counter += 1;
 		 	}
 		 	
@@ -69,7 +70,7 @@ public class TCPclient implements Runnable {
     	// send BootUp message
 	 	try {
 			clientManager.sendMessage(new ClientMessage_BootUp(getSensor_ID()));
-		 	System.out.println("[TCPclient]  Boot Up message send by the TCPClient - Client manager for sensor ID: " + getSensor_ID() + " is being launched");
+		 	System.out.println("[TCPclient " + getSensor_ID() +"]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched");
 		} catch (IOException IOex) {
 			System.out.println("Error: The client for sensor ID: "+getSensor_ID()+" returns the IOException when attempted to send Boot Up message");
 			IOex.printStackTrace();
@@ -92,7 +93,7 @@ public class TCPclient implements Runnable {
 		if(INSTANCE.getClientSocket() != null){
 
 			INSTANCE.getClientSocket().close();
-			System.out.println("[TCPclient] Socket for the client with socket ID: " + getSensor_ID() + " closed successfully");
+			System.out.println("[TCPclient " + getSensor_ID() +"] Socket for the sensor closed successfully");
 			
 			// reinitialize clientRunning to false
 			clientRunning(false);
@@ -110,7 +111,7 @@ public class TCPclient implements Runnable {
 			INSTANCE.getClientManager().closeInStream();
 			INSTANCE.getClientManager().setClientManagerRunning(false);
 			
-			System.out.println("[TCPclient] ClientManager for the client with socket ID: " + getSensor_ID() + " closed successfully");
+			System.out.println("[TCPclient " + getSensor_ID() +"] ClientManager for the sensor closed successfully");
 		} 
 		else {
 			throw new IllegalArgumentException();
@@ -148,7 +149,7 @@ public class TCPclient implements Runnable {
 			for (SensorImpl s : Client_Sensors_LIST) {
 				if (s.getSensorID() == sensor.getSensorID()) {
 					Client_Sensors_LIST.set(itemIndex, sensor);
-					System.out.println("[TCPclient] updateClientSensorList() sensor: " + sensor.getSensorID() + " instance on Client_Sensors_LIST has been updated");
+					System.out.println("[TCPclient " + sensor.getSensorID() +"] updateClientSensorList() sensor instance on Client_Sensors_LIST has been updated");
 					break;
 				} 
 				else {
@@ -157,7 +158,7 @@ public class TCPclient implements Runnable {
 			}
 			if(itemIndex == (Client_Sensors_LIST.size())) {
 				Client_Sensors_LIST.add(sensor);
-				System.out.println("[TCPclient] updateClientSensorList() sensor: " + sensor.getSensorID() + " instance has been added to Client_Sensors_LIST");
+				System.out.println("[TCPclient " + sensor.getSensorID() +"] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST");
 			}
 		}
 		return Client_Sensors_LIST;
