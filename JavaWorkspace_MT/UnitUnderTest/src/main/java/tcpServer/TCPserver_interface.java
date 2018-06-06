@@ -35,7 +35,7 @@ public interface TCPserver_interface {
     public void saveMeasurementHistoryInfo(SensorImpl sensor, MeasurementData[] m_hist)throws IOException, FileNotFoundException;
     
     // Compare if the 24 previously received and serialized Measurement Data items are the same as the Measurement History received from the Sensor
-    public boolean compareMeasurementDataAgainstMeasurementHistory(SensorImpl sensor, MeasurementData[] m_history) throws ClassNotFoundException;
+    //public boolean compareMeasurementDataAgainstMeasurementHistory(SensorImpl sensor, MeasurementData[] m_history) throws ClassNotFoundException;
     
     // if compareMeasurementDataAgainstMeasurementHistory returns true, delete 24 serialized Measurement Data items from MeasurementData_PATH after saving that data in MeasurementHistory_PATH
     public void deleteMeasurementDataInfo(SensorImpl sensor);

@@ -85,14 +85,14 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    				//System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1h_Watchdog global: \t" + get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
 		    				//System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1h_Watchdog local: \t" + getLocal_1h_watchdog());
 		    				if(getLocal_1h_watchdog() < (130 * getLocal_watchdog_scale_factor()) ) {
-			    				setLocal_1h_watchdog(getLocal_1h_watchdog() - ((getDelay() * getLocal_watchdog_scale_factor())));
+			    				setLocal_1h_watchdog(getLocal_1h_watchdog() - ((getDelay()* 2 * getLocal_watchdog_scale_factor())));
 			    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1h_Watchdog updated including the delay for ServerMessage_Request_MeasurementData: \t" + getLocal_1h_watchdog());
 		    				}
-		    				else if(getLocal_24h_watchdog() < (200 * getLocal_watchdog_scale_factor()) ) {
+		    				else if(getLocal_24h_watchdog() < (130 * getLocal_watchdog_scale_factor()) ) {
 		    					// indicate that ServerMessage_Request_MeasurementHistory is going to be send
 			    				measurement_history_request_flag = true;
 			    				
-			    				setLocal_24h_watchdog(getLocal_24h_watchdog() - ((getDelay() * getLocal_watchdog_scale_factor())));
+			    				setLocal_24h_watchdog(getLocal_24h_watchdog() - ((getDelay()* 2 * getLocal_watchdog_scale_factor())));
 			    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 24h_Watchdog updated including the delay for ServerMessage_Request_MeasurementHistory: \t" + getLocal_24h_watchdog());
 		    				}
 		    			}
@@ -182,42 +182,19 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	    				else if (receivedMessage instanceof ClientMessage_MeasurementHistory) {
 	    					
 	    					MeasurementData[] mes_hist = ((ClientMessage_MeasurementHistory) receivedMessage).getMes_history();
-	    					
-	    					// serialize measurement data instance and save it to file
-	    					getProcessing_engine().saveMeasurementHistoryInfo(sensor, mes_hist);
+
 	    					
 	    					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] MeasurementHistory from sensor: " + sensor.getSensorID() + " has been received.");
 	    					//System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] MeasurementHistory message has the following timestamp: " + receivedMessage.getTimestamp());
 	    					
-	    					if(getProcessing_engine(). compareMeasurementDataAgainstMeasurementHistory(sensor, mes_hist)) {
-	    						// serialize measurement data instance and save it to file
-	        					getProcessing_engine().saveMeasurementHistoryInfo(sensor, mes_hist);
-	        					getProcessing_engine().deleteMeasurementDataInfo(sensor);
-	        					
-	        					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] MeasurementHistory matches the MeasurementData");
-	        					sensor.resetSensor();
-	        					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
 
-		    					// send ServerMessage_ACK
-		    					sendMessage(new ServerMessage_ACK(receivedMessage.getSensorID(),
-										getLocal_1h_watchdog(), getLocal_24h_watchdog()));
-		        				
-	    					}
-	    					else {
-	    						sensor.setSensorState(SensorState.DEAD);
-	        					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
+    						// serialize measurement data instance and save it to file
+        					getProcessing_engine().saveMeasurementHistoryInfo(sensor, mes_hist);
+        					getProcessing_engine().deleteMeasurementDataInfo(sensor);
 	        					
-	        					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] MeasurementHistory does not match the MeasurementData");
-	        					
-	        					// send ServerMessage_SensorInfoUpdate that indicates that something is wrong with the sensor
-	        					// write 0 [s] to 1hWatchdog and 24hWatchdog to indicate that this sensor is dead
-	        					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),0 ,0, 1.0));
-	        					setComputeEngine_Runnable_running(false);
-		        				
-	        					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] MeasurementHistory does not match the MeasurementData");
-	        					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] Sensor instance: " + sensor.getSensorID() + " is dead");
-	    					}
-	    					
+        					sensor.resetSensor();
+        					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
+
 	    					// feed 24hWatchdog
 	        				//get_24hWatchdog_INSTANCE().feed(get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
 	    					setLocal_24h_watchdog(get_24hWatchdog_INSTANCE().getExpiration() * getLocal_watchdog_scale_factor() );
@@ -225,6 +202,10 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	    					
 	    					//indicate to the TCPserver that the 24h watchdog for this sensor has been kicked
 	        				set_24hWatchog_Timestamp_tableID_value(true, receivedMessage.getSensorID() - 1);
+
+        					// send ServerMessage_SensorInfoUpdate that causes the server to reset and reconfigure
+	    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
+    								getLocal_1h_watchdog(), getLocal_24h_watchdog(), getLocal_watchdog_scale_factor()));
 	    				}
 		    		}
 					processingDelay(getDelay());
@@ -233,7 +214,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
     				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 24h_Watchdog local: \t" + getLocal_24h_watchdog());
     				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1h_Watchdog global: \t" + get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
     				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 24h_Watchdog global: \t" + get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
-					if (getLocal_1h_watchdog() <= 110 * getLocal_watchdog_scale_factor()) {
+					if (getLocal_1h_watchdog() <= 100 * getLocal_watchdog_scale_factor()) {
 		    			if (sensor.getSensorID() != 0) {
 		    				// send ServerMessage_Request_MeasurementData
 		    				sendMessage(new ServerMessage_Request_MeasurementData(sensor.getSensorID()));
@@ -243,7 +224,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    				throw new IllegalArgumentException("[Compute engine Runnable " +sensor.getSensorID()+"] sensor_ID is not specified for ComputeEngine_Runnable (ServerMessage_Request_MeasurementData)");
 		    			}
 		    		}
-		    		else if ((getLocal_24h_watchdog() <= 180 * getLocal_watchdog_scale_factor()) && measurement_history_request_flag ) {
+		    		else if ((getLocal_24h_watchdog() <= 100 * getLocal_watchdog_scale_factor()) && measurement_history_request_flag ) {
 		    			if (sensor.getSensorID() != 0) {
 		    				// send ServerMessage_Request_MeasurementData
 		    				sendMessage(new ServerMessage_Request_MeasurementHistory(sensor.getSensorID()));

@@ -149,7 +149,7 @@ public class TCPclient implements Runnable {
 			for (SensorImpl s : Client_Sensors_LIST) {
 				if (s.getSensorID() == sensor.getSensorID()) {
 					Client_Sensors_LIST.set(itemIndex, sensor);
-					System.out.println("[TCPclient " + sensor.getSensorID() +"] updateClientSensorList() sensor instance on Client_Sensors_LIST has been updated");
+					//System.out.println("[TCPclient " + sensor.getSensorID() +"] updateClientSensorList() sensor instance on Client_Sensors_LIST has been updated");
 					break;
 				} 
 				else {

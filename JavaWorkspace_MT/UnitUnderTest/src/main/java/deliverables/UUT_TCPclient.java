@@ -29,7 +29,7 @@ public class UUT_TCPclient extends TCPclient{
     public static void main(String []args) throws IOException, InterruptedException{
 		
 		int temp_port = 9876;
-		int temp_sensor_ID = 3;
+		int temp_sensor_ID = 1;
 		
 		UUT_TCPclient uut1_TCPclient = null;
 		

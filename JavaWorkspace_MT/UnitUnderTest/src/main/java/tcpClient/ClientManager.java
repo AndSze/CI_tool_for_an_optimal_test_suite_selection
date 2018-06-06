@@ -88,8 +88,9 @@ public class ClientManager implements TCPclient_interface{
 							SensorImpl temp_sens = sensor = TCPclient.searchInClientSensorList(sensor_ID);
 							mes_data = temp_sens.readLastMeasurementData();
 							System.out.println("\t\t[ClientManager" +sensor.getSensorID()+"] readLastMeasurementData()\t Pm25: "+ mes_data.getPm25() + "\t Pm10: "+ mes_data.getPm10()  + "\t humidity: "+ mes_data.getHumidity());
-							System.out.println("[ClientManager " +sensor.getSensorID()+"] sensor: \t" + sensor.getSensorID() + " has the following number of measurements: \t"  + sensor.getNumberOfMeasurements());
 							*/
+							System.out.println("[ClientManager " +sensor.getSensorID()+"] sensor: \t" + sensor.getSensorID() + " has the following number of measurements: \t"  + sensor.getNumberOfMeasurements());
+							
 							if (sensor.getNumberOfMeasurements() == 3) {
 								System.out.println("[ClientManager " +sensor.getSensorID()+"] ack_alert is set to true - the sensor waits for ServerMessage_Request_MeasurementHistory.");
 								ack_alert = true;

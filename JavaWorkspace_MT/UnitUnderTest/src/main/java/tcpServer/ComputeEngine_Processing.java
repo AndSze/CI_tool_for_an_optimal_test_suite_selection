@@ -103,7 +103,7 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 			TCPserver.MeasurementHistory_LIST.add(m_history);
 			serialize(m_history, getMeasurementHistoryPath(sensor, m_history));
 	}
-	
+	/*
 	@Override
 	public boolean compareMeasurementDataAgainstMeasurementHistory(SensorImpl sensor, MeasurementData[] m_history) throws ClassNotFoundException {
 		
@@ -114,33 +114,46 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 		File sensor_path = null;
 		sensor_path = new java.io.File(TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID());
 		for (File file :  sensor_path.listFiles()) {
+			System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] mesurement datas: "+ file.getName());
 			if(file.toString().toString().substring(file.toString().length() - 16).equals("measurement_data")) {
 				serialized_m_data_paths.add(file.toString());
 			}
 		}
 		
 		// deserialize MeasurementData object and save them to mes_data_to_compare
-		ArrayList<MeasurementData> mes_data_to_compare = new ArrayList<>();
+		ArrayList<MeasurementData> mes_data_saved_in_the_directory = new ArrayList<>();
 		for (String path :  serialized_m_data_paths) {
-			mes_data_to_compare.add((MeasurementData) deserialize(path));
+			mes_data_saved_in_the_directory.add((MeasurementData) deserialize(path));
 		}
 		
 		// deserialize array of  MeasurementData objects and save it to mes_hist_to_compare
-		MeasurementData[] mes_hist_to_compare = new MeasurementData[3];
-		mes_hist_to_compare = (MeasurementData[]) deserialize(getMeasurementHistoryPath(sensor, m_history));
+		MeasurementData[] mes_hist_received = new MeasurementData[3];
+		mes_hist_received = (MeasurementData[]) deserialize(getMeasurementHistoryPath(sensor, m_history));
 		int i = 0;
 		
-		for(MeasurementData m_data : mes_data_to_compare) {
-			if (m_data != mes_hist_to_compare[i]) {
+		for(MeasurementData m_data : mes_data_saved_in_the_directory) {
+			if (m_data.equals(mes_hist_received[i])) {
+				/*
+				System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] mes_data_saved_in_the_directory Pm10 "+ m_data.getPm10());
+				System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] mes_data_saved_in_the_directory TimeStamp "+ m_data.getTimestamp());
+				
+				System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] mes_hist_received[i] Pm10 "+ mes_hist_received[i].getPm10());
+				System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] mes_hist_received[i] TimeStamp "+ mes_hist_received[i].getTimestamp());
+				
+				System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] mes_data_saved_in_the_directory equals mes_hist_received[i]");
+			}
+			else {
+				System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] mes_data_saved_in_the_directory does not equal mes_hist_received[i]");
 				break;
-			} else if (i==2) {
+			}
+			if (i==2) {
 				success = true;
 			}
 			i++;
 		}
 		
 		return success;
-	}
+	}*/
 	
 	@Override
 	public void deleteMeasurementDataInfo(SensorImpl sensor) {
@@ -170,7 +183,12 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 		sensor_path = TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID();
 		boolean success = (new File(sensor_path)).mkdirs();
 		if(success) {
-			System.out.println("New folder for a sensor instance created");
+			System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] New folder for a sensor instance created");
+		}
+		sensor_path = TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID() + "\\" + "sensor_Infos";
+		success = (new File(sensor_path)).mkdirs();
+		if(success) {
+			System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] New folder for a sensor info created");
 		}
 		sensor_serialized_file_path = sensor_path + "\\" + "sensor_" + sensor.getSensorID() + ".sensor_info";
 		return sensor_serialized_file_path;
@@ -180,7 +198,11 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 	public String getMeasurementDataPath(SensorImpl sensor, MeasurementData m_data){
 		String sensor_path = null;
 		String measurementData_serialized_file_path = null;
-		sensor_path = TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID();
+		sensor_path = TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID() + "\\" + "measurement_Datas";
+		boolean success = (new File(sensor_path)).mkdirs();
+		if(success) {
+			System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] New folder for MeasurementData created");
+		}
 		measurementData_serialized_file_path = sensor_path + "\\" + "measurement_" + m_data.getTimestamp() + ".measurement_data";
 		return measurementData_serialized_file_path;
 	}
@@ -192,7 +214,11 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 		String date_Timestamp = null;
 		// remove time from the m_hist[0] element timestamp
 		date_Timestamp = m_hist[0].getTimestamp().substring(0, m_hist[0].getTimestamp().length() - 9);;
-		sensor_path = TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID();
+		sensor_path = TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID() + "\\" + "measurement_Histories";
+		boolean success = (new File(sensor_path)).mkdirs();
+		if(success) {
+			System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] New folder for MeasurementHistory created");
+		}
 		measurementHistory_serialized_file_path = sensor_path + "\\" + "measurement_" + date_Timestamp + ".measurement_history";
 		return measurementHistory_serialized_file_path;
 	}

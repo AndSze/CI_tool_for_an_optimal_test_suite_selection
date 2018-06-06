@@ -49,18 +49,18 @@ public class TCPserver {
 	protected static ArrayList<MeasurementData> MeasurementData_LIST= new ArrayList<>();
 	
 	// directory that determines where the serialized files for a particular sensor will be saved
-	protected static String Sensors_PATH = "files\\Sensors";
+	protected static String Sensors_PATH = "files\\sensors";
 
 	// data to be loaded to sensor instances after initializing them
-	protected float[][] sensor_coordinates_array = { {1.0f, 1.0f}, {2.0f, 1.0f}, {1.5f, 2.0f}};// {2.5f, 0.5f}, {3.0f, 3.5f}};//  {1.0f, 3.5f}, {2.5f, 0.5f}, {0.5f, 2.5f}};
+	protected float[][] sensor_coordinates_array = { {1.0f, 1.0f}};//, {2.0f, 1.0f}, {1.5f, 2.0f}};// {2.5f, 0.5f}, {3.0f, 3.5f}};//  {1.0f, 3.5f}, {2.5f, 0.5f}, {0.5f, 2.5f}};
 
 	// watchdogs that are being checked on a regular basis - if they are about to expire, the server-client communication is being initialized. Afterward, the watchdogs are kicked and they continue to count down
 	private static _1h_Watchdog _1hWatchdog_INSTANCE = null;
 	private static _24h_Watchdog _24hWatchdog_INSTANCE = null;
 	
 	// initial values for the flags that indicate if the watchdogs have been kicked (it needs to be defined to have the fixed size of the flags array)
-	private static boolean _1hWatchog_timestamp_table_initial[] = {false, false, false};//, false, false};
-	private static boolean _24hWatchog_timestamp_table_initial[] = {false , false, false};//, false, false};
+	private static boolean _1hWatchog_timestamp_table_initial[] = {false,};// false, false};//, false, false};
+	private static boolean _24hWatchog_timestamp_table_initial[] = {false};// , false, false};//, false, false};
 
 	// initialize the flags arrays that indicate if the watchdogs have been kicked - AtomicReference is being used since the flags need to be accessible in parallel in different threads
     private static AtomicReference<boolean[]> _1hWatchog_timestamp_table = new AtomicReference<boolean[]>(_1hWatchog_timestamp_table_initial);
