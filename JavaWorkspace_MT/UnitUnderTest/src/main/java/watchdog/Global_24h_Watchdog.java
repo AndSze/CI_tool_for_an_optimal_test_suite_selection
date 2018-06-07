@@ -34,27 +34,29 @@ import tcpServer.TCPserver;
  * http://thedailywtf.com/Articles/_0x2f__0x2f_TODO_0x3a__Uncomment_Later.aspx 
  */ 
 
-public class _24h_Watchdog implements Runnable { 
+public class Global_24h_Watchdog implements Runnable { 
  
-    private static _24h_Watchdog m_instance; 
+    private static Global_24h_Watchdog m_instance; 
     private double millisecondsLeftUntilExpiration; 
     private Thread _24h_WatchdogThread; 
     private Lock expirationDateLock; 
     // _24h_Watchdog expiration time is given in seconds
-    private final double _24h_WatchdogExpiration = 3600 * 3; 
+    private final double _24h_WatchdogExpiration = 3600; 
     // _24h_Watchdog expiration time decrementation timeIntervals in milliseconds (its value is decremented every minute)
-    private int timeIntervals = 1000 * 3; 
+    private int timeIntervals = 1000;
     private boolean isPaused = false; 
-	private double local_watchgod_scale_factor = 1.0;
+	private double server_watchgod_scale_factor = 1.0;
+	private int server_measurements_limit; 
 	
     /*
      * The Server_24h_Watchdog is born. 
      */ 
-    protected _24h_Watchdog(double global_watchdogs_scale_factor) {             
+    protected Global_24h_Watchdog(double global_watchdogs_scale_factor, int measurements_limit) {             
         expirationDateLock = new ReentrantLock(); 
-        setLocal_watchgod_scale_factor(global_watchdogs_scale_factor);
-       	setTimeIntervals( (int) (getTimeIntervals() * global_watchdogs_scale_factor));
-        millisecondsLeftUntilExpiration = (double) (global_watchdogs_scale_factor * (_24h_WatchdogExpiration*1000)); 
+        setServer_watchgod_scale_factor(global_watchdogs_scale_factor);
+        setServer_measurements_limit(measurements_limit);
+       	setTimeIntervals( (int) (getTimeIntervals() * global_watchdogs_scale_factor * getServer_measurements_limit() / 3));
+        millisecondsLeftUntilExpiration = (double) (global_watchdogs_scale_factor * (_24h_WatchdogExpiration*1000) * getServer_measurements_limit() ); 
         _24h_WatchdogThread = new Thread(this, "_24h_Watchdog Thread"); 
         _24h_WatchdogThread.start(); 
     } 
@@ -63,9 +65,9 @@ public class _24h_Watchdog implements Runnable {
      *  Get an instance of the Server_24h_Watchdog 
      * @return an instance of the Server_24h_Watchdog 
      */ 
-    public static synchronized _24h_Watchdog getInstance() { 
+    public static synchronized Global_24h_Watchdog getInstance() { 
         if (m_instance == null) { 
-            m_instance = new _24h_Watchdog(TCPserver.getWatchdogs_scale_factor()); 
+            m_instance = new Global_24h_Watchdog(TCPserver.getWatchdogs_scale_factor(), TCPserver.getMeasurements_limit()); 
         } 
         return m_instance; 
     } 
@@ -82,7 +84,7 @@ public class _24h_Watchdog implements Runnable {
      */ 
     public void feed() { 
 		expirationDateLock.lock(); 
-		millisecondsLeftUntilExpiration = (double) (_24h_WatchdogExpiration * 1000  ); 
+		millisecondsLeftUntilExpiration = (double) (getServer_watchgod_scale_factor() * _24h_WatchdogExpiration * 1000 *  getServer_measurements_limit() ); 
 		expirationDateLock.unlock(); 
     } 
  
@@ -211,14 +213,21 @@ public class _24h_Watchdog implements Runnable {
 	public void setTimeIntervals(int timeIntervals) {
 		this.timeIntervals = timeIntervals;
 	}
-	
 	 
-    public double getLocal_watchgod_scale_factor() {
-		return local_watchgod_scale_factor;
+    public double getServer_watchgod_scale_factor() {
+		return server_watchgod_scale_factor;
 	}
 
-	public void setLocal_watchgod_scale_factor(double local_watchgod_scale_factor) {
-		this.local_watchgod_scale_factor = local_watchgod_scale_factor;
+	public void setServer_watchgod_scale_factor(double global_watchgod_scale_factor) {
+		this.server_watchgod_scale_factor = global_watchgod_scale_factor;
+	}
+	
+    public int getServer_measurements_limit() {
+		return server_measurements_limit;
+	}
+
+	public void setServer_measurements_limit(int server_measurements_limit) {
+		this.server_measurements_limit = server_measurements_limit;
 	}
 
 }

@@ -6,7 +6,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+
 import sensor.MeasurementData;
 import sensor.SensorImpl;
 
@@ -86,9 +89,10 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 	}
 
 	@Override
-	public void saveSensorInfo(SensorImpl sensor) throws IOException{
+	public void saveSensorInfo(SensorImpl sensor, String action) throws IOException{
 		//dTCPserver.Server_Sensors_LIST.add(sensor);
-		serialize(sensor, getSensorPath(sensor));
+		String temp_sensor_path = getSensorPath(sensor) + "_" + new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Calendar.getInstance().getTime()) + "_" + action;
+		serialize(sensor, temp_sensor_path);
 	}
 	
 
@@ -160,15 +164,17 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 		// delete 24 MeasurementData files after saving the date in the getMeasurementHistoryPath
 		ArrayList<File> serialized_m_datas = new ArrayList<>();
 		File sensor_path = null;
-		sensor_path = new java.io.File(TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID());
+		sensor_path = new java.io.File(TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID()+ "\\" + "measurement_Datas");
 		for (File file :  sensor_path.listFiles()) {
+			System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] substring(file.toString().length() - 16): " + file.toString().toString().substring(file.toString().length() - 16));
 			if(file.toString().toString().substring(file.toString().length() - 16).equals("measurement_data")) {
 				serialized_m_datas.add(file);
 			}
 		}
 		
-		if(serialized_m_datas.size() == 3) {
+		if(serialized_m_datas.size() == TCPserver.getMeasurements_limit()) {
 			for (File file :  serialized_m_datas) {
+				System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] the following measurement data: " + file.getName() + " is being deleted");
 				file.delete();
 			}
 		} else {
@@ -213,7 +219,7 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 		String measurementHistory_serialized_file_path = null;
 		String date_Timestamp = null;
 		// remove time from the m_hist[0] element timestamp
-		date_Timestamp = m_hist[0].getTimestamp().substring(0, m_hist[0].getTimestamp().length() - 9);;
+		date_Timestamp = m_hist[0].getTimestamp().substring(0, m_hist[0].getTimestamp().length() - 3);;
 		sensor_path = TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID() + "\\" + "measurement_Histories";
 		boolean success = (new File(sensor_path)).mkdirs();
 		if(success) {

@@ -16,9 +16,11 @@ public class ServerMessage_SensorInfoUpdate extends Message_Interface implements
 	protected double _1h_Watchdog;
 	protected double _24h_Watchdog;
 	protected double sensor_watchdog_scale_factor = 1.0;
+	protected int measurements_limit = 0;
 	
 	// ServerMessage_SensorInfoUpdate class constructor
-	public ServerMessage_SensorInfoUpdate(int sensorID, Point2D.Float coordinates, String softwareImageID, SensorState sensorState, double _1h_Watchdog, double _24h_Watchdog, double sensor_watchdog_scale_factor) {
+	public ServerMessage_SensorInfoUpdate(int sensorID, Point2D.Float coordinates, String softwareImageID, SensorState sensorState, double _1h_Watchdog, double _24h_Watchdog, 
+										  double sensor_watchdog_scale_factor, int measurements_limit) {
 		super(sensorID);
 		this.coordinates = coordinates;
 		this.softwareImageID = softwareImageID;
@@ -26,6 +28,7 @@ public class ServerMessage_SensorInfoUpdate extends Message_Interface implements
 		this._1h_Watchdog = _1h_Watchdog;
 		this._24h_Watchdog = _24h_Watchdog;
 		this.sensor_watchdog_scale_factor = sensor_watchdog_scale_factor;
+		this.measurements_limit = measurements_limit;
 		this.sensorMessage = ServerMessage.SENSOR_INFO_UPDATE;
 	}
 
@@ -51,6 +54,10 @@ public class ServerMessage_SensorInfoUpdate extends Message_Interface implements
 	
 	public double getSensor_watchdog_scale_factor() {
 		return sensor_watchdog_scale_factor;
+	}
+	
+	public int getMeasurements_limit() {
+		return measurements_limit;
 	}
 
 }

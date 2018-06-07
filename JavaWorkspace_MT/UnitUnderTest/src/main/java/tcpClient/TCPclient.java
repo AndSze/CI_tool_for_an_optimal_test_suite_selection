@@ -5,6 +5,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import messages.ClientMessage_BootUp;
 import sensor.SensorImpl;
+import watchdog.Local_1h_Watchdog;
 
 public class TCPclient implements Runnable {
 
@@ -15,6 +16,13 @@ public class TCPclient implements Runnable {
 	protected static ArrayList<SensorImpl> Client_Sensors_LIST;
 	private int sensor_ID;
 	private Thread clientThread = null;
+	
+	// it is required to duplicate the below parameters here, because they are used for setting the input parameters for the local watchdog on the client side
+	// measurement limit is used for determining after how many measurement datas, the measurement history request is sent - variable is set to a value received from the server in ServerMessage_SensorInfoUpdate
+	private static int measurements_limit;
+	
+	// watchdog scale factor is used for scaling the watchdog expiration times - variable is set to a value received from the server in ServerMessage_SensorInfoUpdate
+	private static double watchdogs_scale_factor = 0.01;
 
 	// default constructor 
     public TCPclient() {
@@ -26,6 +34,11 @@ public class TCPclient implements Runnable {
     		Client_Sensors_LIST = new ArrayList<>();
     		System.out.println("[TCPclient " + getSensor_ID() +"] Client_Sensors_LIST created");
     	}
+    	
+    	// create 1h watchdog that are being checked on a regular basis - if they are about to expire, the server-client communication is being initialized. Afterward, the watchdogs are kicked and they continue to count down
+        // 1h watchdog on the client side are being synchronized with the 1h watchdog on the server side in messages sent from the server
+    	// 24h watchdog is not required on the client side since it is not being checked anywhere and causes no operations if it is close to expire
+    	Local_1h_Watchdog.getInstance();
     }
     
     // overloaded constructor
@@ -216,6 +229,22 @@ public class TCPclient implements Runnable {
 
 	public synchronized void setClientThread(Thread clientThread) {
 		this.clientThread = clientThread;
+	}
+
+	public static int getMeasurements_limit() {
+		return measurements_limit;
+	}
+
+	public static void setMeasurements_limit(int measurements_limit) {
+		TCPclient.measurements_limit = measurements_limit;
+	}
+
+	public static double getWatchdogs_scale_factor() {
+		return watchdogs_scale_factor;
+	}
+
+	public static void setWatchdogs_scale_factor(double watchdogs_scale_factor) {
+		TCPclient.watchdogs_scale_factor = watchdogs_scale_factor;
 	}
 
 

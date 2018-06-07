@@ -12,11 +12,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
-
 import sensor.MeasurementData;
 import sensor.SensorImpl;
-import watchdog._1h_Watchdog;
-import watchdog._24h_Watchdog;
+import watchdog.Global_1h_Watchdog;
+import watchdog.Global_24h_Watchdog;
+
 
 public class TCPserver {
 	
@@ -52,20 +52,23 @@ public class TCPserver {
 	protected static String Sensors_PATH = "files\\sensors";
 
 	// data to be loaded to sensor instances after initializing them
-	protected float[][] sensor_coordinates_array = { {1.0f, 1.0f}};//, {2.0f, 1.0f}, {1.5f, 2.0f}};// {2.5f, 0.5f}, {3.0f, 3.5f}};//  {1.0f, 3.5f}, {2.5f, 0.5f}, {0.5f, 2.5f}};
+	protected float[][] sensor_coordinates_array = { {1.0f, 1.0f} , {2.0f, 1.0f}, {1.5f, 2.0f}};// {2.5f, 0.5f}, {3.0f, 3.5f}};//  {1.0f, 3.5f}, {2.5f, 0.5f}, {0.5f, 2.5f}};
 
 	// watchdogs that are being checked on a regular basis - if they are about to expire, the server-client communication is being initialized. Afterward, the watchdogs are kicked and they continue to count down
-	private static _1h_Watchdog _1hWatchdog_INSTANCE = null;
-	private static _24h_Watchdog _24hWatchdog_INSTANCE = null;
+	private static Global_1h_Watchdog _1hWatchdog_INSTANCE = null;
+	private static Global_24h_Watchdog _24hWatchdog_INSTANCE = null;
 	
 	// initial values for the flags that indicate if the watchdogs have been kicked (it needs to be defined to have the fixed size of the flags array)
-	private static boolean _1hWatchog_timestamp_table_initial[] = {false,};// false, false};//, false, false};
-	private static boolean _24hWatchog_timestamp_table_initial[] = {false};// , false, false};//, false, false};
+	private static boolean _1hWatchog_timestamp_table_initial[] = {false, false, false};//, false, false};
+	private static boolean _24hWatchog_timestamp_table_initial[] = {false , false, false};//, false, false};
 
 	// initialize the flags arrays that indicate if the watchdogs have been kicked - AtomicReference is being used since the flags need to be accessible in parallel in different threads
     private static AtomicReference<boolean[]> _1hWatchog_timestamp_table = new AtomicReference<boolean[]>(_1hWatchog_timestamp_table_initial);
 	private static AtomicReference<boolean[]> _24hWatchog_timestamp_table = new AtomicReference<boolean[]>(_24hWatchog_timestamp_table_initial);
 	
+	// measurement limit is a variable that determines after how many measurement datas, the measurement history request is sent
+	private static final int measurements_limit = 24;
+
 	
 	/******************************************************************************************************************************************
 	 * Specific Variable Names: 
@@ -96,8 +99,8 @@ public class TCPserver {
 	public TCPserver() throws IOException{
 		// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
 		super();
-		TCPserver._1hWatchdog_INSTANCE = _1h_Watchdog.getInstance();
-		TCPserver._24hWatchdog_INSTANCE = _24h_Watchdog.getInstance();
+		TCPserver._1hWatchdog_INSTANCE = Global_1h_Watchdog.getInstance();
+		TCPserver._24hWatchdog_INSTANCE = Global_24h_Watchdog.getInstance();
 	};
 
 	/******************************************************************************************************************************************
@@ -133,8 +136,9 @@ public class TCPserver {
 	    
     	for (int i = 1; i <= sensor_coordinates_array.length; i++) {
     		try {
-	    		SensorImpl temp_sensor = new SensorImpl(i, new Point2D.Float(sensor_coordinates_array[i-1][0], sensor_coordinates_array[i-1][1]), "Release 1");
-	    		processing_engine.saveSensorInfo(temp_sensor);
+	    		SensorImpl temp_sensor = new SensorImpl(i, new Point2D.Float(sensor_coordinates_array[i-1][0], sensor_coordinates_array[i-1][1]), "Release 1", getMeasurements_limit());
+	    		processing_engine.saveSensorInfo(temp_sensor, "sensorINITIALIZATION");
+	    		temp_sensor.setSensor_watchdog_scale_factor(getWatchdogs_scale_factor());
 	    		Server_Sensors_LIST = processing_engine.updateServerSensorList(temp_sensor);
 	    		
 	    		// set flags that indicate if the watchdogs have been kicked to FALSE
@@ -209,29 +213,29 @@ public class TCPserver {
 					System.out.println("[TCPserver] Server Thread Started.");
 					
 					while(isServerRunning()) {
-						
+						/*
 						if ((get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration() == 0.0) || (get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration() == 0.0 )) {
 							ServerRunning(false);
 							System.out.println("[TCPserver] TCPserver is being closed due to watchdog expiration.");
 						}
-						else {
-							try {
-				                //start listening to incoming client request (blocking function)
-				                System.out.println("[TCPserver] waiting for the incoming request ...");
-				                clientSocket = serverSocket.accept();
-				                //new Thread(new ComputeEngine(clientSocket, computeEnginesRunningID)).start();
-				                //computeEnginesRunningID += 1;
-							} catch (SocketException Sockex) {
-								// this exception is being thrown to exit the while loop and call the exception handler from startServer()
-								//throw new RuntimeException("Error accepting client connection", Sockex);
-								serverThread.interrupt();
-								System.out.println("Server Thread Stopped.");
-								break;
-							} 
-							System.out.println("[TCPserver] Number of Active Threads: "+clientProcessingPool.getActiveCount());
-			
-			                clientProcessingPool.execute((new ComputeEngine_Runnable(clientSocket, getWatchdogs_scale_factor(), isComputeEngineRunning())));
-						}
+						*/
+						
+						try {
+			                //start listening to incoming client request (blocking function)
+			                System.out.println("[TCPserver] waiting for the incoming request ...");
+			                clientSocket = serverSocket.accept();
+			                //new Thread(new ComputeEngine(clientSocket, computeEnginesRunningID)).start();
+			                //computeEnginesRunningID += 1;
+						} catch (SocketException Sockex) {
+							// this exception is being thrown to exit the while loop and call the exception handler from startServer()
+							//throw new RuntimeException("Error accepting client connection", Sockex);
+							serverThread.interrupt();
+							System.out.println("Server Thread Stopped.");
+							break;
+						} 
+						System.out.println("[TCPserver] Number of Active Threads: "+clientProcessingPool.getActiveCount());
+		
+		                clientProcessingPool.execute((new ComputeEngine_Runnable(clientSocket, getWatchdogs_scale_factor(), isComputeEngineRunning())));
 					}	
 	            } catch (IllegalThreadStateException ITSex) {
 		            System.out.println("Error: when new Thread with MessageProcessorRunnable created");
@@ -269,19 +273,19 @@ public class TCPserver {
 	    this.serverRunning = isServerRunning;
 	}
 
-	public static _1h_Watchdog get_1hWatchdog_INSTANCE() {
+	public static Global_1h_Watchdog get_1hWatchdog_INSTANCE() {
 		return _1hWatchdog_INSTANCE;
 	}
 
-	public static void set_1hWatchdog_INSTANCE(_1h_Watchdog _1hWatchdog_INSTANCE) {
+	public static void set_1hWatchdog_INSTANCE(Global_1h_Watchdog _1hWatchdog_INSTANCE) {
 		TCPserver._1hWatchdog_INSTANCE = _1hWatchdog_INSTANCE;
 	}
 
-	public static _24h_Watchdog get_24hWatchdog_INSTANCE() {
+	public static Global_24h_Watchdog get_24hWatchdog_INSTANCE() {
 		return _24hWatchdog_INSTANCE;
 	}
 
-	public static void set_24hWatchdog_INSTANCE(_24h_Watchdog _24hWatchdog_INSTANCE) {
+	public static void set_24hWatchdog_INSTANCE(Global_24h_Watchdog _24hWatchdog_INSTANCE) {
 		TCPserver._24hWatchdog_INSTANCE = _24hWatchdog_INSTANCE;
 	}
 	
@@ -354,6 +358,10 @@ public class TCPserver {
 
 	public synchronized static void setWatchdogs_scale_factor(double watchdogs_scale_factor) {
 		TCPserver.watchdogs_scale_factor = watchdogs_scale_factor;
+	}
+	
+	public synchronized static int getMeasurements_limit() {
+		return measurements_limit;
 	}
 	
 	public synchronized boolean isComputeEngineRunning() {

@@ -22,7 +22,7 @@ public interface TCPserver_interface {
 	
     // Since sensor are defined prior to execution, this function only serializes the sensor instances in the specified path
 	// to register Sensor on the server side (add to Sensor List) the updateServerSensorList function should be called
-    public void saveSensorInfo(SensorImpl sensor) throws IOException, FileNotFoundException;
+    public void saveSensorInfo(SensorImpl sensor, String action) throws IOException, FileNotFoundException;
     
     // this function is called to update the Server Sensor List every time the new or updated sensor info is received 
     public ArrayList<SensorImpl> updateServerSensorList(SensorImpl sensor);

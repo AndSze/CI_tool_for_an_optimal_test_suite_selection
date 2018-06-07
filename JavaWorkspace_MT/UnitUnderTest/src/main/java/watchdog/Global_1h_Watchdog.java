@@ -34,9 +34,9 @@ import tcpServer.TCPserver;
  * http://thedailywtf.com/Articles/_0x2f__0x2f_TODO_0x3a__Uncomment_Later.aspx 
  */ 
 
-public class _1h_Watchdog implements Runnable { 
+public class Global_1h_Watchdog implements Runnable { 
  
-    private static _1h_Watchdog m_instance; 
+    private static Global_1h_Watchdog m_instance; 
     private double millisecondsLeftUntilExpiration; 
     private Thread _1h_WatchdogThread; 
     private Lock expirationDateLock; 
@@ -45,14 +45,14 @@ public class _1h_Watchdog implements Runnable {
     // _1h_Watchdog expiration time decrementation timeIntervals in milliseconds (its value is decremented every second)
     private int timeIntervals = 1000; 
 	private boolean isPaused = false; 
-	private double local_watchgod_scale_factor = 1.0;
+	private double server_watchgod_scale_factor = 1.0;
 
 	/*
      * The _1h_Watchdog is born. 
      */ 
-    protected _1h_Watchdog(double global_watchdogs_scale_factor) {            
+    protected Global_1h_Watchdog(double global_watchdogs_scale_factor) {            
         expirationDateLock = new ReentrantLock(); 
-        setLocal_watchgod_scale_factor(global_watchdogs_scale_factor);
+        setServer_watchgod_scale_factor(global_watchdogs_scale_factor);
        	setTimeIntervals( (int) (getTimeIntervals() * global_watchdogs_scale_factor));
         millisecondsLeftUntilExpiration = (double) (global_watchdogs_scale_factor * (_1h_WatchdogExpiration*1000)); 
         _1h_WatchdogThread = new Thread(this, "_1h_Watchdog Thread"); 
@@ -63,9 +63,9 @@ public class _1h_Watchdog implements Runnable {
      *  Get an instance of the _1h_Watchdog 
      * @return an instance of the _1h_Watchdog 
      */ 
-    public static synchronized _1h_Watchdog getInstance() { 
+    public static synchronized Global_1h_Watchdog getInstance() { 
         if (m_instance == null) { 
-            m_instance = new _1h_Watchdog(TCPserver.getWatchdogs_scale_factor()); 
+            m_instance = new Global_1h_Watchdog(TCPserver.getWatchdogs_scale_factor()); 
         } 
         return m_instance; 
     } 
@@ -82,7 +82,7 @@ public class _1h_Watchdog implements Runnable {
      */ 
     public void feed() { 
 		expirationDateLock.lock(); 
-		millisecondsLeftUntilExpiration = (double) (getLocal_watchgod_scale_factor() * _1h_WatchdogExpiration * 1000 ); 
+		millisecondsLeftUntilExpiration = (double) (getServer_watchgod_scale_factor() * _1h_WatchdogExpiration * 1000 ); 
 		expirationDateLock.unlock(); 
     } 
  
@@ -211,12 +211,12 @@ public class _1h_Watchdog implements Runnable {
 		this.timeIntervals = timeIntervals;
 	}
 	 
-    public double getLocal_watchgod_scale_factor() {
-		return local_watchgod_scale_factor;
+    public double getServer_watchgod_scale_factor() {
+		return server_watchgod_scale_factor;
 	}
 
-	public void setLocal_watchgod_scale_factor(double local_watchgod_scale_factor) {
-		this.local_watchgod_scale_factor = local_watchgod_scale_factor;
+	public void setServer_watchgod_scale_factor(double global_watchgod_scale_factor) {
+		this.server_watchgod_scale_factor = global_watchgod_scale_factor;
 	}
 
 

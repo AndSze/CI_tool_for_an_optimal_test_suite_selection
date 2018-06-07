@@ -84,11 +84,11 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    				//System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] Processing Delay set to: " + getDelay());
 		    				//System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1h_Watchdog global: \t" + get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration());
 		    				//System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1h_Watchdog local: \t" + getLocal_1h_watchdog());
-		    				if(getLocal_1h_watchdog() < (130 * getLocal_watchdog_scale_factor()) ) {
+		    				if(getLocal_1h_watchdog() < (140 * getLocal_watchdog_scale_factor()) ) {
 			    				setLocal_1h_watchdog(getLocal_1h_watchdog() - ((getDelay()* 2 * getLocal_watchdog_scale_factor())));
 			    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1h_Watchdog updated including the delay for ServerMessage_Request_MeasurementData: \t" + getLocal_1h_watchdog());
 		    				}
-		    				else if(getLocal_24h_watchdog() < (130 * getLocal_watchdog_scale_factor()) ) {
+		    				else if(getLocal_24h_watchdog() < (140 * getLocal_watchdog_scale_factor()) ) {
 		    					// indicate that ServerMessage_Request_MeasurementHistory is going to be send
 			    				measurement_history_request_flag = true;
 			    				
@@ -109,7 +109,8 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    				
 		    				if ((sensor.getCoordinates().equals(received_sensor.getCoordinates())) &&
 		    					(sensor.getSoftwareImageID().equals(received_sensor.getSoftwareImageID())) &&
-		    					(sensor.getSensorState().equals(received_sensor.getSensorState()))){
+		    					(sensor.getSensorState().equals(received_sensor.getSensorState())) &&
+		    					(sensor.getLocal_watchdog_scale_factor() == (received_sensor.getLocal_watchdog_scale_factor()))){
 		    					
 		    					// received sensor info is up to date
 		    					// send go to operational by updating the sensor state
@@ -117,13 +118,33 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    					sensor.setSensorState(SensorState.OPERATIONAL);
 		    					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
 		    					
-		    					// serialize sensor instance and save it to file
-		    					getProcessing_engine().saveSensorInfo(sensor);
 		    					
-		    					// send ServerMessage_SensorInfoUpdate that changes only state of the sensor to SensorState.OPERATIONAL
-		    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
-	    								get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), getLocal_watchdog_scale_factor()));
-		    					
+		    					if (received_sensor.getSensorState() == SensorState.PRE_OPERATIONAL) {
+		    						
+		    						// send ServerMessage_SensorInfoUpdate that changes state of the sensor to SensorState.OPERATIONAL and update Watchdogs after sensor reset upon receiving ClientMessage_MeasurementHistory
+			    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
+			    							 									   getLocal_1h_watchdog(), getLocal_24h_watchdog(),
+		    																	   getLocal_watchdog_scale_factor(), getMeasurements_limit()));
+			    					// serialize sensor instance and save it to file
+			    					getProcessing_engine().saveSensorInfo(sensor, "gotoOPERATIONALafterRESET");
+		    					}
+		    					else if (received_sensor.getSensorState() == SensorState.MAINTENANCE) {
+		    						// send ServerMessage_SensorInfoUpdate that changes state of the sensor to SensorState.OPERATIONAL and update Watchdogs after sensor reset upon being successfully initialized
+		    						sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
+	    																	   	   get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), 
+	    																	       getLocal_watchdog_scale_factor(), getMeasurements_limit()));
+		    						// serialize sensor instance and save it to file
+			    					getProcessing_engine().saveSensorInfo(sensor, "gotoOPERATIONALafterCONFIGURATION");
+		    					}
+		    					else {
+		    						// send ServerMessage_SensorInfoUpdate that confirms state of the sensor, which is SensorState.OPERATIONAL and update Watchdogs
+		    						// after 1h Watchdog is close to expiration and the Measurement Data Request is going to be send 
+		    						sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
+																			   	   get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), 
+																			       getLocal_watchdog_scale_factor(), getMeasurements_limit()));
+		    						// serialize sensor instance and save it to file
+			    					getProcessing_engine().saveSensorInfo(sensor, "stayinOPERATIONAL");
+		    					}
 		        				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] send go to OPERATIONAL to sensor: " + sensor.getSensorID());
 		        				//setComputeEngine_Runnable_running(false);
 		        				
@@ -136,14 +157,12 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
 		    					
 		    					// serialize sensor instance and save it to file
-		    					getProcessing_engine().saveSensorInfo(sensor);
-		    					
-		    					// set to 1hWatchdog 120 [s] to activate the client socket (out/in object streams)
-		        				// get_1hWatchdog_INSTANCE().setTimeLeftBeforeExpiration(30);
-		    					
+		    					getProcessing_engine().saveSensorInfo(sensor, "gotoMAINTENANCEafterINITIALIZATION");
+
 		    					// send ServerMessage_SensorInfoUpdate that changes triggers the sensor to reset, then the sensor should send ClientMessage_BootUp
 		    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
-	    								get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), getLocal_watchdog_scale_factor()));
+		    							 									   get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration(), 
+		    							 									   getLocal_watchdog_scale_factor(), getMeasurements_limit()));
 		    					
 		    					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] send new setting (go to MAINTENANCE) to sensor: " + sensor.getSensorID());
 		    				}
@@ -151,7 +170,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	    				else if (receivedMessage instanceof ClientMessage_MeasurementData) {
 	    					
 	    					sensor.addMeasurement(((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getPm25(),
-	    										((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getPm10(),
+	    									   	((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getPm10(),
 	    										((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getHumidity(),
 	    										((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getTemperature(),
 	    										((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getPressure());
@@ -205,7 +224,8 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 
         					// send ServerMessage_SensorInfoUpdate that causes the server to reset and reconfigure
 	    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
-    								getLocal_1h_watchdog(), getLocal_24h_watchdog(), getLocal_watchdog_scale_factor()));
+	    																   getLocal_1h_watchdog(), getLocal_24h_watchdog(), 
+									   									   getLocal_watchdog_scale_factor(), getMeasurements_limit()));
 	    				}
 		    		}
 					processingDelay(getDelay());

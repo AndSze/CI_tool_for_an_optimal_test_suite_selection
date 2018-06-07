@@ -19,8 +19,7 @@ import messages.ServerMessage_SensorInfoQuerry;
 import messages.ServerMessage_SensorInfoUpdate;
 import sensor.MeasurementData;
 import sensor.SensorImpl;
-import watchdog._1h_Watchdog;
-import watchdog._24h_Watchdog;
+import watchdog.Local_1h_Watchdog;
 
 public class ClientManager implements TCPclient_interface{
 
@@ -91,7 +90,7 @@ public class ClientManager implements TCPclient_interface{
 							*/
 							System.out.println("[ClientManager " +sensor.getSensorID()+"] sensor: \t" + sensor.getSensorID() + " has the following number of measurements: \t"  + sensor.getNumberOfMeasurements());
 							
-							if (sensor.getNumberOfMeasurements() == 3) {
+							if (sensor.getNumberOfMeasurements() == TCPclient.getMeasurements_limit()) {
 								System.out.println("[ClientManager " +sensor.getSensorID()+"] ack_alert is set to true - the sensor waits for ServerMessage_Request_MeasurementHistory.");
 								ack_alert = true;
 							}
@@ -104,6 +103,7 @@ public class ClientManager implements TCPclient_interface{
 						if (sensor != null) {
 							
 							System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_Request_MeasurementHistory has been received.");
+							System.out.println("[ClientManager " +sensor.getSensorID()+"] sensor: \t" + sensor.getSensorID() + " has the following number of measurements: \t"  + sensor.getNumberOfMeasurements());
 							//System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_Request_MeasurementHistory has the following timestamp: " + receivedMessage.getTimestamp());
 							MeasurementData[] mes_data = sensor.readMeasurementHistory();
 							sendMessage(new ClientMessage_MeasurementHistory(sensor_ID, mes_data));
@@ -128,7 +128,8 @@ public class ClientManager implements TCPclient_interface{
 						if (sensor != null) {
 							SensorImpl new_sensor = new SensorImpl(receivedMessage.getSensorID(), 
 																((ServerMessage_SensorInfoUpdate) receivedMessage).getCoordinates(), 
-																((ServerMessage_SensorInfoUpdate) receivedMessage).getSoftwareImageID());
+																((ServerMessage_SensorInfoUpdate) receivedMessage).getSoftwareImageID(),
+																((ServerMessage_SensorInfoUpdate) receivedMessage).getMeasurements_limit());
 							
 							new_sensor.setSensorState(((ServerMessage_SensorInfoUpdate) receivedMessage).getSensorState());
 							
@@ -136,7 +137,9 @@ public class ClientManager implements TCPclient_interface{
 							//System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_SensorInfoUpdate has the following timestamp: " + receivedMessage.getTimestamp());
 							new_sensor.setSensor_watchdog_scale_factor(((ServerMessage_SensorInfoUpdate) receivedMessage).getSensor_watchdog_scale_factor());
 							
-							if (new_sensor.getSensorState() == SensorState.MAINTENANCE) {
+							if (new_sensor.getSensorState() == SensorState.MAINTENANCE || new_sensor.getSensorState() == SensorState.PRE_OPERATIONAL) {
+						
+								SensorState previousSensorState = new_sensor.getSensorState();
 								new_sensor.resetSensor();
 								
 								// send BootUp message
@@ -144,8 +147,9 @@ public class ClientManager implements TCPclient_interface{
 						    	System.out.println("[ClientManager " +sensor.getSensorID()+"] Boot Up message send by the Client after processing ServerMessage_SensorInfoUpdate");
 						    	System.out.println("[ClientManager " +sensor.getSensorID()+"] Sensor is being reset once ClientMessage_BootUp is being sent");
 						    	// reset Sensor results in setting its state to PRE_OPERATIONAL, hence the state has to be updated to MAINTENANCE
-								new_sensor.setSensorState(SensorState.MAINTENANCE);
-								
+						    	if (previousSensorState == SensorState.MAINTENANCE) {
+						    		new_sensor.setSensorState(SensorState.MAINTENANCE);
+						    	}
 								TCPclient.updateClientSensorList(new_sensor);
 								
 							}
@@ -155,6 +159,8 @@ public class ClientManager implements TCPclient_interface{
 						    	sendMessage(new ClientMessage_ACK(sensor_ID));
 						    	
 						    	sensor.setSensorState(SensorState.OPERATIONAL);
+						    	sensor.setSensor_watchdog_scale_factor(((ServerMessage_SensorInfoUpdate) receivedMessage).getSensor_watchdog_scale_factor());
+			
 						    	TCPclient.updateClientSensorList(sensor);
 								
 							}
@@ -166,16 +172,21 @@ public class ClientManager implements TCPclient_interface{
 								
 								TCPclient.updateClientSensorList(new_sensor);
 							}
-							 
-							_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_SensorInfoUpdate) receivedMessage).get1h_Watchdog());
-							_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_SensorInfoUpdate) receivedMessage).get24h_Watchdog());
+							
+							// set the input parameters for the local watchdogs on the client side
+							TCPclient.setWatchdogs_scale_factor(((ServerMessage_SensorInfoUpdate) receivedMessage).getSensor_watchdog_scale_factor());
+							TCPclient.setMeasurements_limit(((ServerMessage_SensorInfoUpdate) receivedMessage).getMeasurements_limit());
+							
+							// activate the local watchdogs on the client side
+							Local_1h_Watchdog.getInstance().setEnabled(isClientManagerRunning());
+							Local_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_SensorInfoUpdate) receivedMessage).get1h_Watchdog());
 							
 							System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_SensorInfoUpdate has the following SensorState: " + new_sensor.getSensorState());
-							System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_SensorInfoUpdate received when _1h_Watchdog equals: " + _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
+							System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_SensorInfoUpdate received when _1h_Watchdog equals: " + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 							
-							if(new_sensor.getSensorState() == SensorState.OPERATIONAL && _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > 12) {
+							if(new_sensor.getSensorState() == SensorState.OPERATIONAL && Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > 12) {
 								System.out.println("[ClientManager " +sensor.getSensorID()+"] if sensor receives go to OPERATIONAL, ClientManager is being closed"); 
-								System.out.println("[ClientManager " +sensor.getSensorID()+"] it will be launched agan once - _1h_Watchdog: " + _1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + "[s] is close to expire.");
+								System.out.println("[ClientManager " +sensor.getSensorID()+"] it will be launched agan once - _1h_Watchdog: " + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + "[s] is close to expire.");
 								setClientManagerRunning(false);
 							}
 
@@ -193,13 +204,12 @@ public class ClientManager implements TCPclient_interface{
 						if(!ack_alert) {
 							setClientManagerRunning(false);
 							// updating the 1h Watchdog time before expiration is required here when the sensor is in a different from the OPERATIONAL state
-							_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_ACK) receivedMessage).get1h_Watchdog());
+							Local_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_ACK) receivedMessage).get1h_Watchdog());
 							System.out.println("[ClientManager " +sensor.getSensorID()+"] ClientMessage_ACK has been sent to end the server-client connection successfully");
 							// send ACK message to disable the socket on the server side
 					    	sendMessage(new ClientMessage_ACK(sensor_ID));
 						}
 						else {
-							_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_ACK) receivedMessage).get24h_Watchdog());
 							// send ACK message to confirm that ClientMessage_MeasurementData has been sent, but do not disable the socket on the server side - the sensor waits for ServerMessage_Request_MeasurementHistory
 							System.out.println("[ClientManager " +sensor.getSensorID()+"] ClientMessage_ACK has been sned to confirm that ClientMessage_MeasurementData has been sent - wait for ServerMessage_Request_MeasurementHistory");
 							sendMessage(new ClientMessage_ACK(sensor_ID));

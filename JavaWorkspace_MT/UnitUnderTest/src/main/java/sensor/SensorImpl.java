@@ -11,13 +11,15 @@ public class SensorImpl extends MeasurementData implements Serializable {
 	private static final long serialVersionUID = 1L;
 		
 	// class attributes
-	private final int sensor_m_history_array_size = 3;
 	protected int sensorID;
 	protected Point2D.Float coordinates = null;
 	protected String softwareImageID = null;
 	protected SensorState sensorState = SensorState.PRE_OPERATIONAL;
-	protected MeasurementData[] sensor_m_history= new MeasurementData[sensor_m_history_array_size];
+	// sensor_m_history_array_size is used for determining after how many measurement datas, the measurement history request is sent - variable is set to a value received from the server in ServerMessage_SensorInfoUpdate
+	private int sensor_m_history_array_size = 0;
+	protected MeasurementData[] sensor_m_history;
 	protected int numberOfMeasurements = 0;
+	// watchdog scale factor is used for scaling the watchdog expiration times - variable is set to a value received from the server in ServerMessage_SensorInfoUpdate
     double sensor_watchdog_scale_factor = 1.0;
 	
 	// Default SensorImpl class constructor - for the client side
@@ -27,11 +29,13 @@ public class SensorImpl extends MeasurementData implements Serializable {
 	}
 
 	// Overloaded SensorImpl class constructor - for the server side
-	public SensorImpl(int sensorID, Point2D.Float coordinates, String softwareImageID) {
+	public SensorImpl(int sensorID, Point2D.Float coordinates, String softwareImageID, int sensor_m_history_array_size) {
 		super();
 		this.sensorID = sensorID;
 		this.coordinates = coordinates;
 		this.softwareImageID = softwareImageID;
+		this.sensor_m_history_array_size = sensor_m_history_array_size;
+		sensor_m_history =  new MeasurementData[sensor_m_history_array_size];
 	}
 	
 	public void resetSensor() {
