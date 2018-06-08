@@ -183,6 +183,32 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 	}
 	
 	@Override
+	public void deleteAllFilesFromDirectiory(String path) {
+		String new_path = null;
+		File file_path = null;
+		File files_to_be_deleted_path = null;
+		file_path = new java.io.File(path);
+		String[]entries_1 = file_path.list();
+		for (int i = 0; i< entries_1.length; i++) {
+			new_path = path + "\\" + entries_1[i];
+			file_path = new java.io.File(new_path);
+			String[]entries_2 = file_path.list();
+			for (int j = 0; j< entries_2.length; j++) {
+				new_path = path + "\\" + entries_1[i] + "\\" + entries_2[j];
+				files_to_be_deleted_path = new java.io.File(new_path);
+				for (File file :  files_to_be_deleted_path.listFiles()) {
+					System.out.println("[Compute engine Processing] There is the following file in the directiory to be deleted: " + new_path + "\\" + entries_1[i] + "\\" + entries_2[j]);
+					System.out.println("[Compute engine Processing] the following file: " + file.getName() + " is being deleted");
+					file.delete();
+				}
+				files_to_be_deleted_path.delete();
+			}
+			file_path.delete();
+		}
+		
+	}
+	
+	@Override
 	public String getSensorPath(SensorImpl sensor){
 		String sensor_path = null;
 		String sensor_serialized_file_path = null;

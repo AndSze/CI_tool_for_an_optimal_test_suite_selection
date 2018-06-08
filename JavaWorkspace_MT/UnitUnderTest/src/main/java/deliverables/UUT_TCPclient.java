@@ -83,7 +83,7 @@ public class UUT_TCPclient extends TCPclient{
 				
 				// closeTheClientManager closes input/output object stremas for the ClientManager that has been already closed
 				uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE()));
-				uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE()));            
+				uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE()));  
 			}
 			
 			if (Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > (200 * UUT_sensor_instance.getLocal_watchdog_scale_factor()) ) {

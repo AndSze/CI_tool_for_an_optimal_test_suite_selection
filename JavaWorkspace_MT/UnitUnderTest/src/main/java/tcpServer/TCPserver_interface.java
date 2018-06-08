@@ -39,6 +39,7 @@ public interface TCPserver_interface {
     
     // if compareMeasurementDataAgainstMeasurementHistory returns true, delete 24 serialized Measurement Data items from MeasurementData_PATH after saving that data in MeasurementHistory_PATH
     public void deleteMeasurementDataInfo(SensorImpl sensor);
+    public void deleteAllFilesFromDirectiory(String path);
     
 	// List all object saved in the specified path
     public ArrayList<String> getObjectsPath(File folder); // used for getting to any List

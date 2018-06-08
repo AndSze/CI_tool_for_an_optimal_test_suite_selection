@@ -84,7 +84,7 @@ public class Global_24h_Watchdog implements Runnable {
      */ 
     public void feed() { 
 		expirationDateLock.lock(); 
-		millisecondsLeftUntilExpiration = (double) (getServer_watchgod_scale_factor() * _24h_WatchdogExpiration * 1000 *  getServer_measurements_limit() ); 
+		millisecondsLeftUntilExpiration =  (double) (getServer_watchgod_scale_factor() * _24h_WatchdogExpiration * 1000 *  getServer_measurements_limit() ); 
 		expirationDateLock.unlock(); 
     } 
  

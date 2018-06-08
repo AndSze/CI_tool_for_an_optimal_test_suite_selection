@@ -67,7 +67,7 @@ public class TCPserver {
 	private static AtomicReference<boolean[]> _24hWatchog_timestamp_table = new AtomicReference<boolean[]>(_24hWatchog_timestamp_table_initial);
 	
 	// measurement limit is a variable that determines after how many measurement datas, the measurement history request is sent
-	private static final int measurements_limit = 24;
+	private static final int measurements_limit = 3;
 
 	
 	/******************************************************************************************************************************************
@@ -133,6 +133,7 @@ public class TCPserver {
         	System.out.println(CNFex.getMessage());
         }
 	    
+	    processing_engine.deleteAllFilesFromDirectiory(Sensors_PATH);
 	    
     	for (int i = 1; i <= sensor_coordinates_array.length; i++) {
     		try {
@@ -307,6 +308,14 @@ public class TCPserver {
 	    }
 		/*System.out.println("[TCPserver - areAllTrue] Have all watchdogs been kicked?: " + returned_flag);
 	    if (!returned_flag) System.out.println("[TCPserver - areAllTrue] If they haven't, the problematic ID is: " + i);*/
+	    return returned_flag;
+	}
+	
+	public static boolean isIDTrue(boolean[] array, int ID){
+		boolean returned_flag = false;
+		if(array[ID-1]) {
+	    	returned_flag = true;
+	    }
 	    return returned_flag;
 	}
 	
