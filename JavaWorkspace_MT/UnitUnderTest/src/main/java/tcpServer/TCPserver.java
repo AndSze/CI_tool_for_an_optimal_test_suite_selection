@@ -17,20 +17,16 @@ import sensor.SensorImpl;
 import watchdog.Global_1h_Watchdog;
 import watchdog.Global_24h_Watchdog;
 
-
 public class TCPserver {
 	
-	/******************************************************************************************************************************************
+    /***********************************************************************************************************
 	 * TCPserver - Class Attributes
-	 *****************************************************************************************************************************************/
-	
+	 ***********************************************************************************************************/
     //declare a TCP socket object and initialize it to null
 	private ServerSocket serverSocket = null;
 	
 	//  determine the maximum number of threads running at the same time
-	private final ThreadPoolExecutor clientProcessingPool = new ThreadPoolExecutor(8, 8, 0L, 
-			TimeUnit.MILLISECONDS,
-            new LinkedBlockingQueue<Runnable>());
+	private final ThreadPoolExecutor clientProcessingPool = new ThreadPoolExecutor(8, 8, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
 
 	// instance of the Thread class that starts the server thread and enables the server to handle multiple connections with TCP clients in different threads
 	private Thread serverThread = null;
@@ -53,10 +49,6 @@ public class TCPserver {
 
 	// data to be loaded to sensor instances after initializing them
 	protected float[][] sensor_coordinates_array = { {1.0f, 1.0f} , {2.0f, 1.0f}, {1.5f, 2.0f}};// {2.5f, 0.5f}, {3.0f, 3.5f}};//  {1.0f, 3.5f}, {2.5f, 0.5f}, {0.5f, 2.5f}};
-
-	// watchdogs that are being checked on a regular basis - if they are about to expire, the server-client communication is being initialized. Afterward, the watchdogs are kicked and they continue to count down
-	private static Global_1h_Watchdog _1hWatchdog_INSTANCE = null;
-	private static Global_24h_Watchdog _24hWatchdog_INSTANCE = null;
 	
 	// initial values for the flags that indicate if the watchdogs have been kicked (it needs to be defined to have the fixed size of the flags array)
 	private static boolean _1hWatchog_timestamp_table_initial[] = {false, false, false};//, false, false};
@@ -69,13 +61,12 @@ public class TCPserver {
 	// measurement limit is a variable that determines after how many measurement datas, the measurement history request is sent
 	private static final int measurements_limit = 3;
 
-	
-	/******************************************************************************************************************************************
-	 * Specific Variable Names: 
-	 *				1) double watchdogs_scale_factor
-	 * 				2) boolean computeEngineRunning
-	 * Description: Interfaces for the testing purposes
-	 *****************************************************************************************************************************************/
+    /***********************************************************************************************************
+   	 * Auxiliary piece of code
+   	 * Specific Variable Names: 	1) double watchdogs_scale_factor
+	 								2) boolean set_ComputeEngineRunning
+	 * Description: 				Interfaces for the testing purposes
+	 ***********************************************************************************************************/
 	/* watchdog scale factor is used for scaling the watchdog expiration times: 
 	 * it should be used for the simulation purposes - to make the simulation of the server-client communication faster
 	 * By default it should be equal 1 - what causes the following watchdog expiration times: 
@@ -90,25 +81,33 @@ public class TCPserver {
 	// interface for testing purposes -> in tests it should be set to false to avoid hanging the execution in inputStream.readObject() in ComputeEngine_Runnable
 	private boolean computeEngineRunning = true;
 	
-
-	/******************************************************************************************************************************************
-	 * Method Name: TCPserver() throws IOException
-	 * 
-	 * Description: Default constructor for the TCPserver class 
-	 *****************************************************************************************************************************************/
-	public TCPserver() throws IOException{
+    /***********************************************************************************************************
+	 * Method Name: 				public TCPserver()
+	 * Description: 				TCPserver class default constructor
+	 * Affected external variables: Global_1h_Watchdog, Global_24h_Watchdog
+	 * Exceptions thrown:			IOException
+	 ***********************************************************************************************************/
+  public TCPserver() throws IOException{
 		// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
 		super();
-		TCPserver._1hWatchdog_INSTANCE = Global_1h_Watchdog.getInstance();
-		TCPserver._24hWatchdog_INSTANCE = Global_24h_Watchdog.getInstance();
+		
+		// watchdogs that are being checked on a regular basis - if they are about to expire, the server-client communication is being initialized. Afterward, the watchdogs are kicked and they continue to count down
+		Global_1h_Watchdog.getInstance();
+		Global_24h_Watchdog.getInstance();
 	};
 
-	/******************************************************************************************************************************************
-	 * Method Name: TCPserver (int port) throws IOException
-	 * 
-	 * Description: Overloaded constructor for the TCPserver class 
-	 *****************************************************************************************************************************************/
-	private TCPserver (int port) throws IOException{
+    /***********************************************************************************************************
+	 * Method Name: 				private TCPserver(int port)
+	 * Description: 				TCPserver class overloaded constructor
+	 * Affected internal variables: serverSocket, serverRunning, processing_engine, Server_Sensors_LIST, _1hWatchog_timestamp_table, _24hWatchog_timestamp_table
+	 * Affected external variables: Global_1h_Watchdog, Global_24h_Watchdog
+	 * Called internal functions: 	startServer()
+	 * Called external functions: 	Global_1h_Watchdog.setEnabled(), Global_24h_Watchdog.setEnabled(), ComputeEngine_Processing(), SensorImpl(), ComputeEngine_Processing.saveSensorInfo(),
+	 								ComputeEngine_Processing.updateServerSensorList()
+	 * Exceptions thrown: 			IOException
+	 * Exceptions handled: 			ClassNotFoundException, FileNotFoundException, NotSerializableException
+	 ***********************************************************************************************************/
+	private TCPserver(int port) throws IOException{
 		
 		// communication stuff
 		serverSocket = new ServerSocket();
@@ -117,11 +116,11 @@ public class TCPserver {
 	    System.out.println("[TCPserver] server created and bound at port = "+port);
 	    
 	    // set TCPserver running flag to True
-	    ServerRunning(true);
+	    set_ServerRunning(true);
 	    
 	    // start watchdogs
-	    TCPserver._1hWatchdog_INSTANCE.setEnabled(isServerRunning());
-	    TCPserver._24hWatchdog_INSTANCE.setEnabled(isServerRunning());
+	    Global_1h_Watchdog.getInstance().setEnabled(get_ServerRunning());
+	    Global_24h_Watchdog.getInstance().setEnabled(get_ServerRunning());
 	    
 	    // data processing stuff 
 	    // create instances of sensors on the server side and add them to the Server_Sensors_LIST
@@ -157,25 +156,27 @@ public class TCPserver {
 	    
     	// server starts to listen messages from sensors
 	    startServer(serverSocket);
-
 	};
 
-	/******************************************************************************************************************************************
-	 * Method Name: initServer(int port) throws IOException
-	 * 
-	 * Description: initialize TCP server
-	 *****************************************************************************************************************************************/
-	
+    /***********************************************************************************************************
+	 * Method Name: 				public TCPserver initServer(int port)
+	 * Description: 				calls overloaded constructor of TCPserver that triggers entire communication handling on the server side
+	 * Returned value				TCPserver
+	 * Called internal functions: 	TCPserver()
+	 * Exceptions thrown: 			IOException
+	 ***********************************************************************************************************/
 	public TCPserver initServer(int port) throws IOException {
-		
 		return (new TCPserver(port));
 	}
 	
-	/******************************************************************************************************************************************
-	 * Method Name: closeServer(TCPserver INSTANCE, int port) throws IOException
-	 * 
-	 * Description: close TCP server
-	 *****************************************************************************************************************************************/
+    /***********************************************************************************************************
+	 * Method Name: 				public void closeServer(TCPserver INSTANCE, int port
+	 * Description: 				Closes server socket for TCPserver and kicks 1h_Watchdog since server socket has been closed intentionally
+	 * Affected internal variables: serverSocket, serverRunning
+	 * Affected external variables: Global_1h_Watchdog
+	 * Called external functions: 	Global_1h_Watchdog.setTimeLeftBeforeExpiration()
+	 * Exceptions thrown: 			IOException, IllegalArgumentException
+	 ***********************************************************************************************************/
 	public void closeServer(TCPserver INSTANCE, int port) throws IOException{
 	
 		if (INSTANCE.getServerSocket()!= null){
@@ -184,59 +185,43 @@ public class TCPserver {
 			System.out.println("[TCPserver] Socket for the server with port: "+port+" closed successfully");
 			
 			// set to 1hWatchdog 30 [s] to activate the client socket when Watchdog time before expiration reaches its specified level (client-socket opening level)
-			get_1hWatchdog_INSTANCE().setTimeLeftBeforeExpiration(3600 * getWatchdogs_scale_factor());
+			Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(3600 * getWatchdogs_scale_factor());
 			
-			// reinitialize serverRunning to false
-			ServerRunning(false);
+			// reinitialize set_ServerRunning to false
+			set_ServerRunning(false);
 		} 
 		else {
 			throw new IllegalArgumentException();
 		}
-		
 	}
 	
-	/******************************************************************************************************************************************
-	 * Method Name: startServer(final ServerSocket serverSocket)
-	 * 
-	 * Description: start TCP server and handle the server-client communication in the multiple threads by triggering ComputeEngine_Runnables
-	 *****************************************************************************************************************************************/
+    /***********************************************************************************************************
+	 * Method Name: 				public void startServer(final ServerSocket serverSocket)
+	 * Description: 				Listens for connection from the client side. Handles each incoming connection in a separate thread.
+	 * Affected internal variables: serverThread, serverSocket, clientProcessingPool
+	 * Called external functions: 	ComputeEngine_Runnable()
+	 * Exceptions handled: 			IllegalThreadStateException, IOException
+	 ***********************************************************************************************************/
 	public void startServer(final ServerSocket serverSocket){
-		
 		this.serverThread = new Thread(new Runnable() {
-		//Runnable serverTask = new Runnable() {
 	        public void run() {
-	        	/*synchronized(this){
-	        		Thread.currentThread();
-	            }*/
 	            try {
 	            	Socket clientSocket = null;
-				
 					System.out.println("[TCPserver] Server Thread Started.");
 					
-					while(isServerRunning()) {
-						/*
-						if ((get_1hWatchdog_INSTANCE().getTimeLeftBeforeExpiration() == 0.0) || (get_24hWatchdog_INSTANCE().getTimeLeftBeforeExpiration() == 0.0 )) {
-							ServerRunning(false);
-							System.out.println("[TCPserver] TCPserver is being closed due to watchdog expiration.");
-						}
-						*/
-						
+					while(get_ServerRunning()) {
 						try {
 			                //start listening to incoming client request (blocking function)
 			                System.out.println("[TCPserver] waiting for the incoming request ...");
 			                clientSocket = serverSocket.accept();
-			                //new Thread(new ComputeEngine(clientSocket, computeEnginesRunningID)).start();
-			                //computeEnginesRunningID += 1;
 						} catch (SocketException Sockex) {
 							// this exception is being thrown to exit the while loop and call the exception handler from startServer()
-							//throw new RuntimeException("Error accepting client connection", Sockex);
 							serverThread.interrupt();
 							System.out.println("Server Thread Stopped.");
 							break;
 						} 
 						System.out.println("[TCPserver] Number of Active Threads: "+clientProcessingPool.getActiveCount());
-		
-		                clientProcessingPool.execute((new ComputeEngine_Runnable(clientSocket, getWatchdogs_scale_factor(), isComputeEngineRunning())));
+		                clientProcessingPool.execute((new ComputeEngine_Runnable(clientSocket, getWatchdogs_scale_factor(), get_ComputeEngineRunning())));
 					}	
 	            } catch (IllegalThreadStateException ITSex) {
 		            System.out.println("Error: when new Thread with MessageProcessorRunnable created");
@@ -246,54 +231,62 @@ public class TCPserver {
 		            System.out.println(IOe.getMessage());
 		            clientProcessingPool.shutdown();
 		        }
-        	}   
+    		}   
 		});
 		// create new thread for the object defined in the runnable interface and then start run() method for that object
-		//Thread serverThread = new Thread(serverTask);
 	    serverThread.start();
 	}
 	
-	public synchronized ServerSocket getServerSocket() {
-		return this.serverSocket;
+    /***********************************************************************************************************
+	 * Method Name: 				protected synchronized static void set_1hWatchog_Timestamp_tableID_value(boolean new_value, int ID)
+	 * Description: 				Sets value of a particular element in 1hWatchog_Timestamp_tableID
+	 * Affected internal variables: _1hWatchog_timestamp_table
+	 ***********************************************************************************************************/
+	protected synchronized static void set_1hWatchog_Timestamp_tableID_value(boolean new_value, int ID)  {
+		boolean[] temp =  _1hWatchog_timestamp_table.get();
+		temp[ID] = new_value;
+		_1hWatchog_timestamp_table.set(temp);
 	}
 	
-	public synchronized Thread getServerThread() {
-		return this.serverThread;
+    /***********************************************************************************************************
+	 * Method Name: 				protected synchronized static void set_24hWatchog_Timestamp_tableID_value(boolean new_value, int ID)
+	 * Description: 				Sets value of a particular element in 24hWatchog_Timestamp_tableID
+	 * Affected internal variables: _24hWatchog_timestamp_table
+	 ***********************************************************************************************************/
+	protected synchronized static void set_24hWatchog_Timestamp_tableID_value(boolean new_value, int ID)  {
+		boolean[] temp =  _24hWatchog_timestamp_table.get();
+		temp[ID] = new_value;
+		_24hWatchog_timestamp_table.set(temp);
 	}
 	
-	synchronized ThreadPoolExecutor getThreadPoolExecutor() {
-		return this.clientProcessingPool;
+    /***********************************************************************************************************
+	 * Method Name: 				public static void set_1hWatchog_Allfalse()
+	 * Description: 				Sets all elements in 1hWatchog_Timestamp_tableID to FALSE
+	 * Affected internal variables: _1hWatchog_timestamp_table
+	 ***********************************************************************************************************/
+	public static void set_1hWatchog_Allfalse(){
+		for(int i = 0; i < get_1hWatchog_timestamp_table().get().length; i++) {
+	    	set_1hWatchog_Timestamp_tableID_value(false, i);
+	    }
 	}
 	
-	
-	public synchronized boolean isServerRunning() {
-		return this.serverRunning;
+    /***********************************************************************************************************
+	 * Method Name: 				public static void set_24hWatchog_Allfalse()
+	 * Description: 				Sets all elements in 24hWatchog_Timestamp_tableID to FALSE
+	 * Affected internal variables: _24hWatchog_timestamp_table
+	 ***********************************************************************************************************/
+	public static void set_24hWatchog_Allfalse(){
+		for(int i = 0; i < get_24hWatchog_timestamp_table().get().length; i++) {
+	    	set_24hWatchog_Timestamp_tableID_value(false, i);
+	    }
 	}
 	
-	public synchronized void ServerRunning(boolean isServerRunning) {
-	    this.serverRunning = isServerRunning;
-	}
-
-	public static Global_1h_Watchdog get_1hWatchdog_INSTANCE() {
-		return _1hWatchdog_INSTANCE;
-	}
-
-	public static void set_1hWatchdog_INSTANCE(Global_1h_Watchdog _1hWatchdog_INSTANCE) {
-		TCPserver._1hWatchdog_INSTANCE = _1hWatchdog_INSTANCE;
-	}
-
-	public static Global_24h_Watchdog get_24hWatchdog_INSTANCE() {
-		return _24hWatchdog_INSTANCE;
-	}
-
-	public static void set_24hWatchdog_INSTANCE(Global_24h_Watchdog _24hWatchdog_INSTANCE) {
-		TCPserver._24hWatchdog_INSTANCE = _24hWatchdog_INSTANCE;
-	}
-	
-	public static ComputeEngine_Processing getProcessing_engine() {
-		return processing_engine;
-	}
-
+    /***********************************************************************************************************
+     * Auxiliary piece of code
+	 * Method Name: 				public static boolean areAllTrue(boolean[] array)
+	 * Description: 				checks if all elements in array equals true
+	 * Returned value:				returned_flag
+	 ***********************************************************************************************************/
 	public static boolean areAllTrue(boolean[] array){
 		boolean returned_flag = false;
 		int i = 0;
@@ -311,6 +304,12 @@ public class TCPserver {
 	    return returned_flag;
 	}
 	
+    /***********************************************************************************************************
+     * Auxiliary piece of code
+	 * Method Name: 				public static boolean isIDTrue(boolean[] array, int ID)
+	 * Description: 				checks if a particular element in array with index ID equals true
+	 * Returned value:				returned_flag
+	 ***********************************************************************************************************/
 	public static boolean isIDTrue(boolean[] array, int ID){
 		boolean returned_flag = false;
 		if(array[ID-1]) {
@@ -319,30 +318,30 @@ public class TCPserver {
 	    return returned_flag;
 	}
 	
-	public static void set_1hWatchog_Allfalse(){
-		for(int i = 0; i < get_1hWatchog_timestamp_table().get().length; i++) {
-	    	set_1hWatchog_Timestamp_tableID_value(false, i);
-	    }
+	public synchronized ServerSocket getServerSocket() {
+		return this.serverSocket;
 	}
 	
-	public static void set_24hWatchog_Allfalse(){
-		for(int i = 0; i < get_24hWatchog_timestamp_table().get().length; i++) {
-	    	set_24hWatchog_Timestamp_tableID_value(false, i);
-	    }
+	public synchronized Thread getServerThread() {
+		return this.serverThread;
+	}
+	
+	synchronized ThreadPoolExecutor getThreadPoolExecutor() {
+		return this.clientProcessingPool;
+	}	
+	
+	public synchronized boolean get_ServerRunning() {
+		return this.serverRunning;
+	}
+	
+	public synchronized void set_ServerRunning(boolean isServerRunning) {
+	    this.serverRunning = isServerRunning;
+	}
+	
+	public static ComputeEngine_Processing getProcessing_engine() {
+		return processing_engine;
 	}
 
-	protected synchronized static void set_1hWatchog_Timestamp_tableID_value(boolean new_value, int ID)  {
-		boolean[] temp =  _1hWatchog_timestamp_table.get();
-		temp[ID] = new_value;
-		_1hWatchog_timestamp_table.set(temp);
-	}
-	
-	protected synchronized static void set_24hWatchog_Timestamp_tableID_value(boolean new_value, int ID)  {
-		boolean[] temp =  _24hWatchog_timestamp_table.get();
-		temp[ID] = new_value;
-		_24hWatchog_timestamp_table.set(temp);
-	}
-	
 	// auxiliary method used in set_1hWatchog_Allfalse() and areAllTrue(get_1hWatchog_timestamp_table().get())
     public static AtomicReference<boolean[]> get_1hWatchog_timestamp_table() {
 		return _1hWatchog_timestamp_table;
@@ -354,11 +353,12 @@ public class TCPserver {
 	}
 	
 	/******************************************************************************************************************************************
+	 * Auxiliary piece of code
 	 * Testing Interfaces Method Names: 
 	 * 								1) static double getWatchdogs_scale_factor()
 	 * 								2) static void setWatchdogs_scale_factor(double watchdogs_scale_factor)
-	 *								3) boolean isComputeEngineRunning()
-	 *								4) ComputeEngineRunning(boolean computeEngineRunning)
+	 *								3) boolean get_isComputeEngineRunning()
+	 *								4) set_ComputeEngineRunning(boolean set_ComputeEngineRunning)
 	 *****************************************************************************************************************************************/
 	
 	public synchronized static double getWatchdogs_scale_factor() {
@@ -373,12 +373,12 @@ public class TCPserver {
 		return measurements_limit;
 	}
 	
-	public synchronized boolean isComputeEngineRunning() {
+	public synchronized boolean get_ComputeEngineRunning() {
 		return this.computeEngineRunning;
 	}
 	
-	public synchronized void ComputeEngineRunning(boolean computeEngineRunning) {
-	    this.computeEngineRunning = computeEngineRunning;
+	public synchronized void set_ComputeEngineRunning(boolean isComputeEngineRunning) {
+	    this.computeEngineRunning = isComputeEngineRunning;
 	}
 
 }

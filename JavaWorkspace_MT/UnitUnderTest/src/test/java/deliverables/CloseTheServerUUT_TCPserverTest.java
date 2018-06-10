@@ -50,7 +50,7 @@ public class CloseTheServerUUT_TCPserverTest {
 		assertNotEquals(null,		tcp_server_temp);
 		assertNotEquals(null,		tcp_server_temp.getServerThread());
 		assertTrue(tcp_server_temp.getServerSocket().isClosed());
-		assertFalse(tcp_server_temp.isServerRunning());
+		assertFalse(tcp_server_temp.get_ServerRunning());
 	}
 	
 	@Test
@@ -61,7 +61,7 @@ public class CloseTheServerUUT_TCPserverTest {
 		assertNotEquals(null,		uut_TCPserver_1.getINSTANCE());
 		assertNotEquals(null,		uut_TCPserver_1.getINSTANCE().getServerThread());
 		assertTrue(uut_TCPserver_1.getINSTANCE().getServerSocket().isClosed());
-		assertFalse(uut_TCPserver_1.getINSTANCE().isServerRunning());
+		assertFalse(uut_TCPserver_1.getINSTANCE().get_ServerRunning());
 	}
 	
 	
