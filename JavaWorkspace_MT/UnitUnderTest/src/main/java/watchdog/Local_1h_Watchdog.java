@@ -102,7 +102,7 @@ public class Local_1h_Watchdog implements Runnable {
      * @return The number of seconds left to _1h_Watchdog expiration. 
      */ 
     public double getTimeLeftBeforeExpiration() { 
-        return millisecondsLeftUntilExpiration / 1000.0; 
+        return millisecondsLeftUntilExpiration * 0.001; 
     } 
     
     /*
@@ -119,7 +119,7 @@ public class Local_1h_Watchdog implements Runnable {
      * @return The number of seconds since last meal. 
      */ 
     public double getTimeFromLastFeed() { 
-        return (_1h_WatchdogExpiration - (millisecondsLeftUntilExpiration / 1000.0)); 
+        return (_1h_WatchdogExpiration - (millisecondsLeftUntilExpiration * 0.001)); 
     } 
  
     /*

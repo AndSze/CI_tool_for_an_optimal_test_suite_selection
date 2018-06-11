@@ -8,8 +8,6 @@ import java.net.Socket;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import messages.ClientMessage_BootUp;
 import tcpClient.ClientManager;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;;
@@ -61,12 +59,12 @@ public class StartServerTCPserverTest {
 		
 		serverSocket_1.setReuseAddress(true);
 	    serverSocket_1.bind(new java.net.InetSocketAddress(port_1));
-	    tcpserver_1.ServerRunning(true);
+	    TCPserver.set_ServerRunning(true);
 
-		assertEquals(null, 		tcpserver_1.getServerThread());
+		assertEquals(null, 		TCPserver.getServerThread());
 		
 		tcpserver_1.startServer(serverSocket_1);
-		assertNotEquals(null, 	tcpserver_1.getServerThread());
+		assertNotEquals(null, 	TCPserver.getServerThread());
 		
 	}
 	
@@ -75,13 +73,13 @@ public class StartServerTCPserverTest {
 		
 		serverSocket_1.setReuseAddress(true);
 		serverSocket_1.bind(new java.net.InetSocketAddress(port_1));    
-	    tcpserver_1.ServerRunning(true);
+	    TCPserver.set_ServerRunning(true);
 		tcpserver_1.startServer(serverSocket_1);
-		Thread testThread1 = tcpserver_1.getServerThread();
+		Thread testThread1 = TCPserver.getServerThread();
 		serverSocket_2.bind(new java.net.InetSocketAddress(port_2));
-	    tcpserver_2.ServerRunning(true);
+	    TCPserver.set_ServerRunning(true);
 		tcpserver_2.startServer(serverSocket_2);
-		Thread testThread2 = tcpserver_2.getServerThread();
+		Thread testThread2 = TCPserver.getServerThread();
 
 		assertNotEquals(testThread2, 	testThread1);
 	}
@@ -91,15 +89,15 @@ public class StartServerTCPserverTest {
 		
 		serverSocket_1.setReuseAddress(true);
 		serverSocket_1.bind(new java.net.InetSocketAddress(port_1));    
-	    tcpserver_1.ServerRunning(true);
+	    TCPserver.set_ServerRunning(true);
 		tcpserver_1.startServer(serverSocket_1);
 		
-		assertEquals(Thread.State.RUNNABLE,		tcpserver_1.getServerThread().getState());
+		assertEquals(Thread.State.RUNNABLE,		TCPserver.getServerThread().getState());
 		
 		serverSocket_1.close();
 		Thread.sleep(100);
 		
-		assertEquals(Thread.State.TERMINATED,	tcpserver_1.getServerThread().getState());
+		assertEquals(Thread.State.TERMINATED,	TCPserver.getServerThread().getState());
 	}
 	
 	@Test
@@ -107,7 +105,7 @@ public class StartServerTCPserverTest {
 		
 		serverSocket_1.setReuseAddress(true);
 		serverSocket_1.bind(new java.net.InetSocketAddress(port_1));
-		tcpserver_1.ServerRunning(true);
+		TCPserver.set_ServerRunning(true);
 		tcpserver_1.startServer(serverSocket_1);
 		clientSocket = new Socket(serverHostName, port_1);
 		
@@ -120,7 +118,7 @@ public class StartServerTCPserverTest {
 		
 		serverSocket_1.setReuseAddress(true);
 		serverSocket_1.bind(new java.net.InetSocketAddress(port_1));
-		tcpserver_1.ServerRunning(true);
+		TCPserver.set_ServerRunning(true);
 		//tcpserver_1.ComputeEngineRunning(false);
 		tcpserver_1.startServer(serverSocket_1);			
 		clientSocket = new Socket(serverHostName, port_1);
@@ -155,7 +153,7 @@ public class StartServerTCPserverTest {
 		
 		serverSocket_1.setReuseAddress(true);
 		serverSocket_1.bind(new java.net.InetSocketAddress(port_1));
-		tcpserver_1.ServerRunning(true);
+		TCPserver.set_ServerRunning(true);
 		//tcpserver_1.ComputeEngineRunning(false);
 		tcpserver_1.startServer(serverSocket_1);			
 		

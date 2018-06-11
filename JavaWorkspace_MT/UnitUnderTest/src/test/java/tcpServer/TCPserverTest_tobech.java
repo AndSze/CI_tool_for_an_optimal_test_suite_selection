@@ -8,7 +8,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.net.BindException;
 
-public class InitServerTCPserverTest {
+public class TCPserverTest_tobechanged {
 	
 	int port_1 = 9876;
 	TCPserver tcpserver_1 = null;
@@ -25,7 +25,7 @@ public class InitServerTCPserverTest {
 	
 	
 	public static void incrementTestID() {
-		InitServerTCPserverTest.testID += 1;
+		TCPserverTest.testID += 1;
 	}
 	
 	
@@ -33,16 +33,16 @@ public class InitServerTCPserverTest {
 	public void before() throws IOException {
 		tcpserver_1 = new TCPserver();
 		
-		if(InitServerTCPserverTest.testID == 2 || InitServerTCPserverTest.testID == 3) {
+		if(TCPserverTest.testID == 2 || TCPserverTest.testID == 3) {
 			tcpserver_2 = new TCPserver();
 		}
-		if(InitServerTCPserverTest.testID == 4 ) {
+		if(TCPserverTest.testID == 4 ) {
 			port_1 = 0;
 		}
 		
-		System.out.println("\t\tTest Run "+InitServerTCPserverTest.testID+" Purpose:");
-		System.out.println(testPurpose[(InitServerTCPserverTest.testID-1)]);
-		System.out.println("\t\tTest Run "+InitServerTCPserverTest.testID+" Logic:");
+		System.out.println("\t\tTest Run "+TCPserverTest.testID+" Purpose:");
+		System.out.println(testPurpose[(TCPserverTest.testID-1)]);
+		System.out.println("\t\tTest Run "+TCPserverTest.testID+" Logic:");
 	}
 	
 
@@ -90,7 +90,7 @@ public class InitServerTCPserverTest {
    @After
     public void teardown() throws IOException, InterruptedException{
 	   
-	   System.out.println("\t\tTest Run "+InitServerTCPserverTest.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+TCPserverTest.testID+" teardown section:");
 	   
 	   if(tcpserver_1 != null) {
 		   if(tcpserver_1.isServerRunning()){

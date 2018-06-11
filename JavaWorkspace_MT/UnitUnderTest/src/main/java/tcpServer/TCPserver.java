@@ -22,17 +22,20 @@ public class TCPserver {
     /***********************************************************************************************************
 	 * TCPserver - Class Attributes
 	 ***********************************************************************************************************/
+	// instance of TCPserver that should be referred in case of any modification to the TCPserver class attributes or any attempt to read the TCPserver class attribute
+	private static TCPserver TCPserver_instance; 
+	
     //declare a TCP socket object and initialize it to null
-	private ServerSocket serverSocket = null;
+	private static ServerSocket serverSocket = null;
 	
 	//  determine the maximum number of threads running at the same time
 	private final ThreadPoolExecutor clientProcessingPool = new ThreadPoolExecutor(8, 8, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
 
 	// instance of the Thread class that starts the server thread and enables the server to handle multiple connections with TCP clients in different threads
-	private Thread serverThread = null;
+	private static Thread serverThread = null;
 	
 	// flag that indicates if TCPserver is running
-	private boolean serverRunning = false;
+	private static boolean serverRunning = false;
 	
 	// instance of the ComputeEngine_Processing class that triggers processing of the previously serialized files saved in the defined directory
 	private static ComputeEngine_Processing processing_engine; 
@@ -45,7 +48,7 @@ public class TCPserver {
 	protected static ArrayList<MeasurementData> MeasurementData_LIST= new ArrayList<>();
 	
 	// directory that determines where the serialized files for a particular sensor will be saved
-	protected static String Sensors_PATH = "files\\sensors";
+	protected static final String Sensors_PATH = "files\\sensors";
 
 	// data to be loaded to sensor instances after initializing them
 	protected float[][] sensor_coordinates_array = { {1.0f, 1.0f} , {2.0f, 1.0f}, {1.5f, 2.0f}};// {2.5f, 0.5f}, {3.0f, 3.5f}};//  {1.0f, 3.5f}, {2.5f, 0.5f}, {0.5f, 2.5f}};
@@ -87,7 +90,7 @@ public class TCPserver {
 	 * Affected external variables: Global_1h_Watchdog, Global_24h_Watchdog
 	 * Exceptions thrown:			IOException
 	 ***********************************************************************************************************/
-  public TCPserver() throws IOException{
+	public TCPserver() throws IOException{
 		// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
 		super();
 		
@@ -107,7 +110,7 @@ public class TCPserver {
 	 * Exceptions thrown: 			IOException
 	 * Exceptions handled: 			ClassNotFoundException, FileNotFoundException, NotSerializableException
 	 ***********************************************************************************************************/
-	private TCPserver(int port) throws IOException{
+	TCPserver(int port) throws IOException{
 		
 		// communication stuff
 		serverSocket = new ServerSocket();
@@ -123,8 +126,6 @@ public class TCPserver {
 	    Global_24h_Watchdog.getInstance().setEnabled(get_ServerRunning());
 	    
 	    // data processing stuff 
-	    // create instances of sensors on the server side and add them to the Server_Sensors_LIST
-	    
 	    try {
 	    	processing_engine = new ComputeEngine_Processing();
 	    } catch (ClassNotFoundException CNFex) {
@@ -132,8 +133,10 @@ public class TCPserver {
         	System.out.println(CNFex.getMessage());
         }
 	    
+	    // delete all files on the server side
 	    processing_engine.deleteAllFilesFromDirectiory(Sensors_PATH);
 	    
+	    // create instances of sensors on the server side and add them to the Server_Sensors_LIST
     	for (int i = 1; i <= sensor_coordinates_array.length; i++) {
     		try {
 	    		SensorImpl temp_sensor = new SensorImpl(i, new Point2D.Float(sensor_coordinates_array[i-1][0], sensor_coordinates_array[i-1][1]), "Release 1", getMeasurements_limit());
@@ -152,43 +155,55 @@ public class TCPserver {
                 System.out.println("Error: when there was an attempt to serialize a class instance - this class instance is not serializable");
             	System.out.println(NonSerex.getMessage());
             }	
- 		}
-	    
+ 		}	
+	  
+    	
     	// server starts to listen messages from sensors
 	    startServer(serverSocket);
 	};
 
     /***********************************************************************************************************
-	 * Method Name: 				public TCPserver initServer(int port)
-	 * Description: 				calls overloaded constructor of TCPserver that triggers entire communication handling on the server side
-	 * Returned value				TCPserver
+	 * Method Name: 				public static synchronized TCPserver getInstance(int port)
+	 * Description: 				if this function is called for the first time, the default constructor of the TCPserver class is being called,
+	 								if this function is called for the second time, the overloaded constructor of the TCPserver class is being called,
+	 								otherwise, the already initialized instance of the TCPserver class is being returned
+	 * Affected internal variables: TCPserver_instance								
+	 * Returned value				TCPserver_instance
 	 * Called internal functions: 	TCPserver()
 	 * Exceptions thrown: 			IOException
 	 ***********************************************************************************************************/
-	public TCPserver initServer(int port) throws IOException {
-		return (new TCPserver(port));
-	}
-	
+    public static synchronized TCPserver getInstance(int port) throws IOException { 
+        if (TCPserver_instance == null) { 
+        	TCPserver_instance = new TCPserver(); 
+        } 
+        else if (!get_ServerRunning()) { 
+        	TCPserver_instance = new TCPserver(port); 
+        } 
+        return TCPserver_instance; 
+    } 
+ 
     /***********************************************************************************************************
 	 * Method Name: 				public void closeServer(TCPserver INSTANCE, int port
 	 * Description: 				Closes server socket for TCPserver and kicks 1h_Watchdog since server socket has been closed intentionally
-	 * Affected internal variables: serverSocket, serverRunning
-	 * Affected external variables: Global_1h_Watchdog
+	 * Affected internal variables: serverSocket, serverRunning, serverThread
+	 * Affected external variables: Global_1h_Watchdog.millisecondsLeftUntilExpiration
 	 * Called external functions: 	Global_1h_Watchdog.setTimeLeftBeforeExpiration()
 	 * Exceptions thrown: 			IOException, IllegalArgumentException
 	 ***********************************************************************************************************/
 	public void closeServer(TCPserver INSTANCE, int port) throws IOException{
 	
-		if (INSTANCE.getServerSocket()!= null){
+		if (get_ServerRunning()){
 			
-			INSTANCE.getServerSocket().close();
-			System.out.println("[TCPserver] Socket for the server with port: "+port+" closed successfully");
+			TCPserver.getServerSocket().close();
+			getServerThread().interrupt();
 			
 			// set to 1hWatchdog 30 [s] to activate the client socket when Watchdog time before expiration reaches its specified level (client-socket opening level)
-			Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(3600 * getWatchdogs_scale_factor());
+			Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(Global_1h_Watchdog.getInstance().getExpiration() * getWatchdogs_scale_factor());
 			
 			// reinitialize set_ServerRunning to false
 			set_ServerRunning(false);
+			
+			System.out.println("[TCPserver] Socket for the server with port: "+port+" closed successfully");
 		} 
 		else {
 			throw new IllegalArgumentException();
@@ -203,7 +218,7 @@ public class TCPserver {
 	 * Exceptions handled: 			IllegalThreadStateException, IOException
 	 ***********************************************************************************************************/
 	public void startServer(final ServerSocket serverSocket){
-		this.serverThread = new Thread(new Runnable() {
+		TCPserver.serverThread = new Thread(new Runnable() {
 	        public void run() {
 	            try {
 	            	Socket clientSocket = null;
@@ -318,24 +333,24 @@ public class TCPserver {
 	    return returned_flag;
 	}
 	
-	public synchronized ServerSocket getServerSocket() {
-		return this.serverSocket;
+	public synchronized static ServerSocket getServerSocket() {
+		return serverSocket;
 	}
 	
-	public synchronized Thread getServerThread() {
-		return this.serverThread;
+	public synchronized static Thread getServerThread() {
+		return serverThread;
 	}
 	
 	synchronized ThreadPoolExecutor getThreadPoolExecutor() {
 		return this.clientProcessingPool;
 	}	
 	
-	public synchronized boolean get_ServerRunning() {
-		return this.serverRunning;
+	public synchronized static boolean get_ServerRunning() {
+		return serverRunning;
 	}
 	
-	public synchronized void set_ServerRunning(boolean isServerRunning) {
-	    this.serverRunning = isServerRunning;
+	public synchronized static void set_ServerRunning(boolean isServerRunning) {
+	    serverRunning = isServerRunning;
 	}
 	
 	public static ComputeEngine_Processing getProcessing_engine() {
@@ -354,13 +369,11 @@ public class TCPserver {
 	
 	/******************************************************************************************************************************************
 	 * Auxiliary piece of code
-	 * Testing Interfaces Method Names: 
-	 * 								1) static double getWatchdogs_scale_factor()
-	 * 								2) static void setWatchdogs_scale_factor(double watchdogs_scale_factor)
-	 *								3) boolean get_isComputeEngineRunning()
-	 *								4) set_ComputeEngineRunning(boolean set_ComputeEngineRunning)
+	 * Testing Interfaces Method Names: 1) static double getWatchdogs_scale_factor()
+	 * 									2) static void setWatchdogs_scale_factor(double watchdogs_scale_factor)
+	 *									3) boolean get_isComputeEngineRunning()
+	 *									4) set_ComputeEngineRunning(boolean set_ComputeEngineRunning)
 	 *****************************************************************************************************************************************/
-	
 	public synchronized static double getWatchdogs_scale_factor() {
 		return watchdogs_scale_factor;
 	}

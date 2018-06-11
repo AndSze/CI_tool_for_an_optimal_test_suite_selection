@@ -45,7 +45,7 @@ public class Global_1h_Watchdog implements Runnable {
     // _1h_Watchdog expiration time decrementation timeIntervals in milliseconds (its value is decremented every second)
     private int timeIntervals = 1000; 
 	private boolean isPaused = false; 
-	private double server_watchgod_scale_factor = 1.0;
+	private static double server_watchgod_scale_factor = 1.0;
 
 	/*
      * The _1h_Watchdog is born. 
@@ -102,7 +102,7 @@ public class Global_1h_Watchdog implements Runnable {
      * @return The number of seconds left to _1h_Watchdog expiration. 
      */ 
     public double getTimeLeftBeforeExpiration() { 
-        return millisecondsLeftUntilExpiration / 1000.0; 
+        return millisecondsLeftUntilExpiration * 0.001;  
     } 
     
     /*
@@ -110,7 +110,7 @@ public class Global_1h_Watchdog implements Runnable {
      * It should be called to update _1h_Watchdog on the client side respectively to the _1h_Watchdog
      */ 
     public void setTimeLeftBeforeExpiration(double _1h_WatchdogExpiration) { 
-    	 millisecondsLeftUntilExpiration = (long) (_1h_WatchdogExpiration*1000); 
+    	 millisecondsLeftUntilExpiration = (long) (_1h_WatchdogExpiration * 1000); 
     } 
     
     /*
@@ -119,7 +119,7 @@ public class Global_1h_Watchdog implements Runnable {
      * @return The number of seconds since last meal. 
      */ 
     public double getTimeFromLastFeed() { 
-        return (_1h_WatchdogExpiration - (millisecondsLeftUntilExpiration / 1000.0)); 
+        return (_1h_WatchdogExpiration - (millisecondsLeftUntilExpiration * 0.001)); 
     } 
  
     /*
@@ -127,7 +127,7 @@ public class Global_1h_Watchdog implements Runnable {
      * 
      * @return The number of seconds before starvation following a meal (_1h_Watchdog starves if it doesn't eat this often). 
      */ 
-    public double getExpiration() { 
+    public int getExpiration() { 
         return _1h_WatchdogExpiration; 
     } 
 
@@ -211,12 +211,12 @@ public class Global_1h_Watchdog implements Runnable {
 		this.timeIntervals = timeIntervals;
 	}
 	 
-    public double getServer_watchgod_scale_factor() {
+    public static double getServer_watchgod_scale_factor() {
 		return server_watchgod_scale_factor;
 	}
 
-	public void setServer_watchgod_scale_factor(double global_watchgod_scale_factor) {
-		this.server_watchgod_scale_factor = global_watchgod_scale_factor;
+	public static void setServer_watchgod_scale_factor(double global_watchgod_scale_factor) {
+		server_watchgod_scale_factor = global_watchgod_scale_factor;
 	}
 
 

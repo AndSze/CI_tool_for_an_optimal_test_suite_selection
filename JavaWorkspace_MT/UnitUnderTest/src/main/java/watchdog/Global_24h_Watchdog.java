@@ -45,7 +45,7 @@ public class Global_24h_Watchdog implements Runnable {
     // _24h_Watchdog expiration time decrementation timeIntervals in milliseconds (its value is decremented every minute)
     private int timeIntervals = 1000;
     private boolean isPaused = false; 
-	private double server_watchgod_scale_factor = 1.0;
+	private static double server_watchgod_scale_factor = 1.0;
 	private int server_measurements_limit; 
 	
     /*
@@ -104,7 +104,7 @@ public class Global_24h_Watchdog implements Runnable {
      * @return The number of seconds left to ServerWatchgod expiration. 
      */ 
     public double getTimeLeftBeforeExpiration() { 
-        return millisecondsLeftUntilExpiration / 1000.0; 
+        return millisecondsLeftUntilExpiration * 0.001; 
     } 
     
     /*
@@ -112,7 +112,7 @@ public class Global_24h_Watchdog implements Runnable {
      * It should be called to update _24h_Watchdog on the client side respectively to the server_24h_Watchdog
      */ 
     public void setTimeLeftBeforeExpiration(double _24h_WatchdogExpiration) { 
-    	 millisecondsLeftUntilExpiration = (long) (_24h_WatchdogExpiration*1000); 
+    	 millisecondsLeftUntilExpiration = (long) (_24h_WatchdogExpiration * 1000); 
     } 
     
     
@@ -122,7 +122,7 @@ public class Global_24h_Watchdog implements Runnable {
      * @return The number of seconds since last meal. 
      */ 
     public double getTimeFromLastFeed() { 
-        return (_24h_WatchdogExpiration - (millisecondsLeftUntilExpiration / 1000.0)); 
+        return (_24h_WatchdogExpiration - (millisecondsLeftUntilExpiration * 0.001)); 
     } 
  
     /*
@@ -214,12 +214,12 @@ public class Global_24h_Watchdog implements Runnable {
 		this.timeIntervals = timeIntervals;
 	}
 	 
-    public double getServer_watchgod_scale_factor() {
+    public static double getServer_watchgod_scale_factor() {
 		return server_watchgod_scale_factor;
 	}
 
-	public void setServer_watchgod_scale_factor(double global_watchgod_scale_factor) {
-		this.server_watchgod_scale_factor = global_watchgod_scale_factor;
+	public static void setServer_watchgod_scale_factor(double global_watchgod_scale_factor) {
+		server_watchgod_scale_factor = global_watchgod_scale_factor;
 	}
 	
     public int getServer_measurements_limit() {

@@ -66,7 +66,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
     	try {
     		while(true) {
     			
-    			setDelay(100 * getLocal_watchdog_scale_factor());
+    			setDelay(200 * getLocal_watchdog_scale_factor());
     			if(isComputeEngine_Runnable_running()) {
     				
 					if( (receivedMessage = (Message_Interface) inputStream.readObject()) != null) {
@@ -91,6 +91,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    					// conversion from [ms] (getDelay) to [s] (getLocal_1h_watchdog) is required, hence multiplication by 0.001
 			    				setLocal_1h_watchdog(getLocal_1h_watchdog() - ((double)((0.001 * getDelay()))));
 			    				
+			    				setDelay(200 * getLocal_watchdog_scale_factor());
 			    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1h_Watchdog updated including the delay for ServerMessage_Request_MeasurementData: \t" + getLocal_1h_watchdog());
 		    				}
 		    				else if(getLocal_24h_watchdog() < (200 * getLocal_watchdog_scale_factor()) ) {
@@ -101,7 +102,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 			    				setLocal_24h_watchdog(getLocal_24h_watchdog() - ((double)((0.001 * getDelay()))));
 			    				
 			    				// delay is set to a minimal value to prevent 1h Watchdog from expiration
-			    				setDelay(100 * getLocal_watchdog_scale_factor());
+			    				setDelay(200 * getLocal_watchdog_scale_factor());
 			    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 24h_Watchdog updated including the delay for ServerMessage_Request_MeasurementHistory: \t" + getLocal_24h_watchdog());
 		    				}
 		    				else {
@@ -228,9 +229,9 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 
     						// serialize measurement data instance and save it to file
         					getProcessing_engine().saveMeasurementHistoryInfo(sensor, mes_hist);
-	        					
+	        				
+        					// reset sensor to create new MeasurementData array, set NumberOfMeasurements to 0 and set SensorState to PRE_OPERATIONAL
         					sensor.resetSensor();
-        					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
 
 	    					// feed Local 24hWatchdog
         					setLocal_24h_watchdog(Global_24h_Watchdog.getInstance().getExpiration() * getLocal_watchdog_scale_factor());
@@ -247,6 +248,8 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
 	    																   getLocal_1h_watchdog(), getLocal_24h_watchdog(), 
 									   									   getLocal_watchdog_scale_factor(), getMeasurements_limit()));
+	    					
+	    					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
 	    				}
 		    		}
 					processingDelay(getDelay());
@@ -348,6 +351,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 				set_24hWatchog_Allfalse();
 			}
         	try {
+        		processingDelay(100);
         		closeOutStream();
 				closeInStream();
 			} catch (IOException IOex) {

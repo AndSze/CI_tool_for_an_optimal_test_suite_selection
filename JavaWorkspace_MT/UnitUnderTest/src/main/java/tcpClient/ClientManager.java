@@ -211,7 +211,7 @@ public class ClientManager implements TCPclient_interface{
 						}
 						else {
 							// send ACK message to confirm that ClientMessage_MeasurementData has been sent, but do not disable the socket on the server side - the sensor waits for ServerMessage_Request_MeasurementHistory
-							System.out.println("[ClientManager " +sensor.getSensorID()+"] ClientMessage_ACK has been sned to confirm that ClientMessage_MeasurementData has been sent - wait for ServerMessage_Request_MeasurementHistory");
+							System.out.println("[ClientManager " +sensor.getSensorID()+"] ClientMessage_ACK has been sent to confirm that ClientMessage_MeasurementData has been sent - wait for ServerMessage_Request_MeasurementHistory");
 							sendMessage(new ClientMessage_ACK(sensor_ID));
 						}
 
