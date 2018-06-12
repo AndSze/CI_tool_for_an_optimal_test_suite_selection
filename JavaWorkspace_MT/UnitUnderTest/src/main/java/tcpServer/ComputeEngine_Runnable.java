@@ -342,6 +342,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 			if (isIDTrue(get_24hWatchog_timestamp_table().get(), sensor.getSensorID()) ) {
 				getProcessing_engine().deleteMeasurementDataInfo(sensor);
 			}
+
 			
 			// if 24h Watchdog has been kicked - set local 24h watchdog flags in the 24hWatchog_timestamp_table array to FALSE
 			if(areAllTrue(get_24hWatchog_timestamp_table().get())) {

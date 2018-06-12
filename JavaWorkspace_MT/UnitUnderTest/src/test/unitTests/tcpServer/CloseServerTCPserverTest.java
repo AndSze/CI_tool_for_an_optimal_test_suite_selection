@@ -106,7 +106,7 @@ public class CloseServerTCPserverTest {
 	   System.out.println("\t\tTest Run "+CloseServerTCPserverTest.testID+" teardown section:");
 	   	   
 	   // Time offset between consecutive test runs execution
-	   Thread.sleep(1000);
+	   Thread.sleep(100);
 
 	   incrementTestID();
     }

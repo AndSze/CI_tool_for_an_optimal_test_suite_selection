@@ -140,5 +140,10 @@ public class SensorImpl extends MeasurementData implements Serializable {
 	public void setSensor_watchdog_scale_factor(double local_watchdog_scale_factor) {
 		this.sensor_watchdog_scale_factor = local_watchdog_scale_factor;
 	}
+	
+	public int getSensor_m_history_array_size() {
+		return sensor_m_history_array_size;
+	}
+
 
 }

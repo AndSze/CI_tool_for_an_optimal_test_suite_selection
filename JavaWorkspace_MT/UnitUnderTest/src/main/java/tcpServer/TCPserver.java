@@ -38,7 +38,7 @@ public class TCPserver {
 	private static boolean serverRunning = false;
 	
 	// instance of the ComputeEngine_Processing class that triggers processing of the previously serialized files saved in the defined directory
-	private static ComputeEngine_Processing processing_engine; 
+	protected static ComputeEngine_Processing processing_engine; 
    
 	// Array Lists that permanently store sensors and measurement history objects prior to save them in the defined directory
 	protected static ArrayList<SensorImpl> Server_Sensors_LIST= new ArrayList<>();
@@ -52,6 +52,7 @@ public class TCPserver {
 
 	// data to be loaded to sensor instances after initializing them
 	protected float[][] sensor_coordinates_array = { {1.0f, 1.0f} , {2.0f, 1.0f}, {1.5f, 2.0f}};// {2.5f, 0.5f}, {3.0f, 3.5f}};//  {1.0f, 3.5f}, {2.5f, 0.5f}, {0.5f, 2.5f}};
+	protected String softwareImageID = "Release 1";
 	
 	// initial values for the flags that indicate if the watchdogs have been kicked (it needs to be defined to have the fixed size of the flags array)
 	private static boolean _1hWatchog_timestamp_table_initial[] = {false, false, false};//, false, false};
@@ -139,10 +140,10 @@ public class TCPserver {
 	    // create instances of sensors on the server side and add them to the Server_Sensors_LIST
     	for (int i = 1; i <= sensor_coordinates_array.length; i++) {
     		try {
-	    		SensorImpl temp_sensor = new SensorImpl(i, new Point2D.Float(sensor_coordinates_array[i-1][0], sensor_coordinates_array[i-1][1]), "Release 1", getMeasurements_limit());
-	    		processing_engine.saveSensorInfo(temp_sensor, "sensorINITIALIZATION");
+	    		SensorImpl temp_sensor = new SensorImpl(i, new Point2D.Float(sensor_coordinates_array[i-1][0], sensor_coordinates_array[i-1][1]), softwareImageID, getMeasurements_limit());
 	    		temp_sensor.setSensor_watchdog_scale_factor(getWatchdogs_scale_factor());
 	    		Server_Sensors_LIST = processing_engine.updateServerSensorList(temp_sensor);
+	    		processing_engine.saveSensorInfo(temp_sensor, "sensorINITIALIZATION");
 	    		
 	    		// set flags that indicate if the watchdogs have been kicked to FALSE
 	    		set_1hWatchog_Timestamp_tableID_value(false, i-1);
@@ -253,6 +254,7 @@ public class TCPserver {
 	}
 	
     /***********************************************************************************************************
+	 * Auxiliary piece of code
 	 * Method Name: 				protected synchronized static void set_1hWatchog_Timestamp_tableID_value(boolean new_value, int ID)
 	 * Description: 				Sets value of a particular element in 1hWatchog_Timestamp_tableID
 	 * Affected internal variables: _1hWatchog_timestamp_table
@@ -264,6 +266,7 @@ public class TCPserver {
 	}
 	
     /***********************************************************************************************************
+	 * Auxiliary piece of code
 	 * Method Name: 				protected synchronized static void set_24hWatchog_Timestamp_tableID_value(boolean new_value, int ID)
 	 * Description: 				Sets value of a particular element in 24hWatchog_Timestamp_tableID
 	 * Affected internal variables: _24hWatchog_timestamp_table
@@ -275,6 +278,7 @@ public class TCPserver {
 	}
 	
     /***********************************************************************************************************
+	 * Auxiliary piece of code
 	 * Method Name: 				public static void set_1hWatchog_Allfalse()
 	 * Description: 				Sets all elements in 1hWatchog_Timestamp_tableID to FALSE
 	 * Affected internal variables: _1hWatchog_timestamp_table
@@ -286,6 +290,7 @@ public class TCPserver {
 	}
 	
     /***********************************************************************************************************
+	 * Auxiliary piece of code
 	 * Method Name: 				public static void set_24hWatchog_Allfalse()
 	 * Description: 				Sets all elements in 24hWatchog_Timestamp_tableID to FALSE
 	 * Affected internal variables: _24hWatchog_timestamp_table

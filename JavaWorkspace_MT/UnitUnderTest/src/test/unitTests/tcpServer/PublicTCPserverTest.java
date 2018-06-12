@@ -10,7 +10,7 @@ import org.junit.Test;
 import watchdog.Global_1h_Watchdog;
 import watchdog.Global_24h_Watchdog;
 
-public class publicTCPserverTest {
+public class PublicTCPserverTest {
 	
 	TCPserver tcpserver_1 = null;
 	
@@ -22,7 +22,7 @@ public class publicTCPserverTest {
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		publicTCPserverTest.testID += 1;
+		PublicTCPserverTest.testID += 1;
 	}
 	
 	@Before
@@ -30,9 +30,9 @@ public class publicTCPserverTest {
 		
 		tcpserver_1 = new TCPserver();
 		
-		System.out.println("\t\tTest Run "+publicTCPserverTest.testID+" Purpose:");
-		System.out.println(testPurpose[(publicTCPserverTest.testID-1)]);
-		System.out.println("\t\tTest Run "+publicTCPserverTest.testID+" Logic:");
+		System.out.println("\t\tTest Run "+PublicTCPserverTest.testID+" Purpose:");
+		System.out.println(testPurpose[(PublicTCPserverTest.testID-1)]);
+		System.out.println("\t\tTest Run "+PublicTCPserverTest.testID+" Logic:");
 	}
 	
     /***********************************************************************************************************
@@ -117,10 +117,10 @@ public class publicTCPserverTest {
    @After
     public void teardown() throws IOException, InterruptedException{
 	   
-	   System.out.println("\t\tTest Run "+publicTCPserverTest.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+PublicTCPserverTest.testID+" teardown section:");
 	   
 	   // Time offset between consecutive test runs execution
-	   Thread.sleep(1000);
+	   Thread.sleep(100);
 	   
 	   System.out.println("");
 	   incrementTestID();
