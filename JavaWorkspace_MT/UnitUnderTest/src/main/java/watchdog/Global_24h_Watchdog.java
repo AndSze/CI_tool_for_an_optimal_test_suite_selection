@@ -41,7 +41,7 @@ public class Global_24h_Watchdog implements Runnable {
     private Thread _24h_WatchdogThread; 
     private Lock expirationDateLock; 
     // _24h_Watchdog expiration time is given in seconds
-    private final double _24h_WatchdogExpiration = 3600; 
+    private final double _24h_WatchdogExpiration = 3600;
     // _24h_Watchdog expiration time decrementation timeIntervals in milliseconds (its value is decremented every minute)
     private int timeIntervals = 1000;
     private boolean isPaused = false; 

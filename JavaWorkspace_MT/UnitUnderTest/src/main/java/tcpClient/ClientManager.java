@@ -62,7 +62,7 @@ public class ClientManager implements TCPclient_interface{
 		
 		Message_Interface receivedMessage = null;
 		boolean ack_alert = false;
-		
+		boolean wait_for_measurement_data = false;
 		while(true)
         {
 			if (isClientManagerRunning()) {
@@ -70,7 +70,7 @@ public class ClientManager implements TCPclient_interface{
 				{
 					sensor = TCPclient.searchInClientSensorList(sensor_ID);
 					if (receivedMessage instanceof ServerMessage_Request_MeasurementData) {
-						if (sensor != null) {
+						if (sensor != null && wait_for_measurement_data) {
 							
 							System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_Request_MeasurementData has been received.");
 							//System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_Request_MeasurementData has the following timestamp: " + receivedMessage.getTimestamp());
@@ -97,6 +97,8 @@ public class ClientManager implements TCPclient_interface{
 							
 							sendMessage(new ClientMessage_MeasurementData(sensor_ID, mes_data));
 							TCPclient.updateClientSensorList(sensor);
+							
+							wait_for_measurement_data = false;
 						}
 					}
 					else if (receivedMessage instanceof ServerMessage_Request_MeasurementHistory) {
@@ -163,6 +165,7 @@ public class ClientManager implements TCPclient_interface{
 			
 						    	TCPclient.updateClientSensorList(sensor);
 								
+						    	wait_for_measurement_data = true;
 							}
 							else if (new_sensor.getSensorState() == SensorState.DEAD) {
 								sendMessage(new ClientMessage_ACK(sensor_ID));

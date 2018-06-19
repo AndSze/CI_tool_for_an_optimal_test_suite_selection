@@ -29,7 +29,7 @@ public class TCPserver {
 	private static ServerSocket serverSocket = null;
 	
 	//  determine the maximum number of threads running at the same time
-	private final ThreadPoolExecutor clientProcessingPool = new ThreadPoolExecutor(8, 8, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
+	private final ThreadPoolExecutor serverProcessingPool = new ThreadPoolExecutor(8, 8, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
 
 	// instance of the Thread class that starts the server thread and enables the server to handle multiple connections with TCP clients in different threads
 	private static Thread serverThread = null;
@@ -63,7 +63,7 @@ public class TCPserver {
 	private static AtomicReference<boolean[]> _24hWatchog_timestamp_table = new AtomicReference<boolean[]>(_24hWatchog_timestamp_table_initial);
 	
 	// measurement limit is a variable that determines after how many measurement datas, the measurement history request is sent
-	private static final int measurements_limit = 3;
+	private static final int measurements_limit = 24;
 
     /***********************************************************************************************************
    	 * Auxiliary piece of code
@@ -214,7 +214,7 @@ public class TCPserver {
     /***********************************************************************************************************
 	 * Method Name: 				public void startServer(final ServerSocket serverSocket)
 	 * Description: 				Listens for connection from the client side. Handles each incoming connection in a separate thread.
-	 * Affected internal variables: serverThread, serverSocket, clientProcessingPool
+	 * Affected internal variables: serverThread, serverSocket, serverProcessingPool
 	 * Called external functions: 	ComputeEngine_Runnable()
 	 * Exceptions handled: 			IllegalThreadStateException, IOException
 	 ***********************************************************************************************************/
@@ -236,8 +236,8 @@ public class TCPserver {
 							System.out.println("Server Thread Stopped.");
 							break;
 						} 
-						System.out.println("[TCPserver] Number of Active Threads: "+clientProcessingPool.getActiveCount());
-		                clientProcessingPool.execute((new ComputeEngine_Runnable(clientSocket, getWatchdogs_scale_factor(), get_ComputeEngineRunning())));
+						System.out.println("[TCPserver] Number of Active Threads: "+serverProcessingPool.getActiveCount());
+		                serverProcessingPool.execute((new ComputeEngine_Runnable(clientSocket, getWatchdogs_scale_factor(), get_ComputeEngineRunning())));
 					}	
 	            } catch (IllegalThreadStateException ITSex) {
 		            System.out.println("Error: when new Thread with MessageProcessorRunnable created");
@@ -245,7 +245,7 @@ public class TCPserver {
 				} catch (IOException IOe) {
 		            System.out.println("Error: when attempted to open input/stream for ComputeEngine()");
 		            System.out.println(IOe.getMessage());
-		            clientProcessingPool.shutdown();
+		            serverProcessingPool.shutdown();
 		        }
     		}   
 		});
@@ -347,7 +347,7 @@ public class TCPserver {
 	}
 	
 	synchronized ThreadPoolExecutor getThreadPoolExecutor() {
-		return this.clientProcessingPool;
+		return this.serverProcessingPool;
 	}	
 	
 	public synchronized static boolean get_ServerRunning() {

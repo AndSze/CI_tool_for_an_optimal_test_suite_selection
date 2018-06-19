@@ -51,6 +51,10 @@ public class SensorImpl extends MeasurementData implements Serializable {
 				int temp_numberOfMeasurements = getNumberOfMeasurements();
 				//System.out.println("[SensorImpl] Sensor: \t" + sensorID + " has the following number of measurements:\t" + temp_numberOfMeasurements);
 				
+				// overwrite last measurement in sensor_m_history to prevent inserting a measurement to the out-of-bound array index
+				if (temp_numberOfMeasurements == sensor_m_history_array_size) {
+					temp_numberOfMeasurements = temp_numberOfMeasurements - 1;
+				}
 				// overwrite the MeasurementData class instance to get current timestamp
 				this.sensor_m_history[temp_numberOfMeasurements] = new MeasurementData();
 				
