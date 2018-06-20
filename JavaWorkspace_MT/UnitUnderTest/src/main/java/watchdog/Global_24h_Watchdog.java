@@ -41,7 +41,7 @@ public class Global_24h_Watchdog implements Runnable {
     private Thread _24h_WatchdogThread; 
     private Lock expirationDateLock; 
     // _24h_Watchdog expiration time is given in seconds
-    private final double _24h_WatchdogExpiration = 3600;
+    private final double _24h_WatchdogExpiration = 3600 + (TCPserver.getMeasurements_limit() * 0.5);
     // _24h_Watchdog expiration time decrementation timeIntervals in milliseconds (its value is decremented every minute)
     private int timeIntervals = 1000;
     private boolean isPaused = false; 
@@ -53,7 +53,7 @@ public class Global_24h_Watchdog implements Runnable {
      */ 
     protected Global_24h_Watchdog(double global_watchdogs_scale_factor, int measurements_limit) {             
         expirationDateLock = new ReentrantLock(); 
-        setServer_watchgod_scale_factor(global_watchdogs_scale_factor);
+        setServer_watchdog_scale_factor(global_watchdogs_scale_factor);
         setServer_measurements_limit(measurements_limit);
        	setTimeIntervals( (int) (getTimeIntervals() * global_watchdogs_scale_factor * getServer_measurements_limit() / 3));
         millisecondsLeftUntilExpiration = (double) (global_watchdogs_scale_factor * (_24h_WatchdogExpiration*1000) * getServer_measurements_limit() ); 
@@ -84,7 +84,7 @@ public class Global_24h_Watchdog implements Runnable {
      */ 
     public void feed() { 
 		expirationDateLock.lock(); 
-		millisecondsLeftUntilExpiration =  (double) (getServer_watchgod_scale_factor() * _24h_WatchdogExpiration * 1000 *  getServer_measurements_limit() ); 
+		millisecondsLeftUntilExpiration =  (double) (getServer_watchdog_scale_factor() * _24h_WatchdogExpiration * 1000 *  getServer_measurements_limit() ); 
 		expirationDateLock.unlock(); 
     } 
  
@@ -214,11 +214,11 @@ public class Global_24h_Watchdog implements Runnable {
 		this.timeIntervals = timeIntervals;
 	}
 	 
-    public static double getServer_watchgod_scale_factor() {
+    public static double getServer_watchdog_scale_factor() {
 		return server_watchgod_scale_factor;
 	}
 
-	public static void setServer_watchgod_scale_factor(double global_watchgod_scale_factor) {
+	public static void setServer_watchdog_scale_factor(double global_watchgod_scale_factor) {
 		server_watchgod_scale_factor = global_watchgod_scale_factor;
 	}
 	

@@ -1,9 +1,0 @@
-Designing pipeline for Jenkins:
-https://bulldogjob.pl/articles/726-exploring-jenkins-pipelines-a-simple-delivery-flow?utm_source=fb__30112017_artykul-cognifidepolska&utm_medium=fb__30112017_artykul-cognifidepolska&utm_campaign=fb__30112017_artykul-cognifidepolska-895541003936301-artykul-cognifidepolska
-
-
-Blog for test engineers:
-https://testdetective.com/
-
-Setup Basics:
-https://automatingguy.com/2017/10/13/selenium-tests-with-jenkins-and-zalenium/
