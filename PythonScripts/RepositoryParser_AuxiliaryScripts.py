@@ -10,7 +10,7 @@ from AuxiliaryScripts import *
 def build_resulted_array_of_removed_lines_numbers(resulted_array_of_removed_lines, list_of_modified_files_to_be_processed, commit_older, repo_directory_address_diff): 
 
 	start = time.time()
-		
+
 	# array of lists of file names along with the method names for functions that have been modified (removed lines) between commits for these files
 	resulted_array_of_modified_methods_with_removed_lines = np.empty((len(resulted_array_of_removed_lines),),dtype=object)
 	resulted_array_of_modified_methods_with_removed_lines.fill([])
@@ -62,7 +62,7 @@ def build_resulted_array_of_removed_lines_numbers(resulted_array_of_removed_line
 			changed_lines_numbers_for_a_file_list = []
 			changed_method_names_for_a_file_list = []
 			changed_method_names_for_a_file_list.append(source_file)
-			#print 'source_file: ' + str(source_file)
+			print 'source_file: ' + str(source_file)
 			lines_sourceFile = [line.rstrip('\n') for line in open(list_of_sourceFiles_from_older_commit[source_file_index])]
 			index_of_file = normalized_list_of_removed_files_to_be_processed.index(source_file)
 			for line in lines_sourceFile:
@@ -88,13 +88,20 @@ def build_resulted_array_of_removed_lines_numbers(resulted_array_of_removed_line
 			# call build_element_line_numbers_list_for_a_file
 			list_of_method_name_line_numbers, list_of_changed_methods = build_element_line_numbers_list_for_a_file(list_of_sourceFiles_from_older_commit[source_file_index], element_to_be_found)
 			
+			method_brackets_iterator = 0
 			for method_name_line_number in list_of_method_name_line_numbers:
+				if (method_brackets_iterator < len(list_of_method_name_line_numbers) - 1):
+					method_brackets_iterator = method_brackets_iterator + 1
 				for changed_line_number in changed_lines_numbers_for_a_file_list:
 					changed_method_name = ''
+					# add 'Class Attributes' to changed_method_names_for_a_file_list if changed line number is lesser than line number for the first method in a file under analysis
 					if list_of_method_name_line_numbers.index(method_name_line_number) == 0 and len(list_of_method_name_line_numbers) > 1 :
 						if changed_line_number < method_name_line_number:
 							changed_method_name = 'Class Attributes'
-					if changed_line_number > method_name_line_number:
+					# add method name to changed_method_names_for_a_file_list if:
+					# changed line number is inside the method's body (it means between the changed method header and header for consecutive method)
+					# changed line number is higher than line number for the last method in a file under analysis
+					if (changed_line_number > method_name_line_number and changed_line_number < list_of_method_name_line_numbers[method_brackets_iterator]) or (changed_line_number > method_name_line_number and method_name_line_number == list_of_method_name_line_numbers[method_brackets_iterator]):
 						changed_method_name = list_of_changed_methods[list_of_method_name_line_numbers.index(method_name_line_number)]
 					if (changed_method_name != '') and (changed_method_name not in changed_method_names_for_a_file_list):
 						changed_method_names_for_a_file_list.append(changed_method_name)
@@ -189,13 +196,20 @@ def build_resulted_array_of_added_lines_numbers(resulted_array_of_added_lines, l
 			# call build_element_line_numbers_list_for_a_file
 			list_of_method_name_line_numbers, list_of_changed_methods = build_element_line_numbers_list_for_a_file(list_of_sourceFiles_from_newer_commit[source_file_index], element_to_be_found)
 			
+			method_brackets_iterator = 0
 			for method_name_line_number in list_of_method_name_line_numbers:
+				if (method_brackets_iterator < len(list_of_method_name_line_numbers) - 1):
+					method_brackets_iterator = method_brackets_iterator + 1
 				for changed_line_number in changed_lines_numbers_for_a_file_list:
 					changed_method_name = ''
+					# add 'Class Attributes' to changed_method_names_for_a_file_list if changed line number is lesser than line number for the first method in a file under analysis
 					if list_of_method_name_line_numbers.index(method_name_line_number) == 0 and len(list_of_method_name_line_numbers) > 1 :
 						if changed_line_number < method_name_line_number:
 							changed_method_name = 'Class Attributes'
-					if changed_line_number > method_name_line_number:
+					# add method name to changed_method_names_for_a_file_list if:
+					# changed line number is inside the method's body (it means between the changed method header and header for consecutive method)
+					# changed line number is higher than line number for the last method in a file under analysis
+					if (changed_line_number > method_name_line_number and changed_line_number < list_of_method_name_line_numbers[method_brackets_iterator]) or (changed_line_number > method_name_line_number and method_name_line_number == list_of_method_name_line_numbers[method_brackets_iterator]):
 						changed_method_name = list_of_changed_methods[list_of_method_name_line_numbers.index(method_name_line_number)]
 					if (changed_method_name != '') and (changed_method_name not in changed_method_names_for_a_file_list):
 						changed_method_names_for_a_file_list.append(changed_method_name)

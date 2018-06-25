@@ -1,15 +1,31 @@
 #!/usr/bin/env python
 
+import os
+
+# navigate to 'CI_tool' that is the base directory 
+base_dir_path_norm =  os.path.dirname(os.path.abspath(__file__))
+base_dir_path_norm = os.path.normpath(base_dir_path_norm)
+base_dir_path_norm = base_dir_path_norm.split(os.sep)
+base_dir_path = ''
+base_dir_path_diff = ''
+for i in range(0, len(base_dir_path_norm)):
+	if (i < 3):
+		base_dir_path = base_dir_path + base_dir_path_norm[i] + '\\'
+		base_dir_path_diff = base_dir_path_diff + base_dir_path_norm[i] + '\\'
+	if (i==3): 
+		base_dir_path = base_dir_path + base_dir_path_norm[i] + '\\'
+		break
+
 # directories definition
-dir_repository_older_commit = r'C:\Projects\Test_Integration_Jenkins\CI_tool\CI_tool_diff_older_commit\master'
-dir_repository_newer_commit = r'C:\Projects\Test_Integration_Jenkins\CI_tool\CI_tool_diff_newer_commit\master'
-dir_repository_master = r'C:\Projects\Test_Integration_Jenkins\CI_tool\master'
+dir_repository_older_commit = base_dir_path + r'CI_tool_diff_older_commit\master'
+dir_repository_newer_commit = base_dir_path + r'CI_tool_diff_newer_commit\master'
+dir_repository_master = base_dir_path + r'master'
 dir_repository_master_sourceCode = dir_repository_master + r'\JavaWorkspace_MT\UnitUnderTest\src\main\java'
-dir_repository_older_commit_sourceCode = dir_repository_newer_commit + r'\JavaWorkspace_MT\UnitUnderTest\src\main\java'
-dir_repository_newer_commit_sourceCode = dir_repository_master + r'\JavaWorkspace_MT\UnitUnderTest\src\main\java'
+dir_repository_older_commit_sourceCode = dir_repository_older_commit + r'\JavaWorkspace_MT\UnitUnderTest\src\main\java'
+dir_repository_newer_commit_sourceCode = dir_repository_newer_commit + r'\JavaWorkspace_MT\UnitUnderTest\src\main\java'
 dir_repository_master_unitTests = dir_repository_master + r'\JavaWorkspace_MT\UnitUnderTest\src\test\unitTests'
 dir_repository_master_integrationTests = dir_repository_master + r'\JavaWorkspace_MT\UnitUnderTest\src\test\integrationTests'
-dir_sourceCode_diff = r'C:\Projects\Test_Integration_Jenkins\CI_tool_diff_repo\master\JavaWorkspace_MT\UnitUnderTest\src\main\java'
+dir_sourceCode_diff = base_dir_path_diff + r'CI_tool_diff_repo\master\JavaWorkspace_MT\UnitUnderTest\src\main\java'
 
 # All Files common
 elem_start = "/********"
