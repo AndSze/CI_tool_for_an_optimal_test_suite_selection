@@ -41,8 +41,8 @@ public class Global_24h_Watchdog implements Runnable {
     private Thread _24h_WatchdogThread; 
     private Lock expirationDateLock; 
     // _24h_Watchdog expiration time is given in seconds
-    private final double _24h_WatchdogExpiration = 3600 + (TCPserver.getMeasurements_limit() * 0.5);
-    // _24h_Watchdog expiration time decrementation timeIntervals in milliseconds (its value is decremented every minute)
+    private final double _24h_WatchdogExpiration = 3600;
+	// _24h_Watchdog expiration time decrementation timeIntervals in milliseconds (its value is decremented every minute)
     private int timeIntervals = 1000;
     private boolean isPaused = false; 
 	private static double server_watchgod_scale_factor = 1.0;
@@ -56,7 +56,7 @@ public class Global_24h_Watchdog implements Runnable {
         setServer_watchdog_scale_factor(global_watchdogs_scale_factor);
         setServer_measurements_limit(measurements_limit);
        	setTimeIntervals( (int) (getTimeIntervals() * global_watchdogs_scale_factor * getServer_measurements_limit() / 3));
-        millisecondsLeftUntilExpiration = (double) (global_watchdogs_scale_factor * (_24h_WatchdogExpiration*1000) * getServer_measurements_limit() ); 
+        millisecondsLeftUntilExpiration = (double) (global_watchdogs_scale_factor * (_24h_WatchdogExpiration*1000) * getServer_measurements_limit()); 
         _24h_WatchdogThread = new Thread(this, "_24h_Watchdog Thread"); 
         _24h_WatchdogThread.start(); 
     } 

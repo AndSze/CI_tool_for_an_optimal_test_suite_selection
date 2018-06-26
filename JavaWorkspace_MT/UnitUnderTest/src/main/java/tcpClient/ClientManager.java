@@ -187,7 +187,7 @@ public class ClientManager implements TCPclient_interface{
 							System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_SensorInfoUpdate has the following SensorState: " + new_sensor.getSensorState());
 							System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_SensorInfoUpdate received when _1h_Watchdog equals: " + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 							
-							if(new_sensor.getSensorState() == SensorState.OPERATIONAL && Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > 12) {
+							if(new_sensor.getSensorState() == SensorState.OPERATIONAL && Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > 1200 * ((ServerMessage_SensorInfoUpdate) receivedMessage).getSensor_watchdog_scale_factor()) {
 								System.out.println("[ClientManager " +sensor.getSensorID()+"] if sensor receives go to OPERATIONAL, ClientManager is being closed"); 
 								System.out.println("[ClientManager " +sensor.getSensorID()+"] it will be launched agan once - _1h_Watchdog: " + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + "[s] is close to expire.");
 								setClientManagerRunning(false);

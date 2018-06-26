@@ -22,6 +22,9 @@ public class TCPserver {
     /***********************************************************************************************************
 	 * TCPserver - Class Attributes
 	 ***********************************************************************************************************/
+	
+	public static double computing_time = 0;
+	
 	// instance of TCPserver that should be referred in case of any modification to the TCPserver class attributes or any attempt to read the TCPserver class attribute
 	private static TCPserver TCPserver_instance; 
 	
@@ -236,6 +239,9 @@ public class TCPserver {
 							System.out.println("Server Thread Stopped.");
 							break;
 						} 
+						if (serverProcessingPool.getActiveCount() == 0) {
+							computing_time = Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration();
+						}
 						System.out.println("[TCPserver] Number of Active Threads: "+serverProcessingPool.getActiveCount());
 		                serverProcessingPool.execute((new ComputeEngine_Runnable(clientSocket, getWatchdogs_scale_factor(), get_ComputeEngineRunning())));
 					}	

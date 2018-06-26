@@ -166,7 +166,7 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 		File sensor_path = null;
 		sensor_path = new java.io.File(TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID()+ "\\" + "measurement_Datas");
 		for (File file :  sensor_path.listFiles()) {
-			System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] substring(file.toString().length() - 16): " + file.toString().toString().substring(file.toString().length() - 16));
+			//System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] substring(file.toString().length() - 16): " + file.toString().toString().substring(file.toString().length() - 16));
 			if(file.toString().toString().substring(file.toString().length() - 16).equals("measurement_data")) {
 				serialized_m_datas.add(file);
 			}
@@ -174,7 +174,7 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 		
 		if(serialized_m_datas.size() == TCPserver.getMeasurements_limit()) {
 			for (File file :  serialized_m_datas) {
-				System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] the following measurement data: " + file.getName() + " is being deleted");
+				//System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] the following measurement data: " + file.getName() + " is being deleted");
 				file.delete();
 			}
 		} else {
@@ -197,8 +197,8 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 				new_path = path + "\\" + entries_1[i] + "\\" + entries_2[j];
 				files_to_be_deleted_path = new java.io.File(new_path);
 				for (File file :  files_to_be_deleted_path.listFiles()) {
-					System.out.println("[Compute engine Processing] There is the following file in the directiory to be deleted: " + new_path + "\\" + entries_1[i] + "\\" + entries_2[j]);
-					System.out.println("[Compute engine Processing] the following file: " + file.getName() + " is being deleted");
+					//System.out.println("[Compute engine Processing] There is the following file in the directiory to be deleted: " + new_path + "\\" + entries_1[i] + "\\" + entries_2[j]);
+					//System.out.println("[Compute engine Processing] the following file: " + file.getName() + " is being deleted");
 					file.delete();
 				}
 				files_to_be_deleted_path.delete();

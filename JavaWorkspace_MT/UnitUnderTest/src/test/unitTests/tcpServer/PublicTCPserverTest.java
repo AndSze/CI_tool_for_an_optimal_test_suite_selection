@@ -83,7 +83,7 @@ public class PublicTCPserverTest {
 	public void test_run_4() {
 
 		assertEquals(Global_1h_Watchdog.getServer_watchgod_scale_factor(), TCPserver.getWatchdogs_scale_factor(), 0.0001);
-		assertEquals(Global_24h_Watchdog.getServer_watchgod_scale_factor(), TCPserver.getWatchdogs_scale_factor(), 0.0001);
+		assertEquals(Global_24h_Watchdog.getServer_watchdog_scale_factor(), TCPserver.getWatchdogs_scale_factor(), 0.0001);
 	}
 	
     /***********************************************************************************************************
@@ -100,7 +100,7 @@ public class PublicTCPserverTest {
 		TCPserver temp_TCPserver_1 = tcpserver_1;
 		
 		assertEquals(Global_1h_Watchdog.getServer_watchgod_scale_factor(), TCPserver.getWatchdogs_scale_factor(), 0.0001);
-		assertEquals(Global_24h_Watchdog.getServer_watchgod_scale_factor(), TCPserver.getWatchdogs_scale_factor(), 0.0001);
+		assertEquals(Global_24h_Watchdog.getServer_watchdog_scale_factor(), TCPserver.getWatchdogs_scale_factor(), 0.0001);
 		
 		assertNotEquals(null, tcpserver_1);
 		
@@ -111,7 +111,7 @@ public class PublicTCPserverTest {
 		
 		assertNotEquals(temp_TCPserver_1, temp_TCPserver_2);
 		assertEquals(Global_1h_Watchdog.getServer_watchgod_scale_factor(), temp_watchdogs_scale_factor, 0.0001);
-		assertEquals(Global_24h_Watchdog.getServer_watchgod_scale_factor(), temp_watchdogs_scale_factor, 0.0001);	
+		assertEquals(Global_24h_Watchdog.getServer_watchdog_scale_factor(), temp_watchdogs_scale_factor, 0.0001);	
 	}
 	
    @After
