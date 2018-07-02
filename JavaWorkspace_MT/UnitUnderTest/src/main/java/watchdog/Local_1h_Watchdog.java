@@ -219,5 +219,4 @@ public class Local_1h_Watchdog implements Runnable {
 		this.local_watchgod_scale_factor = local_watchgod_scale_factor;
 	}
 
-
 }

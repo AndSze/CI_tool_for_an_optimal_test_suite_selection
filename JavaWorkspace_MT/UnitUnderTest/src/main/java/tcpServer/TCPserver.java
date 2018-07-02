@@ -23,8 +23,6 @@ public class TCPserver {
 	 * TCPserver - Class Attributes
 	 ***********************************************************************************************************/
 	
-	public static double computing_time = 0;
-	
 	// instance of TCPserver that should be referred in case of any modification to the TCPserver class attributes or any attempt to read the TCPserver class attribute
 	private static TCPserver TCPserver_instance; 
 	
@@ -67,8 +65,11 @@ public class TCPserver {
 	
 	// measurement limit is a variable that determines after how many measurement datas, the measurement history request is sent
 	private static final int measurements_limit = 24;
+	
+	// computing time is a variable that measures duration of execution of Compute Engines Runnable thread for all sensors 
+	private static double computing_time = 0;
 
-    /***********************************************************************************************************
+	/***********************************************************************************************************
    	 * Auxiliary piece of code
    	 * Specific Variable Names: 	1) double watchdogs_scale_factor
 	 								2) boolean set_ComputeEngineRunning
@@ -92,6 +93,7 @@ public class TCPserver {
 	 * Method Name: 				public TCPserver()
 	 * Description: 				TCPserver class default constructor
 	 * Affected external variables: Global_1h_Watchdog, Global_24h_Watchdog
+	 * Called external functions: 	Global_1h_Watchdog.getInstance()
 	 * Exceptions thrown:			IOException
 	 ***********************************************************************************************************/
 	public TCPserver() throws IOException{
@@ -104,10 +106,10 @@ public class TCPserver {
 	};
 
     /***********************************************************************************************************
-	 * Method Name: 				private TCPserver(int port)
+	 * Method Name: 				private TCPserver()
 	 * Description: 				TCPserver class overloaded constructor
 	 * Affected internal variables: serverSocket, serverRunning, processing_engine, Server_Sensors_LIST, _1hWatchog_timestamp_table, _24hWatchog_timestamp_table
-	 * Affected external variables: Global_1h_Watchdog, Global_24h_Watchdog
+	 * Affected external variables: Global_1h_Watchdog, Global_24h_Watchdog, SensorImpl
 	 * Called internal functions: 	startServer()
 	 * Called external functions: 	Global_1h_Watchdog.setEnabled(), Global_24h_Watchdog.setEnabled(), ComputeEngine_Processing(), SensorImpl(), ComputeEngine_Processing.saveSensorInfo(),
 	 								ComputeEngine_Processing.updateServerSensorList()
@@ -167,12 +169,12 @@ public class TCPserver {
 	};
 
     /***********************************************************************************************************
-	 * Method Name: 				public static synchronized TCPserver getInstance(int port)
+	 * Method Name: 				public static synchronized TCPserver getInstance()
 	 * Description: 				if this function is called for the first time, the default constructor of the TCPserver class is being called,
 	 								if this function is called for the second time, the overloaded constructor of the TCPserver class is being called,
 	 								otherwise, the already initialized instance of the TCPserver class is being returned
 	 * Affected internal variables: TCPserver_instance								
-	 * Returned value				TCPserver_instance
+	 * Returned value:				TCPserver_instance
 	 * Called internal functions: 	TCPserver()
 	 * Exceptions thrown: 			IOException
 	 ***********************************************************************************************************/
@@ -187,11 +189,10 @@ public class TCPserver {
     } 
  
     /***********************************************************************************************************
-	 * Method Name: 				public void closeServer(TCPserver INSTANCE, int port
+	 * Method Name: 				public void closeServer()
 	 * Description: 				Closes server socket for TCPserver and kicks 1h_Watchdog since server socket has been closed intentionally
 	 * Affected internal variables: serverSocket, serverRunning, serverThread
 	 * Affected external variables: Global_1h_Watchdog.millisecondsLeftUntilExpiration
-	 * Called external functions: 	Global_1h_Watchdog.setTimeLeftBeforeExpiration()
 	 * Exceptions thrown: 			IOException, IllegalArgumentException
 	 ***********************************************************************************************************/
 	public void closeServer(TCPserver INSTANCE, int port) throws IOException{
@@ -201,7 +202,7 @@ public class TCPserver {
 			TCPserver.getServerSocket().close();
 			getServerThread().interrupt();
 			
-			// set to 1hWatchdog 30 [s] to activate the client socket when Watchdog time before expiration reaches its specified level (client-socket opening level)
+			// set to 1hWatchdog its expiration time to activate the client socket when Watchdog time before expiration reaches its specified level (client-socket opening level)
 			Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(Global_1h_Watchdog.getInstance().getExpiration() * getWatchdogs_scale_factor());
 			
 			// reinitialize set_ServerRunning to false
@@ -215,9 +216,9 @@ public class TCPserver {
 	}
 	
     /***********************************************************************************************************
-	 * Method Name: 				public void startServer(final ServerSocket serverSocket)
+	 * Method Name: 				public void startServer()
 	 * Description: 				Listens for connection from the client side. Handles each incoming connection in a separate thread.
-	 * Affected internal variables: serverThread, serverSocket, serverProcessingPool
+	 * Affected internal variables: serverThread, serverSocket, serverProcessingPool, computing_time
 	 * Called external functions: 	ComputeEngine_Runnable()
 	 * Exceptions handled: 			IllegalThreadStateException, IOException
 	 ***********************************************************************************************************/
@@ -241,6 +242,12 @@ public class TCPserver {
 						} 
 						if (serverProcessingPool.getActiveCount() == 0) {
 							computing_time = Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration();
+							System.out.println("[TCPserver] 1st ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog " + Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + " [s]");
+							System.out.println("[TCPserver] 1st ComputeEngine_Runnable launched when Global_24h_Watchdog " + Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + " [s]");
+						}
+						if (serverProcessingPool.getActiveCount() == sensor_coordinates_array.length - 1) {
+							System.out.println("[TCPserver] last ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog " + Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + " [s]");
+							System.out.println("[TCPserver] last ComputeEngine_Runnable launched when Global_24h_Watchdog " + Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + " [s]");
 						}
 						System.out.println("[TCPserver] Number of Active Threads: "+serverProcessingPool.getActiveCount());
 		                serverProcessingPool.execute((new ComputeEngine_Runnable(clientSocket, getWatchdogs_scale_factor(), get_ComputeEngineRunning())));
@@ -344,6 +351,10 @@ public class TCPserver {
 	    return returned_flag;
 	}
 	
+    /***********************************************************************************************************
+	 * Auxiliary piece of code
+	 * Description: 				getters & setters for class attributes			
+	 ***********************************************************************************************************/
 	public synchronized static ServerSocket getServerSocket() {
 		return serverSocket;
 	}
@@ -403,6 +414,14 @@ public class TCPserver {
 	
 	public synchronized void set_ComputeEngineRunning(boolean isComputeEngineRunning) {
 	    this.computeEngineRunning = isComputeEngineRunning;
+	}
+	
+    public static double getComputing_time() {
+		return computing_time;
+	}
+
+	public static void setComputing_time(double computing_time) {
+		TCPserver.computing_time = computing_time;
 	}
 
 }

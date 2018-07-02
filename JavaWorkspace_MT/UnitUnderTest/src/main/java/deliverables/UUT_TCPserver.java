@@ -6,14 +6,13 @@ import java.net.SocketException;
 import tcpServer.TCPserver;
 
 public class UUT_TCPserver{
-	
+
     /***********************************************************************************************************
-	 * Method Name: public static void main(String []args)
-	 * Description: Calls constructors of the TCPserver class 
-	 * Affected external variables: TCPserver_instance
-	 * Called external functions: TCPserver.getInstance()
-	 * Exceptions handled: IOException, BindException, SocketException
-	 ***********************************************************************************************************/
+	* Method Name: 				public static void main(String []args) 
+	* Description: 				Calls constructors of the TCPserver class 
+	* Called external functions:   TCPserver.getInstance()
+	* Exceptions handled: 			IOException, BindException, SocketException
+	***********************************************************************************************************/
 	public static void main(String []args){
 		
 		// local variable that determines the port on which the TCP communication is going to take place

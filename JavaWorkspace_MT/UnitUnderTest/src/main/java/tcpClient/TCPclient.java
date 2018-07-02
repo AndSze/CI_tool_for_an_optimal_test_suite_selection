@@ -9,7 +9,10 @@ import watchdog.Local_1h_Watchdog;
 
 public class TCPclient implements Runnable {
 
-	// we can have multiple clients, hence Socket and ClientManager are not a static variable and they are unique for each TCPclient
+    /***********************************************************************************************************
+	 * UUT_TCPclient - Class Attributes
+	 ***********************************************************************************************************/
+	// there are multiple clients, hence Socket and ClientManager are not a static variable and they are unique for each TCPclient
     private Socket clientSocket = null;
     private ClientManager clientManager = null;
 	private boolean clientRunning = false;
@@ -24,7 +27,13 @@ public class TCPclient implements Runnable {
 	// watchdog scale factor is used for scaling the watchdog expiration times - variable is set to a value received from the server in ServerMessage_SensorInfoUpdate
 	private static double watchdogs_scale_factor = 0.01;
 
-	// default constructor 
+    /***********************************************************************************************************
+	 * Method Name: 				public UUT_TCPclient()
+	 * Description: 				UUT_TCPclient class default constructor
+	 * Affected internal variables: Client_Sensors_LIST
+	 * Affected external variables: Local_1h_Watchdog
+	 * Called external functions: 	Local_1h_Watchdog.getInstance() 
+	 ***********************************************************************************************************/
     public TCPclient() {
     
     	// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
@@ -37,11 +46,16 @@ public class TCPclient implements Runnable {
     	
     	// create 1h watchdog that are being checked on a regular basis - if they are about to expire, the server-client communication is being initialized. Afterward, the watchdogs are kicked and they continue to count down
         // 1h watchdog on the client side are being synchronized with the 1h watchdog on the server side in messages sent from the server
-    	// 24h watchdog is not required on the client side since it is not being checked anywhere and causes no operations if it is close to expire
     	Local_1h_Watchdog.getInstance();
     }
     
-    // overloaded constructor
+    /***********************************************************************************************************
+	 * Method Name: 				private UUT_TCPclient()
+	 * Description: 				UUT_TCPclient class overloaded constructor
+	 * Affected internal variables: clientSocket, sensor_ID, clientManager, clientRunning, Client_Sensors_LIST
+	 * Called internal functions:	searchInClientSensorList
+	 * Called external functions: 	ClientManager(), ClientManager.initClientManager(), SensorImpl()
+	 ***********************************************************************************************************/
     private TCPclient(int sensor_ID, String serverHostName, int port) throws IOException {
 	    
 	    setClientSocket(new Socket(serverHostName, port));
@@ -73,11 +87,24 @@ public class TCPclient implements Runnable {
     	}
     }
 	
+    /***********************************************************************************************************
+	 * Method Name: 				public TCPclient initClient()
+	 * Description: 				calls overloaded constructor for TCPclient						
+	 * Returned value				TCPclient
+	 * Called internal functions: 	TCPclient()
+	 * Exceptions thrown: 			IOException
+	 ***********************************************************************************************************/
 	public TCPclient initClient(int sensor_ID, String serverHostName, int port) throws IOException{
 
 		return (new TCPclient (sensor_ID, serverHostName, port));
 	}
 	
+    /***********************************************************************************************************
+	 * Method Name: 				public void run()
+	 * Description: 				runnable method for TCP connection on the client side 				
+	 * Called external functions: 	ClientManager.sendMessage(), ClientMessage_BootUp(), ClientManager.messagesHandler()
+	 * Exceptions handled: 			IOException, ClassNotFoundException
+	 ***********************************************************************************************************/
 	public void run() {
 
     	// send BootUp message
@@ -101,6 +128,12 @@ public class TCPclient implements Runnable {
 	    }
 	}
 	
+    /***********************************************************************************************************
+	 * Method Name: 				public void closeClient()
+	 * Description: 				closes TCP connection on the client side by closing client socket	
+	 * Affected internal variables: clientSocket			
+	 * Exceptions thrown: 			IOException, IllegalArgumentException
+	 ***********************************************************************************************************/
 	public void closeClient(TCPclient INSTANCE) throws IOException{
 		
 		if(INSTANCE.getClientSocket() != null){
@@ -116,6 +149,12 @@ public class TCPclient implements Runnable {
 		}
 	}
 	
+    /***********************************************************************************************************
+	 * Method Name: 				public void closeClient()
+	 * Description: 				closes client manager for TCP connection on the client side by closing client output and input streams	
+	 * Affected internal variables: ClientManager.outputStream, ClientManager.inputStream, ClientManager.isClientManagerRunning			
+	 * Exceptions thrown: 			IOException, IllegalArgumentException
+	 ***********************************************************************************************************/
 	public void closeClientManager(TCPclient INSTANCE) throws IOException{
 		
 		if(INSTANCE.getClientManager() != null){
@@ -131,28 +170,12 @@ public class TCPclient implements Runnable {
 		}
 	}
 	
-	/*public void EchoMessageHandler(Socket clientSocket, String message) {
-		
-		// time point when the clients sends its message to the server
-		long t0 = 0;
-		try {
-			//System.out.println("Client Manager that is processed by the TCPclient has outputsteam = "+CLIENTMANAGER.getOutputStream() +" and input stream = "+ CLIENTMANAGER.getInputStream());
-			t0 = getClientManager().sendMessage(message, clientSocket);
-			//Thread.sleep(1000);
-		} catch (IOException IOEx) {
-	    	System.out.println("Error: The client cannot send the following message: "+message);
-	    	IOEx.printStackTrace();
-		}
-		try {
-			ReceivedMessage receivedMessage = getClientManager().receiveMessage(t0, clientSocket);
-	        System.out.printf("message {%s} after %d msec \n",receivedMessage.getMessage(),(receivedMessage.getTimestamp()-t0));
-		} catch (IOException IOEx) {
-	    	System.out.println("Error: The client cannot receive srever's response for the following message sent: "+message);
-	    	IOEx.printStackTrace();
-	    }
-		//return success;
-	}*/
-	
+    /***********************************************************************************************************
+	 * Method Name: 				public static synchronized ArrayList<SensorImpl> updateClientSensorList()
+	 * Description: 				updates a sensor instance from Client_Sensors_LIST if it exists, otherwise inserts new sensor instance to Client_Sensors_LIST
+	 * Affected internal variables: Client_Sensors_LIST
+	 * Returned value:				Client_Sensors_LIST
+	 ***********************************************************************************************************/
 	public static synchronized ArrayList<SensorImpl> updateClientSensorList(SensorImpl sensor){
 		int itemIndex = 0;
 		if (Client_Sensors_LIST.size() == 0) {
@@ -178,6 +201,11 @@ public class TCPclient implements Runnable {
 		
 	}
 	
+    /***********************************************************************************************************
+	 * Method Name: 				public static synchronized SensorImpl searchInClientSensorList()
+	 * Description: 				searches for a sensor instance in Client_Sensors_LIST based on sensor ID
+	 * Returned value:				SensorImpl
+	 ***********************************************************************************************************/
 	public static synchronized SensorImpl searchInClientSensorList(int sensor_ID){
 		SensorImpl temp_sens = null;
 		for (SensorImpl sens : Client_Sensors_LIST) {
@@ -190,6 +218,10 @@ public class TCPclient implements Runnable {
 		return temp_sens;
 	}
 	
+    /***********************************************************************************************************
+	 * Auxiliary piece of code
+	 * Description: 				getters & setters for class attributes			
+	 ***********************************************************************************************************/
 	public synchronized Socket getClientSocket() {
 		return this.clientSocket;
 	}

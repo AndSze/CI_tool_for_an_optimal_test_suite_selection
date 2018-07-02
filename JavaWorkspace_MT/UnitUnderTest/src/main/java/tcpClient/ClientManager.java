@@ -183,6 +183,7 @@ public class ClientManager implements TCPclient_interface{
 							// activate the local watchdogs on the client side
 							Local_1h_Watchdog.getInstance().setEnabled(isClientManagerRunning());
 							Local_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_SensorInfoUpdate) receivedMessage).get1h_Watchdog());
+							System.out.println("[ClientManager " +sensor.getSensorID()+"] Local_1h_Watchdog for the sensor has been synchronized and it equals: " + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + " [s]" );
 							
 							System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_SensorInfoUpdate has the following SensorState: " + new_sensor.getSensorState());
 							System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_SensorInfoUpdate received when _1h_Watchdog equals: " + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
@@ -208,6 +209,7 @@ public class ClientManager implements TCPclient_interface{
 							setClientManagerRunning(false);
 							// updating the 1h Watchdog time before expiration is required here when the sensor is in a different from the OPERATIONAL state
 							Local_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_ACK) receivedMessage).get1h_Watchdog());
+							System.out.println("[ClientManager " +sensor.getSensorID()+"] Local_1h_Watchdog for the sensor has been synchronized and it equals: " + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + " [s]" );
 							System.out.println("[ClientManager " +sensor.getSensorID()+"] ClientMessage_ACK has been sent to end the server-client connection successfully");
 							// send ACK message to disable the socket on the server side
 					    	sendMessage(new ClientMessage_ACK(sensor_ID));
