@@ -115,7 +115,7 @@ public class UUT_TCPclient extends TCPclient{
 			if ((uut1_TCPclient.getINSTANCE().getClientManager().isClientManagerRunning() == false) && (previous_sensor_state == SensorState.OPERATIONAL) && (uut1_TCPclient.getINSTANCE().isClientRunning() == true)){
 				// sensors gets go to pre_operational message once it received the ack server message what means that the watchdog has been kicked
 				// hence close the client socket and the client manager, it will be opened again once the watchdog reaches its threshold
-				System.out.println("[UUT_TCPclient " + uut1_TCPclient.getSensor_ID() + "]\t closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: \" + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + \" [s]\"");
+				System.out.println("[UUT_TCPclient " + uut1_TCPclient.getSensor_ID() + "]\t closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: " + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + " [s]\"");
 				
 				// closeTheClientManager closes input/output object stremas for the ClientManager that has been already closed
 				uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE()));

@@ -43,7 +43,7 @@ public interface TCPserver_interface {
     
 	// List all object saved in the specified path
     public ArrayList<String> getObjectsPath(File folder); // used for getting to any List
-    public String getSensorPath(SensorImpl sensor);
+    public String getSensorPath(SensorImpl sensor, String info_type);
     public String getMeasurementHistoryPath(SensorImpl sensor, MeasurementData[] m_hist);
     public String getMeasurementDataPath(SensorImpl sensor, MeasurementData m_data);
     

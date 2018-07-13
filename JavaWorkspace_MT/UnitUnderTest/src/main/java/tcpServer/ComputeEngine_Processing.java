@@ -91,21 +91,21 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 	@Override
 	public void saveSensorInfo(SensorImpl sensor, String action) throws IOException{
 		//dTCPserver.Server_Sensors_LIST.add(sensor);
-		String temp_sensor_path = getSensorPath(sensor) + "_" + new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Calendar.getInstance().getTime()) + "_" + action;
+		String temp_sensor_path = getSensorPath(sensor, action);
 		serialize(sensor, temp_sensor_path);
 	}
 	
 
 	@Override
 	public void saveMeasurementDataInfo(SensorImpl sensor, MeasurementData m_data) throws IOException{
-			TCPserver.MeasurementData_LIST.add(m_data);
-			serialize(m_data, getMeasurementDataPath(sensor, m_data));
+		TCPserver.MeasurementData_LIST.add(m_data);
+		serialize(m_data, getMeasurementDataPath(sensor, m_data));
 	}
 	
 	@Override
 	public void saveMeasurementHistoryInfo(SensorImpl sensor, MeasurementData[] m_history) throws IOException{
-			TCPserver.MeasurementHistory_LIST.add(m_history);
-			serialize(m_history, getMeasurementHistoryPath(sensor, m_history));
+		TCPserver.MeasurementHistory_LIST.add(m_history);
+		serialize(m_history, getMeasurementHistoryPath(sensor, m_history));
 	}
 	/*
 	@Override
@@ -209,7 +209,7 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 	}
 	
 	@Override
-	public String getSensorPath(SensorImpl sensor){
+	public String getSensorPath(SensorImpl sensor, String info_type){
 		String sensor_path = null;
 		String sensor_serialized_file_path = null;
 		sensor_path = TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID();
@@ -222,7 +222,8 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 		if(success) {
 			System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] New folder for a sensor info created");
 		}
-		sensor_serialized_file_path = sensor_path + "\\" + "sensor_" + sensor.getSensorID() + ".sensor_info";
+		String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Calendar.getInstance().getTime());
+		sensor_serialized_file_path = sensor_path + "\\" + "sensor_" + sensor.getSensorID() + "_" + timestamp + "_" + info_type + ".sensor_info";
 		return sensor_serialized_file_path;
 	}
 	

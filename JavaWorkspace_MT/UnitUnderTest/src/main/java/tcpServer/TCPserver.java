@@ -130,6 +130,8 @@ public class TCPserver {
 	    // start watchdogs
 	    Global_1h_Watchdog.getInstance().setEnabled(get_ServerRunning());
 	    Global_24h_Watchdog.getInstance().setEnabled(get_ServerRunning());
+	    Global_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + 
+	    															 (Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() / getMeasurements_limit()) );
 	    
 	    // data processing stuff 
 	    try {

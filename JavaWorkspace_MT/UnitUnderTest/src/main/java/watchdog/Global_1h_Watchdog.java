@@ -43,7 +43,7 @@ public class Global_1h_Watchdog implements Runnable {
     // _1h_Watchdog expiration time is given in seconds
     private final int _1h_WatchdogExpiration = 3600; 
     // _1h_Watchdog expiration time decrementation timeIntervals in milliseconds (its value is decremented every second)
-    private int timeIntervals = 1000; 
+    private int timeIntervals = 100; 
 	private boolean isPaused = false; 
 	private static double server_watchgod_scale_factor = 1.0;
 
@@ -80,10 +80,12 @@ public class Global_1h_Watchdog implements Runnable {
      * By the way, it's not cool to ask the neighbor (some random task) to 
      * feed your dog for you.  He's your responsibility! 
      */ 
-    public void feed() { 
-		expirationDateLock.lock(); 
-		millisecondsLeftUntilExpiration = (double) (getServer_watchgod_scale_factor() * _1h_WatchdogExpiration * 1000 ); 
-		expirationDateLock.unlock(); 
+    public synchronized void feed() { 
+    	if (!((ReentrantLock) expirationDateLock).isLocked()) {
+    		expirationDateLock.lock(); 
+    		millisecondsLeftUntilExpiration = (double) (getServer_watchgod_scale_factor() * _1h_WatchdogExpiration * 1000 ); 
+    		expirationDateLock.unlock(); 
+    	}
     } 
  
     /*
@@ -118,7 +120,7 @@ public class Global_1h_Watchdog implements Runnable {
      * 
      * @return The number of seconds since last meal. 
      */ 
-    public double getTimeFromLastFeed() { 
+    public synchronized double getTimeFromLastFeed() { 
         return (_1h_WatchdogExpiration - (millisecondsLeftUntilExpiration * 0.001)); 
     } 
  
@@ -152,10 +154,12 @@ public class Global_1h_Watchdog implements Runnable {
      * 
      * @param enabled Enable or disable the _1h_Watchdog. 
      */ 
-    public void setEnabled(final boolean enabled) { 
-		expirationDateLock.lock(); 
-		isPaused = !enabled; 
-		expirationDateLock.unlock(); 
+    public synchronized void setEnabled(final boolean enabled) { 
+    	if (!((ReentrantLock) expirationDateLock).isLocked()) {
+			expirationDateLock.lock(); 
+			isPaused = !enabled; 
+			expirationDateLock.unlock(); 
+    	}
     } 
  
     /*
