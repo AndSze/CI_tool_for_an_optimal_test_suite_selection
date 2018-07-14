@@ -95,7 +95,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 * Affected external variables: Message_Interface
 	 * Exceptions thrown: 			IOException
 	 ***********************************************************************************************************/
-	private void sendMessage(Message_Interface message) throws IOException {
+	public void sendMessage(Message_Interface message) throws IOException {
 		
         // it sends the message via output stream
 		getOutputStream().writeObject(message);

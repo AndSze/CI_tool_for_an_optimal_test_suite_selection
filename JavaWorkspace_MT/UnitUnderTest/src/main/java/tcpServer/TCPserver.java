@@ -201,7 +201,7 @@ public class TCPserver {
 	
 		if (get_ServerRunning()){
 			
-			TCPserver.getServerSocket().close();
+			getServerSocket().close();
 			getServerThread().interrupt();
 			
 			// set to 1hWatchdog its expiration time to activate the client socket when Watchdog time before expiration reaches its specified level (client-socket opening level)
@@ -357,11 +357,11 @@ public class TCPserver {
 	 * Auxiliary piece of code
 	 * Description: 				getters & setters for class attributes			
 	 ***********************************************************************************************************/
-	public synchronized static ServerSocket getServerSocket() {
+	public synchronized ServerSocket getServerSocket() {
 		return serverSocket;
 	}
 	
-	public synchronized static Thread getServerThread() {
+	public synchronized Thread getServerThread() {
 		return serverThread;
 	}
 	

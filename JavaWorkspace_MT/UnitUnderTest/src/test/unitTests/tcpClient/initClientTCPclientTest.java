@@ -167,7 +167,6 @@ public class initClientTCPclientTest {
 		
 		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
 		assertTrue(tcpclient_1.isClientRunning());
-		
 
 		//tempServer_OutputStream_1.writeObject(new ServerMessage_ACK(sensor_ID_1,mock_Watchdog.getTimeLeftBeforeExpiration(), mock_Watchdog.getTimeLeftBeforeExpiration()));
 		

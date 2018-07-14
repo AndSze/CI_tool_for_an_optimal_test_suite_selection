@@ -44,8 +44,8 @@ public class PublicTCPserverTest {
 	public void test_run_1() {
 
 		assertFalse(TCPserver.get_ServerRunning());
-		assertEquals(null, TCPserver.getServerSocket());
-		assertEquals(null, TCPserver.getServerThread());
+		assertEquals(null, tcpserver_1.getServerSocket());
+		assertEquals(null, tcpserver_1.getServerThread());
 	}
 	
     /***********************************************************************************************************

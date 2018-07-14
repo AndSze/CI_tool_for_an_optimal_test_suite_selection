@@ -75,10 +75,10 @@ public class StartServerTCPserverTest {
 	    serverSocket_1.bind(new java.net.InetSocketAddress(port_1));
 	    TCPserver.set_ServerRunning(true);
 
-		assertEquals(null, 		TCPserver.getServerThread());
+		assertEquals(null, 		tcpserver_1.getServerThread());
 		
 		tcpserver_1.startServer(serverSocket_1);
-		assertNotEquals(null, 	TCPserver.getServerThread());
+		assertNotEquals(null, 	tcpserver_1.getServerThread());
 	}
 	
     /***********************************************************************************************************
@@ -96,12 +96,12 @@ public class StartServerTCPserverTest {
 	    TCPserver.set_ServerRunning(true);
 		tcpserver_1.startServer(serverSocket_1);
 		
-		assertEquals(Thread.State.RUNNABLE,		TCPserver.getServerThread().getState());
+		assertEquals(Thread.State.RUNNABLE,		tcpserver_1.getServerThread().getState());
 		
 		serverSocket_1.close();
 		Thread.sleep(100);
 		
-		assertEquals(Thread.State.TERMINATED,	TCPserver.getServerThread().getState());
+		assertEquals(Thread.State.TERMINATED,	tcpserver_1.getServerThread().getState());
 	}
 	
     /***********************************************************************************************************

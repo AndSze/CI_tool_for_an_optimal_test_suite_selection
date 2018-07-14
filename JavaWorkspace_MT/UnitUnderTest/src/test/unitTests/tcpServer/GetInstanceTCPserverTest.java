@@ -50,8 +50,8 @@ public class GetInstanceTCPserverTest {
 	public void test_run_1() throws IOException{
 		
 		assertNotEquals(null,		temp_TCPserver);
-		assertEquals(	null,		TCPserver.getServerSocket());
-		assertEquals(	null,		TCPserver.getServerThread());
+		assertEquals(	null,		temp_TCPserver.getServerSocket());
+		assertEquals(	null,		temp_TCPserver.getServerThread());
 		assertFalse(TCPserver.get_ServerRunning());
 	}
 	
@@ -68,8 +68,8 @@ public class GetInstanceTCPserverTest {
 		temp_TCPserver = TCPserver.getInstance(port_1);
 		
 		assertNotEquals(null,		temp_TCPserver);
-		assertNotEquals(null,		TCPserver.getServerSocket());
-		assertNotEquals(null,		TCPserver.getServerThread());
+		assertNotEquals(null,		temp_TCPserver.getServerSocket());
+		assertNotEquals(null,		temp_TCPserver.getServerThread());
 		assertTrue(TCPserver.get_ServerRunning());
 	}
 	
@@ -86,13 +86,13 @@ public class GetInstanceTCPserverTest {
 		temp_TCPserver = TCPserver.getInstance(port_1);
 		
 		assertNotEquals(null,		temp_TCPserver);
-		assertNotEquals(null,		TCPserver.getServerSocket());
-		assertNotEquals(null,		TCPserver.getServerThread());
+		assertNotEquals(null,		temp_TCPserver.getServerSocket());
+		assertNotEquals(null,		temp_TCPserver.getServerThread());
 		assertTrue(TCPserver.get_ServerRunning());
 		
 		TCPserver temp_TCPserver_prev = TCPserver.getInstance(port_1);
-		ServerSocket temp_ServerSocket_prev = TCPserver.getServerSocket();
-		Thread temp_ServerThread_prev = TCPserver.getServerThread();
+		ServerSocket temp_ServerSocket_prev = temp_TCPserver.getServerSocket();
+		Thread temp_ServerThread_prev = temp_TCPserver.getServerThread();
 		
 		// close the server instance to prevent the Bind Exception from being thrown due to an attempt to bind a server socket twice to the same port
 		TCPserver.getInstance(port_1).closeServer(TCPserver.getInstance(port_1), port_1);
@@ -102,8 +102,8 @@ public class GetInstanceTCPserverTest {
 		temp_TCPserver = TCPserver.getInstance(port_1);
 		
 		assertNotEquals(temp_TCPserver_prev,		temp_TCPserver);
-		assertNotEquals(temp_ServerSocket_prev,		TCPserver.getServerSocket());
-		assertNotEquals(temp_ServerThread_prev,		TCPserver.getServerThread());
+		assertNotEquals(temp_ServerSocket_prev,		temp_TCPserver.getServerSocket());
+		assertNotEquals(temp_ServerThread_prev,		temp_TCPserver.getServerThread());
 		assertTrue(TCPserver.get_ServerRunning());
 	}
 	
@@ -124,7 +124,7 @@ public class GetInstanceTCPserverTest {
 		assertTrue(TCPserver.get_ServerRunning());
 		
 		assertEquals(temp_TCPserver.getServerSocket(), 	TCPserver.getInstance(port_1).getServerSocket());
-		assertEquals(temp_TCPserver.getServerThread(), 	TCPserver.getInstance(port_1).getServerThread());
+		TCPserver.getInstance(port_1);
 		assertEquals(temp_TCPserver, 					TCPserver.getInstance(port_1));
 	}
 	
@@ -145,7 +145,7 @@ public class GetInstanceTCPserverTest {
 		assertTrue(TCPserver.get_ServerRunning());
 		
 		assertEquals(temp_TCPserver.getServerSocket(), 	TCPserver.getInstance(port_2).getServerSocket());
-		assertEquals(temp_TCPserver.getServerThread(), 	TCPserver.getInstance(port_2).getServerThread());
+		TCPserver.getInstance(port_2);
 		assertEquals(temp_TCPserver, 					TCPserver.getInstance(port_2));
 	}
 	

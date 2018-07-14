@@ -55,8 +55,8 @@ public class CloseServerTCPserverTest {
 		
 		TCPserver.getInstance(port_1).closeServer(TCPserver.getInstance(port_1), port_1);
 		
-		assertTrue(TCPserver.getServerThread().isInterrupted());
-		assertTrue(TCPserver.getServerSocket().isClosed());
+		assertTrue(tempTCPserver.getServerThread().isInterrupted());
+		assertTrue(tempTCPserver.getServerSocket().isClosed());
 		assertFalse(TCPserver.get_ServerRunning());
 	}
 	

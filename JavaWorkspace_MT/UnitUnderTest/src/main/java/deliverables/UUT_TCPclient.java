@@ -27,9 +27,9 @@ public class UUT_TCPclient extends TCPclient{
 	 								4) final int watchdog_thresholds_array_size
 	 * Description: 				Interfaces for the testing purposes - to parameterize times dependencies
 	 ***********************************************************************************************************/
-    private static double[] watchdog_thresholds_array = null;
+    protected static double[] watchdog_thresholds_array = null;
     private final static int watchdog_thresholds_array_size = 3;
-    private static int[] delays_array = null;
+    protected static int[] delays_array = null;
     private final static int delays_array_size = 4;
     
     /***********************************************************************************************************
@@ -158,9 +158,9 @@ public class UUT_TCPclient extends TCPclient{
 		try {
 			INSTANCE = INSTANCE.initClient(INSTANCE.getSensor_ID(), serverHostName, port);
 			
-			Thread temp = new Thread(INSTANCE);
-			temp.start();
-			INSTANCE.setClientThread(temp);
+			Thread TCPclient_thread = new Thread(INSTANCE, "TCPclient Thread");
+			TCPclient_thread.start();
+			INSTANCE.setClientThread(TCPclient_thread);
 			
 		} catch (UnknownHostException unHostEx) {
 	    	System.out.println("Error: The client with port="+port+" returns the UnknownHostException if if the IP address of the host could not be determined");
@@ -224,7 +224,7 @@ public class UUT_TCPclient extends TCPclient{
 	 * Description: 				sets delays that will be used in the runnable state machine based on watchdog_scale_factor
 	 * Returned value				delays_array
 	 ***********************************************************************************************************/
-	private static int[] set_delays_array(double watchdog_scale_factor, int array_size) {
+	protected static int[] set_delays_array(double watchdog_scale_factor, int array_size) {
 		
 		int[] temp_delays_array =  new int[array_size];
 		
@@ -249,7 +249,7 @@ public class UUT_TCPclient extends TCPclient{
 	 * Description: 				sets watchsdog thresholds that will be used in the runnable state machine based on watchdog_scale_factor
 	 * Returned value	 			watchdog_thresholds_array
 	 ***********************************************************************************************************/
-	private static double[] set_watchdog_thresholds_array(double watchdog_scale_factor, int array_size) {
+	protected static double[] set_watchdog_thresholds_array(double watchdog_scale_factor, int array_size) {
 		
 		double[] temp_watchdog_thresholds_array =  new double[array_size];
 		
@@ -272,7 +272,7 @@ public class UUT_TCPclient extends TCPclient{
 	 * Description: 				retrieves watchsdog threshold based on input Watchdog_Thresholds enumeration
 	 * Returned value	 			watchdog_threshold
 	 ***********************************************************************************************************/
-	private static double get_watchdog_threshold(Watchdog_Thresholds THRESHOLD, double[] watchdog_thresholds_array) {
+	protected static double get_watchdog_threshold(Watchdog_Thresholds THRESHOLD, double[] watchdog_thresholds_array) {
 		
 		double watchdog_threshold = 0;
 		
@@ -295,7 +295,7 @@ public class UUT_TCPclient extends TCPclient{
 	* Description: 				retrieves delay based on input Delays enumeration
 	* Returned value	 			delay
 	***********************************************************************************************************/
-	private static int get_delays(Delays THRESHOLD, int[] delays_array) {
+	protected static int get_delays(Delays THRESHOLD, int[] delays_array) {
 		
 		int delay = 0;
 		
