@@ -149,6 +149,12 @@ public class initClientTCPclientTest {
 		System.out.println("\t\tTest Run "+initClientTCPclientTest.testID+" Logic:");
 	}
 	
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_1
+	 * Description: 			Verify that the Connect Exception is returned if there was an attempt to create the client without a server instance initialized previously
+	 * Exceptions thrown TBV:	ConnectException
+     * Exceptions thrown: 		IOException
+	 ***********************************************************************************************************/
 	@Test(expected = ConnectException.class)
 	public void test_run_1() throws IOException {
 		
@@ -158,6 +164,13 @@ public class initClientTCPclientTest {
 		assertTrue(false);
 	}
 	
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_2
+	 * Description: 			Verify that once the server is initialized at any registered port, the client can be created successfully at this port
+	 * Internal variables TBV: 	clientRunning
+	 * Mocked external methods: TCPserver.startServer()
+     * Exceptions thrown: 		IOException, InterruptedException
+	 ***********************************************************************************************************/
 	@Test
 	public void test_run_2() throws IOException, InterruptedException {
 		
@@ -172,6 +185,13 @@ public class initClientTCPclientTest {
 		
 	}
 	
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_3
+	 * Description: 			Verify that once the server is initialized at any registered port, multiple client instances can be created successfully at the same port
+	 * Internal variables TBV: 	clientRunning
+	 * Mocked external methods: TCPserver.startServer()
+     * Exceptions thrown: 		IOException, InterruptedException
+	 ***********************************************************************************************************/
 	@Test
 	public void test_run_3() throws IOException {
 		
@@ -189,6 +209,14 @@ public class initClientTCPclientTest {
 		
 	}
 
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_4
+	 * Description: 			Verify that once multiple server instances are initialized at any different registered ports, 
+	  							multiple client instances can be created successfully at any port with a server instance initialized
+	 * Internal variables TBV: 	clientRunning
+	 * Mocked external methods: TCPserver.startServer()
+     * Exceptions thrown: 		IOException, InterruptedException
+	 ***********************************************************************************************************/
 	@Test
 	public void test_run_4() throws IOException, InterruptedException {
 	
@@ -218,22 +246,38 @@ public class initClientTCPclientTest {
 		assertTrue(tcpclient_3.isClientRunning());
 	}
 	
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_5
+	 * Description: 			Verify that the Connect Exception is returned 
+	 							if there was an attempt to create the client at an invalid address on local machine, or port that is not valid on remote machine
+	 * Exceptions thrown TBV:	ConnectException
+     * Exceptions thrown: 		IOException
+	 ***********************************************************************************************************/
 	@Test(expected = ConnectException.class)
 	public void test_run_5() throws IOException {
 
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		
+		// serverHostName = "1.1.1.1";
 		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
 		
 		// To prove that exception's stack trace reported by JUnit caught the ConnectException
 		assertTrue(false);
 	}
 	
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_6
+	 * Description: 			Verify that the Connect Exception caused by connection timeout is returned 
+	 							if there was an attempt to create the client at the IP address of the host, for which the connection cannot be established
+	 * Exceptions thrown TBV:	ConnectException
+     * Exceptions thrown: 		IOException
+	 ***********************************************************************************************************/
 	@Test(expected = ConnectException.class)
 	public void test_run_6() throws IOException {
 
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		
+		// port_1 = 0
 		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
 		
 		// To prove that exception's stack trace reported by JUnit caught the ConnectException
@@ -259,7 +303,7 @@ public class initClientTCPclientTest {
 	   System.out.println("\t\tTest Run "+initClientTCPclientTest.testID+" teardown section:");
 	   	   
 	   // Time offset between consecutive test runs execution
-	   Thread.sleep(1000);
+	   Thread.sleep(100);
 	   
 	   if(tcpclient_1 != null) {
 		   if(tcpclient_1.isClientRunning()){

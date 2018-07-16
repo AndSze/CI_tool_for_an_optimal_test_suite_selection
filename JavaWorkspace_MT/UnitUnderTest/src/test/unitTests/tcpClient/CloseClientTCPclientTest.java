@@ -113,12 +113,17 @@ public class CloseClientTCPclientTest {
 		System.out.println("\t\tTest Run "+CloseClientTCPclientTest.testID+" Logic:");
 	}
 	
-
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_1
+	 * Description: 			Verify that once the previously initialized client is closed, the new client instance can be initialized at the same port as previous
+	 * Internal variables TBV: 	clientRunning, clientSocket
+	 * Mocked external methods: TCPserver.startServer()
+     * Exceptions thrown: 		IOException
+	 ***********************************************************************************************************/
 	@Test
 	public void test_run_1() throws IOException {
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
-		
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
 		mockServerThread.start();
 		
@@ -135,6 +140,13 @@ public class CloseClientTCPclientTest {
 		assertFalse(tcpclient_1.getClientSocket().isClosed());
 	}
 	
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_2
+	 * Description: 			Verify that if a client instance at some port was closed, the other clients at different ports are not being closed
+	 * Internal variables TBV: 	clientRunning, clientSocket
+	 * Mocked external methods: TCPserver.startServer()
+     * Exceptions thrown: 		IOException
+	 ***********************************************************************************************************/
 	@Test
 	public void test_run_2() throws IOException {
 
@@ -159,14 +171,19 @@ public class CloseClientTCPclientTest {
 		assertTrue(tcpclient_1.getClientSocket().isClosed());
 		assertTrue(tcpclient_2.isClientRunning());
 		assertFalse(tcpclient_2.getClientSocket().isClosed());
-			
 	}
 	
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_3
+	 * Description: 			Verify that there is NO IllegalArgumentException returned if there was an attempt to close twice the client that has been initiated
+	 * Mocked external methods: TCPserver.startServer()
+	 * Exceptions thrown TBV:	IllegalArgumentException
+     * Exceptions thrown: 		IOException
+	 ***********************************************************************************************************/
 	@Test
 	public void test_run_3() throws IOException {
 	
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
-		
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
 		mockServerThread.start();
 
@@ -184,11 +201,17 @@ public class CloseClientTCPclientTest {
 			
 	}
 	
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_4
+	 * Description: 			Verify that there is the IllegalArgumentException returned if there was an attempt to close the client that has not been initialized
+	 * Mocked external methods: TCPserver.startServer()
+	 * Exceptions thrown TBV:	IllegalArgumentException
+     * Exceptions thrown: 		IOException
+	 ***********************************************************************************************************/
 	@Test(expected = IllegalArgumentException.class)
 	public void test_run_4() throws IOException {
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
-		
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
 		mockServerThread.start();
 		
@@ -199,13 +222,13 @@ public class CloseClientTCPclientTest {
 			
 	}
 	
-   @After
-    public void teardown() throws IOException, InterruptedException{
+	@After
+	public void teardown() throws IOException, InterruptedException{
 	  
 	   System.out.println("\t\tTest Run "+CloseClientTCPclientTest.testID+" teardown section:");
 	   	   
 	   // Time offset between consecutive test runs execution
-	   Thread.sleep(1000);
+	   Thread.sleep(100);
 	   
 	   if(tcpclient_1 != null) {
 		   if(tcpclient_1.isClientRunning()){
@@ -227,9 +250,8 @@ public class CloseClientTCPclientTest {
 		   }
 	   }
 	   	  
-	   
 	   incrementTestID();
-    }
+	}
 	
 	
 }

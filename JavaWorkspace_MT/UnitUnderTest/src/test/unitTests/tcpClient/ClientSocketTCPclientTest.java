@@ -26,9 +26,10 @@ import tcpServer.TCPserver;
 public class ClientSocketTCPclientTest {
 
 	int port_1 = 9876;
-	int sensor_ID = 1;
+	int sensor_ID_1 = 1;
 	TCPclient tcpclient_1 = null;
 	int port_2 = 9877;
+	int sensor_ID_2 = 2;
 	TCPclient tcpclient_2 = null;
 	final String serverHostName = "localhost";
 	
@@ -107,7 +108,13 @@ public class ClientSocketTCPclientTest {
 		System.out.println("\t\tTest Run "+CloseClientTCPclientTest.testID+" Logic:");
 	}
 	
-
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_1
+	 * Description: 			Verify that once a Client instance is created, the client socket for its instance is connected to the specified port number on the named host
+	 * Internal variables TBV: 	clientSocket
+	 * Mocked external methods: TCPserver.startServer()
+     * Exceptions thrown: 		IOException
+	 ***********************************************************************************************************/
 	@Test
 	public void test_run_1() throws IOException {
 		
@@ -115,12 +122,19 @@ public class ClientSocketTCPclientTest {
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
 		mockServerThread.start();
 		
-		tcpclient_1 = tcpclient_1.initClient(sensor_ID, serverHostName, port_1);
-		assertTrue(tcpclient_1.isClientRunning());
+		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
 		assertFalse(tcpclient_1.getClientSocket().isClosed());
 		assertEquals(port_1,		tcpclient_1.getClientSocket().getPort());
 	}
 	
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_2
+	 * Description: 			Verify that once a Client instance is created, the client socket for its instance is being bound to some local port 
+	 							that has different port number than the port number specified on the named host
+	 * Internal variables TBV: 	clientSocket
+	 * Mocked external methods: TCPserver.startServer()
+     * Exceptions thrown: 		IOException
+	 ***********************************************************************************************************/
 	@Test
 	public void test_run_2() throws IOException {
 		
@@ -128,13 +142,19 @@ public class ClientSocketTCPclientTest {
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
 		mockServerThread.start();
 		
-		tcpclient_1 = tcpclient_1.initClient(sensor_ID, serverHostName, port_1);
-		assertTrue(tcpclient_1.isClientRunning());
+		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
 		assertFalse(tcpclient_1.getClientSocket().isClosed());
 		assertTrue(tcpclient_1.getClientSocket().isBound());
 		assertNotEquals(port_1,		tcpclient_1.getClientSocket().getLocalPort());
 	}
 	
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_3
+	 * Description: 			Verify that once multiple Client instances are created at the same port, each client instance has its unique Client Socket
+	 * Internal variables TBV: 	clientSocket
+	 * Mocked external methods: TCPserver.startServer()
+     * Exceptions thrown: 		IOException
+	 ***********************************************************************************************************/
 	@Test
 	public void test_run_3() throws IOException {
 	
@@ -142,11 +162,11 @@ public class ClientSocketTCPclientTest {
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
 		mockServerThread.start();
 		 
-		tcpclient_1 = tcpclient_1.initClient(sensor_ID, serverHostName, port_1);
+		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
 		assertTrue(tcpclient_1.isClientRunning());
 		assertFalse(tcpclient_1.getClientSocket().isClosed());
 		
-		tcpclient_2 = tcpclient_2.initClient(sensor_ID, serverHostName, port_1);
+		tcpclient_2 = tcpclient_2.initClient(sensor_ID_2, serverHostName, port_1);
 		assertTrue(tcpclient_2.isClientRunning());
 		assertFalse(tcpclient_2.getClientSocket().isClosed());
 		
@@ -154,9 +174,15 @@ public class ClientSocketTCPclientTest {
 		Socket tcpclient_2_Socket = tcpclient_2.getClientSocket();
 
 		assertNotEquals(tcpclient_1_Socket,		tcpclient_2_Socket);
-			
 	}
 	
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_4
+	 * Description: 			Verify that if a Client instance at some port was closed, in case the new client instance at this port is created, it will have different socket ID
+	 * Internal variables TBV: 	clientSocket
+	 * Mocked external methods: TCPserver.startServer()
+     * Exceptions thrown: 		IOException
+	 ***********************************************************************************************************/
 	@Test
 	public void test_run_4() throws IOException {
 
@@ -164,7 +190,7 @@ public class ClientSocketTCPclientTest {
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
 		mockServerThread.start();
 		 
-		tcpclient_1 = tcpclient_1.initClient(sensor_ID, serverHostName, port_1);
+		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
 		assertTrue(tcpclient_1.isClientRunning());
 		assertFalse(tcpclient_1.getClientSocket().isClosed());
 		
@@ -172,7 +198,7 @@ public class ClientSocketTCPclientTest {
 		
 		tcpclient_1.closeClient(tcpclient_1);
 		
-		tcpclient_1 = tcpclient_1.initClient(sensor_ID, serverHostName, port_1);
+		tcpclient_1 = tcpclient_1.initClient(sensor_ID_2, serverHostName, port_1);
 		assertTrue(tcpclient_1.isClientRunning());
 		assertFalse(tcpclient_1.getClientSocket().isClosed());
 		
@@ -187,7 +213,7 @@ public class ClientSocketTCPclientTest {
 	   System.out.println("\t\tTest Run "+CloseClientTCPclientTest.testID+" teardown section:");
 	   	   
 	   // Time offset between consecutive test runs execution
-	   Thread.sleep(1000);
+	   Thread.sleep(100);
 	   
 	   if(tcpclient_1 != null) {
 		   if(tcpclient_1.isClientRunning()){

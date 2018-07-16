@@ -114,7 +114,6 @@ public class GetInstanceTCPserverTest {
 	 * Internal variables TBV: 	serverSocket, serverThread, serverRunning
 	 * Exceptions thrown: 		IOException
 	 ***********************************************************************************************************/
-	@SuppressWarnings("static-access")
 	@Test
 	public void test_run_4() throws IOException {
 		
@@ -135,7 +134,6 @@ public class GetInstanceTCPserverTest {
 	 * Internal variables TBV: 	serverSocket, serverThread, serverRunning
 	 * Exceptions thrown: 		IOException
 	 ***********************************************************************************************************/
-	@SuppressWarnings("static-access")
 	@Test
 	public void test_run_5() throws IOException {
 		
