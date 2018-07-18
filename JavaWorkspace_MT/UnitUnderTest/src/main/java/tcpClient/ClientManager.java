@@ -66,8 +66,7 @@ public class ClientManager implements TCPclient_interface{
 		while(true)
         {
 			if (isClientManagerRunning()) {
-				if( (receivedMessage = (Message_Interface) inputStream.readObject()) != null)
-				{
+				if( (receivedMessage = (Message_Interface) inputStream.readObject()) != null) {
 					sensor = TCPclient.searchInClientSensorList(sensor_ID);
 					if (receivedMessage instanceof ServerMessage_Request_MeasurementData) {
 						if (sensor != null && wait_for_measurement_data) {
@@ -183,10 +182,10 @@ public class ClientManager implements TCPclient_interface{
 							// activate the local watchdogs on the client side
 							Local_1h_Watchdog.getInstance().setEnabled(isClientManagerRunning());
 							Local_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(((ServerMessage_SensorInfoUpdate) receivedMessage).get1h_Watchdog());
-							System.out.println("[ClientManager " +sensor.getSensorID()+"] Local_1h_Watchdog for the sensor has been synchronized and it equals: " + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + " [s]" );
 							
+							System.out.println("[ClientManager " +sensor.getSensorID()+"] Local_1h_Watchdog for the sensor has been synchronized and it equals: " + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + " [s]" );
 							System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_SensorInfoUpdate has the following SensorState: " + new_sensor.getSensorState());
-							System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_SensorInfoUpdate received when _1h_Watchdog equals: " + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
+
 							
 							if(new_sensor.getSensorState() == SensorState.OPERATIONAL && Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > 1200 * ((ServerMessage_SensorInfoUpdate) receivedMessage).getSensor_watchdog_scale_factor()) {
 								System.out.println("[ClientManager " +sensor.getSensorID()+"] if sensor receives go to OPERATIONAL, ClientManager is being closed"); 
@@ -213,11 +212,13 @@ public class ClientManager implements TCPclient_interface{
 							System.out.println("[ClientManager " +sensor.getSensorID()+"] ClientMessage_ACK has been sent to end the server-client connection successfully");
 							// send ACK message to disable the socket on the server side
 					    	sendMessage(new ClientMessage_ACK(sensor_ID));
+					    	Local_1h_Watchdog.getInstance().setEnabled(true);
 						}
 						else {
 							// send ACK message to confirm that ClientMessage_MeasurementData has been sent, but do not disable the socket on the server side - the sensor waits for ServerMessage_Request_MeasurementHistory
 							System.out.println("[ClientManager " +sensor.getSensorID()+"] ClientMessage_ACK has been sent to confirm that ClientMessage_MeasurementData has been sent - wait for ServerMessage_Request_MeasurementHistory");
 							sendMessage(new ClientMessage_ACK(sensor_ID));
+							Local_1h_Watchdog.getInstance().setEnabled(false);
 						}
 
 					}

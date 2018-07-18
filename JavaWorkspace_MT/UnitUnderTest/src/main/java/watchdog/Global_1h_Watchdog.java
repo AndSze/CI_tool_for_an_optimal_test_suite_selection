@@ -44,7 +44,7 @@ public class Global_1h_Watchdog implements Runnable {
     private final int _1h_WatchdogExpiration = 3600; 
     // _1h_Watchdog expiration time decrementation timeIntervals in milliseconds (its value is decremented every second)
     private int timeIntervals = 100; 
-	private boolean isPaused = false; 
+	private boolean isPaused = true; 
 	private static double server_watchgod_scale_factor = 1.0;
 
 	/*

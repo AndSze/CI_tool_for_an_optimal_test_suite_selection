@@ -256,12 +256,12 @@ public class UUT_TCPclient extends TCPclient{
 		if (watchdog_scale_factor != 1.0 ) {
 			temp_watchdog_thresholds_array[0] = 100 * watchdog_scale_factor;
 			temp_watchdog_thresholds_array[1] = 120 * watchdog_scale_factor;
-			temp_watchdog_thresholds_array[2] = 200 * watchdog_scale_factor;
+			temp_watchdog_thresholds_array[2] = 150 * watchdog_scale_factor;
 		}
 		else {
 			temp_watchdog_thresholds_array[0] = 100;
 			temp_watchdog_thresholds_array[1] = 120;
-			temp_watchdog_thresholds_array[2] = 200;
+			temp_watchdog_thresholds_array[2] = 150;
 		}
 		
 		return temp_watchdog_thresholds_array;	

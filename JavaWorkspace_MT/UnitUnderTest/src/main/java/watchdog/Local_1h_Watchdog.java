@@ -38,13 +38,13 @@ public class Local_1h_Watchdog implements Runnable {
  
     private static Local_1h_Watchdog m_instance; 
     private double millisecondsLeftUntilExpiration; 
-    private Thread _1h_WatchdogThread; 
-    private Lock expirationDateLock; 
+    private Thread _1h_WatchdogThread;
+	private Lock expirationDateLock; 
     // _1h_Watchdog expiration time is given in seconds
     private final int _1h_WatchdogExpiration = 3600; 
     // _1h_Watchdog expiration time decrementation timeIntervals in milliseconds (its value is decremented every second)
     private int timeIntervals = 1000; 
-	private boolean isPaused = false; 
+	private boolean isPaused = true; 
 	private double local_watchgod_scale_factor = 1.0;
 
 	/*
@@ -217,6 +217,10 @@ public class Local_1h_Watchdog implements Runnable {
 
 	public void setLocal_watchgod_scale_factor(double local_watchgod_scale_factor) {
 		this.local_watchgod_scale_factor = local_watchgod_scale_factor;
+	}
+	
+    public Thread get_1h_WatchdogThread() {
+		return _1h_WatchdogThread;
 	}
 
 }

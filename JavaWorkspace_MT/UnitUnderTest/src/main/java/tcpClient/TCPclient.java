@@ -56,8 +56,8 @@ public class TCPclient implements Runnable {
 	 * Called internal functions:	searchInClientSensorList
 	 * Called external functions: 	ClientManager(), ClientManager.initClientManager(), SensorImpl()
 	 ***********************************************************************************************************/
-    private TCPclient(int sensor_ID, String serverHostName, int port) throws IOException {
-	    
+    TCPclient(int sensor_ID, String serverHostName, int port) throws IOException {
+    	
 	    setClientSocket(new Socket(serverHostName, port));
 	    setSensor_ID(sensor_ID);
 	    System.out.println("[TCPclient " + getSensor_ID() +"] Client Socket created on port = "+port);
@@ -69,9 +69,7 @@ public class TCPclient implements Runnable {
     	System.out.println("[TCPclient " + getSensor_ID() +"] Client Manager created with outputsteam and input stream");
     	clientRunning(true);
     	
-    	
     	if (searchInClientSensorList(getSensor_ID()) == null) {
-    	
 		    // add the instance of sensor on the client side to the Client_Sensors_LIST
 		 	Client_Sensors_LIST = updateClientSensorList(new SensorImpl(getSensor_ID()));
 		 	
@@ -83,8 +81,7 @@ public class TCPclient implements Runnable {
 		 		System.out.println("[TCPclient " + getSensor_ID() +"]\t loop counter: " +sensor_list_counter+ "\twith the following sensor ID:\t" + sens.getSensorID());
 		 		sensor_list_counter += 1;
 		 	}
-		 	
-    	}
+		}
     }
 	
     /***********************************************************************************************************

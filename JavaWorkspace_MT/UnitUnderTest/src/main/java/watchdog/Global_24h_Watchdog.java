@@ -44,7 +44,7 @@ public class Global_24h_Watchdog implements Runnable {
     private final double _24h_WatchdogExpiration = 3600;
 	// _24h_Watchdog expiration time decrementation timeIntervals in milliseconds (its value is decremented every minute)
     private int timeIntervals = 1000;
-    private boolean isPaused = false; 
+    private boolean isPaused = true; 
 	private static double server_watchgod_scale_factor = 1.0;
 	private int server_measurements_limit; 
 	
@@ -58,7 +58,7 @@ public class Global_24h_Watchdog implements Runnable {
        	setTimeIntervals( (int) (getTimeIntervals() * global_watchdogs_scale_factor * getServer_measurements_limit() / 3));
         millisecondsLeftUntilExpiration = (double) (global_watchdogs_scale_factor * (_24h_WatchdogExpiration*1000) * getServer_measurements_limit()); 
         _24h_WatchdogThread = new Thread(this, "_24h_Watchdog Thread"); 
-        _24h_WatchdogThread.start(); 
+        _24h_WatchdogThread.start();   
     } 
  
     /*
@@ -69,10 +69,13 @@ public class Global_24h_Watchdog implements Runnable {
         if (m_instance == null) { 
             m_instance = new Global_24h_Watchdog(TCPserver.getWatchdogs_scale_factor(), TCPserver.getMeasurements_limit()); 
         } 
+        else if( (m_instance != null) && (m_instance.get_24h_WatchdogThread().isInterrupted()) ) { 
+        	 m_instance = new Global_24h_Watchdog(TCPserver.getWatchdogs_scale_factor(), TCPserver.getMeasurements_limit()); 
+        }
         return m_instance; 
     } 
- 
-    /*
+
+	/*
      * Throw the dog a bone. 
      * 
      * When everything is going well, you feed your dog when you get home. 
@@ -228,6 +231,10 @@ public class Global_24h_Watchdog implements Runnable {
 
 	public void setServer_measurements_limit(int server_measurements_limit) {
 		this.server_measurements_limit = server_measurements_limit;
+	}
+	
+    public Thread get_24h_WatchdogThread() {
+		return _24h_WatchdogThread;
 	}
 
 }

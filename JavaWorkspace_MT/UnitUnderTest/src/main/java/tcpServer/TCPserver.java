@@ -52,12 +52,12 @@ public class TCPserver {
 	protected static final String Sensors_PATH = "files\\sensors";
 
 	// data to be loaded to sensor instances after initializing them
-	protected float[][] sensor_coordinates_array = { {1.0f, 1.0f} , {2.0f, 1.0f}, {1.5f, 2.0f}};// {2.5f, 0.5f}, {3.0f, 3.5f}};//  {1.0f, 3.5f}, {2.5f, 0.5f}, {0.5f, 2.5f}};
+	protected float[][] sensor_coordinates_array = { {1.0f, 1.0f}, {2.0f, 1.0f}, {1.5f, 2.0f}};// {2.5f, 0.5f}, {3.0f, 3.5f}};//  {1.0f, 3.5f}, {2.5f, 0.5f}, {0.5f, 2.5f}};
 	protected String softwareImageID = "Release 1";
 	
 	// initial values for the flags that indicate if the watchdogs have been kicked (it needs to be defined to have the fixed size of the flags array)
 	private static boolean _1hWatchog_timestamp_table_initial[] = {false, false, false};//, false, false};
-	private static boolean _24hWatchog_timestamp_table_initial[] = {false , false, false};//, false, false};
+	private static boolean _24hWatchog_timestamp_table_initial[] = {false, false, false};//, false, false};
 
 	// initialize the flags arrays that indicate if the watchdogs have been kicked - AtomicReference is being used since the flags need to be accessible in parallel in different threads
     private static AtomicReference<boolean[]> _1hWatchog_timestamp_table = new AtomicReference<boolean[]>(_1hWatchog_timestamp_table_initial);
@@ -130,8 +130,8 @@ public class TCPserver {
 	    // start watchdogs
 	    Global_1h_Watchdog.getInstance().setEnabled(get_ServerRunning());
 	    Global_24h_Watchdog.getInstance().setEnabled(get_ServerRunning());
-	    Global_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + 
-	    															 (Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() / getMeasurements_limit()) );
+	    //Global_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + 
+	    //															 (Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() / getMeasurements_limit()) );
 	    
 	    // data processing stuff 
 	    try {
