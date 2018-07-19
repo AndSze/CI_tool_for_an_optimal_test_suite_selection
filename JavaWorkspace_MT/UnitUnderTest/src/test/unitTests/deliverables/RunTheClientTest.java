@@ -45,10 +45,7 @@ public class RunTheClientTest {
 	private final ThreadPoolExecutor auxiliaryServerThreadExecutor = new ThreadPoolExecutor(8, 8, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
 	
 	String[] testPurpose = { "Verify that once the runTheClientTest() function is called, TCP connection is set up by running the initClient() function for the TCPclient class instance",
-							 "Verify that once the runTheClientTest() function is called, a dedicated thread that handles TCP connection is started for the TCPclient class instance",
-							 "Verify that UnknownHostException is thrown once the runTheClientTest() function is called on a host name that is not allowed to set up a TCP connection",
-							 "Verify that ConnectException is thrown once the runTheClientTest() function is called while attempting to connect a socket to a remote address and port. Typically, the connection was refused remotely",
-							 "Verify that IOException is thrown once the runTheClientTest() function is called when the bind operation fails, or if the socket is already bound"};
+							 "Verify that once the runTheClientTest() function is called, a dedicated thread that handles TCP connection is started for the TCPclient class instance"};
 	
 	static int testID = 1;
 	

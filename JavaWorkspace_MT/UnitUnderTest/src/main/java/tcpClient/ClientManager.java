@@ -26,8 +26,7 @@ public class ClientManager implements TCPclient_interface{
 	private ObjectOutputStream outputStream = null;
 	private ObjectInputStream inputStream = null;
 	private boolean isClientManagerRunning = false;
-	private int sensor_ID = 0;
-	SensorImpl sensor = null;
+	protected int sensor_ID = 0;
 	
 	// default constructor 
 	public ClientManager() {
@@ -36,7 +35,7 @@ public class ClientManager implements TCPclient_interface{
 	}
 	
 	// overloaded constructor
-	private ClientManager(ObjectOutputStream outputStream, ObjectInputStream inputStream, int sensor_ID){
+	ClientManager(ObjectOutputStream outputStream, ObjectInputStream inputStream, int sensor_ID){
 		this.outputStream = outputStream;
         this.inputStream = inputStream;
         this.sensor_ID = sensor_ID;
@@ -60,6 +59,7 @@ public class ClientManager implements TCPclient_interface{
 	
 	public void messagesHandler(ObjectOutputStream outputStream, ObjectInputStream inputStream) throws IOException, ClassNotFoundException {
 		
+		SensorImpl sensor = null;
 		Message_Interface receivedMessage = null;
 		boolean ack_alert = false;
 		boolean wait_for_measurement_data = false;

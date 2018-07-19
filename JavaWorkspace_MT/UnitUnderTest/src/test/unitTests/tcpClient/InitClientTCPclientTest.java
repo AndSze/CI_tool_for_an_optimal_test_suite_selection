@@ -22,7 +22,7 @@ import org.mockito.stubbing.Answer;
 import tcpServer.ComputeEngine_Runnable;
 import tcpServer.TCPserver;
 
-public class initClientTCPclientTest {
+public class InitClientTCPclientTest {
 
 	int port_1 = 9876;
 	int sensor_ID_1 = 1;
@@ -61,7 +61,7 @@ public class initClientTCPclientTest {
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		initClientTCPclientTest.testID += 1;
+		InitClientTCPclientTest.testID += 1;
 	}
 	
 	
@@ -69,14 +69,14 @@ public class initClientTCPclientTest {
 	public void before() throws IOException {
 		tcpclient_1 = new TCPclient();
 
-		if(initClientTCPclientTest.testID > 1 ) {
+		if(InitClientTCPclientTest.testID > 1 ) {
 			// mock Server Socket to enable the Client Socket to establish connection
 			mockTCPserverTest = mock(TCPserver.class);
 			mockClientSocket = mock(Socket.class);
 			
 			tempServerSocket_1 = new ServerSocket();
 			
-			if ( initClientTCPclientTest.testID == 4) {
+			if ( InitClientTCPclientTest.testID == 4) {
 				tempServerSocket_2 = new ServerSocket();
 				when(mockTCPserverTest.getServerSocket()).thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_2).thenReturn(tempServerSocket_2)
 														 .thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_2).thenReturn(tempServerSocket_2); // teardown section
@@ -122,7 +122,7 @@ public class initClientTCPclientTest {
 		// the test uses this approach for the purpose of avoiding actual messages sent via TCP - it will be checked in the integration tests
 		}
 		
-		if (initClientTCPclientTest.testID == 3 || initClientTCPclientTest.testID == 4)
+		if (InitClientTCPclientTest.testID == 3 || InitClientTCPclientTest.testID == 4)
 		{
 			tcpclient_2 = new TCPclient();
 			tcpclient_3 = new TCPclient();
@@ -130,23 +130,23 @@ public class initClientTCPclientTest {
 			tcpclient_5 = new TCPclient();
 			tcpclient_6 = new TCPclient();
 		}
-		if (initClientTCPclientTest.testID == 5)
+		if (InitClientTCPclientTest.testID == 5)
 		{
 			serverHostName = "1.1.1.1";
 		}
-		if (initClientTCPclientTest.testID == 6)
+		if (InitClientTCPclientTest.testID == 6)
 		{
 			port_1 = 0;
 		}
 		/*
-		if (initClientTCPclientTest.testID == 7)
+		if (InitClientTCPclientTest.testID == 7)
 		{
 			serverHostName = "";
 		}*/
 		
-		System.out.println("\t\tTest Run "+initClientTCPclientTest.testID+" Purpose:");
-		System.out.println(testPurpose[(initClientTCPclientTest.testID-1)]);
-		System.out.println("\t\tTest Run "+initClientTCPclientTest.testID+" Logic:");
+		System.out.println("\t\tTest Run "+InitClientTCPclientTest.testID+" Purpose:");
+		System.out.println(testPurpose[(InitClientTCPclientTest.testID-1)]);
+		System.out.println("\t\tTest Run "+InitClientTCPclientTest.testID+" Logic:");
 	}
 	
     /***********************************************************************************************************
@@ -300,7 +300,7 @@ public class initClientTCPclientTest {
    @After
     public void teardown() throws IOException, InterruptedException{
 	  
-	   System.out.println("\t\tTest Run "+initClientTCPclientTest.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+InitClientTCPclientTest.testID+" teardown section:");
 	   	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);

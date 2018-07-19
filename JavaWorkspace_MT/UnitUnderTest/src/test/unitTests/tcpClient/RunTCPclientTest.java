@@ -4,8 +4,6 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ExecutorService;
@@ -20,10 +18,11 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-
+import messages.ClientMessage_ACK;
 import messages.ClientMessage_BootUp;
 import messages.Message_Interface;
 import messages.ServerMessage_ACK;
+import sensor.SensorImpl;
 import tcpServer.ComputeEngine_Runnable;
 import tcpServer.TCPserver;
 
@@ -35,35 +34,30 @@ public class RunTCPclientTest {
     String serverHostName  = "localhost";
     Thread testThread = null;
     
+    // to make reading messages sent by Client Manger possible, the ClientManager class instance cannot be a mock (due to final methods that are not supported by Mockito)
+    ClientManager tempClientManger = null;
+    
+    // placeholder for messages sent by the ClientManager class instance
+    Message_Interface receivedMessage = null;
+    
 	// to mock TCPserver instances with ServerSocket mocks
 	TCPserver mockTCPserverTest = null;
 	ServerSocket tempServerSocket_1 = null;
-	ServerSocket tempServerSocket_2 = null;
 	
 	// to mock Client Socket instance in the mockClientSocket = servSocket.accept() statement
 	Socket mockClientSocket = null;
 	
 	// to mock client socket and client manager (for the purpose of avoiding configuration via calling the TCPclient class overloaded constructor)
 	Socket TCPclientSocket = null;
-	ClientManager mockClientManger = null;
-	ObjectOutputStream tempOutputStream = null;
-	ObjectInputStream tempInputStream = null;
-	
-	ObjectInputStream servInputStream = null;
-	ObjectOutputStream servOutputStream = null;
-	Message_Interface receivedMessage = null;
-	
+
 	// to mock server threads
 	Thread mockServerThread = null;
 	ComputeEngine_Runnable mockComputeEngine_Runnable = null;
 	ExecutorService executor = Executors.newSingleThreadExecutor();
 	private final ThreadPoolExecutor auxiliaryServerThreadExecutor = new ThreadPoolExecutor(8, 8, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
 	
-	String[] testPurpose = { "Verify that the run() function for the TCPclass instance handles its runnable functionality - it is verified by starting the TCPclient thread and proving that the run() function is executed",
-							 "Verify that once the runTheClientTest() function is called, a dedicated thread that handles TCP connection is started for the TCPclient class instance",
-							 "Verify that UnknownHostException is thrown once the runTheClientTest() function is called on a host name that is not allowed to set up a TCP connection",
-							 "Verify that ConnectException is thrown once the runTheClientTest() function is called while attempting to connect a socket to a remote address and port. Typically, the connection was refused remotely",
-							 "Verify that IOException is thrown once the runTheClientTest() function is called when the bind operation fails, or if the socket is already bound"};
+	String[] testPurpose = { "Verify that the run() function for the TCPclient class instance handles its runnable functionality - it is verified by proving that once the TCPclient thread is started, the run() function is executed and sends the ClientMessage_BootUp message",
+							 "Verify that once the TCPclient thread is started, the run() function activates the messagesHandler() function for the ClientManager class instance - it is verified by proving that the expected ClientMessage_ACK message is received as a response for the ServerMessage_ACK message"};
 	
 	static int testID = 1;
 	
@@ -79,12 +73,10 @@ public class RunTCPclientTest {
 		// mock Server Socket to enable the Client Socket to establish connection
 		mockTCPserverTest = mock(TCPserver.class);
 		mockClientSocket = mock(Socket.class);
-		//mockClientManger = mock(ClientManager.class);
 		mockComputeEngine_Runnable = mock(ComputeEngine_Runnable.class);
 		
 		tempServerSocket_1 = new ServerSocket();
 		when(mockTCPserverTest.getServerSocket()).thenReturn(tempServerSocket_1);
-		
 		
 		/* To avoid "remote deadlock" - there is a need to submit mockComputeEngine_Runnable to ThreadPoolExecutor 
 		 * The ObjectInputStream on the client is waiting for the object stream from the server before proceeding, but the server isn't going to send that, 
@@ -101,11 +93,8 @@ public class RunTCPclientTest {
                 			while(!servSocket.isClosed()) {
 		                		try {
 									mockClientSocket = servSocket.accept();
-									//mockComputeEngine_Runnable = Mockito.spy(new ComputeEngine_Runnable(mockClientSocket, 1.0, false));
-									//auxiliaryServerThreadExecutor.submit(mockComputeEngine_Runnable);
-									//Message_Interface receivedMessage = (Message_Interface) (mockComputeEngine_Runnable.getInputReaderStream()).readObject();
-									servOutputStream = new ObjectOutputStream(mockClientSocket.getOutputStream());
-									servInputStream = new ObjectInputStream(mockClientSocket.getInputStream());
+									mockComputeEngine_Runnable = Mockito.spy(new ComputeEngine_Runnable(mockClientSocket, 1.0, false));
+									auxiliaryServerThreadExecutor.submit(mockComputeEngine_Runnable);
 								} catch (IOException IOex) {
 									mockServerThread.interrupt();
 									System.out.println("Server Thread Stopped.");
@@ -128,18 +117,16 @@ public class RunTCPclientTest {
 	
     /***********************************************************************************************************
 	 * Test Name: 					test_run_1
-	 * Description: 				Verify that the run() function for the TCPclass instance handles its runnable functionality - it is verified by starting the TCPclient thread
-	  								and proving that the run() function activates the Compute Engine Runnable interface on the TCPserver side
-	 * Internal variables TBC:		clientThread						
-	 * Called internal functions: 	clientThread.start()
-	 * Mocked internal objects: 	clientManager, clientSocket
-	 * Mocked external methods: 	TCPserver.startServer()
+	 * Description: 				Verify that the run() function for the TCPclient class instance handles its runnable functionality - it is verified by proving that
+	   								once the TCPclient thread is started, the run() function is executed and sends the ClientMessage_BootUp message
+	 * Internal variables TBV:		clientThread
+	 * Mocked object:				TCPserver, ComputeEngine_Runnable, Socket
+	 * Mocks method called:			TCPserver.startServer(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
-     * @throws ClassNotFoundException 
 	 ***********************************************************************************************************/
-	@SuppressWarnings("unused")
+	@SuppressWarnings("static-access")
 	@Test
-	public void test_run_1() throws IOException, InterruptedException, ClassNotFoundException {
+	public void test_run_1() throws IOException, InterruptedException {
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
@@ -147,50 +134,100 @@ public class RunTCPclientTest {
 		
 		TCPclientSocket = new Socket(serverHostName, port_1);
 		tcpclient_1.setClientSocket(TCPclientSocket);
+		tcpclient_1.updateClientSensorList(new SensorImpl(sensor_ID_1));
 		
-		/*
-		tempOutputStream = new ObjectOutputStream(TCPclientSocket.getOutputStream());
-		tempInputStream = new ObjectInputStream(TCPclientSocket.getInputStream());
-		when(mockClientManger.getInputReaderStream()).thenReturn(tempInputStream);
-		when(mockClientManger.getOutputStream()).thenReturn(tempOutputStream);
-		*/
-		mockClientManger = new ClientManager();
-		mockClientManger = mockClientManger.initClientManager(TCPclientSocket, sensor_ID_1);
+		tempClientManger = new ClientManager();
+		tempClientManger = tempClientManger.initClientManager(TCPclientSocket, sensor_ID_1);
 		
-		tcpclient_1.setClientManager(mockClientManger);
+		tcpclient_1.setClientManager(tempClientManger);
 		Thread.sleep(100);
-		
-		//assertFalse(mockComputeEngine_Runnable.get_ComputeEngineRunning());
-		//mockComputeEngine_Runnable.set_ComputeEngineRunning(false);
-		
 		
 		testThread = new Thread(new Runnable() {
 			//Runnable serverTask = new Runnable() {
 			public void run() {
 				try {
-					receivedMessage = (Message_Interface) (servInputStream).readObject();
+					receivedMessage = (Message_Interface) (mockComputeEngine_Runnable.getInputReaderStream()).readObject();
 				} catch (ClassNotFoundException e) {
-					// TODO Auto-generated catch block
+					// To prove that exception's stack trace reported by JUnit caught ClassNotFoundException
+					assertTrue(false);
 					e.printStackTrace();
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					// To prove that exception's stack trace reported by JUnit caught IOException
+					assertTrue(false);
 					e.printStackTrace();
 				}
 			}
 		});
 		testThread.start();
+		Thread.sleep(100);
 		
 		Thread TCPclient_thread = new Thread(tcpclient_1, "TCPclient Thread");
 		TCPclient_thread.start();
 		tcpclient_1.setClientThread(TCPclient_thread);
 		Thread.sleep(100);
+		
+		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
 
-		Thread.sleep(1000);
-		
 		assertTrue(receivedMessage instanceof ClientMessage_BootUp);
+	}
+	
+    /***********************************************************************************************************
+	 * Test Name: 					test_run_2
+	 * Description: 				Verify that once the TCPclient thread is started, the run() function activates the messagesHandler() function for the ClientManager class instance - it is verified
+	 * 								by proving that the expected ClientMessage_ACK message is received as a response for the ServerMessage_ACK message
+	 * Internal variables TBV:		clientThread
+	 * Mocked object:				TCPserver, ComputeEngine_Runnable, Socket
+	 * Mocks method called:			TCPserver.startServer(), ComputeEngine_Runnable.sendMessage()
+     * Exceptions thrown: 			IOException, InterruptedException
+	 ***********************************************************************************************************/
+	@SuppressWarnings("static-access")
+	@Test
+	public void test_run_2() throws IOException, InterruptedException, ClassNotFoundException {
 		
-		//assertTrue(mockComputeEngine_Runnable.get_ComputeEngineRunning());
+		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
+		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
+		mockServerThread.start();
 		
+		TCPclientSocket = new Socket(serverHostName, port_1);
+		tcpclient_1.setClientSocket(TCPclientSocket);
+		tcpclient_1.updateClientSensorList(new SensorImpl(sensor_ID_1));
+		
+		tempClientManger = new ClientManager();
+		tempClientManger = tempClientManger.initClientManager(TCPclientSocket, sensor_ID_1);
+		
+		tcpclient_1.setClientManager(tempClientManger);
+		Thread.sleep(100);
+		
+		Thread TCPclient_thread = new Thread(tcpclient_1, "TCPclient Thread");
+		TCPclient_thread.start();
+		tcpclient_1.setClientThread(TCPclient_thread);
+		Thread.sleep(100);
+		
+		testThread = new Thread(new Runnable() {
+			//Runnable serverTask = new Runnable() {
+			public void run() {
+				try {
+					while (tempClientManger.isClientManagerRunning()) {
+						receivedMessage = (Message_Interface) (mockComputeEngine_Runnable.getInputReaderStream()).readObject();
+					}
+				} catch (ClassNotFoundException e) {
+					// To prove that exception's stack trace reported by JUnit caught ClassNotFoundException
+					e.printStackTrace();
+				} catch (IOException e) {
+					// To prove that exception's stack trace reported by JUnit caught IOException
+					e.printStackTrace();
+				}
+			}
+		});
+		testThread.start();
+		Thread.sleep(100);
+		
+		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
+		
+		Thread.sleep(100);
+		assertTrue(receivedMessage instanceof ClientMessage_ACK);
 	}
 	
    @After
@@ -206,6 +243,9 @@ public class RunTCPclientTest {
 	   }
 	   if (tcpclient_1.getClientSocket() != null) {
 		   tcpclient_1.closeClient(tcpclient_1);
+	   }
+	   if (testThread.isAlive()) {
+		   testThread.interrupt();
 	   }
 
 	   // Time offset between consecutive test runs execution
