@@ -28,7 +28,6 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
     /***********************************************************************************************************
 	 * ComputeEngine_Runnable - Class Attributes
 	 ***********************************************************************************************************/
-	
     private ObjectOutputStream outputStream = null;
     private ObjectInputStream inputStream = null;
     private SensorImpl sensor = null;
@@ -92,7 +91,6 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 * Method Name: 				private void sendMessage()
 	 * Description: 				writes object that has to inherit from Message_Interface class to object output stream
 	 * Affected internal variables: outputStream
-	 * Affected external variables: Message_Interface
 	 * Exceptions thrown: 			IOException
 	 ***********************************************************************************************************/
 	public void sendMessage(Message_Interface message) throws IOException {
@@ -100,6 +98,22 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
         // it sends the message via output stream
 		getOutputStream().writeObject(message);
 		processingDelay(get_delays(Delays.LOWEST));
+	}
+	
+	/***********************************************************************************************************
+	 * Method Name: 				public Message_Interface readMessage()
+	 * Description: 				reads an object that has to inherit from Message_Interface class from object input stream
+	 * Affected internal variables: inputStream
+	 * Returned value:				Message_Interface
+	 * Exceptions thrown: 			IOException, ClassNotFoundException
+	 ***********************************************************************************************************/
+	public Message_Interface readMessage() throws IOException, ClassNotFoundException {
+		
+		Message_Interface receivedMessage = null;
+		
+        // it reads the message from input stream
+		receivedMessage = (Message_Interface) inputStream.readObject();
+		return receivedMessage;
 	}
 	
 	/***********************************************************************************************************
@@ -131,7 +145,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
     			setDelay(get_delays(Delays.LOW));
     			if(isComputeEngine_Runnable_running()) {
     				
-					if( (receivedMessage = (Message_Interface) inputStream.readObject()) != null) {
+					if( (receivedMessage = readMessage()) != null) {
 		    			
 	    				sensor = getProcessing_engine().searchInServerSensorList(receivedMessage.getSensorID());
 						

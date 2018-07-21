@@ -20,7 +20,7 @@ public class SensorImpl extends MeasurementData implements Serializable {
 	protected MeasurementData[] sensor_m_history;
 	protected int numberOfMeasurements = 0;
 	// watchdog scale factor is used for scaling the watchdog expiration times - variable is set to a value received from the server in ServerMessage_SensorInfoUpdate
-    double sensor_watchdog_scale_factor = 1.0;
+	protected double sensor_watchdog_scale_factor = 1.0;
 	
 	// Default SensorImpl class constructor - for the client side
 	public SensorImpl(int sensorID) {

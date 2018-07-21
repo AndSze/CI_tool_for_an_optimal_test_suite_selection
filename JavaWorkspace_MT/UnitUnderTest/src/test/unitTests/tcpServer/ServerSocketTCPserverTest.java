@@ -90,16 +90,19 @@ public class ServerSocketTCPserverTest {
 		assertTrue(tcpserver_1.get_ServerRunning());
 		assertFalse(tcpserver_1.getServerSocket().isClosed());
 		
+		String expected_exception_name = "java.net.SocketException";
+		
 		testThread = new Thread(new Runnable() {
 			//Runnable serverTask = new Runnable() {
 		        public void run() {
 		        	try {
 		        		tcpserver_1.getServerSocket().accept();
-		        	} catch (SocketException Sockex) {
+		        	} catch (SocketException e) {
 		        		testThread.interrupt();
 		        		// To prove that exception's stack trace reported by JUnit caught SocketException
 		        		assertTrue(testThread.isInterrupted());
-		        	} catch (IOException IOex) {
+		        		assertEquals(expected_exception_name,		e.getClass().getName());
+		        	} catch (IOException e) {
 		        		// To prove that exception's stack trace reported by JUnit did not catch IOException
 		        		assertTrue(false);
 		        	}

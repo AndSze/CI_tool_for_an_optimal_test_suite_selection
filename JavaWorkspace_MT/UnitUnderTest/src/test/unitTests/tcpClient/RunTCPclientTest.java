@@ -120,8 +120,8 @@ public class RunTCPclientTest {
 	 * Description: 				Verify that the run() function for the TCPclient class instance handles its runnable functionality - it is verified by proving that
 	   								once the TCPclient thread is started, the run() function is executed and sends the ClientMessage_BootUp message
 	 * Internal variables TBV:		clientThread
-	 * Mocked object:				TCPserver, ComputeEngine_Runnable, Socket
-	 * Mocks method called:			TCPserver.startServer(), ComputeEngine_Runnable.sendMessage()
+	 * Mocked objects:				TCPserver, ComputeEngine_Runnable, Socket
+	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@SuppressWarnings("static-access")
@@ -177,8 +177,8 @@ public class RunTCPclientTest {
 	 * Description: 				Verify that once the TCPclient thread is started, the run() function activates the messagesHandler() function for the ClientManager class instance - it is verified
 	 * 								by proving that the expected ClientMessage_ACK message is received as a response for the ServerMessage_ACK message
 	 * Internal variables TBV:		clientThread
-	 * Mocked object:				TCPserver, ComputeEngine_Runnable, Socket
-	 * Mocks method called:			TCPserver.startServer(), ComputeEngine_Runnable.sendMessage()
+	 * Mocked objects:				TCPserver, ComputeEngine_Runnable, Socket
+	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@SuppressWarnings("static-access")
@@ -213,9 +213,11 @@ public class RunTCPclientTest {
 					}
 				} catch (ClassNotFoundException e) {
 					// To prove that exception's stack trace reported by JUnit caught ClassNotFoundException
+					assertTrue(false);
 					e.printStackTrace();
 				} catch (IOException e) {
 					// To prove that exception's stack trace reported by JUnit caught IOException
+					assertTrue(false);
 					e.printStackTrace();
 				}
 			}

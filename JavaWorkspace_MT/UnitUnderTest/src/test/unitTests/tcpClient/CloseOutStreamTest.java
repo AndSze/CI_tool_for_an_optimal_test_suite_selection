@@ -4,9 +4,9 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import java.io.IOException;
-import java.net.ConnectException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -19,10 +19,12 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import messages.ClientMessage_BootUp;
+import messages.Message_Interface;
 import tcpServer.ComputeEngine_Runnable;
 import tcpServer.TCPserver;
 
-public class InitClientManagerTest {
+public class CloseOutStreamTest {
 
 	ClientManager clientManager_1 = null;
     int port_1 = 9876;
@@ -31,6 +33,9 @@ public class InitClientManagerTest {
     
     // Client Socket for the TCPclient class mock
 	Socket TCPclientSocket = null;
+	
+    // placeholder for messages sent by the ClientManager class instance
+    Message_Interface receivedMessage = null;
     
 	// to mock TCPserver instances with ServerSocket mocks
 	TCPserver mockTCPserverTest = null;
@@ -46,14 +51,13 @@ public class InitClientManagerTest {
 	ExecutorService executor = Executors.newSingleThreadExecutor();
 	private final ThreadPoolExecutor auxiliaryServerThreadExecutor = new ThreadPoolExecutor(8, 8, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
 	
-	String[] testPurpose = { "Verify that once the initClientManager() function is called, ObjectOutputStream and ObjectInputStream is created based on the input and output streams of a client socket given as an input argument",
-							 "Verify that once the initClientManager() function is called, the overloaded constructor of the ClientManager class is called - it is verified by proving that he isClientManagerRunning flag is set to true",
-							 "Verify that ConnectException is thrown if there was an attempt to call the initClientManager() function for a client socket that has not established TCP connection with TCPserver"};
+	String[] testPurpose = { "Verify that once the closeOutStream() function for a client manager class instance is called, the object output stream is closed - it is verified by SocketException that is thrown when there was an attempt to write an object to the previously closed object output stream",
+							 "Verify that IllegalArgumentException is thrown if there was an attempt to call the closeOutStream() function for a client manager class instance without initializing its object output stream"};
 	
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		InitClientManagerTest.testID += 1;
+		SendMessageTest.testID += 1;
 	}
 	
 	@Before
@@ -75,7 +79,7 @@ public class InitClientManagerTest {
 		/* To avoid "remote deadlock" - there is a need to submit mockComputeEngine_Runnable to ThreadPoolExecutor 
 		 * The ObjectInputStream on the client is waiting for the object stream from the server before proceeding, but the server isn't going to send that, 
 		 * because its ObjectInputStream is waiting for the header from the client before proceeding... 
-		 */
+		*/
 		Mockito.doAnswer(new Answer<Thread>() {
             @Override
             public Thread answer(InvocationOnMock invocation) throws Throwable {
@@ -101,49 +105,58 @@ public class InitClientManagerTest {
                 }
                 return mockServerThread;
             }
-		}).when(mockTCPserverTest).startServer(Matchers.any(ServerSocket.class));
+		}).when(mockTCPserverTest).startServer(Matchers.any(ServerSocket.class)); 
 		// Mockito.doAnswer - to mock void method to do something (mock the behavior despite being void) - in this case it is used for TCPserver.startServer();
-	
-		System.out.println("\t\tTest Run "+InitClientManagerTest.testID+" Purpose:");
-		System.out.println(testPurpose[(InitClientManagerTest.testID-1)]);
-		System.out.println("\t\tTest Run "+InitClientManagerTest.testID+" Logic:");
+		
+		System.out.println("\t\tTest Run "+CloseOutStreamTest.testID+" Purpose:");
+		System.out.println(testPurpose[(CloseOutStreamTest.testID-1)]);
+		System.out.println("\t\tTest Run "+CloseOutStreamTest.testID+" Logic:");
 	}
 	
     /***********************************************************************************************************
-	 * Test Name: 				test_run_1
-	 * Description: 			Verify that once the initClientManager() function is called,
-	  							ObjectOutputStream and ObjectInputStream is created based on the input and output streams of a client socket given as an input argument
-	 * Internal variables TBV: 	outputStream, inputStream
-     * Exceptions thrown: 		IOException
+	 * Test Name: 					test_run_1
+	 * Description: 				Verify that once the closeOutStream() function for a client manager class instance is called, the object output stream is closed
+	  								- it is verified by SocketException that is thrown when there was an attempt to write an object to the previously closed object output stream
+	 * Internal variables TBV:		outputStream
+	 * Mocked objects:				TCPserver, TCPclient, ComputeEngine_Runnable, Socket
+	 * Mocks methods called:		TCPserver.startServer()
+	 * Exceptions thrown TBV:		SocketException
+     * Exceptions thrown: 			IOException
 	 ***********************************************************************************************************/
-	@Test
+	@Test(expected = SocketException.class)
 	public void test_run_1() throws IOException {
-		
+	
 		// bind server socket and start TCPserver
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
 		mockServerThread.start();
 		
 		TCPclientSocket = new Socket(serverHostName, port_1);
-		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);
-		
-		assertEquals(null,			clientManager_1.getInputReaderStream());	
-		assertEquals(null,			clientManager_1.getOutputStream());	
+		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);	
 		
 		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
 		
-		assertNotEquals(null,		clientManager_1.getInputReaderStream());	
-		assertNotEquals(null,		clientManager_1.getOutputStream());	
+		clientManager_1.sendMessage(new ClientMessage_BootUp(sensor_ID_1));
+		
+		clientManager_1.closeOutStream();
+		
+		clientManager_1.sendMessage(new ClientMessage_BootUp(sensor_ID_1));
+		
+		// To prove that exception's stack trace reported by JUnit caught SocketException
+		assertTrue(false);
 	}
 	
     /***********************************************************************************************************
-	 * Test Name: 				test_run_2
-	 * Description: 			Verify that once the initClientManager() function is called, 
-	 							the overloaded constructor of the ClientManager class is called - it is verified by proving that he isClientManagerRunning flag is set to true
-	 * Internal variables TBV: 	isClientManagerRunning
-     * Exceptions thrown: 		IOException
+	 * Test Name: 					test_run_2
+	 * Description: 				Verify that IllegalArgumentException is thrown if there was an attempt to
+	  								call the closeOutStream() function for a client manager class instance without initializing its object output stream
+	 * Internal variables TBV:		outputStream
+	 * Mocked objects:				TCPserver, TCPclient, ComputeEngine_Runnable, Socket
+	 * Mocks methods called:		TCPserver.startServer()
+	 * Exceptions thrown TBV:		IllegalArgumentException
+     * Exceptions thrown: 			IOException
 	 ***********************************************************************************************************/
-	@Test
+	@Test(expected = IllegalArgumentException.class)
 	public void test_run_2() throws IOException {
 		
 		// bind server socket and start TCPserver
@@ -152,53 +165,31 @@ public class InitClientManagerTest {
 		mockServerThread.start();
 		
 		TCPclientSocket = new Socket(serverHostName, port_1);
-		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);
+		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);	
 		
-		assertFalse(clientManager_1.isClientManagerRunning());	
+		clientManager_1.closeOutStream();
 		
-		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
-		
-		assertTrue(clientManager_1.isClientManagerRunning());	
-	}
-	
-    /***********************************************************************************************************
-	 * Test Name: 				test_run_3
-	 * Description: 			Verify that ConnectException is thrown if there was an attempt to call
-	  							the initClientManager() function for a client socket that has not established TCP connection with TCPserver
-	 * Exceptions thrown TBV:	ConnectException
-     * Exceptions thrown: 		IOException
-	 ***********************************************************************************************************/
-	@Test(expected = ConnectException.class)
-	public void test_run_3() throws IOException {
-		
-		TCPclientSocket = new Socket(serverHostName, port_1);
-		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);
-		
-		assertFalse(clientManager_1.isClientManagerRunning());	
-		
-		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
-		
-		// To prove that exception's stack trace reported by JUnit caught ConnectException
+		// To prove that exception's stack trace reported by JUnit caught IllegalArgumentException
 		assertTrue(false);
 	}
 	
    @After
    public void teardown() throws IOException, InterruptedException{
 	   
-	   System.out.println("\t\tTest Run "+InitClientManagerTest.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+CloseOutStreamTest.testID+" teardown section:");
 	   
-	   if(mockTCPserverTest.getServerSocket().isBound()) {
+	   if ( (mockTCPserverTest.getServerSocket().isBound()) && (!mockTCPserverTest.getServerSocket().isClosed()) ){
 		   mockTCPserverTest.getServerSocket().close();
 	   }
-	   if (clientManager_1.isClientManagerRunning()) {
-		   clientManager_1.getInputReaderStream().close();
-		   clientManager_1.getOutputStream().close();
+	   if (clientManager_1.getInputReaderStream() != null) {
+		   clientManager_1.closeInStream();
 	   }
-	   
+
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);
 	   
 	   System.out.println("");
 	   incrementTestID();
-   }
+	}
+
 }

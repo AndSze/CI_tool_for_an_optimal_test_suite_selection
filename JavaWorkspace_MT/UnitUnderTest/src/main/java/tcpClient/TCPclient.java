@@ -22,10 +22,10 @@ public class TCPclient implements Runnable {
 	
 	// it is required to duplicate the below parameters here, because they are used for setting the input parameters for the local watchdog on the client side
 	// measurement limit is used for determining after how many measurement datas, the measurement history request is sent - variable is set to a value received from the server in ServerMessage_SensorInfoUpdate
-	private static int measurements_limit;
+	protected static int measurements_limit;
 	
 	// watchdog scale factor is used for scaling the watchdog expiration times - variable is set to a value received from the server in ServerMessage_SensorInfoUpdate
-	private static double watchdogs_scale_factor = 0.01;
+	protected static double watchdogs_scale_factor = 0.01;
 
     /***********************************************************************************************************
 	 * Method Name: 				public UUT_TCPclient()

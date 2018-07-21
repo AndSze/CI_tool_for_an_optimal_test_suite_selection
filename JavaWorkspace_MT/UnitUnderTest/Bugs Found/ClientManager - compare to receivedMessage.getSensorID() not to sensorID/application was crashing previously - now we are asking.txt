@@ -1,0 +1,10 @@
+else if(sensor.getSensorID() != receivedMessage.getSensorID()) {
+	System.out.println("[ClientManager " +sensor.getSensorID()+"] message with invalid sensor ID has been received.");
+	
+	sensor.setSensorID(receivedMessage.getSensorID());
+	TCPclient.updateClientSensorList(sensor);
+	
+	sensor_ID = receivedMessage.getSensorID();
+	
+	sendMessage(new ClientMessage_SensorInfo(sensor));
+}
