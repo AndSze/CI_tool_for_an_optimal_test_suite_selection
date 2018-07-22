@@ -1,0 +1,17 @@
+else if (receivedMessage instanceof ServerMessage_Request_MeasurementHistory && sensor.getSensorID() == receivedMessage.getSensorID() && wait_for_measurement_history) {
+	
+	System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_Request_MeasurementHistory has been received.");
+	System.out.println("[ClientManager " +sensor.getSensorID()+"] sensor: \t" + sensor.getSensorID() + " has the following number of measurements: \t"  + sensor.getNumberOfMeasurements());
+	//System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_Request_MeasurementHistory has the following timestamp: " + receivedMessage.getTimestamp());
+	MeasurementData[] mes_data = sensor.readMeasurementHistory();
+	sendMessage(new ClientMessage_MeasurementHistory(sensor_ID, mes_data));
+	System.out.println("[ClientManager " +sensor.getSensorID()+"] responds to ServerMessage_Request_MeasurementHistory with ClientMessage_MeasurementHistory.");
+	
+	// to clear the measurement history and set number of measurement to 0
+	System.out.println("[ClientManager " +sensor.getSensorID()+"] Sensor is being reset once ClientMessage_MeasurementHistory is sent");
+	sensor.resetSensor();
+	TCPclient.updateClientSensorList(sensor);
+	
+	wait_for_measurement_history = false;
+
+}

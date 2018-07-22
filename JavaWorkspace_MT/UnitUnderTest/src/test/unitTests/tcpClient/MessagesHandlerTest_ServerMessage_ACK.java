@@ -3,6 +3,7 @@ package tcpClient;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -20,25 +21,27 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import messages.ClientMessage_ACK;
-import messages.ClientMessage_SensorInfo;
+import messages.ClientMessage_MeasurementData;
 import messages.Message_Interface;
+import messages.SensorState;
 import messages.ServerMessage_ACK;
-import messages.ServerMessage_SensorInfoQuerry;
+import messages.ServerMessage_Request_MeasurementData;
+import messages.ServerMessage_Request_MeasurementHistory;
+import messages.ServerMessage_SensorInfoUpdate;
 import sensor.SensorImpl;
 import tcpServer.ComputeEngine_Runnable;
 import tcpServer.TCPserver;
+import watchdog.Local_1h_Watchdog;
 
-public class MessagesHandlerTest {
-	
+public class MessagesHandlerTest_ServerMessage_ACK {
+
 	ClientManager clientManager_1 = null;
     int port_1 = 9876;
     int sensor_ID_1 = 1;
-    int sensor_ID_2 = 2;
     String serverHostName  = "localhost";
     Thread testThread_server = null;
     Thread testThread_client = null;
-    Thread testThread_exception = null;
-    SensorImpl sensor_1 = null;
+    SensorImpl temp_sens_sent_1 = null; 
     
     // Client Socket for the TCPclient class mock
 	Socket TCPclientSocket = null;
@@ -60,15 +63,13 @@ public class MessagesHandlerTest {
 	ExecutorService executor = Executors.newSingleThreadExecutor();
 	private final ThreadPoolExecutor auxiliaryServerThreadExecutor = new ThreadPoolExecutor(8, 8, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
 	
-	String[] testPurpose = { "Verify that once the messagesHandler() function is called while the isClientManagerRunning flag is equal to true, the client manager class instance that runs the messagesHandler() function is able to read messages send from TCPserver",
-							 "Verify that once the messagesHandler() function is called while the isClientManagerRunning flag is set to false, the client manager class instance that runs the messagesHandler() function is NOT able to read messages send from TCPserver",
-							 "Verify that once the messagesHandler() function is called, it hangs in the readMessage() function until it gets a new message from TCPserver. \nIt is verified also that the state machine of messagesHandler() function is executed for all messages received from TCPserver, but every time the currently processing message is different from the previous",
-							 "Verify that once the messagesHandler() function receives any message from TCPserver that has different sensor ID than the sensor ID that is written to the Client Manager class instance, \nthe state machine of messagesHandler() function sends ClientMessage_SensorInfo with the new sensor ID to confirm that this sensor ID was set intentionally. Verify also that the new sensor ID is also set for the sensor in Client_Sensors_LIST."};
-	
+	String[] testPurpose = { "Verify that the messagesHandler() function responds to ServerMessage_ACK with ClientMessage_ACK",
+							 "Verify that the messagesHandler() sets the isClientManagerRunning flag to false, synchronizes Local_1h_Watchdog.timeLeftBeforeExpiration with Global_1h_Watchdog.timeLeftBeforeExpiration received in ServerMessage_ACK and enables Local_1h_Watchdog if ServerMessage_ACK was received when the wait_for_measurement_history flag is set to false",
+							 "Verify that the messagesHandler() disables Local_1h_Watchdog if ServerMessage_ACK was received when the wait_for_measurement_history flag is set to true"};
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		MessagesHandlerTest.testID += 1;
+		MessagesHandlerTest_ServerMessage_ACK.testID += 1;
 	}
 	
 	@SuppressWarnings("static-access")
@@ -152,17 +153,25 @@ public class MessagesHandlerTest {
 			}
 		});
 		
-		System.out.println("\t\tTest Run "+MessagesHandlerTest.testID+" Purpose:");
-		System.out.println(testPurpose[(MessagesHandlerTest.testID-1)]);
-		System.out.println("\t\tTest Run "+MessagesHandlerTest.testID+" Logic:");
-	}
+		int sensorID = 1;
+		float[][] sensor_coordinates_array_1 = {{11.0f, 14.0f}};
+		String softwareImageID_1 = "Release X";
+		int measurement_limit_1 = 5;
+		SensorState sens_state_1 = SensorState.MAINTENANCE;
+		
+		temp_sens_sent_1 = new SensorImpl(sensorID, new Point2D.Float(sensor_coordinates_array_1[0][0], sensor_coordinates_array_1[0][1]), softwareImageID_1, measurement_limit_1);
+		temp_sens_sent_1.setSensorState(sens_state_1);
 	
-    /***********************************************************************************************************
+		System.out.println("\t\tTest Run "+MessagesHandlerTest_ServerMessage_ACK.testID+" Purpose:");
+		System.out.println(testPurpose[(MessagesHandlerTest_ServerMessage_ACK.testID-1)]);
+		System.out.println("\t\tTest Run "+MessagesHandlerTest_ServerMessage_ACK.testID+" Logic:");
+	}
+
+   /***********************************************************************************************************
 	 * Test Name: 					test_run_1
-	 * Description: 				Verify that once the messagesHandler() function is called while the isClientManagerRunning flag is equal to true,
-	  								the client manager class instance that runs the messagesHandler() function is able to read messages send from TCPserver
-	 * Internal variables TBV:		inputStream, outputStream, isClientManagerRunning
-	 * External variables TBV:		ClientMessage_SensorInfo, ServerMessage_ACK, ServerMessage_SensorInfoQuerry
+	 * Description: 				Verify that the messagesHandler() function responds to ServerMessage_ACK with ClientMessage_ACK
+	 * Internal variables TBV:		inputStream, outputStream
+	 * External variables TBV:		ClientMessage_ACK, ServerMessage_ACK
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
@@ -190,22 +199,19 @@ public class MessagesHandlerTest {
 		testThread_client.start();
 		Thread.sleep(10);
 		
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_1));
-		Thread.sleep(10);
-		
-		assertTrue(receivedMessage instanceof ClientMessage_SensorInfo);
-		
-		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
 		Thread.sleep(10);
+			
+		assertTrue(receivedMessage instanceof ClientMessage_ACK);
 	}
-
+	
    /***********************************************************************************************************
 	 * Test Name: 					test_run_2
-	 * Description: 				Verify that once the messagesHandler() function is called while the isClientManagerRunning flag is set to false,
-	  								the client manager class instance that runs the messagesHandler() function is NOT able to read messages send from TCPserver
+	 * Description: 				Verify that the messagesHandler() sets the isClientManagerRunning flag to false, 
+	 								synchronizes Local_1h_Watchdog.timeLeftBeforeExpiration with Global_1h_Watchdog.timeLeftBeforeExpiration received in ServerMessage_ACK
+	 								and enables Local_1h_Watchdog if ServerMessage_ACK was received when the wait_for_measurement_history flag is set to false
 	 * Internal variables TBV:		inputStream, outputStream, isClientManagerRunning
-	 * External variables TBV:		ClientMessage_ACK, ClientMessage_SensorInfo, ServerMessage_ACK, ServerMessage_SensorInfoQuerry
+	 * External variables TBV:		ClientMessage_ACK, ServerMessage_ACK, Local_1h_Watchdog.isPaused, Local_1h_Watchdog.millisecondsLeftUntilExpiration
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
@@ -233,27 +239,22 @@ public class MessagesHandlerTest {
 		testThread_client.start();
 		Thread.sleep(10);
 		
-		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
 		Thread.sleep(10);
-		
+			
 		assertTrue(receivedMessage instanceof ClientMessage_ACK);
 		
+		assertEquals(mockComputeEngine_Runnable.getLocal_1h_watchdog(), 			Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), 0.5);
+		assertTrue(Local_1h_Watchdog.getInstance().getEnabled());
 		assertFalse(clientManager_1.isClientManagerRunning());
-		
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_1));
-		Thread.sleep(10);
-		
-		assertFalse(receivedMessage instanceof ClientMessage_SensorInfo);
 	}
 	
    /***********************************************************************************************************
 	 * Test Name: 					test_run_3
-	 * Description: 				Verify that once the messagesHandler() function is called, it hangs in the readMessage() function until it gets a new message from TCPserver.
-	 								It is verified also that the state machine of messagesHandler() function is executed for all messages received from TCPserver,
-	 								but every time the currently processing message is different from the previous
+	 * Description: 				Verify that the messagesHandler() disables Local_1h_Watchdog if ServerMessage_ACK was received when the wait_for_measurement_history flag is set to true
 	 * Internal variables TBV:		inputStream, outputStream
-	 * External variables TBV:		ServerMessage_SensorInfoQuerry
+	 * External variables TBV:		ServerMessage_ACK, ClientMessage_ACK, ServerMessage_SensorInfoUpdate, ClientMessage_MeasurementData, 
+	 								ServerMessage_Request_MeasurementData, ServerMessage_Request_MeasurementHistory, Local_1h_Watchdog.isPaused	
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
@@ -281,79 +282,48 @@ public class MessagesHandlerTest {
 		testThread_client.start();
 		Thread.sleep(10);
 		
-		Message_Interface receivedMessage_old = null;
-		Message_Interface receivedMessage_new = null;
+		double sens_watchdog_scale_factor_1 = 0.01;
+		double received_Local_1h_watchdog = 120 * sens_watchdog_scale_factor_1;
+		when(mockComputeEngine_Runnable.getLocal_1h_watchdog()).thenReturn(received_Local_1h_watchdog);
+		temp_sens_sent_1.setSensor_watchdog_scale_factor(sens_watchdog_scale_factor_1);
+		
+		for (int measurements = 0; measurements < temp_sens_sent_1.getSensor_m_history_array_size(); measurements++) {
+		
+			mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
+													temp_sens_sent_1.getSensorState(),
+													mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
+													temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()));
+			Thread.sleep(10);
 			
-		assertEquals(null, 							receivedMessage);
+			// change sensor state to SensorState.OPERATIONAL what will result in setting wait_for_measurement_data to true in the state machine statement that processes the next ServerMessage_SensorInfoUpdate
+			SensorState sens_state_2 = SensorState.OPERATIONAL;
+			temp_sens_sent_1.setSensorState(sens_state_2);
+			
+			mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
+													temp_sens_sent_1.getSensorState(),
+													mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
+													temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()));
+			Thread.sleep(10);
+			
+			mockComputeEngine_Runnable.sendMessage(new ServerMessage_Request_MeasurementData(sensor_ID_1));
+			Thread.sleep(10);
+			
+			assertTrue(receivedMessage instanceof ClientMessage_MeasurementData);
+		}
 		
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_1));
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
 		Thread.sleep(10);
+			
+		assertTrue(receivedMessage instanceof ClientMessage_ACK);
 		
-		assertNotEquals(null, 						receivedMessage);
-		receivedMessage_old = receivedMessage;
+		assertFalse(Local_1h_Watchdog.getInstance().getEnabled());
 		
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_1));
+		// send ServerMessage_Request_MeasurementHistory to enable TCP connection to be closed upon receiving ServerMessage_ACK
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_Request_MeasurementHistory(sensor_ID_1));
 		Thread.sleep(10);
-		
-		assertNotEquals(null, 						receivedMessage);
-		receivedMessage_new = receivedMessage;
-		
-		assertNotEquals(receivedMessage_new, 		receivedMessage_old);
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
-		Thread.sleep(10);
-	}
-	
-	   /***********************************************************************************************************
-		 * Test Name: 					test_run_4
-		 * Description: 				Verify that once the messagesHandler() function receives any message from TCPserver that has different sensor ID than the sensor ID
-		 								that is written to the Client Manager class instance, the state machine of messagesHandler() function sends ClientMessage_SensorInfo
-		 								with the new sensor ID to confirm that this sensor ID was set intentionally. Verify also that the new sensor ID is also set for the sensor in Client_Sensors_LIST.
-		 * Internal variables TBV:		inputStream, outputStream
-		 * External variables TBV:		ServerMessage_SensorInfoQuerry, ClientMessage_SensorInfo, ServerMessage_ACK, SensorImpl.sensorID, Client_Sensors_LIST
-		 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
-		 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
-	     * Exceptions thrown: 			IOException, InterruptedException
-		 ***********************************************************************************************************/
-	@SuppressWarnings("static-access")
-	@Test
-	public void test_run_4() throws IOException, InterruptedException {
-		
-		// bind server socket and start TCPserver
-		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
-		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
-		mockServerThread.start();
-		
-		TCPclientSocket = new Socket(serverHostName, port_1);
-		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);	
-		
-		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
-		Thread.sleep(10);
-		
-		// start test Thread on the server side that is responsible for listening messages sent by TCPclient
-		testThread_server.start();
-		Thread.sleep(10);
-		
-		// start test Thread on the client side that is responsible for listening messages sent by TCPserver and re-sending particular responses that are verified in the consecutive test runs
-		// method under test messagesHandler() is called in this thread
-		testThread_client.start();
-		Thread.sleep(10);
-		
-		SensorImpl temp_sens_old = mockTCPclientTest.searchInClientSensorList(sensor_ID_1);
-	
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_2));
-		Thread.sleep(10);
-		
-		SensorImpl temp_sens_new = mockTCPclientTest.searchInClientSensorList(sensor_ID_2);
-		
-		assertTrue(receivedMessage instanceof ClientMessage_SensorInfo);
-		assertEquals(sensor_ID_2, 			receivedMessage.getSensorID());
-		assertEquals(temp_sens_old, 		temp_sens_new);		
-		
-		
-		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_2, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
 		Thread.sleep(10);
 	}
 	
@@ -361,7 +331,7 @@ public class MessagesHandlerTest {
 	@After
 	public void teardown() throws IOException, InterruptedException{
 	   
-	   System.out.println("\t\tTest Run "+MessagesHandlerTest.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+MessagesHandlerTest_ServerMessage_ACK.testID+" teardown section:");
 	   
 	   if (clientManager_1.getInputReaderStream() != null) {
 		   clientManager_1.closeInStream();
@@ -394,3 +364,4 @@ public class MessagesHandlerTest {
 	}
 
 }
+

@@ -100,7 +100,7 @@ public class TCPclient implements Runnable {
 	 * Method Name: 				public void run()
 	 * Description: 				runnable method for TCP connection on the client side 				
 	 * Called external functions: 	ClientManager.sendMessage(), ClientMessage_BootUp(), ClientManager.messagesHandler()
-	 * Exceptions handled: 			IOException, ClassNotFoundException
+	 * Exceptions handled: 			IOException
 	 ***********************************************************************************************************/
 	public void run() {
 
@@ -113,16 +113,8 @@ public class TCPclient implements Runnable {
 			IOex.printStackTrace();
 		}
 	
-        try {
-    		clientManager.messagesHandler(clientManager.getOutputStream(), clientManager.getInputReaderStream());
-    	} catch (ClassNotFoundException CNFEx) {
-	    	System.out.println("Error: The client for sensor ID: "+getSensor_ID()+" returns the ClassNotFoundException when class of a serialized object cannot be read by the ObjectInputStream.");
-	    	CNFEx.printStackTrace();
-	    } catch (IOException IOex) {
-	    	System.out.println("Error: The client for sensor ID: "+getSensor_ID()+" returns the IOException when any of the usual Input/Output related exceptions take place, e.g. "
-	    			+ "Something is wrong with a class used by serialization, Control information in the stream is inconsistent or Primitive data was found in the stream instead of objects");
-	    	IOex.printStackTrace();
-	    }
+    	clientManager.messagesHandler(clientManager.getOutputStream(), clientManager.getInputReaderStream());
+    	
 	}
 	
     /***********************************************************************************************************
@@ -182,7 +174,7 @@ public class TCPclient implements Runnable {
 			for (SensorImpl s : Client_Sensors_LIST) {
 				if (s.getSensorID() == sensor.getSensorID()) {
 					Client_Sensors_LIST.set(itemIndex, sensor);
-					//System.out.println("[TCPclient " + sensor.getSensorID() +"] updateClientSensorList() sensor instance on Client_Sensors_LIST has been updated");
+					System.out.println("[TCPclient " + sensor.getSensorID() +"] sensor instance in Client_Sensors_LIST has been updated");
 					break;
 				} 
 				else {
