@@ -7,7 +7,9 @@ public enum Watchdog_Thresholds {
 	// decrease processing delays between consecutive Local 1h Watchdog time to expiration read
 	MEDIUM (1),
 	// do not decrease processing delays between consecutive Local 1h Watchdog time to expiration read
-	HIGHEST (2);
+	HIGH (2),
+	// do not decrease processing delays between consecutive Local 1h Watchdog time to expiration read
+	HIGHEST (3);
 
 	private int watchdogThreashold;
 

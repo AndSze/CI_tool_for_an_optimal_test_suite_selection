@@ -53,7 +53,12 @@ public class Global_1h_Watchdog implements Runnable {
     protected Global_1h_Watchdog(double global_watchdogs_scale_factor) {            
         expirationDateLock = new ReentrantLock(); 
         setServer_watchgod_scale_factor(global_watchdogs_scale_factor);
-       	setTimeIntervals( (int) (getTimeIntervals() * global_watchdogs_scale_factor));
+        if(global_watchdogs_scale_factor > 0.01) {
+        	setTimeIntervals( (int) (getTimeIntervals() * global_watchdogs_scale_factor));
+        }
+        else {
+        	setTimeIntervals( (int) (getTimeIntervals() * 0.01));
+        }
         millisecondsLeftUntilExpiration = (double) (global_watchdogs_scale_factor * (_1h_WatchdogExpiration*1000)); 
         _1h_WatchdogThread = new Thread(this, "_1h_Watchdog Thread"); 
         _1h_WatchdogThread.start(); 

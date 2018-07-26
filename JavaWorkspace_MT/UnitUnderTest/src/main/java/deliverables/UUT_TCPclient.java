@@ -28,7 +28,7 @@ public class UUT_TCPclient extends TCPclient{
 	 * Description: 				Interfaces for the testing purposes - to parameterize times dependencies
 	 ***********************************************************************************************************/
     protected static double[] watchdog_thresholds_array = null;
-    private final static int watchdog_thresholds_array_size = 3;
+    private final static int watchdog_thresholds_array_size = 4;
     protected static int[] delays_array = null;
     private final static int delays_array_size = 4;
     
@@ -63,7 +63,7 @@ public class UUT_TCPclient extends TCPclient{
     public static void main(String []args) throws IOException{
 		
 		int temp_port = 9876;
-		int temp_sensor_ID = 3;
+		int temp_sensor_ID = 5;
 		String temp_serverHostName = "localhost";
 		
 		// local variables
@@ -131,7 +131,7 @@ public class UUT_TCPclient extends TCPclient{
 				}
 				processingDelay(get_delays(Delays.MEDIUM, delays_array));
 			}
-			else if (Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > (get_watchdog_threshold(Watchdog_Thresholds.LOWEST, watchdog_thresholds_array))) {
+			else if (Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > (get_watchdog_threshold(Watchdog_Thresholds.HIGH, watchdog_thresholds_array))) {
 				print_loop_count++;
 				if (print_loop_count == 5) {
 					System.out.println("[UUT_TCPclient " + uut1_TCPclient.getSensor_ID() + "]\t  Local_1h_Watchdog: "+ Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
@@ -255,13 +255,15 @@ public class UUT_TCPclient extends TCPclient{
 		
 		if (watchdog_scale_factor != 1.0 ) {
 			temp_watchdog_thresholds_array[0] = 100 * watchdog_scale_factor;
-			temp_watchdog_thresholds_array[1] = 120 * watchdog_scale_factor;
-			temp_watchdog_thresholds_array[2] = 150 * watchdog_scale_factor;
+			temp_watchdog_thresholds_array[1] = 150 * watchdog_scale_factor;
+			temp_watchdog_thresholds_array[2] = 300 * watchdog_scale_factor;
+			temp_watchdog_thresholds_array[3] = 900 * watchdog_scale_factor;
 		}
 		else {
-			temp_watchdog_thresholds_array[0] = 100;
-			temp_watchdog_thresholds_array[1] = 120;
-			temp_watchdog_thresholds_array[2] = 150;
+			temp_watchdog_thresholds_array[0] = 100 * watchdog_scale_factor;
+			temp_watchdog_thresholds_array[1] = 150 * watchdog_scale_factor;
+			temp_watchdog_thresholds_array[2] = 300 * watchdog_scale_factor;
+			temp_watchdog_thresholds_array[3] = 900 * watchdog_scale_factor;
 		}
 		
 		return temp_watchdog_thresholds_array;	
@@ -281,7 +283,9 @@ public class UUT_TCPclient extends TCPclient{
 				break;
 			case MEDIUM: watchdog_threshold = watchdog_thresholds_array[1];
 				break;
-			case HIGHEST: watchdog_threshold = watchdog_thresholds_array[2];
+			case HIGH: watchdog_threshold = watchdog_thresholds_array[2];
+				break;
+			case HIGHEST: watchdog_threshold = watchdog_thresholds_array[3];
 				break;
 			default:
 				break;

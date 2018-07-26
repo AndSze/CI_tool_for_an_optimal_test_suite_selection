@@ -250,7 +250,7 @@ public class ClientManager implements TCPclient_interface{
 							System.out.println("[ClientManager " +sensor.getSensorID()+"] ServerMessage_SensorInfoUpdate has the following SensorState: " + new_sensor.getSensorState());
 
 							
-							if(new_sensor.getSensorState() == SensorState.OPERATIONAL && Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > ( (0.25 * Local_1h_Watchdog.getInstance().getExpiration()) * ((ServerMessage_SensorInfoUpdate) receivedMessage).getSensor_watchdog_scale_factor()) ) {
+							if(new_sensor.getSensorState() == SensorState.OPERATIONAL && Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > ( (0.08333333 * Local_1h_Watchdog.getInstance().getExpiration()) * ((ServerMessage_SensorInfoUpdate) receivedMessage).getSensor_watchdog_scale_factor()) ) {
 								System.out.println("[ClientManager " +sensor.getSensorID()+"] if sensor receives go to OPERATIONAL message, ClientManager is being closed since its Local_1h_Watchdog is not close to expire"); 
 								System.out.println("[ClientManager " +sensor.getSensorID()+"] it will be launched agan once its Local_1h_Watchdog: " + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + "[s] will reach threshold for launching the TCP connection.");
 								setClientManagerRunning(false);
@@ -301,11 +301,13 @@ public class ClientManager implements TCPclient_interface{
 						}
 					}
 				} catch (ClassNotFoundException CNFex) {
-		            System.out.println("[ClientManager " +sensor.getSensorID()+"] when new readMessage() failed due to class of a deserialized object cannot be found");
+		            System.out.println("[ClientManager " +sensor.getSensorID()+"] Error: readMessage() failed due to class of a deserialized object cannot be found");
 		        	System.out.println(CNFex.getMessage());
+		        	setClientManagerRunning(false);
 				} catch (IOException IOex) {
-					System.out.println("[ClientManager " +sensor.getSensorID()+"] when new readMessage() failed due to TCP connection issues");
+					System.out.println("[ClientManager " +sensor.getSensorID()+"] Error: readMessage() failed due to TCP connection issues - when attempted to read Object from inputStream on the client side");
 			        System.out.println(IOex.getMessage());
+			        setClientManagerRunning(false);
 				}
 			} 
 			else {
