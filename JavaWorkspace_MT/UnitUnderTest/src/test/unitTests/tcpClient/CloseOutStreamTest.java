@@ -136,11 +136,11 @@ public class CloseOutStreamTest {
 		
 		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
 		
-		clientManager_1.sendMessage(new ClientMessage_BootUp(sensor_ID_1));
+		clientManager_1.sendMessage(new ClientMessage_BootUp(sensor_ID_1), clientManager_1.getOutputStream());
 		
 		clientManager_1.closeOutStream();
 		
-		clientManager_1.sendMessage(new ClientMessage_BootUp(sensor_ID_1));
+		clientManager_1.sendMessage(new ClientMessage_BootUp(sensor_ID_1), clientManager_1.getOutputStream());;
 		
 		// To prove that exception's stack trace reported by JUnit caught SocketException
 		assertTrue(false);

@@ -119,6 +119,7 @@ public class SendMessageTest {
 	 * Test Name: 					test_run_1
 	 * Description: 				Verify that the sendMessage() function for the ClientManager class instance writes an object to the previously opened object output stream for a client socket
 	 * Internal variables TBV:		outputStream
+	 * External variables TBV:		ClientMessage_BootUp, Message_Interface
 	 * Mocked objects:				TCPserver, TCPclient, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer()
      * Exceptions thrown: 			IOException, InterruptedException
@@ -135,13 +136,13 @@ public class SendMessageTest {
 		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);	
 		
 		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
-		Thread.sleep(100);
+		Thread.sleep(20);
 		
 		testThread = new Thread(new Runnable() {
 			//Runnable serverTask = new Runnable() {
 			public void run() {
 				try {
-					receivedMessage = (Message_Interface) (mockComputeEngine_Runnable.getInputReaderStream()).readObject();
+					receivedMessage = (Message_Interface) (mockComputeEngine_Runnable.readMessage(mockComputeEngine_Runnable.getInputReaderStream()));
 				} catch (ClassNotFoundException e) {
 					// To prove that exception's stack trace reported by JUnit caught ClassNotFoundException
 					assertTrue(false);
@@ -154,10 +155,10 @@ public class SendMessageTest {
 			}
 		});
 		testThread.start();
-		Thread.sleep(100);
+		Thread.sleep(20);
 		
-		clientManager_1.sendMessage(new ClientMessage_BootUp(sensor_ID_1));
-		Thread.sleep(100);
+		clientManager_1.sendMessage(new ClientMessage_BootUp(sensor_ID_1), clientManager_1.getOutputStream());
+		Thread.sleep(20);
 		
 		assertTrue(receivedMessage instanceof ClientMessage_BootUp);
 	}
@@ -186,7 +187,7 @@ public class SendMessageTest {
 		
 		clientManager_1.closeOutStream();
 		
-		clientManager_1.sendMessage(new ClientMessage_BootUp(sensor_ID_1));
+		clientManager_1.sendMessage(new ClientMessage_BootUp(sensor_ID_1), clientManager_1.getOutputStream());
 		
 		// To prove that exception's stack trace reported by JUnit caught SocketException
 		assertTrue(false);
@@ -212,13 +213,13 @@ public class SendMessageTest {
 		TCPclientSocket = new Socket(serverHostName, port_1);
 		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);	
 		
-		clientManager_1.sendMessage(new ClientMessage_BootUp(sensor_ID_1));
+		clientManager_1.sendMessage(new ClientMessage_BootUp(sensor_ID_1), clientManager_1.getOutputStream());
 		
 		// To prove that exception's stack trace reported by JUnit caught IllegalArgumentException
 		assertTrue(false);
 	}
 	
-   @After
+	@After
     public void teardown() throws IOException, InterruptedException{
 	   
 	   System.out.println("\t\tTest Run "+SendMessageTest.testID+" teardown section:");
@@ -238,7 +239,7 @@ public class SendMessageTest {
 		   }
 	   }
 	   // Time offset between consecutive test runs execution
-	   Thread.sleep(100);
+	   Thread.sleep(20);
 	   
 	   System.out.println("");
 	   incrementTestID();

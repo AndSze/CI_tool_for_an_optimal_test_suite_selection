@@ -139,7 +139,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 			public void run() {
 					try {
 						while(clientManager_1.isClientManagerRunning()) {
-							receivedMessage = (Message_Interface) (mockComputeEngine_Runnable.readMessage());
+							receivedMessage = (Message_Interface) (mockComputeEngine_Runnable.readMessage(mockComputeEngine_Runnable.getInputReaderStream()));
 						}
 					} catch (ClassNotFoundException e) {
 						// To prove that exception's stack trace reported by JUnit caught ClassNotFoundException
@@ -191,16 +191,16 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);	
 		
 		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the server side that is responsible for listening messages sent by TCPclient
 		testThread_server.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver and re-sending particular responses that are verified in the consecutive test runs
 		// method under test messagesHandler() is called in this thread
 		testThread_client.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		int sensorID = 1;
 		float[][] sensor_coordinates_array_1 = {{18.0f, 15.0f}};
@@ -228,8 +228,8 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
 												temp_sens_sent_1.getSensorState(),
 												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
-												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()));
-		Thread.sleep(10);
+												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 		
 		temp_sens_received_1 = mockTCPclientTest.searchInClientSensorList(sensorID);
 		
@@ -270,8 +270,8 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_2.getSensorID(), temp_sens_sent_2.getCoordinates(), temp_sens_sent_2.getSoftwareImageID(), 
 												temp_sens_sent_2.getSensorState(),
 												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
-												temp_sens_sent_2.getLocal_watchdog_scale_factor(), temp_sens_sent_2.getSensor_m_history_array_size()));
-		Thread.sleep(10);
+												temp_sens_sent_2.getLocal_watchdog_scale_factor(), temp_sens_sent_2.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 		
 		temp_sens_received_2 = mockTCPclientTest.searchInClientSensorList(sensorID);
 		
@@ -287,8 +287,8 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		assertEquals(temp_sens_sent_2.getSensor_m_history_array_size(),		temp_sens_received_2.getSensor_m_history_array_size());
 
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensorID, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
-		Thread.sleep(10);
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensorID, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 	}
 	/***********************************************************************************************************
 	 * Test Name: 					test_run_2
@@ -314,16 +314,16 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);	
 		
 		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the server side that is responsible for listening messages sent by TCPclient
 		testThread_server.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver and re-sending particular responses that are verified in the consecutive test runs
 		// method under test messagesHandler() is called in this thread
 		testThread_client.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		int sensorID = 1;
 		float[][] sensor_coordinates_array_1 = {{11.0f, 14.0f}};
@@ -344,8 +344,8 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
 												temp_sens_sent_1.getSensorState(),
 												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
-												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()));
-		Thread.sleep(10);
+												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 		
 		temp_sens_received_1 = mockTCPclientTest.searchInClientSensorList(sensorID);
 		
@@ -355,8 +355,8 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		assertEquals(temp_sens_sent_1.getSensorState(),						temp_sens_received_1.getSensorState());
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensorID, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
-		Thread.sleep(10);
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensorID, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 	}	
 	
 	/***********************************************************************************************************
@@ -383,16 +383,16 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);	
 		
 		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the server side that is responsible for listening messages sent by TCPclient
 		testThread_server.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver and re-sending particular responses that are verified in the consecutive test runs
 		// method under test messagesHandler() is called in this thread
 		testThread_client.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		int sensorID = 1;
 		float[][] sensor_coordinates_array_1 = {{11.0f, 14.0f}};
@@ -412,8 +412,8 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
 												temp_sens_sent_1.getSensorState(),
 												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
-												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()));
-		Thread.sleep(10);
+												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 		
 		temp_sens_received_1 = mockTCPclientTest.searchInClientSensorList(sensorID);
 		
@@ -446,12 +446,12 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);	
 		
 		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver and re-sending particular responses that are verified in the consecutive test runs
 		// method under test messagesHandler() is called in this thread
 		testThread_client.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		int sensorID = 1;
 		float[][] sensor_coordinates_array_1 = {{11.0f, 14.0f}};
@@ -471,8 +471,8 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
 												temp_sens_sent_1.getSensorState(),
 												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
-												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()));
-		Thread.sleep(10);
+												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 		
 		assertEquals(sens_watchdog_scale_factor_1, 			TCPclient.watchdogs_scale_factor, 0.01);
 		assertEquals(measurement_limit_1, 					TCPclient.measurements_limit, 0.01);
@@ -480,8 +480,8 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		assertTrue(Local_1h_Watchdog.getInstance().getEnabled());
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensorID, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
-		Thread.sleep(10);
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensorID, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 	}	
 	
 	/***********************************************************************************************************
@@ -506,12 +506,12 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);	
 		
 		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver and re-sending particular responses that are verified in the consecutive test runs
 		// method under test messagesHandler() is called in this thread
 		testThread_client.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		int sensorID = 1;
 		float[][] sensor_coordinates_array_1 = {{11.0f, 14.0f}};
@@ -529,11 +529,11 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
 												temp_sens_sent_1.getSensorState(),
 												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
-												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()));
-		Thread.sleep(10);
+												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 		
 		assertFalse(clientManager_1.isClientManagerRunning());
-		Thread.sleep(10);
+		Thread.sleep(20);
 	}	
 
 	@SuppressWarnings("static-access")

@@ -132,7 +132,7 @@ public class MessagesHandlerTest {
 		public void run() {
 				try {
 					while(clientManager_1.isClientManagerRunning()) {
-						receivedMessage = (Message_Interface) (mockComputeEngine_Runnable.readMessage());
+						receivedMessage = (Message_Interface) (mockComputeEngine_Runnable.readMessage(mockComputeEngine_Runnable.getInputReaderStream()));
 					}
 				} catch (ClassNotFoundException e) {
 					// To prove that exception's stack trace reported by JUnit caught ClassNotFoundException
@@ -179,25 +179,25 @@ public class MessagesHandlerTest {
 		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);	
 		
 		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the server side that is responsible for listening messages sent by TCPclient
 		testThread_server.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver and re-sending particular responses that are verified in the consecutive test runs
 		// method under test messagesHandler() is called in this thread
 		testThread_client.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_1));
-		Thread.sleep(10);
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 		
 		assertTrue(receivedMessage instanceof ClientMessage_SensorInfo);
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
-		Thread.sleep(10);
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 	}
 
    /***********************************************************************************************************
@@ -222,27 +222,27 @@ public class MessagesHandlerTest {
 		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);	
 		
 		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the server side that is responsible for listening messages sent by TCPclient
 		testThread_server.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver and re-sending particular responses that are verified in the consecutive test runs
 		// method under test messagesHandler() is called in this thread
 		testThread_client.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
-		Thread.sleep(10);
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 		
 		assertTrue(receivedMessage instanceof ClientMessage_ACK);
 		
 		assertFalse(clientManager_1.isClientManagerRunning());
 		
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_1));
-		Thread.sleep(10);
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 		
 		assertFalse(receivedMessage instanceof ClientMessage_SensorInfo);
 	}
@@ -270,30 +270,30 @@ public class MessagesHandlerTest {
 		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);	
 		
 		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the server side that is responsible for listening messages sent by TCPclient
 		testThread_server.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver and re-sending particular responses that are verified in the consecutive test runs
 		// method under test messagesHandler() is called in this thread
 		testThread_client.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		Message_Interface receivedMessage_old = null;
 		Message_Interface receivedMessage_new = null;
 			
 		assertEquals(null, 							receivedMessage);
 		
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_1));
-		Thread.sleep(10);
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 		
 		assertNotEquals(null, 						receivedMessage);
 		receivedMessage_old = receivedMessage;
 		
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_1));
-		Thread.sleep(10);
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 		
 		assertNotEquals(null, 						receivedMessage);
 		receivedMessage_new = receivedMessage;
@@ -301,8 +301,8 @@ public class MessagesHandlerTest {
 		assertNotEquals(receivedMessage_new, 		receivedMessage_old);
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
-		Thread.sleep(10);
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 	}
 	
 	   /***********************************************************************************************************
@@ -329,21 +329,21 @@ public class MessagesHandlerTest {
 		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);	
 		
 		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the server side that is responsible for listening messages sent by TCPclient
 		testThread_server.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver and re-sending particular responses that are verified in the consecutive test runs
 		// method under test messagesHandler() is called in this thread
 		testThread_client.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		SensorImpl temp_sens_old = mockTCPclientTest.searchInClientSensorList(sensor_ID_1);
 	
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_2));
-		Thread.sleep(10);
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_2), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 		
 		SensorImpl temp_sens_new = mockTCPclientTest.searchInClientSensorList(sensor_ID_2);
 		
@@ -353,8 +353,8 @@ public class MessagesHandlerTest {
 		
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_2, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
-		Thread.sleep(10);
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_2, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 	}
 	
 	@SuppressWarnings("static-access")

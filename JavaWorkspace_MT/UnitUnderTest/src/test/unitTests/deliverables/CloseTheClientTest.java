@@ -129,7 +129,7 @@ public class CloseTheClientTest {
 		Thread.sleep(500);
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to update INSTANCE of TCPclient attribute in UUT_TCPclient_1 class
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
 		
 		Thread.sleep(100);
 		

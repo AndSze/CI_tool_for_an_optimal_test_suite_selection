@@ -129,7 +129,7 @@ public class StartServerTCPserverTest {
 	  						 	the runnable ComputeEngine_Runnable class that handles communication via a TCP connection with sensors
 	 * Internal variables TBV: 	serverProcessingPool
 	 * External variables TBV: 	ComputeEngine_Runnable.isComputeEngine_Runnable_running
-	 * Mocked external methods: ClientManager.getOutputStream, ClientManager.getInputReaderStream 
+	 * Mocked method calls:		ClientManager.getOutputStream, ClientManager.getInputReaderStream 
      * Exceptions thrown:		IOException, InterruptedException, ClassNotFoundException 
 	 ***********************************************************************************************************/
 	@Test
@@ -166,7 +166,7 @@ public class StartServerTCPserverTest {
 	 * Test Name: 				test_run_5
 	 * Description: 			Verify that once an output stream for the client socket is created, all messages sent via this output stream are being handled in separated ThreadPoolExecutors
 	 * Internal variables TBV: 	serverProcessingPool
-	 * Mocked external methods: ClientManager.getOutputStream
+	 * Mocked method calls:	 	ClientManager.getOutputStream
      * Exceptions thrown:		IOException, InterruptedException 
 	 ***********************************************************************************************************/
 	@Test
@@ -202,7 +202,7 @@ public class StartServerTCPserverTest {
 	 * Test Name: 				test_run_6
 	 * Description: 			Verify that there is a possibility to create up to 8 ThreadPoolExecutors to process client messages
 	 * Internal variables TBV: 	serverProcessingPool
-	 * Mocked external methods: ClientManager.getOutputStream
+	 * Mocked method calls: 	ClientManager.getOutputStream
      * Exceptions thrown:		IOException, InterruptedException 
 	 ***********************************************************************************************************/
 	@Test

@@ -31,13 +31,12 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
     private ObjectOutputStream outputStream = null;
     private ObjectInputStream inputStream = null;
     private SensorImpl sensor = null;
-    private boolean isComputeEngine_Runnable_running = false;
+	private boolean isComputeEngine_Runnable_running = false;
     private int delay = 0;
     private double local_1h_watchdog = 0;
     private double local_24h_watchdog = 0;
     // seconds_to_miliseconds_conversion_factor is introduced, because watchdogs are in [s] units, whereas delays are given in [ms]
     private final double seconds_to_miliseconds_conversion_factor = 1000;
-    private static double[] _24h_watchdog_array = new double[24];
     
 	/***********************************************************************************************************
    	 * Auxiliary piece of code
@@ -48,11 +47,11 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 								5) final int watchdog_thresholds_array_size
 	 * Description: 				Interfaces for the testing purposes - to parameterize times dependencies
 	 ***********************************************************************************************************/
-    private double local_watchdog_scale_factor = 1.0;
-    private int[] delays_array;
-    private final int delays_array_size = 4;
-    private double[] watchdog_thresholds_array;
-    private final int watchdog_thresholds_array_size = 4;
+    protected double local_watchdog_scale_factor = 1.0;
+    protected int[] delays_array;
+    protected final int delays_array_size = 4;
+    protected double[] watchdog_thresholds_array;
+    protected final int watchdog_thresholds_array_size = 4;
    
     /***********************************************************************************************************
 	 * Method Name: 				public ComputeEngine_Runnable()
@@ -93,11 +92,15 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 * Affected internal variables: outputStream
 	 * Exceptions thrown: 			IOException
 	 ***********************************************************************************************************/
-	public void sendMessage(Message_Interface message) throws IOException {
+	public void sendMessage(Message_Interface message, ObjectOutputStream out_stream) throws IOException {
 		
-        // it sends the message via output stream
-		getOutputStream().writeObject(message);
-		processingDelay(get_delays(Delays.LOWEST));
+		if (out_stream != null) {
+			// sends message from the server via its output stream to the client input stream
+			out_stream.writeObject(message); 
+		}
+		else {
+			throw new IllegalArgumentException();
+		}   
 	}
 	
 	/***********************************************************************************************************
@@ -107,12 +110,19 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 * Returned value:				Message_Interface
 	 * Exceptions thrown: 			IOException, ClassNotFoundException
 	 ***********************************************************************************************************/
-	public Message_Interface readMessage() throws IOException, ClassNotFoundException {
+	public Message_Interface readMessage(ObjectInputStream in_stream) throws IOException, ClassNotFoundException {
 		
 		Message_Interface receivedMessage = null;
 		
-        // it reads the message from input stream
-		receivedMessage = (Message_Interface) inputStream.readObject();
+		if (in_stream != null) {
+			
+			// reads message sent to the server input stream from the client output stream
+			receivedMessage = (Message_Interface) in_stream.readObject();
+		}
+		else {
+			throw new IllegalArgumentException();
+		}   
+		
 		return receivedMessage;
 	}
 	
@@ -142,27 +152,27 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
     	try {
     		while(true) {
     			
-    			setDelay(get_delays(Delays.LOW));
+    			setDelay(get_delays(Delays.LOW, getDelays_array()));
     			if(isComputeEngine_Runnable_running()) {
     				
-					if( (receivedMessage = readMessage()) != null) {
+					if( (receivedMessage = readMessage(getInputReaderStream())) != null) {
 		    			
 	    				sensor = getProcessing_engine().searchInServerSensorList(receivedMessage.getSensorID());
 						
 		    			if (receivedMessage instanceof ClientMessage_BootUp) {
 		    				
 		    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] BootUp message from sensor: " + sensor.getSensorID() + " has been received.");
-		    				sendMessage(new ServerMessage_SensorInfoQuerry(receivedMessage.getSensorID()));
+		    				sendMessage(new ServerMessage_SensorInfoQuerry(receivedMessage.getSensorID()), getOutputStream());
 		    			}
 		    			else if (receivedMessage instanceof ClientMessage_ACK) {
 		    				
 		    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] received ClientMessage_ACK from sensor: " + sensor.getSensorID() + " has been received.");
-		    				if (getLocal_1h_watchdog() < (get_watchdog_threshold(Watchdog_Thresholds.HIGH)) ) {
+		    				if (getLocal_1h_watchdog() < (get_watchdog_threshold(Watchdog_Thresholds.HIGH, getWatchdog_thresholds_array())) ) {
 		    					
 		    					// adjust Local_1h_watchdogs based on its time left to expiration when ClientMessage_ACK has been received
 			    				setLocal_1h_watchdog(_1h_Watchdog_close_to_expire(getLocal_1h_watchdog(), getLocal_watchdog_scale_factor(), sensor.getNumberOfMeasurements()));
 		    					
-			    				setDelay(get_delays(Delays.LOW));
+			    				setDelay(get_delays(Delays.LOW, getDelays_array()));
 			    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1h_Watchdog global: \t" +  Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 			    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 24h_Watchdog global: \t" +  Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 			    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): \t" + getLocal_1h_watchdog());
@@ -176,12 +186,12 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 			    			        setLocal_24h_watchdog(Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 			    				}
 		    				}
-		    				else if(getLocal_24h_watchdog() < (get_watchdog_threshold(Watchdog_Thresholds.HIGHEST)) ) {
+		    				else if(getLocal_24h_watchdog() < (get_watchdog_threshold(Watchdog_Thresholds.HIGHEST, getWatchdog_thresholds_array())) ) {
 		    					
 		    					// adjust Local_24h_watchdogs based on its time left to expiration when ClientMessage_ACK has been received
 		    					setLocal_24h_watchdog(_24h_Watchdog_close_to_expire(getLocal_24h_watchdog(), getLocal_watchdog_scale_factor()));
 		    					
-		    					setDelay(get_delays(Delays.LOW));
+		    					setDelay(get_delays(Delays.LOW, getDelays_array()));
 		    					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1h_Watchdog global: \t" +  Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 			    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 24h_Watchdog global: \t" +  Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 			    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 24h_Watchdog with delay for ServerMessage_Request_MeasurementHistory (Local_24h_watchdog): \t" + getLocal_24h_watchdog());
@@ -226,7 +236,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    						// send ServerMessage_SensorInfoUpdate that changes state of the sensor to SensorState.OPERATIONAL and update Watchdogs after sensor reset upon receiving ClientMessage_MeasurementHistory
 			    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
 			    							 									   getLocal_1h_watchdog(), getLocal_24h_watchdog(),
-		    																	   getLocal_watchdog_scale_factor(), getMeasurements_limit()));
+		    																	   getLocal_watchdog_scale_factor(), getMeasurements_limit()), getOutputStream());
 			    					// serialize sensor instance and save it to file
 			    					getProcessing_engine().saveSensorInfo(sensor, "gotoOPERATIONALafterRESET");
 			    					
@@ -239,7 +249,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    						// send ServerMessage_SensorInfoUpdate that changes state of the sensor to SensorState.OPERATIONAL and update Watchdogs after sensor reset upon being successfully initialized
 		    						sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
 		    																	   Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), 
-	    																	       getLocal_watchdog_scale_factor(), getMeasurements_limit()));
+	    																	       getLocal_watchdog_scale_factor(), getMeasurements_limit()), getOutputStream());
 		    						// serialize sensor instance and save it to file
 			    					getProcessing_engine().saveSensorInfo(sensor, "gotoOPERATIONALafterCONFIGURATION");
 		    					}
@@ -248,7 +258,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    						// after 1h Watchdog is close to expiration and the Measurement Data Request is going to be send 
 		    						sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
 		    																	   Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), 
-		    																	   getLocal_watchdog_scale_factor(), getMeasurements_limit()));
+		    																	   getLocal_watchdog_scale_factor(), getMeasurements_limit()), getOutputStream());
 		    						// serialize sensor instance and save it to file
 			    					getProcessing_engine().saveSensorInfo(sensor, "stayinOPERATIONAL");
 		    					}
@@ -269,7 +279,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    					// send ServerMessage_SensorInfoUpdate that changes triggers the sensor to reset, then the sensor should send ClientMessage_BootUp
 		    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
 		    							 									   Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), 
-		    							 									   getLocal_watchdog_scale_factor(), getMeasurements_limit()));
+		    							 									   getLocal_watchdog_scale_factor(), getMeasurements_limit()), getOutputStream());
 		    					
 		    					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] send new setting (go to MAINTENANCE) to sensor: " + sensor.getSensorID());
 		    				}
@@ -299,7 +309,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	        				
 	    					// send ServerMessage_ACK
 	        				sendMessage(new ServerMessage_ACK(receivedMessage.getSensorID(),
-									getLocal_1h_watchdog(), getLocal_24h_watchdog()));
+									getLocal_1h_watchdog(), getLocal_24h_watchdog()), getOutputStream());
 	        				
 	        				//indicate to the TCPserver that the 1h watchdog for this sensor has been kicked
 	        				set_1hWatchog_Timestamp_tableID_value(true, receivedMessage.getSensorID() - 1);
@@ -337,7 +347,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
         					// send ServerMessage_SensorInfoUpdate that causes the server to reset and reconfigure
 	    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
 	    																   getLocal_1h_watchdog(), getLocal_24h_watchdog(), 
-									   									   getLocal_watchdog_scale_factor(), getMeasurements_limit()));
+									   									   getLocal_watchdog_scale_factor(), getMeasurements_limit()), getOutputStream());
 	    					
 	    					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
 	    				}
@@ -347,15 +357,15 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
     				//System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1h_Watchdog local: \t" + getLocal_1h_watchdog());
     				//System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 24h_Watchdog local: \t" + getLocal_24h_watchdog());
     			
-					if ( (getLocal_1h_watchdog() <= (get_watchdog_threshold(Watchdog_Thresholds.LOWEST))) && request_measurement_data) {
+					if ( (getLocal_1h_watchdog() <= (get_watchdog_threshold(Watchdog_Thresholds.LOWEST, getWatchdog_thresholds_array()))) && request_measurement_data) {
 	    				// send ServerMessage_Request_MeasurementData
-	    				sendMessage(new ServerMessage_Request_MeasurementData(sensor.getSensorID()));
+	    				sendMessage(new ServerMessage_Request_MeasurementData(sensor.getSensorID()), getOutputStream());
 	    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] Request_MeasurementData is being send to sensor ID: " + sensor.getSensorID());
 	    				request_measurement_data = false;
 		    		}
-		    		else if ( (getLocal_24h_watchdog() <= (get_watchdog_threshold(Watchdog_Thresholds.LOWEST))) && request_measurement_history) {
+		    		else if ( (getLocal_24h_watchdog() <= (get_watchdog_threshold(Watchdog_Thresholds.LOWEST, getWatchdog_thresholds_array()))) && request_measurement_history)  {
 	    				// send ServerMessage_Request_MeasurementData
-	    				sendMessage(new ServerMessage_Request_MeasurementHistory(sensor.getSensorID()));
+	    				sendMessage(new ServerMessage_Request_MeasurementHistory(sensor.getSensorID()), getOutputStream());
 	    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] Request_MeasurementHistory is being send to sensor ID: " + sensor.getSensorID());
 	    				request_measurement_history = false;
 		    		}
@@ -378,27 +388,9 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 			if(sensor != null) {
 				// update watchdogs based on 1hWatchog_timestamp_table and 24hWatchog_timestamp_table one all sensors have finished their TCP connection
 				update_watchgods_after_TCP_connection(get_1hWatchog_timestamp_table().get(), get_24hWatchog_timestamp_table().get(), sensor);	
-				int first_zero_index = 0;
-				for(int i = 0; i< _24h_watchdog_array.length; i++) {
-					if(_24h_watchdog_array[i] == 0.0) {
-						first_zero_index = i;
-						break;
-					}
-				}
-				if (first_zero_index == (sensor.getNumberOfMeasurements() - 1)) {
-					_24h_watchdog_array[first_zero_index] = Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration();
-				}
-				if (first_zero_index == (_24h_watchdog_array.length - 1)) {
-					for(int j = 0; j< _24h_watchdog_array.length; j++) {
-						_24h_watchdog_array[23] = Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration();
-						System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] _24h_watchdog_array["+j+"] equals: " +_24h_watchdog_array[j]);
-						setComputeEngine_Runnable_running(false);
-					}
-					//TCPserver.set_ServerRunning(false);
-				}
 			}
         	try {
-        		processingDelay(get_delays(Delays.HIGHEST));
+        		processingDelay(get_delays(Delays.HIGHEST, getDelays_array()));
         		closeOutStream();
 				closeInStream();
 			} catch (IOException IOex) {
@@ -411,33 +403,34 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 /***********************************************************************************************************
 	 * Method Name: 				private double _1h_Watchdog_close_to_expire()
 	 * Description: 				modifies Local 1h watchdog that triggers particular messages to be sent via TCP connection based on  Global 1h watchdog time left to expiration
+	 * Affected external variables: Global_24h_Watchdog.isPaused
 	 * Returned value				local_1h_watchdog
 	 * Called internal functions: 	processingDelay()
 	 ***********************************************************************************************************/
-	private double _1h_Watchdog_close_to_expire(double _1h_watchdog, double watchdog_scale_factor, int sensor_number_of_measurements ) {
+	protected double _1h_Watchdog_close_to_expire(double _1h_watchdog, double watchdog_scale_factor, int sensor_number_of_measurements ) {
 		
 		// determine duration of an additional delay that is used for watchdogs synchronization
 		double delay_factor = 0.5;
 		//Global_1h_Watchdog.getInstance().setEnabled(false);
-		if ( sensor_number_of_measurements == 23) {
+		if ( sensor_number_of_measurements == (TCPserver.getMeasurements_limit() - 1) ){
 			Global_24h_Watchdog.getInstance().setEnabled(false);
 		}
 		
-		if(_1h_watchdog > (get_watchdog_threshold(Watchdog_Thresholds.MEDIUM))) {
+		if(_1h_watchdog > (get_watchdog_threshold(Watchdog_Thresholds.MEDIUM, getWatchdog_thresholds_array()))) {
 			// this delay is intended to synchronize the measurements from all sensor if their Local_1h_watchdogs have different values that are far from the threshold
 			processingDelay((int)seconds_to_miliseconds_conversion_factor * _1h_watchdog * delay_factor);
-			_1h_watchdog = Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration();
+			_1h_watchdog = (_1h_watchdog - (_1h_watchdog * delay_factor));
+		}
+		// do not enter the additional delay if 1h watchdog value is lower that the lowest threshold and sensor_number_of_measurements equals 23
+		else if ( (_1h_watchdog > get_watchdog_threshold(Watchdog_Thresholds.LOWEST, getWatchdog_thresholds_array())) && (sensor_number_of_measurements != (TCPserver.getMeasurements_limit() - 1)) ){
+			delay_factor = 0.25;
+			processingDelay((int)seconds_to_miliseconds_conversion_factor * _1h_watchdog * delay_factor);
 		}
 		
 		// decrease _1h_watchdog regardless of the fact if it has been already decreased
 		_1h_watchdog = (_1h_watchdog - (_1h_watchdog * delay_factor));
 		
-		// do not enter the additional delay if 1h watchdog value is lower that the lowest threshold and sensor_number_of_measurements equals 23
-		if ( (_1h_watchdog > get_watchdog_threshold(Watchdog_Thresholds.LOWEST)) && (sensor_number_of_measurements != 23) ){
-			processingDelay((int)seconds_to_miliseconds_conversion_factor * _1h_watchdog * delay_factor);
-		}
-		
-		if ( sensor_number_of_measurements == 23) {
+		if ( sensor_number_of_measurements == (TCPserver.getMeasurements_limit() - 1) ) {
 			Global_24h_Watchdog.getInstance().setEnabled(true);
 		}
 		
@@ -450,10 +443,11 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	/***********************************************************************************************************
 	 * Method Name: 				private double _24h_Watchdog_close_to_expire()
 	 * Description: 				modifies both Local and Global 24h watchdog that triggers particular messages to be sent via TCP connection based on Global 24h watchdog time left to expiration
+	 * Affected external variables: Global_1h_Watchdog.isPaused
 	 * Returned value				local_24h_watchdog
-	 * Affected external variables: Global_1h_Watchdog.millisecondsLeftUntilExpiration, Global_24h_Watchdog.millisecondsLeftUntilExpiration
+	 * Called internal functions: 	processingDelay()
 	 ***********************************************************************************************************/
-	private double _24h_Watchdog_close_to_expire(double _24h_watchdog, double watchdog_scale_factor ) {
+	protected double _24h_Watchdog_close_to_expire(double _24h_watchdog, double watchdog_scale_factor ) {
 		
 		// disable 1h watchdog - it will be enabled again once the sensor responses after the reset caused by reaching the measurement history limit
 		Global_1h_Watchdog.getInstance().setEnabled(false);
@@ -461,22 +455,18 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		// determine duration of an additional delay that is used for watchdogs synchronization
 		double delay_factor = 0.5;
 
-		if( (_24h_watchdog < get_watchdog_threshold(Watchdog_Thresholds.LOWEST)) && (Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > get_watchdog_threshold(Watchdog_Thresholds.LOWEST)) ){
-			//Global_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
-			System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] Global_24h_Watchdog was updated and it now equals Global_1h_Watchdog: " + Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
-			_24h_watchdog = Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration();
+		if( (_24h_watchdog < get_watchdog_threshold(Watchdog_Thresholds.LOWEST, getWatchdog_thresholds_array())) && (Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > get_watchdog_threshold(Watchdog_Thresholds.LOWEST, getWatchdog_thresholds_array())) ){
+			// DO NOTHING - 24h watchdog does not require any changes
 		}
-		else if( (_24h_watchdog < get_watchdog_threshold(Watchdog_Thresholds.MEDIUM)) && (_24h_watchdog > get_watchdog_threshold(Watchdog_Thresholds.LOWEST)) ) {
-			// decrease _24h_watchdog regardless of the fact if it has been already decreased
-			//_24h_watchdog = (_24h_watchdog - (_24h_watchdog * delay_factor));
+		else if( (_24h_watchdog < get_watchdog_threshold(Watchdog_Thresholds.MEDIUM, getWatchdog_thresholds_array())) && (_24h_watchdog > get_watchdog_threshold(Watchdog_Thresholds.LOWEST, getWatchdog_thresholds_array())) ) {
 			processingDelay((int)seconds_to_miliseconds_conversion_factor * _24h_watchdog * delay_factor);
 		}
-		else if ( (_24h_watchdog < get_watchdog_threshold(Watchdog_Thresholds.HIGH)) && (_24h_watchdog > get_watchdog_threshold(Watchdog_Thresholds.MEDIUM)) ) {
+		else if ( (_24h_watchdog < get_watchdog_threshold(Watchdog_Thresholds.HIGH, getWatchdog_thresholds_array())) && (_24h_watchdog > get_watchdog_threshold(Watchdog_Thresholds.MEDIUM, getWatchdog_thresholds_array())) ) {
 			delay_factor = 0.7;
 			processingDelay((int)seconds_to_miliseconds_conversion_factor * _24h_watchdog * delay_factor);
 			//_24h_watchdog = (_24h_watchdog - (_24h_watchdog * delay_factor));
 		}
-		else if ( (_24h_watchdog < get_watchdog_threshold(Watchdog_Thresholds.HIGHEST)) && (_24h_watchdog > get_watchdog_threshold(Watchdog_Thresholds.HIGH)) ) {
+		else if ( (_24h_watchdog < get_watchdog_threshold(Watchdog_Thresholds.HIGHEST, getWatchdog_thresholds_array())) && (_24h_watchdog > get_watchdog_threshold(Watchdog_Thresholds.HIGH, getWatchdog_thresholds_array())) ) {
 			delay_factor = 0.9;
 			processingDelay((int)seconds_to_miliseconds_conversion_factor * _24h_watchdog * delay_factor);
 			//_24h_watchdog = (_24h_watchdog - (_24h_watchdog * delay_factor));
@@ -496,13 +486,12 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 * Called external functions: 	Global_1h_Watchdog.feed(), Global_24h_Watchdog.feed(), Global_1h_Watchdog.getInstance().getTimeFromLastFeed(),
 	  								Global_24h_Watchdog.getInstance().getTimeFromLastFeed(), TCPserver.areAllTrue(), TCPserver.set_1hWatchog_Allfalse()
 	 ***********************************************************************************************************/
-	private synchronized void update_watchgods_after_TCP_connection(boolean[] _1hWatchog_timestamp_table, boolean[] _24hWatchog_timestamp_table, SensorImpl sensor) {
+	protected synchronized void update_watchgods_after_TCP_connection(boolean[] _1hWatchog_timestamp_table, boolean[] _24hWatchog_timestamp_table, SensorImpl sensor) {
 	
 		// time_offset is a local variable that measures 1h_Watchdog time left to expiration and adds this measurement to 1h_Watchdog or 24h_Watchdog once the watchdogs are kicked
 		// Updating the watchdogs with this time_offset is required to send messages in defined time intervals
 		// Otherwise the messages will be send with higher frequency, since the watchdogs are being kicked a certain time before they are about to expire
 		double time_left_before_1h_watchdog_kicked = 0;
-		double time_left_before_24h_watchdog_kicked = 0;
 		// time_messages_processing is a local variable that measures how long it takes to send all messages via TCP connection
 		// this variable is used for preventing watchdogs from being kicked multiple times
 		double time_messages_processing = 0;
@@ -523,30 +512,28 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 				// kick 1h Global Watchdog
 				Global_1h_Watchdog.getInstance().feed();
 				
-				if(time_left_before_1h_watchdog_kicked <  Global_1h_Watchdog.getInstance().getExpiration()) {
+				// set computing_time - duration of compute engine execution (subtract the current 1h watchdog time left to expiration from the time that has been measured once Compute engine has started)
+				TCPserver.setComputing_time(TCPserver.getComputing_time() - time_left_before_1h_watchdog_kicked);
+				
+				// kick 1h Global Watchdog
+				Global_1h_Watchdog.getInstance().feed();
+				
+				//  once 1h Watchdog is kicked - set local 1h watchdog flags in the 1hWatchog_timestamp_table array to FALSE
+				set_1hWatchog_Allfalse();
+				
+				// in case this loop has been entered multiple times (thread concurrency - indicated by negative value of TCPserver.getComputing_time()) - prevent from updating the 1h Watchdog value by time offset multiple times
+				if(TCPserver.getComputing_time() > 0) {
 					
-					// set computing_time - duration of compute engine execution (subtract the current 1h watchdog time left to expiration from the time that has been measured once Compute engine has started)
-					TCPserver.setComputing_time(TCPserver.getComputing_time() - time_left_before_1h_watchdog_kicked);
+					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1hWatchdog has been kicked");
 					
-					// kick 1h Global Watchdog
-					Global_1h_Watchdog.getInstance().feed();
-					
-					// in case this loop has been entered multiple times (thread concurrency - indicated by negative value of TCPserver.getComputing_time()) - prevent from updating the 1h Watchdog value by time offset multiple times
-					if(TCPserver.getComputing_time() > 0) {
-						
-						System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1hWatchdog has been kicked");
-						
-						if(time_left_before_1h_watchdog_kicked < (Global_1h_Watchdog.getInstance().getExpiration() * local_watchdog_scale_factor)) {
-							// update 1h Watchdog by time_offset - time left to expiration when 1h watchdog has been kicked
-							Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration((double)(Global_1h_Watchdog.getInstance().getExpiration() * local_watchdog_scale_factor) + (0.75 * time_left_before_1h_watchdog_kicked));
-							System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1hWatchdog has been kicked when it has: "+time_left_before_1h_watchdog_kicked+ " [s] left to expire");
-						}
-						System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] [copmute time] it took: "+TCPserver.getComputing_time()+ " [s] to execute TCP connection");
+					if(time_left_before_1h_watchdog_kicked < (Global_1h_Watchdog.getInstance().getExpiration() * local_watchdog_scale_factor)) {
+						// update 1h Watchdog by time_offset - time left to expiration when 1h watchdog has been kicked
+						Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration((double)(Global_1h_Watchdog.getInstance().getExpiration() * local_watchdog_scale_factor) + (0.0 * time_left_before_1h_watchdog_kicked));
+						System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1hWatchdog has been kicked when it has: "+time_left_before_1h_watchdog_kicked+ " [s] left to expire");
 					}
-					
-					//  once 1h Watchdog is kicked - set local 1h watchdog flags in the 24hWatchog_timestamp_table array to FALSE
-					set_1hWatchog_Allfalse();
+					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] [copmute time] it took: "+TCPserver.getComputing_time()+ " [s] to execute TCP connection");
 				}
+				
 			}
 			// check all local 24h watchdogs - if they haven't been updated - do not kick 1h watchdog
 			else if (!areAllTrue(_24hWatchog_timestamp_table)) {
@@ -555,14 +542,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 			// all local 24h watchdogs  have been updated 
 			else {
 				// DO NOTHING
-				// 1h watchdog will be kicked in the next if statement
-				time_messages_processing = TCPserver.getComputing_time() - Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration();
-				if(time_messages_processing > 0) {
-					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] [copmute time] it took: "+time_messages_processing+ " [s] to process all 1h watchog triggered messages (time_messages_processing)");
-				}
-				else {
-					// DO NOTHING - it means that 1h watchdog has been already kicked by another thread
-				}
+				// 1h watchdog will be kicked in the next if statement that handles 24h watchdog
 			}
 		}
 		// check all local 24h watchdogs - if all have been updated - kick the 24h watchdog & 1h watchdog
@@ -574,40 +554,34 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 			// set computing_time - duration of compute engine execution (subtract the current 24h watchdog time left to expiration from the time that has been measured once Compute engine has started)
 			TCPserver.setComputing_time(TCPserver.getComputing_time() - time_left_before_1h_watchdog_kicked);
 			
-			if(time_left_before_1h_watchdog_kicked <  Global_1h_Watchdog.getInstance().getExpiration()) {
+			// set computing_time - duration of compute engine execution (subtract the current 1h watchdog time left to expiration from the time that has been measured once Compute engine has started)
+			TCPserver.setComputing_time(TCPserver.getComputing_time() - time_left_before_1h_watchdog_kicked);
+			
+			// kick 1h Global Watchdog
+			Global_1h_Watchdog.getInstance().feed();
+			
+			//  once 1h Watchdog is kicked - set local 1h watchdog flags in the 1hWatchog_timestamp_table array to FALSE
+			set_1hWatchog_Allfalse();
+			
+			// in case this loop has been entered multiple times (thread concurrency - indicated by negative value of TCPserver.getComputing_time()) - prevent from updating the 1h Watchdog value by time offset multiple times
+			if(TCPserver.getComputing_time() > 0) {	
 				
-				// set computing_time - duration of compute engine execution (subtract the current 1h watchdog time left to expiration from the time that has been measured once Compute engine has started)
-				TCPserver.setComputing_time(TCPserver.getComputing_time() - time_left_before_1h_watchdog_kicked);
+				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1hWatchdog has been kicked");
 				
-				// kick 1h Global Watchdog
-				Global_1h_Watchdog.getInstance().feed();
-				
-				// in case this loop has been entered multiple times (thread concurrency - indicated by negative value of TCPserver.getComputing_time()) - prevent from updating the 1h Watchdog value by time offset multiple times
-				if(TCPserver.getComputing_time() > 0) {	
-					
-					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1hWatchdog has been kicked");
-					
-					if(time_left_before_1h_watchdog_kicked < (Global_1h_Watchdog.getInstance().getExpiration() * local_watchdog_scale_factor)) {
-						// update 1h Watchdog by time_offset - time left to expiration when 1h watchdog has been kicked
-						Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration((double)(Global_1h_Watchdog.getInstance().getExpiration() * local_watchdog_scale_factor) + (0.75 * time_left_before_1h_watchdog_kicked));
-						System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1hWatchdog has been kicked when it has: "+time_left_before_1h_watchdog_kicked+ " [s] left to expire");
-					}
+				if(time_left_before_1h_watchdog_kicked < (Global_1h_Watchdog.getInstance().getExpiration() * local_watchdog_scale_factor)) {
+					// update 1h Watchdog by time_offset - time left to expiration when 1h watchdog has been kicked
+					Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration((double)(Global_1h_Watchdog.getInstance().getExpiration() * local_watchdog_scale_factor) + (0.75 * time_left_before_1h_watchdog_kicked));
+					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 1hWatchdog has been kicked when it has: "+time_left_before_1h_watchdog_kicked+ " [s] left to expire");
 				}
-				
-				//  once 1h Watchdog is kicked - set local 1h watchdog flags in the 24hWatchog_timestamp_table array to FALSE
-				set_1hWatchog_Allfalse();
 			}
 			
-			if(time_left_before_24h_watchdog_kicked <  Global_24h_Watchdog.getInstance().getExpiration()) {
+			// kick 24h Global Watchdog			
+			Global_24h_Watchdog.getInstance().feed();
 			
-				// kick 24h Global Watchdog			
-				Global_24h_Watchdog.getInstance().feed();
-				
-				// in case this loop has been entered multiple times (thread concurrency - indicated by negative value of TCPserver.getComputing_time()) - prevent from updating the 24h Watchdog value by time offset multiple times
-				if(TCPserver.getComputing_time() > 0) {
-					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 24hWatchdog has been kicked");
-					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] [copmute time] it took: "+TCPserver.getComputing_time()+ " [s] to execute TCP connection");
-				}
+			// in case this loop has been entered multiple times (thread concurrency - indicated by negative value of TCPserver.getComputing_time()) - prevent from updating the 24h Watchdog value by time offset multiple times
+			if(TCPserver.getComputing_time() > 0) {
+				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 24hWatchdog has been kicked");
+				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] [copmute time] it took: "+TCPserver.getComputing_time()+ " [s] to execute TCP connection");
 			}	
 		}
 		else {
@@ -626,7 +600,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		if(areAllTrue(get_24hWatchog_timestamp_table().get())) {
 			
 			// delay is to make sure that the race condition for variables that define the ComputeEngine_Runnable closing activities between parallel threads will not occur
-			processingDelay(get_delays(Delays.HIGHEST));
+			processingDelay(get_delays(Delays.HIGHEST, getDelays_array()));
 			set_24hWatchog_Allfalse();
 		}
 	}
@@ -649,24 +623,30 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 * Method Name: 				public void closeOutStream()
 	 * Description: 				closes object output stream
 	 * Affected internal variables: outputStream
-	 * Exceptions thrown: 			IOException
+	 * Exceptions thrown: 			IOException, IllegalArgumentException
 	 ***********************************************************************************************************/
 	public void closeOutStream() throws IOException {
-		if (outputStream!=null) {
+		if (outputStream != null) {
 			outputStream.close();
 		}
+		else {
+			throw new IllegalArgumentException();
+		}   
 	}
 	
     /***********************************************************************************************************
 	 * Method Name: 				public void closeInStream()
 	 * Description: 				closes object input stream
 	 * Affected internal variables: inputStream
-	 * Exceptions thrown: 			IOException
+	 * Exceptions thrown: 			IOException, IllegalArgumentException
 	 ***********************************************************************************************************/
 	public void closeInStream() throws IOException {
-		if (inputStream!=null) {
+		if (inputStream != null) {
 			inputStream.close();
 		}
+		else {
+			throw new IllegalArgumentException();
+		}   
 	}
 	
 	/***********************************************************************************************************
@@ -674,7 +654,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 * Description: 				sets delays that will be used in the runnable state machine based on watchdog_scale_factor
 	 * Returned value				delays_array
 	 ***********************************************************************************************************/
-	private int[] set_delays_array(double watchdog_scale_factor, int array_size) {
+	protected int[] set_delays_array(double watchdog_scale_factor, int array_size) {
 		
 		int[] temp_delays_array =  new int[array_size];
 		
@@ -699,7 +679,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 * Description: 				sets watchsdog thresholds that will be used in the runnable state machine based on watchdog_scale_factor
 	 * Returned value	 			watchdog_thresholds_array
 	 ***********************************************************************************************************/
-	private double[] set_watchdog_thresholds_array(double watchdog_scale_factor, int array_size) {
+	protected double[] set_watchdog_thresholds_array(double watchdog_scale_factor, int array_size) {
 		
 		double[] temp_watchdog_thresholds_array =  new double[array_size];
 		
@@ -724,18 +704,18 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 * Description: 				retrieves watchsdog threshold based on input Watchdog_Thresholds enumeration
 	 * Returned value	 			watchdog_threshold
   	 ***********************************************************************************************************/
-	private double get_watchdog_threshold(Watchdog_Thresholds THRESHOLD) {
+	protected double get_watchdog_threshold(Watchdog_Thresholds THRESHOLD, double[] watchdog_thresholds_array) {
 		
 		double watchdog_threshold = 0;
 		
 		switch(THRESHOLD){
-			case LOWEST: watchdog_threshold = getWatchdog_thresholds_array()[0];
+			case LOWEST: watchdog_threshold = watchdog_thresholds_array[0];
 				break;
-			case MEDIUM: watchdog_threshold = getWatchdog_thresholds_array()[1];
+			case MEDIUM: watchdog_threshold = watchdog_thresholds_array[1];
 				break;
-			case HIGH: watchdog_threshold = getWatchdog_thresholds_array()[2];
+			case HIGH: watchdog_threshold = watchdog_thresholds_array[2];
 				break;
-			case HIGHEST: watchdog_threshold = getWatchdog_thresholds_array()[3];
+			case HIGHEST: watchdog_threshold = watchdog_thresholds_array[3];
 				break;
 			default:
 				break;
@@ -749,18 +729,18 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 * Description: 				retrieves delay based on input Delays enumeration
 	 * Returned value	 			delay
 	 ***********************************************************************************************************/
-	private int get_delays(Delays DELAY) {
+	protected int get_delays(Delays DELAY, int[] delays_array) {
 		
 		int delay = 0;
 		
 		switch(DELAY){
-			case LOWEST: delay = getDelays_array()[0];
+			case LOWEST: delay = delays_array[0];
 				break;
-			case LOW: delay = getDelays_array()[1];
+			case LOW: delay = delays_array[1];
 				break;	
-			case MEDIUM: delay = getDelays_array()[2];
+			case MEDIUM: delay = delays_array[2];
 				break;
-			case HIGHEST: delay = getDelays_array()[3];
+			case HIGHEST: delay = delays_array[3];
 				break;
 			default:
 				break;
@@ -835,6 +815,10 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 
 	public void setDelays_array(int[] delays_array) {
 		this.delays_array = delays_array;
+	}
+	
+    public void setSensor(SensorImpl sensor) {
+		this.sensor = sensor;
 	}
 
 }

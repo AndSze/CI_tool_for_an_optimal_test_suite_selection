@@ -106,7 +106,7 @@ public class TCPclient implements Runnable {
 
     	// send BootUp message
 	 	try {
-			clientManager.sendMessage(new ClientMessage_BootUp(getSensor_ID()));
+			clientManager.sendMessage(new ClientMessage_BootUp(getSensor_ID()), clientManager.getOutputStream());
 		 	System.out.println("[TCPclient " + getSensor_ID() +"]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched");
 		} catch (IOException IOex) {
 			System.out.println("Error: The client for sensor ID: "+getSensor_ID()+" returns the IOException when attempted to send Boot Up message");

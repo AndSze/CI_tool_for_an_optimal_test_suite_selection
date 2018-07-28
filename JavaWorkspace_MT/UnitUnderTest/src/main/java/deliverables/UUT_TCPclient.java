@@ -133,7 +133,7 @@ public class UUT_TCPclient extends TCPclient{
 			}
 			else if (Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > (get_watchdog_threshold(Watchdog_Thresholds.HIGH, watchdog_thresholds_array))) {
 				print_loop_count++;
-				if (print_loop_count == 5) {
+				if (print_loop_count == 20) {
 					System.out.println("[UUT_TCPclient " + uut1_TCPclient.getSensor_ID() + "]\t  Local_1h_Watchdog: "+ Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 					print_loop_count = 0;
 				}

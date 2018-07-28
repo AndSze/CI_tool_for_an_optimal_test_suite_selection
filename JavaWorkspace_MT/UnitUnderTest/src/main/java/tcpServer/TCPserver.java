@@ -84,7 +84,7 @@ public class TCPserver {
 	 *  	1) 1hWatchog - 36 [s]
 	 *		2) 24hWatchog - 864 [s]
 	 */	
-	private static double watchdogs_scale_factor = 0.005;
+	private static double watchdogs_scale_factor = 0.01;
 	
 	// interface for testing purposes -> in tests it should be set to false to avoid hanging the execution in inputStream.readObject() in ComputeEngine_Runnable
 	private boolean computeEngineRunning = true;

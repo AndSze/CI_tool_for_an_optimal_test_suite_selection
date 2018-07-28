@@ -138,7 +138,7 @@ public class CloseInStreamTest {
 				
 		clientManager_1.closeInStream();
 		
-		receivedMessage = (Message_Interface) (clientManager_1.getInputReaderStream()).readObject();
+		receivedMessage = (Message_Interface) (clientManager_1.readMessage(clientManager_1.getInputReaderStream()));
 		
 		// To prove that exception's stack trace reported by JUnit caught SocketException
 		assertTrue(false);

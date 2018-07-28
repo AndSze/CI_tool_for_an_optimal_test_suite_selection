@@ -140,7 +140,7 @@ public class RunTCPclientTest {
 		tempClientManger = tempClientManger.initClientManager(TCPclientSocket, sensor_ID_1);
 		
 		tcpclient_1.setClientManager(tempClientManger);
-		Thread.sleep(100);
+		Thread.sleep(20);
 		
 		testThread = new Thread(new Runnable() {
 			//Runnable serverTask = new Runnable() {
@@ -159,15 +159,15 @@ public class RunTCPclientTest {
 			}
 		});
 		testThread.start();
-		Thread.sleep(100);
+		Thread.sleep(20);
 		
 		Thread TCPclient_thread = new Thread(tcpclient_1, "TCPclient Thread");
 		TCPclient_thread.start();
 		tcpclient_1.setClientThread(TCPclient_thread);
-		Thread.sleep(100);
+		Thread.sleep(20);
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
 
 		assertTrue(receivedMessage instanceof ClientMessage_BootUp);
 	}
@@ -197,12 +197,12 @@ public class RunTCPclientTest {
 		tempClientManger = tempClientManger.initClientManager(TCPclientSocket, sensor_ID_1);
 		
 		tcpclient_1.setClientManager(tempClientManger);
-		Thread.sleep(100);
+		Thread.sleep(20);
 		
 		Thread TCPclient_thread = new Thread(tcpclient_1, "TCPclient Thread");
 		TCPclient_thread.start();
 		tcpclient_1.setClientThread(TCPclient_thread);
-		Thread.sleep(100);
+		Thread.sleep(20);
 		
 		testThread = new Thread(new Runnable() {
 			//Runnable serverTask = new Runnable() {
@@ -223,12 +223,12 @@ public class RunTCPclientTest {
 			}
 		});
 		testThread.start();
-		Thread.sleep(100);
+		Thread.sleep(20);
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
 		
-		Thread.sleep(100);
+		Thread.sleep(20);
 		assertTrue(receivedMessage instanceof ClientMessage_ACK);
 	}
 	
@@ -251,7 +251,7 @@ public class RunTCPclientTest {
 	   }
 
 	   // Time offset between consecutive test runs execution
-	   Thread.sleep(100);
+	   Thread.sleep(20);
 	   
 	   System.out.println("");
 	   incrementTestID();

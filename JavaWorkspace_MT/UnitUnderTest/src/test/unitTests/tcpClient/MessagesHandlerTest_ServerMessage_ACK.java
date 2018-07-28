@@ -133,7 +133,7 @@ public class MessagesHandlerTest_ServerMessage_ACK {
 		public void run() {
 				try {
 					while(clientManager_1.isClientManagerRunning()) {
-						receivedMessage = (Message_Interface) (mockComputeEngine_Runnable.readMessage());
+						receivedMessage = (Message_Interface) (mockComputeEngine_Runnable.readMessage(mockComputeEngine_Runnable.getInputReaderStream()));
 					}
 				} catch (ClassNotFoundException e) {
 					// To prove that exception's stack trace reported by JUnit caught ClassNotFoundException
@@ -199,7 +199,7 @@ public class MessagesHandlerTest_ServerMessage_ACK {
 		testThread_client.start();
 		Thread.sleep(10);
 		
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
 		Thread.sleep(10);
 			
 		assertTrue(receivedMessage instanceof ClientMessage_ACK);
@@ -239,7 +239,7 @@ public class MessagesHandlerTest_ServerMessage_ACK {
 		testThread_client.start();
 		Thread.sleep(10);
 		
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
 		Thread.sleep(10);
 			
 		assertTrue(receivedMessage instanceof ClientMessage_ACK);
@@ -292,7 +292,7 @@ public class MessagesHandlerTest_ServerMessage_ACK {
 			mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
 													temp_sens_sent_1.getSensorState(),
 													mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
-													temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()));
+													temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
 			Thread.sleep(10);
 			
 			// change sensor state to SensorState.OPERATIONAL what will result in setting wait_for_measurement_data to true in the state machine statement that processes the next ServerMessage_SensorInfoUpdate
@@ -302,16 +302,16 @@ public class MessagesHandlerTest_ServerMessage_ACK {
 			mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
 													temp_sens_sent_1.getSensorState(),
 													mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
-													temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()));
+													temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
 			Thread.sleep(10);
 			
-			mockComputeEngine_Runnable.sendMessage(new ServerMessage_Request_MeasurementData(sensor_ID_1));
+			mockComputeEngine_Runnable.sendMessage(new ServerMessage_Request_MeasurementData(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
 			Thread.sleep(10);
 			
 			assertTrue(receivedMessage instanceof ClientMessage_MeasurementData);
 		}
 		
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
 		Thread.sleep(10);
 			
 		assertTrue(receivedMessage instanceof ClientMessage_ACK);
@@ -319,11 +319,11 @@ public class MessagesHandlerTest_ServerMessage_ACK {
 		assertFalse(Local_1h_Watchdog.getInstance().getEnabled());
 		
 		// send ServerMessage_Request_MeasurementHistory to enable TCP connection to be closed upon receiving ServerMessage_ACK
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_Request_MeasurementHistory(sensor_ID_1));
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_Request_MeasurementHistory(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
 		Thread.sleep(10);
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()) , mockComputeEngine_Runnable.getOutputStream());
 		Thread.sleep(10);
 	}
 	

@@ -130,7 +130,7 @@ public class RunTheClientTest {
 		Thread.sleep(500);
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to update INSTANCE of TCPclient attribute in UUT_TCPclient_1 class
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
 		
 		Thread.sleep(100);
 				
@@ -161,11 +161,11 @@ public class RunTheClientTest {
 		Thread.sleep(500);
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to update INSTANCE of TCPclient attribute in UUT_TCPclient_1 class
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
 		
 		Thread.sleep(100);
 		
-		String client_thread_name = "TCPclient_Thread";
+		String client_thread_name = "TCPclient Thread";
 
 		assertNotEquals(null,        	 UUT_TCPclient_1.getINSTANCE().getClientThread());
 		assertEquals(client_thread_name, UUT_TCPclient_1.getINSTANCE().getClientThread().getName());

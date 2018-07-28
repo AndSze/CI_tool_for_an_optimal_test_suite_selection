@@ -126,7 +126,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoQuerry {
 		public void run() {
 				try {
 					while(clientManager_1.isClientManagerRunning()) {
-						receivedMessage = (Message_Interface) (mockComputeEngine_Runnable.readMessage());
+						receivedMessage = (Message_Interface) (mockComputeEngine_Runnable.readMessage(mockComputeEngine_Runnable.getInputReaderStream()));
 					}
 				} catch (ClassNotFoundException e) {
 					// To prove that exception's stack trace reported by JUnit caught ClassNotFoundException
@@ -172,25 +172,25 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoQuerry {
 		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);	
 		
 		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the server side that is responsible for listening messages sent by TCPclient
 		testThread_server.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver and re-sending particular responses that are verified in the consecutive test runs
 		// method under test messagesHandler() is called in this thread
 		testThread_client.start();
-		Thread.sleep(10);
+		Thread.sleep(20);
 		
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_1));
-		Thread.sleep(10);
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
 			
 		assertTrue(receivedMessage instanceof ClientMessage_SensorInfo);
 
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog() ));
-		Thread.sleep(10);
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());;
+		Thread.sleep(20);
 	}
 	
 	@SuppressWarnings("static-access")
