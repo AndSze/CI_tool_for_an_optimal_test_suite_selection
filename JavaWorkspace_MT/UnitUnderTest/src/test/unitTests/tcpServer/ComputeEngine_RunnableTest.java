@@ -238,8 +238,8 @@ public class ComputeEngine_RunnableTest {
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
-		assertEquals(Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), 			comp_engine_1.getLocal_1h_watchdog(), 0.001);
-		assertEquals(Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), 			comp_engine_1.getLocal_24h_watchdog(), 0.001);
+		assertEquals(Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), 			comp_engine_1.getLocal_1h_watchdog(), 0.1);
+		assertEquals(Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), 			comp_engine_1.getLocal_24h_watchdog(), 0.1);
 	}
 	
     /***********************************************************************************************************
@@ -278,7 +278,7 @@ public class ComputeEngine_RunnableTest {
 	    }
 		
 		for (int i = 0; i < watchdog_thresholds_array_size; i ++) {
-			 assertEquals(temp_watchdog_thresholds_array[i],			comp_engine_1.getWatchdog_thresholds_array()[i], 0.0001);	
+			 assertEquals(temp_watchdog_thresholds_array[i],			comp_engine_1.getWatchdog_thresholds_array()[i], 0.001);	
 		}		
 	}
     /***********************************************************************************************************

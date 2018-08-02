@@ -256,7 +256,7 @@ public class ReadMessageTest {
 		obj_in_stream = new ObjectInputStream(mockTCPclient.getClientSocket().getInputStream());
 		when(mockClientManager.getInputReaderStream()).thenReturn(obj_in_stream);
 		
-		String expected_exception_name = "java.net.SocketException";
+		final String expected_exception_name = "java.net.SocketException";
 		
 		// test thread that listens for exceptions caused on the client side
 		testThread_exception = new Thread(new Runnable() {
@@ -315,7 +315,7 @@ public class ReadMessageTest {
 		obj_in_stream = new ObjectInputStream(mockTCPclient.getClientSocket().getInputStream());
 		when(mockClientManager.getInputReaderStream()).thenReturn(obj_in_stream);
 		
-		String expected_exception_name = "java.lang.ClassCastException";
+		final String expected_exception_name = "java.lang.ClassCastException";
 		
 		// test thread that listens for exceptions caused on the client side
 		testThread_exception = new Thread(new Runnable() {

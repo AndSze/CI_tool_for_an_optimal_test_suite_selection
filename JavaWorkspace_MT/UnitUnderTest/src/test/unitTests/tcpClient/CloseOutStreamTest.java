@@ -57,7 +57,7 @@ public class CloseOutStreamTest {
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		SendMessageTest.testID += 1;
+		CloseOutStreamTest.testID += 1;
 	}
 	
 	@Before

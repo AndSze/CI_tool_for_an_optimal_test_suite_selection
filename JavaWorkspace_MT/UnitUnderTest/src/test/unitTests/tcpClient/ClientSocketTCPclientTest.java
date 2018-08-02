@@ -54,7 +54,7 @@ public class ClientSocketTCPclientTest {
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		CloseClientTCPclientTest.testID += 1;
+		ClientSocketTCPclientTest.testID += 1;
 	}
 	
 	
@@ -103,9 +103,9 @@ public class ClientSocketTCPclientTest {
 			tcpclient_2 = new TCPclient();
 		}
 		
-		System.out.println("\t\tTest Run "+CloseClientTCPclientTest.testID+" Purpose:");
-		System.out.println(testPurpose[(CloseClientTCPclientTest.testID-1)]);
-		System.out.println("\t\tTest Run "+CloseClientTCPclientTest.testID+" Logic:");
+		System.out.println("\t\tTest Run "+ClientSocketTCPclientTest.testID+" Purpose:");
+		System.out.println(testPurpose[(ClientSocketTCPclientTest.testID-1)]);
+		System.out.println("\t\tTest Run "+ClientSocketTCPclientTest.testID+" Logic:");
 	}
 	
     /***********************************************************************************************************
@@ -210,7 +210,7 @@ public class ClientSocketTCPclientTest {
    @After
     public void teardown() throws IOException, InterruptedException{
 	  
-	   System.out.println("\t\tTest Run "+CloseClientTCPclientTest.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+ClientSocketTCPclientTest.testID+" teardown section:");
 	   	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);

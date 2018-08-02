@@ -64,7 +64,7 @@ public class TCPserver {
 	private static AtomicReference<boolean[]> _24hWatchog_timestamp_table = new AtomicReference<boolean[]>(_24hWatchog_timestamp_table_initial);
 	
 	// measurement limit is a variable that determines after how many measurement datas, the measurement history request is sent
-	private static final int measurements_limit = 24;
+	private static int measurements_limit = 24;
 	
 	// computing time is a variable that measures duration of execution of Compute Engines Runnable thread for all sensors 
 	private static double computing_time = 0;
@@ -108,7 +108,7 @@ public class TCPserver {
     /***********************************************************************************************************
 	 * Method Name: 				private TCPserver()
 	 * Description: 				TCPserver class overloaded constructor
-	 * Affected internal variables: serverSocket, serverRunning, processing_engine, Server_Sensors_LIST, _1hWatchog_timestamp_table, _24hWatchog_timestamp_table
+	 * Affected internal variables: serverSocket, serverRunning, processing_engine, Server_Sensors_LIST, _1hWatchog_timestamp_table, _24hWatchog_timestamp_table, Sensors_PATH
 	 * Affected external variables: Global_1h_Watchdog, Global_24h_Watchdog, SensorImpl
 	 * Called internal functions: 	startServer()
 	 * Called external functions: 	Global_1h_Watchdog.setEnabled(), Global_24h_Watchdog.setEnabled(), ComputeEngine_Processing(), SensorImpl(), ComputeEngine_Processing.saveSensorInfo(),
@@ -408,6 +408,10 @@ public class TCPserver {
 	
 	public synchronized static int getMeasurements_limit() {
 		return measurements_limit;
+	}
+	
+	public synchronized static void setMeasurements_limit(int meas_limit) {
+		measurements_limit = meas_limit;
 	}
 	
 	public synchronized boolean get_ComputeEngineRunning() {

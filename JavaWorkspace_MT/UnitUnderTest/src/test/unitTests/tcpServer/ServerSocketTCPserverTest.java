@@ -90,7 +90,7 @@ public class ServerSocketTCPserverTest {
 		assertTrue(tcpserver_1.get_ServerRunning());
 		assertFalse(tcpserver_1.getServerSocket().isClosed());
 		
-		String expected_exception_name = "java.net.SocketException";
+		final String expected_exception_name = "java.net.SocketException";
 		
 		testThread = new Thread(new Runnable() {
 			//Runnable serverTask = new Runnable() {

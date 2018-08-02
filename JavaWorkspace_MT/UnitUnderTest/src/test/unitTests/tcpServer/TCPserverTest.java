@@ -51,7 +51,6 @@ public class TCPserverTest {
 	 * Internal variables TBV: 	serverSocket
       * Exceptions thrown:		SocketException 
 	 ***********************************************************************************************************/
-	@SuppressWarnings("static-access")
 	@Test
 	public void test_run_1() throws SocketException {
 

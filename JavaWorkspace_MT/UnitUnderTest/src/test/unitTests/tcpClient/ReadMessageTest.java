@@ -250,7 +250,7 @@ public class ReadMessageTest {
 		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
 		Thread.sleep(20);
 		
-		String expected_exception_name = "java.net.SocketException";
+		final String expected_exception_name = "java.net.SocketException";
 		
 		// test thread that listens for exceptions caused on the client side
 		testThread_exception = new Thread(new Runnable() {
@@ -304,7 +304,7 @@ public class ReadMessageTest {
 		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
 		Thread.sleep(20);
 		
-		String expected_exception_name = "java.lang.ClassCastException";
+		final String expected_exception_name = "java.lang.ClassCastException";
 		
 		// test thread that listens for exceptions caused on the client side
 		testThread_exception = new Thread(new Runnable() {

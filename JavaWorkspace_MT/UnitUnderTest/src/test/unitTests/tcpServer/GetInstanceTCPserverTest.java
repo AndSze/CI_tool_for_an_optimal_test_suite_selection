@@ -32,8 +32,6 @@ public class GetInstanceTCPserverTest {
 	@Before
 	public void before() throws IOException {
 		
-		temp_TCPserver = TCPserver.getInstance(port_1);
-		
 		System.out.println("\t\tTest Run "+GetInstanceTCPserverTest.testID+" Purpose:");
 		System.out.println(testPurpose[(GetInstanceTCPserverTest.testID-1)]);
 		System.out.println("\t\tTest Run "+GetInstanceTCPserverTest.testID+" Logic:");
@@ -48,6 +46,8 @@ public class GetInstanceTCPserverTest {
 	 ***********************************************************************************************************/
 	@Test
 	public void test_run_1() throws IOException{
+		
+		temp_TCPserver = TCPserver.getInstance(port_1);
 		
 		assertNotEquals(null,		temp_TCPserver);
 		assertEquals(	null,		temp_TCPserver.getServerSocket());
@@ -67,6 +67,8 @@ public class GetInstanceTCPserverTest {
 		
 		temp_TCPserver = TCPserver.getInstance(port_1);
 		
+		temp_TCPserver = TCPserver.getInstance(port_1);
+		
 		assertNotEquals(null,		temp_TCPserver);
 		assertNotEquals(null,		temp_TCPserver.getServerSocket());
 		assertNotEquals(null,		temp_TCPserver.getServerThread());
@@ -82,6 +84,8 @@ public class GetInstanceTCPserverTest {
 	 ***********************************************************************************************************/
 	@Test
 	public void test_run_3() throws IOException {
+		
+		temp_TCPserver = TCPserver.getInstance(port_1);
 		
 		temp_TCPserver = TCPserver.getInstance(port_1);
 		
@@ -119,6 +123,8 @@ public class GetInstanceTCPserverTest {
 		
 		temp_TCPserver = TCPserver.getInstance(port_1);
 		
+		temp_TCPserver = TCPserver.getInstance(port_1);
+		
 		assertNotEquals(null,		temp_TCPserver);
 		assertTrue(TCPserver.get_ServerRunning());
 		
@@ -136,6 +142,8 @@ public class GetInstanceTCPserverTest {
 	 ***********************************************************************************************************/
 	@Test
 	public void test_run_5() throws IOException {
+		
+		temp_TCPserver = TCPserver.getInstance(port_1);
 		
 		temp_TCPserver = TCPserver.getInstance(port_1);
 		

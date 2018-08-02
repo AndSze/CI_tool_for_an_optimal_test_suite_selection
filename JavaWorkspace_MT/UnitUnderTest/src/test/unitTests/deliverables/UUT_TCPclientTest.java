@@ -79,12 +79,14 @@ public class UUT_TCPclientTest {
 		int temp_delays_array_2 = 100000;
 		int temp_delays_array_3 = 1000000;
 		double temp_watchdog_thresholds_array_0 = 100;
-		double temp_watchdog_thresholds_array_1 = 120;
-		double temp_watchdog_thresholds_array_2 = 200;
+		double temp_watchdog_thresholds_array_1 = 150;
+		double temp_watchdog_thresholds_array_2 = 300;
+		double temp_watchdog_thresholds_array_3 = 900;
 		
 		assertEquals(temp_watchdog_thresholds_array_0,  UUT_TCPclient.get_watchdog_threshold(Watchdog_Thresholds.LOWEST, UUT_TCPclient.watchdog_thresholds_array), 0.001);
 		assertEquals(temp_watchdog_thresholds_array_1,  UUT_TCPclient.get_watchdog_threshold(Watchdog_Thresholds.MEDIUM, UUT_TCPclient.watchdog_thresholds_array), 0.001);
-		assertEquals(temp_watchdog_thresholds_array_2,  UUT_TCPclient.get_watchdog_threshold(Watchdog_Thresholds.HIGHEST, UUT_TCPclient.watchdog_thresholds_array), 0.001);
+		assertEquals(temp_watchdog_thresholds_array_2,  UUT_TCPclient.get_watchdog_threshold(Watchdog_Thresholds.HIGH, UUT_TCPclient.watchdog_thresholds_array), 0.001);
+		assertEquals(temp_watchdog_thresholds_array_3,  UUT_TCPclient.get_watchdog_threshold(Watchdog_Thresholds.HIGHEST, UUT_TCPclient.watchdog_thresholds_array), 0.001);
 		assertEquals(temp_delays_array_0,    			UUT_TCPclient.get_delays(Delays.LOWEST, UUT_TCPclient.delays_array));
 		assertEquals(temp_delays_array_1,    			UUT_TCPclient.get_delays(Delays.LOW, UUT_TCPclient.delays_array));
 		assertEquals(temp_delays_array_2,    			UUT_TCPclient.get_delays(Delays.MEDIUM, UUT_TCPclient.delays_array));

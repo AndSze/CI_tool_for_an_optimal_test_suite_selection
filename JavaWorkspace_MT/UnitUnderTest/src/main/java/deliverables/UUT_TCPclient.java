@@ -10,7 +10,7 @@ import tcpClient.TCPclient;
 import tcpClient.Watchdog_Thresholds;
 import watchdog.Local_1h_Watchdog;
 
-public class UUT_TCPclient extends TCPclient{
+public class UUT_TCPclient extends TCPclient implements Runnable {
 
     /***********************************************************************************************************
 	 * UUT_TCPclient - Class Attributes
@@ -60,90 +60,94 @@ public class UUT_TCPclient extends TCPclient{
 	 * Called external functions:   TCPclient.searchInClientSensorList()
 	 * Exceptions thrown: 			IOException
 	 ***********************************************************************************************************/
-    public static void main(String []args) throws IOException{
+    public static void main(final int sensor_ID, final int port, final String serverHostName) {
 		
-		int temp_port = 9876;
-		int temp_sensor_ID = 5;
-		String temp_serverHostName = "localhost";
-		
-		// local variables
-		SensorImpl UUT_sensor_instance = null;
-		UUT_TCPclient uut1_TCPclient = null;
-		int print_loop_count = 0;
-		SensorState current_sensor_state = SensorState.DEAD;
-		SensorState previous_sensor_state = SensorState.DEAD;	
-		
-		// create UUT_TCPclient class object
-		try {
-			uut1_TCPclient = new UUT_TCPclient(temp_sensor_ID, temp_port, temp_serverHostName);
-		} catch (IOException IOEx) {
-			System.out.println("Error: Instance for the TCP client at port: "+temp_port+" cannot be created");
-			IOEx.printStackTrace();
-		}
-			
-		// initiate TCP connection with the server to obtain configuration for the sensor
-		uut1_TCPclient.setINSTANCE(runTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort(), uut1_TCPclient.getServerHostName()));
-		
-		// close the initial TCP connection once configuration is done
-		while(true) {
-			if(uut1_TCPclient.getINSTANCE().getClientThread().isAlive() != true ) {
-				// close the client socket and the client manager, it will be opened again once the watchdog reaches its threshold
-				uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE()));
-				uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE()));
-				UUT_sensor_instance = searchInClientSensorList(uut1_TCPclient.getSensor_ID());
-				break;
-			}
-			else {
-				processingDelay(100);
-			}
-		}
-		
-		// update delays_array and watchdog_thresholds_array based on sensor's getLocal_watchdog_scale_factor obtained during the configuration
-		delays_array = set_delays_array(UUT_sensor_instance.getLocal_watchdog_scale_factor(), delays_array_size);
-		watchdog_thresholds_array = set_watchdog_thresholds_array(UUT_sensor_instance.getLocal_watchdog_scale_factor(), watchdog_thresholds_array_size);
-		
-		// main control loop that initiates TCP connection if Local_1h_Watchdog reaches particular thresholds
-		while (true) {
-			UUT_sensor_instance = searchInClientSensorList(uut1_TCPclient.getSensor_ID());
-			current_sensor_state = UUT_sensor_instance.getSensorState();
-			
-			if ((Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() < get_watchdog_threshold(Watchdog_Thresholds.MEDIUM, watchdog_thresholds_array)) && (current_sensor_state == SensorState.OPERATIONAL) && (uut1_TCPclient.getINSTANCE().isClientRunning() == false)) {
-				// opens the client socket activates the client manager (out/in object streams)
-				System.out.println("[UUT_TCPclient " + uut1_TCPclient.getSensor_ID() + "]\t runTheClient() is being called when Local_1h_Watchdog equals: " + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + " [s]");
-				uut1_TCPclient.setINSTANCE(runTheClient(uut1_TCPclient.getINSTANCE(),uut1_TCPclient.getPort(), uut1_TCPclient.getServerHostName()));
-			}
-			if ((uut1_TCPclient.getINSTANCE().getClientManager().isClientManagerRunning() == false) && (previous_sensor_state == SensorState.OPERATIONAL) && (uut1_TCPclient.getINSTANCE().isClientRunning() == true)){
-				// sensors gets go to pre_operational message once it received the ack server message what means that the watchdog has been kicked
-				// hence close the client socket and the client manager, it will be opened again once the watchdog reaches its threshold
-				System.out.println("[UUT_TCPclient " + uut1_TCPclient.getSensor_ID() + "]\t closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: " + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + " [s]\"");
+		Thread uut_tcp_client_thread = new Thread(new Runnable() {
+	        public void run() {
+	        	
+	    		UUT_TCPclient uut_TCPclient = null;
+	    		
+	    		// create UUT_TCPclient class object
+	    		try {
+	    			uut_TCPclient = new UUT_TCPclient(sensor_ID, port, serverHostName);
+	    		} catch (IOException IOEx) {
+	    			System.out.println("Error: Instance for the TCP client at port: "+port+" cannot be created");
+	    			IOEx.printStackTrace();
+	    		}
+	            
+				// local variables
+				SensorImpl UUT_sensor_instance = null;
+				int print_loop_count = 0;
+				SensorState current_sensor_state = SensorState.DEAD;
+				SensorState previous_sensor_state = SensorState.DEAD;	
+					
+				// initiate TCP connection with the server to obtain configuration for the sensor
+				uut_TCPclient.setINSTANCE(runTheClient(uut_TCPclient.getINSTANCE(),uut_TCPclient.getPort(), uut_TCPclient.getServerHostName()));
 				
-				// closeTheClientManager closes input/output object stremas for the ClientManager that has been already closed
-				uut1_TCPclient.setINSTANCE(closeTheClientManager(uut1_TCPclient.getINSTANCE()));
-				uut1_TCPclient.setINSTANCE(closeTheClient(uut1_TCPclient.getINSTANCE()));  
-			}
-			
-			if (Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > (get_watchdog_threshold(Watchdog_Thresholds.HIGHEST, watchdog_thresholds_array)) ) {
-			
-				print_loop_count++;
-				if (print_loop_count == 10) {
-					System.out.println("[UUT_TCPclient " + uut1_TCPclient.getSensor_ID() + "]\t  Local_1h_Watchdog: "+ Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
-					print_loop_count = 0;
+				// close the initial TCP connection once configuration is done
+				while(true) {
+					if(uut_TCPclient.getINSTANCE().getClientThread().isAlive() != true ) {
+						// close the client socket and the client manager, it will be opened again once the watchdog reaches its threshold
+						uut_TCPclient.setINSTANCE(closeTheClient(uut_TCPclient.getINSTANCE()));
+						uut_TCPclient.setINSTANCE(closeTheClientManager(uut_TCPclient.getINSTANCE()));
+						UUT_sensor_instance = searchInClientSensorList(uut_TCPclient.getSensor_ID());
+						break;
+					}
+					else {
+						processingDelay(100);
+					}
 				}
-				processingDelay(get_delays(Delays.MEDIUM, delays_array));
-			}
-			else if (Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > (get_watchdog_threshold(Watchdog_Thresholds.HIGH, watchdog_thresholds_array))) {
-				print_loop_count++;
-				if (print_loop_count == 20) {
-					System.out.println("[UUT_TCPclient " + uut1_TCPclient.getSensor_ID() + "]\t  Local_1h_Watchdog: "+ Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
-					print_loop_count = 0;
+				
+				// update delays_array and watchdog_thresholds_array based on sensor's getLocal_watchdog_scale_factor obtained during the configuration
+				delays_array = set_delays_array(UUT_sensor_instance.getLocal_watchdog_scale_factor(), delays_array_size);
+				watchdog_thresholds_array = set_watchdog_thresholds_array(UUT_sensor_instance.getLocal_watchdog_scale_factor(), watchdog_thresholds_array_size);
+				
+				// main control loop that initiates TCP connection if Local_1h_Watchdog reaches particular thresholds
+				while (true) {
+					UUT_sensor_instance = searchInClientSensorList(uut_TCPclient.getSensor_ID());
+					current_sensor_state = UUT_sensor_instance.getSensorState();
+					
+					if ((Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() < get_watchdog_threshold(Watchdog_Thresholds.MEDIUM, watchdog_thresholds_array)) && (current_sensor_state == SensorState.OPERATIONAL) && (uut_TCPclient.getINSTANCE().isClientRunning() == false)) {
+						// opens the client socket activates the client manager (out/in object streams)
+						System.out.println("[UUT_TCPclient " + uut_TCPclient.getSensor_ID() + "]\t runTheClient() is being called when Local_1h_Watchdog equals: " + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + " [s]");
+						uut_TCPclient.setINSTANCE(runTheClient(uut_TCPclient.getINSTANCE(),uut_TCPclient.getPort(), uut_TCPclient.getServerHostName()));
+					}
+					if ((uut_TCPclient.getINSTANCE().getClientManager().isClientManagerRunning() == false) && (previous_sensor_state == SensorState.OPERATIONAL) && (uut_TCPclient.getINSTANCE().isClientRunning() == true)){
+						// sensors gets go to pre_operational message once it received the ack server message what means that the watchdog has been kicked
+						// hence close the client socket and the client manager, it will be opened again once the watchdog reaches its threshold
+						System.out.println("[UUT_TCPclient " + uut_TCPclient.getSensor_ID() + "]\t closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: " + Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() + " [s]\"");
+						
+						// closeTheClientManager closes input/output object stremas for the ClientManager that has been already closed
+						uut_TCPclient.setINSTANCE(closeTheClientManager(uut_TCPclient.getINSTANCE()));
+						uut_TCPclient.setINSTANCE(closeTheClient(uut_TCPclient.getINSTANCE()));  
+					}
+					
+					if (Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > (get_watchdog_threshold(Watchdog_Thresholds.HIGHEST, watchdog_thresholds_array)) ) {
+					
+						print_loop_count++;
+						if (print_loop_count == 10) {
+							System.out.println("[UUT_TCPclient " + uut_TCPclient.getSensor_ID() + "]\t  Local_1h_Watchdog: "+ Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
+							print_loop_count = 0;
+						}
+						processingDelay(get_delays(Delays.MEDIUM, delays_array));
+					}
+					else if (Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > (get_watchdog_threshold(Watchdog_Thresholds.HIGH, watchdog_thresholds_array))) {
+						print_loop_count++;
+						if (print_loop_count == 20) {
+							System.out.println("[UUT_TCPclient " + uut_TCPclient.getSensor_ID() + "]\t  Local_1h_Watchdog: "+ Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
+							print_loop_count = 0;
+						}
+						processingDelay(get_delays(Delays.LOW, delays_array));
+					}
+					else {
+						processingDelay(get_delays(Delays.LOWEST, delays_array));
+					}
+					previous_sensor_state = searchInClientSensorList(sensor_ID).getSensorState();
 				}
-				processingDelay(get_delays(Delays.LOW, delays_array));
-			}
-			else {
-				processingDelay(get_delays(Delays.LOWEST, delays_array));
-			}
-			previous_sensor_state = searchInClientSensorList(temp_sensor_ID).getSensorState();
-		}
+	        }   
+		});
+		// create new thread for the object defined in the runnable interface and then start run() method for that object
+		uut_tcp_client_thread.start();
      }
     
     /***********************************************************************************************************
@@ -159,7 +163,7 @@ public class UUT_TCPclient extends TCPclient{
 			INSTANCE = INSTANCE.initClient(INSTANCE.getSensor_ID(), serverHostName, port);
 			
 			Thread TCPclient_thread = new Thread(INSTANCE, "TCPclient Thread");
-			TCPclient_thread.start();
+			TCPclient_thread.run();
 			INSTANCE.setClientThread(TCPclient_thread);
 			
 		} catch (UnknownHostException unHostEx) {
