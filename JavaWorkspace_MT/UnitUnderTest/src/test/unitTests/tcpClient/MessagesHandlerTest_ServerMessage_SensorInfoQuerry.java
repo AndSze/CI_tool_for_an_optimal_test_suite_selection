@@ -57,7 +57,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoQuerry {
 	ExecutorService executor = Executors.newSingleThreadExecutor();
 	private final ThreadPoolExecutor auxiliaryServerThreadExecutor = new ThreadPoolExecutor(8, 8, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
 	
-	String[] testPurpose = { "Verify that once the messagesHandler() function responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo"};
+	String[] testPurpose = { "Verify that the messagesHandler() function responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo"};
 	
 	static int testID = 1;
 	
@@ -153,9 +153,8 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoQuerry {
 
    /***********************************************************************************************************
 	 * Test Name: 					test_run_1
-	 * Description: 				Verify that once the messagesHandler() function responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo
-	 * Internal variables TBV:		inputStream, outputStream
-	 * External variables TBV:		ServerMessage_SensorInfoQuerry, ClientMessage_SensorInfo, ServerMessage_ACK
+	 * Description: 				Verify that the messagesHandler() function responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo
+	 * External variables TBV:		ServerMessage_SensorInfoQuerry, ClientMessage_SensorInfo
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException

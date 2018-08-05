@@ -162,7 +162,6 @@ public class MessagesHandlerTest {
 	 * Description: 				Verify that once the messagesHandler() function is called while the isClientManagerRunning flag is equal to true,
 	  								the client manager class instance that runs the messagesHandler() function is able to read messages send from TCPserver
 	 * Internal variables TBV:		inputStream, outputStream, isClientManagerRunning
-	 * External variables TBV:		ClientMessage_SensorInfo, ServerMessage_ACK, ServerMessage_SensorInfoQuerry
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
@@ -205,7 +204,6 @@ public class MessagesHandlerTest {
 	 * Description: 				Verify that once the messagesHandler() function is called while the isClientManagerRunning flag is set to false,
 	  								the client manager class instance that runs the messagesHandler() function is NOT able to read messages send from TCPserver
 	 * Internal variables TBV:		inputStream, outputStream, isClientManagerRunning
-	 * External variables TBV:		ClientMessage_ACK, ClientMessage_SensorInfo, ServerMessage_ACK, ServerMessage_SensorInfoQuerry
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
@@ -253,7 +251,6 @@ public class MessagesHandlerTest {
 	 								It is verified also that the state machine of messagesHandler() function is executed for all messages received from TCPserver,
 	 								but every time the currently processing message is different from the previous
 	 * Internal variables TBV:		inputStream, outputStream
-	 * External variables TBV:		ServerMessage_SensorInfoQuerry
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
@@ -311,7 +308,7 @@ public class MessagesHandlerTest {
 		 								that is written to the Client Manager class instance, the state machine of messagesHandler() function sends ClientMessage_SensorInfo
 		 								with the new sensor ID to confirm that this sensor ID was set intentionally. Verify also that the new sensor ID is also set for the sensor in Client_Sensors_LIST.
 		 * Internal variables TBV:		inputStream, outputStream
-		 * External variables TBV:		ServerMessage_SensorInfoQuerry, ClientMessage_SensorInfo, ServerMessage_ACK, SensorImpl.sensorID, Client_Sensors_LIST
+		 * External variables TBV:		ServerMessage_SensorInfoQuerry, ClientMessage_SensorInfo, SensorImpl.sensorID, Client_Sensors_LIST
 		 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 		 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
 	     * Exceptions thrown: 			IOException, InterruptedException

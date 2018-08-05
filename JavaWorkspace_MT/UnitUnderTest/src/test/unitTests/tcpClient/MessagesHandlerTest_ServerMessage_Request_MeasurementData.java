@@ -175,8 +175,8 @@ public class MessagesHandlerTest_ServerMessage_Request_MeasurementData {
 	 * Test Name: 					test_run_1
 	 * Description: 				Verify that the messagesHandler() function responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData
 	  								if the wait_for_measurement_data flag is set to true as a result of the previous processing of ServerMessage_SensorInfoUpdate by the state machine of messagesHandler()
-	 * Internal variables TBV:		inputStream, outputStream
-	 * External variables TBV:		ServerMessage_SensorInfoUpdate, ClientMessage_MeasurementData, ServerMessage_ACK, ServerMessage_Request_MeasurementData
+	 * External variables TBV:		ClientMessage_MeasurementData, ServerMessage_Request_MeasurementData
+	 * Local variables TBV:			wait_for_measurement_data
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
@@ -238,8 +238,7 @@ public class MessagesHandlerTest_ServerMessage_Request_MeasurementData {
    /***********************************************************************************************************
 	 * Test Name: 					test_run_2
 	 * Description: 				Verify that the messagesHandler() function ignores ServerMessage_Request_MeasurementData if the wait_for_measurement_data flag is NOT set to true
-	 * Internal variables TBV:		inputStream, outputStream
-	  * External variables TBV:		ServerMessage_SensorInfoUpdate, ClientMessage_BootUp, ServerMessage_ACK, ServerMessage_Request_MeasurementData
+	 * Local variables TBV:			wait_for_measurement_data
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
@@ -303,8 +302,7 @@ public class MessagesHandlerTest_ServerMessage_Request_MeasurementData {
 	 * Test Name: 					test_run_3
 	 * Description: 				Verify that the messagesHandler() function generates a new measurement that is sent in ClientMessage_MeasurementData.
 	 								Verify also that the sensor instance in Client_Sensors_LIST is updated with the newest measurement and its numberOfMeasurements is increased. 
-	 * Internal variables TBV:		inputStream, outputStream
-	 * External variables TBV:		ServerMessage_SensorInfoUpdate, ClientMessage_MeasurementData, ServerMessage_ACK, ServerMessage_Request_MeasurementData, Client_Sensors_LIST
+	 * External variables TBV:		ClientMessage_MeasurementData, ServerMessage_Request_MeasurementData, Client_Sensors_LIST,
 	 								SensorImpl.numberOfMeasurements, MeasurementData.pm25, MeasurementData.pm20, MeasurementData.humidity, MeasurementData.temperature, MeasurementData.pressure
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
@@ -387,8 +385,8 @@ public class MessagesHandlerTest_ServerMessage_Request_MeasurementData {
 	 * Test Name: 					test_run_4
 	 * Description: 				Verify that the messagesHandler() function sets back the wait_for_measurement_data to false,
 	  								hence it is not possible to send more than one measurement data within one TCP connection cycle
-	 * Internal variables TBV:		inputStream, outputStream
-	 * External variables TBV:		ServerMessage_SensorInfoUpdate, ClientMessage_MeasurementData, ServerMessage_ACK, ServerMessage_Request_MeasurementData, ClientMessage_SensorInfo
+	 * External variables TBV:		ClientMessage_MeasurementData, ServerMessage_Request_MeasurementData
+	 * Local variables TBV:			wait_for_measurement_data
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException

@@ -21,8 +21,6 @@ import tcpClient.TCPclient;
 import watchdog.Global_1h_Watchdog;
 import watchdog.Global_24h_Watchdog;
 
-
-
 public class ComputeEngine_RunnableTest {
 	
 	int port_1 = 9876;

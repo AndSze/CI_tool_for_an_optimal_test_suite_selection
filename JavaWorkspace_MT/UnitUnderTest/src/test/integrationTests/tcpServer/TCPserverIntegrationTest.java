@@ -147,9 +147,9 @@ public class TCPserverIntegrationTest {
 				new_path = tcpserver_1.Sensors_PATH  + "\\" + entries_1[i] + "\\" + entries_2[j];
 				files_to_be_verified_path = new java.io.File(new_path);
 				for (String fileNames : files_to_be_verified_path.list()) {
-					fileNames = "C:\\Projects\\Test_Integration_Jenkins\\CI_tool_for_an_optimal_test_suite_selection\\master\\JavaWorkspace_MT\\UnitUnderTest\\" + new_path  + "\\" +  fileNames;
+					fileNames = "C:\\Projects\\Test_Integration_Jenkins\\CI_tool\\master\\JavaWorkspace_MT\\UnitUnderTest\\" + new_path  + "\\" +  fileNames;
 					System.out.println(fileNames);
-					temp_sensor = (SensorImpl) tcpserver_1.getProcessing_engine().deserialize(fileNames);
+					temp_sensor = (SensorImpl) tcpserver_1.getProcessing_engine().deserialize(fileNames, SensorImpl.class);
 					
 					assertEquals(i+1,										temp_sensor.getSensorID());
 					assertEquals(new Point2D.Float(tcpserver_1.sensor_coordinates_array[i][0], tcpserver_1.sensor_coordinates_array[i][1]),	

@@ -119,6 +119,15 @@ public class PublicTCPserverTest {
 	   
 	   System.out.println("\t\tTest Run "+PublicTCPserverTest.testID+" teardown section:");
 	   
+	   if(tcpserver_1.getServerSocket() != null) {
+		   if(!tcpserver_1.getServerSocket().isClosed()){
+			   tcpserver_1.getServerSocket().close();
+		   }
+	   }
+	   if (tcpserver_1 != null) {
+		   tcpserver_1 = null;
+	   }
+	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);
 	   

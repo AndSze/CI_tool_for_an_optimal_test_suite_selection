@@ -170,7 +170,6 @@ public class MessagesHandlerTest_ServerMessage_ACK {
    /***********************************************************************************************************
 	 * Test Name: 					test_run_1
 	 * Description: 				Verify that the messagesHandler() function responds to ServerMessage_ACK with ClientMessage_ACK
-	 * Internal variables TBV:		inputStream, outputStream
 	 * External variables TBV:		ClientMessage_ACK, ServerMessage_ACK
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
@@ -210,7 +209,7 @@ public class MessagesHandlerTest_ServerMessage_ACK {
 	 * Description: 				Verify that the messagesHandler() sets the isClientManagerRunning flag to false, 
 	 								synchronizes Local_1h_Watchdog.timeLeftBeforeExpiration with Global_1h_Watchdog.timeLeftBeforeExpiration received in ServerMessage_ACK
 	 								and enables Local_1h_Watchdog if ServerMessage_ACK was received when the wait_for_measurement_history flag is set to false
-	 * Internal variables TBV:		inputStream, outputStream, isClientManagerRunning
+	 * Internal variables TBV:		isClientManagerRunning
 	 * External variables TBV:		ClientMessage_ACK, ServerMessage_ACK, Local_1h_Watchdog.isPaused, Local_1h_Watchdog.millisecondsLeftUntilExpiration
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
@@ -252,9 +251,8 @@ public class MessagesHandlerTest_ServerMessage_ACK {
    /***********************************************************************************************************
 	 * Test Name: 					test_run_3
 	 * Description: 				Verify that the messagesHandler() disables Local_1h_Watchdog if ServerMessage_ACK was received when the wait_for_measurement_history flag is set to true
-	 * Internal variables TBV:		inputStream, outputStream
-	 * External variables TBV:		ServerMessage_ACK, ClientMessage_ACK, ServerMessage_SensorInfoUpdate, ClientMessage_MeasurementData, 
-	 								ServerMessage_Request_MeasurementData, ServerMessage_Request_MeasurementHistory, Local_1h_Watchdog.isPaused	
+	 * External variables TBV:		ServerMessage_ACK, Local_1h_Watchdog.isPaused	
+	 * Local variables TBV:			wait_for_measurement_data
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException

@@ -170,10 +170,8 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 	 * Description: 				Verify that the messagesHandler() function responds to ServerMessage_SensorInfoUpdate with ClientMessage_BootUp if the received sensor state is 
 	 								either SensorState.MAINTENANCE or SensorState.PRE_OPERATIONAL. Verify also that the sensor instance in Client_Sensors_LIST
 	 								is updated with the new settings a the new sensor state and the resetSensor() function is called.
-	 * Internal variables TBV:		inputStream, outputStream
-	 * External variables TBV:		ServerMessage_SensorInfoQuerry, ClientMessage_SensorInfo, ServerMessage_ACK, SensorImpl.sensorID, SensorImpl.coordinates, SensorImpl.softwareImageID, 
-	 								SensorImpl.sensorState, SensorImpl.sensor_m_history_array_size, SensorImpl.numberOfMeasurements, SensorImpl.sensor_watchdog_scale_factor,
-	 							    ServerMessage_SensorInfoUpdate, ClientMessage_BootUp
+	 * External variables TBV:		ServerMessage_SensorInfoUpdate, ClientMessage_BootUp, SensorImpl.sensorID, SensorImpl.coordinates, SensorImpl.softwareImageID, 
+	 								SensorImpl.sensorState, SensorImpl.sensor_m_history_array_size, SensorImpl.numberOfMeasurements, SensorImpl.sensor_watchdog_scale_factor
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
@@ -294,9 +292,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 	 * Test Name: 					test_run_2
 	 * Description: 				Verify that the messagesHandler() function responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK if the received sensor state is 
 	 								SensorState.OPERATIONAL. Verify also that the sensor instance in Client_Sensors_LIST is updated with the received watchdog_scale_factor and sensor state.
-	 * Internal variables TBV:		inputStream, outputStream
-	 * External variables TBV:		ServerMessage_SensorInfoQuerry, ClientMessage_SensorInfo, ServerMessage_ACK, SensorImpl.sensorState, SensorImpl.sensor_watchdog_scale_factor,
-	 							    ServerMessage_SensorInfoUpdate, ClientMessage_ACK
+	 * External variables TBV:		ServerMessage_SensorInfoUpdate, ClientMessage_ACK, SensorImpl.sensorState, SensorImpl.sensor_watchdog_scale_factor
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
@@ -364,8 +360,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 	 * Description: 				Verify that the messagesHandler() function responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK if the received sensor state is 
 	 								SensorState.DEAD. Verify also that the sensor instance in Client_Sensors_LIST is updated with the sensor state and the isClientManagerRunning is set to false.
 	 * Internal variables TBV:		inputStream, outputStream, isClientManagerRunning
-	 * External variables TBV:		ServerMessage_SensorInfoQuerry, ClientMessage_SensorInfo, ServerMessage_ACK, SensorImpl.sensorState, SensorImpl.sensor_watchdog_scale_factor,
-	 							    ServerMessage_SensorInfoUpdate, ClientMessage_ACK
+	 * External variables TBV:		ServerMessage_SensorInfoUpdate, ClientMessage_ACK, SensorImpl.sensorState, SensorImpl.sensor_watchdog_scale_factor
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException

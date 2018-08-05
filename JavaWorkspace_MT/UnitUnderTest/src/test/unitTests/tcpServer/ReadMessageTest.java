@@ -171,7 +171,7 @@ public class ReadMessageTest {
 		testThread_readMessages.start();
 		Thread.sleep(20);
 		
-		obj_out_stream.writeObject(new ClientMessage_ACK(sensor_ID_1));
+		mockClientManager.getOutputStream().writeObject(new ClientMessage_ACK(sensor_ID_1));
 		Thread.sleep(20);
 		
 		assertTrue(receivedMessage instanceof ClientMessage_ACK);
@@ -213,13 +213,13 @@ public class ReadMessageTest {
 			
 		assertEquals(null, 							receivedMessage);
 		
-		obj_out_stream.writeObject(new ClientMessage_ACK(sensor_ID_1));
+		mockClientManager.getOutputStream().writeObject(new ClientMessage_ACK(sensor_ID_1));
 		Thread.sleep(20);
 		
 		assertNotEquals(null, 						receivedMessage);
 		receivedMessage_old = receivedMessage;
 		
-		obj_out_stream.writeObject(new ClientMessage_ACK(sensor_ID_1));
+		mockClientManager.getOutputStream().writeObject(new ClientMessage_ACK(sensor_ID_1));
 		Thread.sleep(20);
 		
 		assertNotEquals(null, 						receivedMessage);

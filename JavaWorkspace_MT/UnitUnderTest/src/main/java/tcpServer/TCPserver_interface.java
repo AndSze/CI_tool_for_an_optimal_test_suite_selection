@@ -54,7 +54,7 @@ public interface TCPserver_interface {
     boolean serialize(Object obj, String path) throws IOException;
     
     // Retrieve data from a serialized file
-    Object deserialize(String path) throws ClassNotFoundException;
+    public <T> T  deserialize(String path, Class<T> type) throws ClassNotFoundException;
     
 	
 }

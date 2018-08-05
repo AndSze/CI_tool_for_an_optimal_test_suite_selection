@@ -150,7 +150,7 @@ public class SendMessageTest {
 					obj_in_stream = new ObjectInputStream(mockTCPclient.getClientSocket().getInputStream());
 					when(mockClientManager.getInputReaderStream()).thenReturn(obj_in_stream);
 					
-					receivedMessage = (Message_Interface) obj_in_stream.readObject();
+					receivedMessage = (Message_Interface) mockClientManager.getInputReaderStream().readObject();
 				} catch (ClassNotFoundException e) {
 					// To prove that exception's stack trace reported by JUnit caught ClassNotFoundException
 					assertTrue(false);

@@ -173,9 +173,8 @@ public class MessagesHandlerTest_ServerMessage_Request_MeasurementHistory {
 	 * Test Name: 					test_run_1
 	 * Description: 				Verify that the messagesHandler() function responds to ServerMessage_Request_MeasurementHistory with ClientMessage_MeasurementHistory
 	  								if the wait_for_measurement_history flag is set to true as a result of reaching of the mesurement limit by the latest ServerMessage_Request_MeasurementData
-	 * Internal variables TBV:		inputStream, outputStream
-	 * External variables TBV:		ServerMessage_SensorInfoUpdate, ClientMessage_MeasurementData, ServerMessage_ACK, ServerMessage_Request_MeasurementData
-	 								ServerMessage_Request_MeasurementHistory, ClientMessage_MeasurementHistory
+	 * External variables TBV:		ServerMessage_Request_MeasurementHistory, ClientMessage_MeasurementHistory
+	 * Local variables TBV:			wait_for_measurement_history
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
@@ -245,8 +244,7 @@ public class MessagesHandlerTest_ServerMessage_Request_MeasurementHistory {
    /***********************************************************************************************************
 	 * Test Name: 					test_run_2
 	 * Description: 				Verify that the messagesHandler() function ignores ServerMessage_Request_MeasurementHistory if the wait_for_measurement_history flag is NOT set to true
-	 * Internal variables TBV:		inputStream, outputStream
-	 * External variables TBV:		ServerMessage_SensorInfoUpdate, ClientMessage_BootUp, ServerMessage_ACK, ServerMessage_Request_MeasurementHistory
+	 * Local variables TBV:			wait_for_measurement_history
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
@@ -310,10 +308,9 @@ public class MessagesHandlerTest_ServerMessage_Request_MeasurementHistory {
 	 * Test Name: 					test_run_3
 	 * Description: 				Verify that the messagesHandler() function reads all measurement data from the current cycle and sends it in ClientMessage_MeasurementHistory. 
 	 								Verify also that the state machine of messagesHandler() resets the sensor instance upon completion of ServerMessage_Request_MeasurementHistory processing
-	 * Internal variables TBV:		inputStream, outputStream
-	 * External variables TBV:		ServerMessage_SensorInfoUpdate, ClientMessage_MeasurementData, ServerMessage_ACK, ServerMessage_Request_MeasurementData,
-	  								ClientMessage_MeasurementHistory, ClientMessage_MeasurementHistory, SensorImpl.sensor_m_history,  Client_Sensors_LIST
-	 								SensorImpl.numberOfMeasurements, MeasurementData.pm25, MeasurementData.pm10, MeasurementData.humidity, MeasurementData.temperature, MeasurementData.pressure
+	 * External variables TBV:		ClientMessage_MeasurementData, ServerMessage_Request_MeasurementData, ClientMessage_MeasurementHistory, ClientMessage_MeasurementHistory
+	 								SensorImpl.numberOfMeasurements, MeasurementData.pm25, MeasurementData.pm10, MeasurementData.humidity, MeasurementData.temperature, MeasurementData.pressure,
+	 								SensorImpl.sensor_m_history,  Client_Sensors_LIST
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException

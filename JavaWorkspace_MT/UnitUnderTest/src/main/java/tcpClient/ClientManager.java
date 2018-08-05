@@ -1,5 +1,6 @@
 package tcpClient;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -114,6 +115,7 @@ public class ClientManager implements TCPclient_interface{
 	 * Affected external variables: TCPclient.Client_Sensors_LIST, SensorImpl.sensorID, SensorImpl.coordinates, SensorImpl.softwareImageID, SensorImpl.sensorState,
 	  								SensorImpl.sensor_m_history, Local_1h_Watchdog.millisecondsLeftUntilExpiration, Local_1h_Watchdog.isPaused, Local_1h_Watchdog.local_watchgod_scale_factor, 
 	  								TCPclient.measurements_limit, TCPclient.watchdogs_scale_factor
+	 * Local variables:			    sensor, receivedMessage, wait_for_measurement_history, wait_for_measurement_data
 	 * Called internal functions:   sendMessage()
 	 * Called external functions:   SensorImpl.addMeasurement(), SensorImpl.resetSensor(), SensorImpl(), TCPclient.updateClientSensorList(), ClientMessage_MeasurementData(), 
 	 								ClientMessage_MeasurementHistory(), ClientMessage_SensorInfo(), ClientMessage_ACK(), ClientMessage_BootUp()
@@ -304,6 +306,10 @@ public class ClientManager implements TCPclient_interface{
 		            System.out.println("[ClientManager " +sensor.getSensorID()+"] Error: readMessage() failed due to class of a deserialized object cannot be found");
 		        	System.out.println(CNFex.getMessage());
 		        	setClientManagerRunning(false);
+				} catch (EOFException EOFex) {
+					System.out.println("[ClientManager " +sensor.getSensorID()+"] Error: readMessage() failed due the fact that Global_1h_Watchdog on the server side has expired and readMessage() cannot receive any new messages");
+			        System.out.println(EOFex.getMessage());
+			        setClientManagerRunning(false);
 				} catch (IOException IOex) {
 					System.out.println("[ClientManager " +sensor.getSensorID()+"] Error: readMessage() failed due to TCP connection issues - when attempted to read Object from inputStream on the client side");
 			        System.out.println(IOex.getMessage());

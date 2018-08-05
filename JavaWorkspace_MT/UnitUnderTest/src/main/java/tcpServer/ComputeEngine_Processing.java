@@ -58,15 +58,15 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
             	for (String file : MySensorsData){
             		String sensor_data_path = TCPserver.Sensors_PATH + "\\" + file;
             		if ((file.substring(file.toString().length() - 11)).equals("sensor_info")){
-            			SensorImpl new_sensor = (SensorImpl) deserialize(sensor_data_path);
+            			SensorImpl new_sensor = (SensorImpl) deserialize(sensor_data_path, SensorImpl.class);
             			Server_Sensors_LIST.add(new_sensor);
             		}
             		else if ((file.substring(file.toString().length() - 16)).equals("measurement_data")){
-            			MeasurementData new_mes_data = (MeasurementData) deserialize(sensor_data_path);
+            			MeasurementData new_mes_data = (MeasurementData) deserialize(sensor_data_path, MeasurementData.class);
             			mes_data_list.add(new_mes_data);
             		}
             		else if ((file.substring(file.toString().length() - 19)).equals("measurement_history")){
-            			MeasurementData[] new_mes_hist = (MeasurementData[]) deserialize(sensor_data_path);
+            			MeasurementData[] new_mes_hist = (MeasurementData[]) deserialize(sensor_data_path, MeasurementData[].class);
             			mes_hist_list.add(new_mes_hist);
             		}
             	}
@@ -74,17 +74,17 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
             }
             if(getNumber_of_sensors() != 0)
             {
-            	System.out.println("Copy existing " + getNumber_of_sensors() + 
-            			" Sensors stored in the directory to a list that store these sensors");
+            	//System.out.println("Copy existing " + getNumber_of_sensors() + 
+            	//		" Sensors stored in the directory to a list that store these sensors");
             }
             else
             {
-            	System.out.println("There are no Sensors in the directory. The initialized Sensors List is empty");
+            	//System.out.println("There are no Sensors in the directory. The initialized Sensors List is empty");
             }
 		}
 		else
 		{
-			System.out.println("Creating a folder to store Sensors Data on the client side");
+			//System.out.println("Creating a folder to store Sensors Data on the client side");
 		}
 	}
 
@@ -299,12 +299,13 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 		out.writeObject(obj);
 		out.close();
 		fileOut.close();
-		System.out.println("Serialized data is saved in " + path);
+		System.out.println("Serialized data of a: " +obj.getClass().getName()+"class type is saved in " + path);
 		return true;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public Object deserialize(String path) throws ClassNotFoundException {
+	public <T> T deserialize(String path, Class<T> type) throws ClassNotFoundException {
 		Object obj = null;
 		try {
 			FileInputStream fileIn = new FileInputStream(path);
@@ -313,10 +314,10 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 			in.close();
 			fileIn.close();
 			//System.out.println("Serialized data is retrieved from " + path);
-			return obj;
+			return (T) obj;
 		} catch (IOException i) {
 			i.printStackTrace();
-			return obj;
+			return (T) obj;
 		}
 	}
 	
@@ -325,11 +326,13 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 		int itemIndex = 0;
 		if (Server_Sensors_LIST.size() == 0) {
 			Server_Sensors_LIST.add(sensor);
+			//System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] sensor ID "+sensor.getSensorID()+" has been added to Server_Sensors_LIST");
 		}
 		else {
 			for (SensorImpl s : Server_Sensors_LIST) {
 				if (s.getSensorID() == sensor.getSensorID()) {
 					Server_Sensors_LIST.set(itemIndex, sensor);
+					//System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] sensor ID "+sensor.getSensorID()+" instance in Server_Sensors_LIST has been updated");
 					break;
 				} 
 				else {
@@ -338,6 +341,7 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 			}
 			if(itemIndex == (Server_Sensors_LIST.size())) {
 				Server_Sensors_LIST.add(sensor);
+				//System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] sensor ID "+sensor.getSensorID()+" has been added to Server_Sensors_LIST");
 			}
 		}
 		return Server_Sensors_LIST;

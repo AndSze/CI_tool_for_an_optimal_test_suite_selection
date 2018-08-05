@@ -132,6 +132,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 * Affected internal variables: inputStream, outputStream, delay, local_1h_watchdog, local_24h_watchdog
 	 * Affected external variables: SensorImpl, TCPserver._1hWatchog_timestamp_table, TCPserver._24hWatchog_timestamp_table, TCPserver.processing_engine, TCPserver.Server_Sensors_LIST,
 	 								TCPserver.MeasurementHistory_LIST, TCPserver.MeasurementData_LIST
+	 * Local variables:				close_ComputeEngine_Runnable, request_measurement_history, request_measurement_data, receivedMessage
 	 * Called internal functions: 	setLocal_1h_watchdog(), setLocal_24h_watchdog, setDelay(), sendMessage(), closeOutStream(), closeInStream(), processingDelay()
 	 * Called external functions: 	ServerMessage_SensorInfoQuerry(), ServerMessage_SensorInfoUpdate(), ServerMessage_ACK(), ServerMessage_Request_MeasurementData(), 
 	 								ServerMessage_Request_MeasurementHistory(), ComputeEngine_Processing.updateServerSensorList(), ComputeEngine_Processing.saveSensorInfo(),
@@ -159,14 +160,15 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    			
 	    				sensor = getProcessing_engine().searchInServerSensorList(receivedMessage.getSensorID());
 						
-		    			if (receivedMessage instanceof ClientMessage_BootUp) {
+		    			if (receivedMessage instanceof ClientMessage_BootUp && sensor != null) {
 		    				
-		    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] BootUp message from sensor: " + sensor.getSensorID() + " has been received.");
+		    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] ClientMessage_BootUp from sensor: " + sensor.getSensorID() + " has been received.");
 		    				sendMessage(new ServerMessage_SensorInfoQuerry(receivedMessage.getSensorID()), getOutputStream());
+		    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.");
 		    			}
-		    			else if (receivedMessage instanceof ClientMessage_ACK) {
+		    			else if (receivedMessage instanceof ClientMessage_ACK && sensor != null) {
 		    				
-		    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] received ClientMessage_ACK from sensor: " + sensor.getSensorID() + " has been received.");
+		    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] ClientMessage_ACK from sensor: " + sensor.getSensorID() + " has been received.");
 		    				if (getLocal_1h_watchdog() < (get_watchdog_threshold(Watchdog_Thresholds.HIGH, getWatchdog_thresholds_array())) ) {
 		    					
 		    					// adjust Local_1h_watchdogs based on its time left to expiration when ClientMessage_ACK has been received
@@ -179,6 +181,9 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 			    				
 			    				if (getLocal_1h_watchdog() > 0) {
 			    					request_measurement_data = true;
+			    				}
+			    				else {
+			    					close_ComputeEngine_Runnable = true;
 			    				}
 			    				
 			    				if (sensor.getNumberOfMeasurements() == 23) {
@@ -196,9 +201,13 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 			    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 24h_Watchdog global: \t" +  Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 			    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] 24h_Watchdog with delay for ServerMessage_Request_MeasurementHistory (Local_24h_watchdog): \t" + getLocal_24h_watchdog());
 			    				
-			    				if (getLocal_1h_watchdog() > 0) {
+			    				if (getLocal_24h_watchdog() > 0) {
 			    					request_measurement_history = true;
 			    				}
+			    				else {
+			    					close_ComputeEngine_Runnable = true;
+			    				}
+			    				
 		    				}
 		    				else {
 		    					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] ClientMessage_ACK received when neither 1h_watchdog: " + getLocal_1h_watchdog() + " [s] nor 24h_watchdog: " + getLocal_24h_watchdog() + " [s] is close to expire");
@@ -208,7 +217,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    					close_ComputeEngine_Runnable = true;
 		    				}
 		    			}
-		    			else if (receivedMessage instanceof ClientMessage_SensorInfo) {
+		    			else if (receivedMessage instanceof ClientMessage_SensorInfo && sensor != null) {
 		    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] ClientMessage_SensorInfo message from sensor: " + sensor.getSensorID() + " has been received.");
 		    				//System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] ClientMessage_SensorInfo message has the following timestamp: " + receivedMessage.getTimestamp());
 		    				SensorImpl received_sensor = ((ClientMessage_SensorInfo) receivedMessage).getSensor();
@@ -237,6 +246,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 			    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
 			    							 									   getLocal_1h_watchdog(), getLocal_24h_watchdog(),
 		    																	   getLocal_watchdog_scale_factor(), getMeasurements_limit()), getOutputStream());
+			    					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.");
 			    					// serialize sensor instance and save it to file
 			    					getProcessing_engine().saveSensorInfo(sensor, "gotoOPERATIONALafterRESET");
 			    					
@@ -250,6 +260,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    						sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
 		    																	   Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), 
 	    																	       getLocal_watchdog_scale_factor(), getMeasurements_limit()), getOutputStream());
+		    						System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.");
 		    						// serialize sensor instance and save it to file
 			    					getProcessing_engine().saveSensorInfo(sensor, "gotoOPERATIONALafterCONFIGURATION");
 		    					}
@@ -259,6 +270,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    						sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
 		    																	   Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), 
 		    																	   getLocal_watchdog_scale_factor(), getMeasurements_limit()), getOutputStream());
+		    						System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.");
 		    						// serialize sensor instance and save it to file
 			    					getProcessing_engine().saveSensorInfo(sensor, "stayinOPERATIONAL");
 		    					}
@@ -280,11 +292,11 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
 		    							 									   Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), 
 		    							 									   getLocal_watchdog_scale_factor(), getMeasurements_limit()), getOutputStream());
-		    					
+		    					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.");
 		    					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] send new setting (go to MAINTENANCE) to sensor: " + sensor.getSensorID());
 		    				}
 		    			}
-	    				else if (receivedMessage instanceof ClientMessage_MeasurementData) {
+	    				else if (receivedMessage instanceof ClientMessage_MeasurementData && sensor != null) {
 	    					
 	    					sensor.addMeasurement(((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getPm25(),
 	    									   	((ClientMessage_MeasurementData) receivedMessage).getMeasurementData().getPm10(),
@@ -310,6 +322,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	    					// send ServerMessage_ACK
 	        				sendMessage(new ServerMessage_ACK(receivedMessage.getSensorID(),
 									getLocal_1h_watchdog(), getLocal_24h_watchdog()), getOutputStream());
+	        				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] responds to ClientMessage_MeasurementData with ServerMessage_ACK.");
 	        				
 	        				//indicate to the TCPserver that the 1h watchdog for this sensor has been kicked
 	        				set_1hWatchog_Timestamp_tableID_value(true, receivedMessage.getSensorID() - 1);
@@ -318,7 +331,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	        				//System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] MeasurementData message has the following timestamp: " + receivedMessage.getTimestamp());
 	        	
 	    				}
-	    				else if (receivedMessage instanceof ClientMessage_MeasurementHistory) {
+	    				else if (receivedMessage instanceof ClientMessage_MeasurementHistory && sensor != null) {
 	    					
 	    					MeasurementData[] mes_hist = ((ClientMessage_MeasurementHistory) receivedMessage).getMes_history();
 
@@ -348,6 +361,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	    					sendMessage(new ServerMessage_SensorInfoUpdate(sensor.getSensorID(), sensor.getCoordinates(), sensor.getSoftwareImageID(), sensor.getSensorState(),
 	    																   getLocal_1h_watchdog(), getLocal_24h_watchdog(), 
 									   									   getLocal_watchdog_scale_factor(), getMeasurements_limit()), getOutputStream());
+	    					System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] responds to ClientMessage_MeasurementHistory with ServerMessage_SensorInfoUpdate.");
 	    					
 	    					Server_Sensors_LIST = getProcessing_engine().updateServerSensorList(sensor);
 	    				}
@@ -360,17 +374,20 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 					if ( (getLocal_1h_watchdog() <= (get_watchdog_threshold(Watchdog_Thresholds.LOWEST, getWatchdog_thresholds_array()))) && request_measurement_data) {
 	    				// send ServerMessage_Request_MeasurementData
 	    				sendMessage(new ServerMessage_Request_MeasurementData(sensor.getSensorID()), getOutputStream());
-	    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] Request_MeasurementData is being send to sensor ID: " + sensor.getSensorID());
+	    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.");
+	    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] Request_MeasurementData is sent to sensor ID: " + sensor.getSensorID());
 	    				request_measurement_data = false;
 		    		}
 		    		else if ( (getLocal_24h_watchdog() <= (get_watchdog_threshold(Watchdog_Thresholds.LOWEST, getWatchdog_thresholds_array()))) && request_measurement_history)  {
 	    				// send ServerMessage_Request_MeasurementData
 	    				sendMessage(new ServerMessage_Request_MeasurementHistory(sensor.getSensorID()), getOutputStream());
-	    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] Request_MeasurementHistory is being send to sensor ID: " + sensor.getSensorID());
+	    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementHistory.");
+	    				System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] Request_MeasurementHistory is sent to sensor ID: " + sensor.getSensorID());
 	    				request_measurement_history = false;
 		    		}
 		    		else if (close_ComputeEngine_Runnable) {
 		    			setComputeEngine_Runnable_running(false);
+		    			System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] does not respond to ClientMessage_ACK.");
 		    		}
 				}
     			else {
