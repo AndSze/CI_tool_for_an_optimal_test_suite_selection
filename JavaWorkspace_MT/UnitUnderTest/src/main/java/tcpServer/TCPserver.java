@@ -25,8 +25,8 @@ public class TCPserver {
 	
 	// instance of TCPserver that should be referred in case of any modification to the TCPserver class attributes or any attempt to read the TCPserver class attribute
 	private static TCPserver TCPserver_instance; 
-	
-    //declare a TCP socket object and initialize it to null
+
+	//declare a TCP socket object and initialize it to null
 	private static ServerSocket serverSocket = null;
 	
 	//  determine the maximum number of threads running at the same time
@@ -229,16 +229,18 @@ public class TCPserver {
 	        public void run() {
 	            try {
 	            	Socket clientSocket = null;
-					System.out.println("[TCPserver] Server Thread Started.");
 					
 					while(get_ServerRunning()) {
 						try {
 			                //start listening to incoming client request (blocking function)
+							System.out.println("[TCPserver] Server Thread Started.");
 			                System.out.println("[TCPserver] waiting for the incoming request ...");
 			                clientSocket = serverSocket.accept();
 						} catch (SocketException Sockex) {
 							// this exception is being thrown to exit the while loop and call the exception handler from startServer()
-							serverThread.interrupt();
+							if (serverThread != null) {
+								serverThread.interrupt();
+							}
 							System.out.println("Server Thread Stopped.");
 							break;
 						} 
@@ -361,8 +363,16 @@ public class TCPserver {
 		return serverSocket;
 	}
 	
+	public synchronized void setServerThread(Thread server_thred) {
+		TCPserver.serverThread = server_thred;
+	}
+	
 	public synchronized Thread getServerThread() {
 		return serverThread;
+	}
+	
+	public synchronized void setServerSocket(ServerSocket server_socket) {
+		TCPserver.serverSocket = server_socket;
 	}
 	
 	synchronized ThreadPoolExecutor getThreadPoolExecutor() {
@@ -430,4 +440,7 @@ public class TCPserver {
 		TCPserver.computing_time = computing_time;
 	}
 
+    public static void setTCPserver_instance(TCPserver tCPserver_instance) {
+		TCPserver_instance = tCPserver_instance;
+	}
 }

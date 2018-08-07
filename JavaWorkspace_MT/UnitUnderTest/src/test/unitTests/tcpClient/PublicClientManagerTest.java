@@ -6,6 +6,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import watchdog.Local_1h_Watchdog;
+
 
 public class PublicClientManagerTest {
 
@@ -52,11 +54,15 @@ public class PublicClientManagerTest {
 	   
 	   	System.out.println("\t\tTest Run "+PublicClientManagerTest.testID+" teardown section:");
    
-   		// Time offset between consecutive test runs execution
-   		Thread.sleep(100);
-   
-   		System.out.println("");
-   		incrementTestID();
+	   if(Local_1h_Watchdog.getInstance() != null) {
+		   Local_1h_Watchdog.getInstance().setM_instance(null);
+	   }
+
+	   // Time offset between consecutive test runs execution
+	   Thread.sleep(100);
+	   
+	   System.out.println("");
+	   incrementTestID();
    }
 
 }

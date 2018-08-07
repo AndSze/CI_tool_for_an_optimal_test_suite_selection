@@ -158,15 +158,22 @@ public class GetInstanceTCPserverTest {
    @After
     public void teardown() throws IOException, InterruptedException{
 	  
-	   System.out.println("\t\tTest Run "+GetInstanceTCPserverTest.testID+" teardown section:");
-	   	  
+		System.out.println("\t\tTest Run "+GetInstanceTCPserverTest.testID+" teardown section:");
+		   
+		// Time offset before running the reinitalize_to_default() function
+		Thread.sleep(100);
+	
 		// close the server instance to prevent the Bind Exception from being thrown due to an attempt to bind a server socket twice to the same port
 		TCPserver.getInstance(port_1).closeServer(TCPserver.getInstance(port_1), port_1);
-		
-	   // Time offset between consecutive test runs execution
-	   Thread.sleep(100);
-
-	   incrementTestID();
+			
+		// run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+		TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+		tcp_server_teardown.reinitalize_to_default(temp_TCPserver);
+			
+		// Time offset between consecutive test runs execution
+		Thread.sleep(100);
+	
+		incrementTestID();
     }
 	   
 }

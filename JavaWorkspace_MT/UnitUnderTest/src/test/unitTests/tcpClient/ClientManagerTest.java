@@ -22,6 +22,8 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import tcpServer.ComputeEngine_Runnable;
 import tcpServer.TCPserver;
+import tcpServer.TCPserver_Teardown;
+import watchdog.Local_1h_Watchdog;
 
 public class ClientManagerTest {
 
@@ -173,6 +175,14 @@ public class ClientManagerTest {
 		   clientManager_1.getInputReaderStream().close();
 		   clientManager_1.getOutputStream().close();
 	   }
+	   
+	   if(Local_1h_Watchdog.getInstance() != null) {
+		   Local_1h_Watchdog.getInstance().setM_instance(null);
+	   }
+	   
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
 	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);

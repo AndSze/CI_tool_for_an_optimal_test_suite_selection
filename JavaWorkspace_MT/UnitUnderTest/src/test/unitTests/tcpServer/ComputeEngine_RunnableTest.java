@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import messages.Message_Interface;
+import sensor.SensorImpl;
 import tcpClient.ClientManager;
 import tcpClient.TCPclient;
 import watchdog.Global_1h_Watchdog;
@@ -24,6 +25,7 @@ import watchdog.Global_24h_Watchdog;
 public class ComputeEngine_RunnableTest {
 	
 	int port_1 = 9876;
+	SensorImpl sensor = null;
 	int sensor_ID_1 = 1;
 	final String serverHostName = "localhost";
 	double global_watchdog_scale_factor = 0.01;
@@ -52,11 +54,11 @@ public class ComputeEngine_RunnableTest {
 	// to mock server threads
 	Thread mockServerThread = null;
 
-	String[] testPurpose = { "Verify that once the default constructor of the ComputeEngine_Runnable class is called, outputStream and inputStream object streams are created for the purpose of setting up the TCP connection set TCPclient based on the client's socket that is 1st argument in the constructor call",
-							 "Verify that once the default constructor of the ComputeEngine_Runnable class is called, local_watchdog_scale_factor is updated in accordance with global_watchdog_scale_factor",
-							 "Verify that once the default constructor of the ComputeEngine_Runnable class is called, the isComputeEngine_Runnable_running flag is updated in accordance with 3rd input argument in the constructor call",
-							 "Verify that once the default constructor of the ComputeEngine_Runnable class is called, time left before expiration for Local_1h_watchdog and Local_24h_watchdog is updated accordingly to the time left before expiration for Global_1h_watchdog and Global_24h_watchdog",
-							 "Verify that once the default constructor of the ComputeEngine_Runnable class is called, delays_array and watchdog_thresholds_array are updated in accordance with global_watchdog_scale_factor",
+	String[] testPurpose = { "Verify that once the default constructor of the ComputeEngine_Runnable class is called, \noutputStream and inputStream object streams are created for the purpose of setting up the TCP connection set TCPclient based on the client's socket that is 1st argument in the constructor call",
+							 "Verify that once the default constructor of the ComputeEngine_Runnable class is called, \nlocal_watchdog_scale_factor is updated in accordance with global_watchdog_scale_factor",
+							 "Verify that once the default constructor of the ComputeEngine_Runnable class is called, \nthe isComputeEngine_Runnable_running flag is updated in accordance with 3rd input argument in the constructor call",
+							 "Verify that once the default constructor of the ComputeEngine_Runnable class is called, \ntime left before expiration for Local_1h_watchdog and Local_24h_watchdog is updated accordingly to the time left before expiration for Global_1h_watchdog and Global_24h_watchdog",
+							 "Verify that once the default constructor of the ComputeEngine_Runnable class is called, \ndelays_array and watchdog_thresholds_array are updated in accordance with global_watchdog_scale_factor",
 							 "Verify that the Socket Exception is returned if there was an attempt to create a ComputeEngine_Runnable class instance with a socket that is closed"};
 	static int testID = 1;
 	
@@ -66,6 +68,10 @@ public class ComputeEngine_RunnableTest {
 	
 	@Before
 	public void before() throws IOException, ClassNotFoundException {
+		
+		TCPserver.processing_engine = new ComputeEngine_Processing();
+		sensor = new SensorImpl(sensor_ID_1);
+		TCPserver.Server_Sensors_LIST = TCPserver.processing_engine.updateServerSensorList(sensor);
 		
 		// mocked objects 
 		mockTCPserverTest = mock(TCPserver.class);
@@ -124,7 +130,7 @@ public class ComputeEngine_RunnableTest {
 	 * Internal variables TBV: 	outputStream, inputStream
 	 * Mocked objects:			TCPserver, TCPclient, ClientManager, Socket
      * Mocked external methods: TCPserver.startServer()
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@Test
 	public void test_run_1() throws IOException, InterruptedException {
@@ -138,6 +144,7 @@ public class ComputeEngine_RunnableTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
@@ -151,10 +158,10 @@ public class ComputeEngine_RunnableTest {
 	 * Internal variables TBV: 	local_watchdog_scale_factor
 	 * Mocked objects:			TCPserver, TCPclient, ClientManager, Socket
      * Mocked external methods: TCPserver.startServer()
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_2() throws IOException {
+	public void test_run_2() throws IOException, InterruptedException {
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
@@ -165,6 +172,7 @@ public class ComputeEngine_RunnableTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
@@ -178,10 +186,10 @@ public class ComputeEngine_RunnableTest {
 	 * Internal variables TBV: 	isComputeEngine_Runnable_running
 	 * Mocked objects:			TCPserver, TCPclient, ClientManager, Socket
      * Mocked external methods: TCPserver.startServer()
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_3() throws IOException {
+	public void test_run_3() throws IOException, InterruptedException {
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
@@ -192,6 +200,7 @@ public class ComputeEngine_RunnableTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, false);
 		
@@ -205,6 +214,7 @@ public class ComputeEngine_RunnableTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
@@ -219,10 +229,10 @@ public class ComputeEngine_RunnableTest {
 	 * Internal variables TBV: 	local_1h_watchdog, local_24h_watchdog
 	 * Mocked objects:			TCPserver, TCPclient, ClientManager, Socket
      * Mocked external methods: TCPserver.startServer()
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_4() throws IOException {
+	public void test_run_4() throws IOException, InterruptedException {
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
@@ -233,6 +243,7 @@ public class ComputeEngine_RunnableTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
@@ -246,10 +257,10 @@ public class ComputeEngine_RunnableTest {
 	 * Internal variables TBV: 	delays_array, watchdog_thresholds_array
 	 * Mocked objects:			TCPserver, TCPclient, ClientManager, Socket
      * Mocked external methods: TCPserver.startServer()
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_5() throws IOException {
+	public void test_run_5() throws IOException, InterruptedException {
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
@@ -260,6 +271,7 @@ public class ComputeEngine_RunnableTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
@@ -285,10 +297,10 @@ public class ComputeEngine_RunnableTest {
 	 * Mocked external methods: TCPserver.startServer()
 	 * Mocked objects:			TCPserver, TCPclient, ClientManager, Socket
 	 * Exceptions thrown TBV:	SocketException
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@Test(expected = SocketException.class)
-	public void test_run_6() throws IOException {
+	public void test_run_6() throws IOException, InterruptedException {
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
@@ -299,6 +311,7 @@ public class ComputeEngine_RunnableTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		mock_CER_ClientSocket.close();
 		
@@ -313,17 +326,19 @@ public class ComputeEngine_RunnableTest {
 	   
 	   System.out.println("\t\tTest Run "+ComputeEngine_RunnableTest.testID+" teardown section:");
 	   
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
+	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);
 	   
-	   if (mockClientManager.getOutputStream() != null){
-		   mockClientManager.closeOutStream();
-	   }
-	   if (mockTCPserverTest.getServerSocket().isBound()) {
-		   mockTCPserverTest.getServerSocket().close();
+	   System.out.println("");
+	   
+	   if(ComputeEngine_RunnableTest.testID == testPurpose.length){
+		   ComputeEngine_RunnableTest.testID = 0;
 	   }
 	   
-	   System.out.println("");
 	   incrementTestID();
     }
 		   

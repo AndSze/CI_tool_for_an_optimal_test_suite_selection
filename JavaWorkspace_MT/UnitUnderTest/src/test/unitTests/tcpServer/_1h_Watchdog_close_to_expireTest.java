@@ -123,10 +123,10 @@ public class _1h_Watchdog_close_to_expireTest {
 	 							and no_of_measurements different than TCPserver.getMeasurements_limit() - 1
 	 * Internal variables TBV: 	local_1h_watchdog
 	 * External variables TBV: 	Global_24h_Watchdog.millisecondsLeftUntilExpiration, Global_1h_Watchdog.millisecondsLeftUntilExpiration
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException 
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_1() throws IOException {
+	public void test_run_1() throws IOException, InterruptedException  {
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
@@ -137,6 +137,7 @@ public class _1h_Watchdog_close_to_expireTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		comp_engine_1.setSensor(new SensorImpl(sensor_ID_1));
@@ -156,8 +157,8 @@ public class _1h_Watchdog_close_to_expireTest {
 		output_1h_watchdog_readout = comp_engine_1._1h_Watchdog_close_to_expire(input_1h_watchdog, global_watchdog_scale_factor, no_of_measurements);
 		
 		assertEquals(expected_1h_watchdog_readout, 				output_1h_watchdog_readout, 0.1);
-		assertEquals(expected_1h_Global_watchdog_readout, 		Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), 0.1);
-		assertEquals(expected_24h_Global_watchdog_readout, 		Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), 0.1);
+		assertEquals(expected_1h_Global_watchdog_readout, 		Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), 0.2);
+		assertEquals(expected_24h_Global_watchdog_readout, 		Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration(), 0.2);
 	}
 	
     /***********************************************************************************************************
@@ -166,10 +167,10 @@ public class _1h_Watchdog_close_to_expireTest {
 	 							and no_of_measurements different than TCPserver.getMeasurements_limit() - 1
 	 * Internal variables TBV: 	local_1h_watchdog
 	 * External variables TBV: 	Global_24h_Watchdog.millisecondsLeftUntilExpiration, Global_1h_Watchdog.millisecondsLeftUntilExpiration
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException 
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_2() throws IOException {
+	public void test_run_2() throws IOException, InterruptedException  {
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
@@ -180,14 +181,15 @@ public class _1h_Watchdog_close_to_expireTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		comp_engine_1.setSensor(new SensorImpl(sensor_ID_1));
 		
 		double input_1h_watchdog = 120 * global_watchdog_scale_factor;
-		double expected_1h_watchdog_readout = input_1h_watchdog * 0.5;
-		double expected_1h_Global_watchdog_readout = input_1h_watchdog * 0.5;
-		double expected_24h_Global_watchdog_readout = input_1h_watchdog * 0.5;
+		double expected_1h_watchdog_readout = input_1h_watchdog * 0.75;
+		double expected_1h_Global_watchdog_readout = input_1h_watchdog * 0.75;
+		double expected_24h_Global_watchdog_readout = input_1h_watchdog * 0.75;
 		int no_of_measurements = 22;
 		
 		Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(input_1h_watchdog);
@@ -209,10 +211,10 @@ public class _1h_Watchdog_close_to_expireTest {
 	 							and no_of_measurements different than TCPserver.getMeasurements_limit() - 1
 	 * Internal variables TBV: 	local_1h_watchdog
 	 * External variables TBV: 	Global_24h_Watchdog.millisecondsLeftUntilExpiration, Global_1h_Watchdog.millisecondsLeftUntilExpiration
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException 
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_3() throws IOException {
+	public void test_run_3() throws IOException, InterruptedException  {
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
@@ -223,6 +225,7 @@ public class _1h_Watchdog_close_to_expireTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		comp_engine_1.setSensor(new SensorImpl(sensor_ID_1));
@@ -252,10 +255,10 @@ public class _1h_Watchdog_close_to_expireTest {
 	 							and no_of_measurements equal to TCPserver.getMeasurements_limit() - 1
 	 * Internal variables TBV: 	local_1h_watchdog
 	 * External variables TBV: 	Global_24h_Watchdog.millisecondsLeftUntilExpiration, Global_1h_Watchdog.millisecondsLeftUntilExpiration
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException 
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_4() throws IOException {
+	public void test_run_4() throws IOException, InterruptedException  {
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
@@ -266,6 +269,7 @@ public class _1h_Watchdog_close_to_expireTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		comp_engine_1.setSensor(new SensorImpl(sensor_ID_1));
@@ -274,7 +278,7 @@ public class _1h_Watchdog_close_to_expireTest {
 		double expected_1h_watchdog_readout = input_1h_watchdog * 0.25;
 		double expected_1h_Global_watchdog_readout = input_1h_watchdog * 0.5;
 		double expected_24h_Global_watchdog_readout = input_1h_watchdog * 1;
-		int no_of_measurements = 23;
+		int no_of_measurements = TCPserver.getMeasurements_limit() - 1;
 		
 		Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(input_1h_watchdog);
 		Global_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(input_1h_watchdog);
@@ -295,10 +299,10 @@ public class _1h_Watchdog_close_to_expireTest {
 	 							and no_of_measurements equal to TCPserver.getMeasurements_limit() - 1
 	 * Internal variables TBV: 	local_1h_watchdog
 	 * External variables TBV: 	Global_24h_Watchdog.millisecondsLeftUntilExpiration, Global_1h_Watchdog.millisecondsLeftUntilExpiration
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_5() throws IOException {
+	public void test_run_5() throws IOException, InterruptedException {
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
@@ -309,6 +313,7 @@ public class _1h_Watchdog_close_to_expireTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		comp_engine_1.setSensor(new SensorImpl(sensor_ID_1));
@@ -317,7 +322,7 @@ public class _1h_Watchdog_close_to_expireTest {
 		double expected_1h_watchdog_readout = input_1h_watchdog * 0.5;
 		double expected_1h_Global_watchdog_readout = input_1h_watchdog * 1;
 		double expected_24h_Global_watchdog_readout = input_1h_watchdog * 1;
-		int no_of_measurements = 23;
+		int no_of_measurements = TCPserver.getMeasurements_limit() - 1;
 		
 		Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(input_1h_watchdog);
 		Global_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(input_1h_watchdog);
@@ -338,10 +343,10 @@ public class _1h_Watchdog_close_to_expireTest {
 	 							and no_of_measurements equal to TCPserver.getMeasurements_limit() - 1
 	 * Internal variables TBV: 	local_1h_watchdog
 	 * External variables TBV: 	Global_24h_Watchdog.millisecondsLeftUntilExpiration, Global_1h_Watchdog.millisecondsLeftUntilExpiration
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_6() throws IOException {
+	public void test_run_6() throws IOException, InterruptedException  {
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
@@ -352,6 +357,7 @@ public class _1h_Watchdog_close_to_expireTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		comp_engine_1.setSensor(new SensorImpl(sensor_ID_1));
@@ -380,21 +386,12 @@ public class _1h_Watchdog_close_to_expireTest {
 	   
 	   System.out.println("\t\tTest Run "+_1h_Watchdog_close_to_expireTest.testID+" teardown section:");
 	   
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
+	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);
-	   
-	   if(!Global_1h_Watchdog.getInstance().getEnabled()) {
-		   Global_1h_Watchdog.getInstance().setEnabled(false);
-	   }
-	   if(!Global_24h_Watchdog.getInstance().getEnabled()) {
-		   Global_24h_Watchdog.getInstance().setEnabled(false);
-	   }
-	   if (mockClientManager.getOutputStream() != null){
-		   mockClientManager.closeOutStream();
-	   }
-	   if (mockTCPserverTest.getServerSocket().isBound()) {
-		   mockTCPserverTest.getServerSocket().close();
-	   }
 	   
 	   System.out.println("");
 	   incrementTestID();

@@ -151,10 +151,10 @@ public class Update_watchgods_after_TCP_connectionTest {
 	 							Verify also that 1hWatchog_timestamp_table and 24hWatchog_timestamp_table are not updated
 	 * External variables TBV: 	Global_24h_Watchdog.millisecondsLeftUntilExpiration, Global_1h_Watchdog.millisecondsLeftUntilExpiration, TCPserver._1hWatchog_timestamp_table
 	 							TCPserver._24hWatchog_timestamp_table
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_1() throws IOException {
+	public void test_run_1() throws IOException, InterruptedException {
 		
 		double input_watchdog = 100 * global_watchdog_scale_factor;
 		double expected_1h_Global_watchdog_readout = input_watchdog;
@@ -185,6 +185,7 @@ public class Update_watchgods_after_TCP_connectionTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
@@ -212,14 +213,14 @@ public class Update_watchgods_after_TCP_connectionTest {
 	 							Verify also that 1hWatchog_timestamp_table is updated by setting all indexes to false, but 24hWatchog_timestamp_table is not updated
 	 * External variables TBV: 	Global_24h_Watchdog.millisecondsLeftUntilExpiration, Global_1h_Watchdog.millisecondsLeftUntilExpiration, TCPserver._1hWatchog_timestamp_table
 	 							TCPserver._24hWatchog_timestamp_table
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_2() throws IOException {
+	public void test_run_2() throws IOException, InterruptedException {
 		
 		double input_watchdog = 100 * global_watchdog_scale_factor;
-		double expected_1h_Global_watchdog_readout = Global_1h_Watchdog.getInstance().getExpiration() * global_watchdog_scale_factor;
 		double expected_24h_Global_watchdog_readout = input_watchdog;
+		double expected_1h_Global_watchdog_readout = Global_1h_Watchdog.getInstance().getExpiration() * global_watchdog_scale_factor + input_watchdog * 0.5;
 		TCPserver.setComputing_time(input_watchdog * 1.5);
 		
 		boolean[] input_1hWatchog_timestamp_table = {true, true, true, true, true};
@@ -246,6 +247,7 @@ public class Update_watchgods_after_TCP_connectionTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
@@ -306,6 +308,7 @@ public class Update_watchgods_after_TCP_connectionTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
@@ -373,6 +376,7 @@ public class Update_watchgods_after_TCP_connectionTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
@@ -421,10 +425,10 @@ public class Update_watchgods_after_TCP_connectionTest {
 	 * Description: 			Verify that once the update_watchgods_after_TCP_connection() function is called if neither input_1hWatchog_timestamp_table nor input_24hWatchog_timestamp_table
 	 							contain only true values, Computing_time that measures duration of the TCP connection is not updated
 	 * External variables TBV: 	TCPserver.computing_time
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_5() throws IOException {
+	public void test_run_5() throws IOException, InterruptedException {
 		
 		double input_watchdog = 100 * global_watchdog_scale_factor;
 		TCPserver.setComputing_time(input_watchdog * 1.5);
@@ -451,6 +455,7 @@ public class Update_watchgods_after_TCP_connectionTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
@@ -471,10 +476,10 @@ public class Update_watchgods_after_TCP_connectionTest {
 	 * Description: 			Verify that once the update_watchgods_after_TCP_connection() function is called if both input_1hWatchog_timestamp_table and input_24hWatchog_timestamp_table
 	  							contain only true values, Computing_time that measures duration of the TCP connection is updated
 	 * External variables TBV: 	TCPserver.computing_time
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_6() throws IOException {
+	public void test_run_6() throws IOException, InterruptedException {
 		
 		double input_watchdog = 100 * global_watchdog_scale_factor;
 		TCPserver.setComputing_time(input_watchdog * 1.5);
@@ -501,6 +506,7 @@ public class Update_watchgods_after_TCP_connectionTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
@@ -523,21 +529,12 @@ public class Update_watchgods_after_TCP_connectionTest {
 	   
 	   System.out.println("\t\tTest Run "+Update_watchgods_after_TCP_connectionTest.testID+" teardown section:");
 	   
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
+	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);
-	   
-	   if(!Global_1h_Watchdog.getInstance().getEnabled()) {
-		   Global_1h_Watchdog.getInstance().setEnabled(false);
-	   }
-	   if(!Global_24h_Watchdog.getInstance().getEnabled()) {
-		   Global_24h_Watchdog.getInstance().setEnabled(false);
-	   }
-	   if (mockClientManager.getOutputStream() != null){
-		   mockClientManager.closeOutStream();
-	   }
-	   if (mockTCPserverTest.getServerSocket().isBound()) {
-		   mockTCPserverTest.getServerSocket().close();
-	   }
 	   
 	   System.out.println("");
 	   incrementTestID();

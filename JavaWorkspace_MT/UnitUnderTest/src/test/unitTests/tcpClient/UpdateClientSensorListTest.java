@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import sensor.SensorImpl;
+import watchdog.Local_1h_Watchdog;
 
 public class UpdateClientSensorListTest {
 
@@ -105,11 +106,15 @@ public class UpdateClientSensorListTest {
 		if(sensor_2 != null) {
 			tcpclient_1.Client_Sensors_LIST.remove(sensor_2);
 		}
+	   if(Local_1h_Watchdog.getInstance() != null) {
+		   Local_1h_Watchdog.getInstance().setM_instance(null);
+	   }
 
-		// Time offset between consecutive test runs execution
-		Thread.sleep(100);
-
-		incrementTestID();
+	   // Time offset between consecutive test runs execution
+	   Thread.sleep(100);
+	   
+	   System.out.println("");
+	   incrementTestID();
 	}
 	
 }

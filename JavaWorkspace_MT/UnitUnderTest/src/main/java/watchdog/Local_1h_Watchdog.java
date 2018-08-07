@@ -37,7 +37,7 @@ import tcpClient.TCPclient;
 public class Local_1h_Watchdog implements Runnable { 
  
     private static Local_1h_Watchdog m_instance; 
-    private double millisecondsLeftUntilExpiration; 
+	private double millisecondsLeftUntilExpiration; 
     private Thread _1h_WatchdogThread;
 	private Lock expirationDateLock; 
     // _1h_Watchdog expiration time is given in seconds
@@ -222,5 +222,10 @@ public class Local_1h_Watchdog implements Runnable {
     public Thread get_1h_WatchdogThread() {
 		return _1h_WatchdogThread;
 	}
+    
+    public void setM_instance(Local_1h_Watchdog m_instance) {
+		Local_1h_Watchdog.m_instance = m_instance;
+	}
+
 
 }

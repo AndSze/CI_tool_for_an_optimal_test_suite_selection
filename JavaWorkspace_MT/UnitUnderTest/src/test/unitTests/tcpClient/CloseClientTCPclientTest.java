@@ -22,6 +22,8 @@ import org.mockito.stubbing.Answer;
 
 import tcpServer.ComputeEngine_Runnable;
 import tcpServer.TCPserver;
+import tcpServer.TCPserver_Teardown;
+import watchdog.Local_1h_Watchdog;
 
 public class CloseClientTCPclientTest {
 
@@ -68,16 +70,10 @@ public class CloseClientTCPclientTest {
 		
 		tempServerSocket_1 = new ServerSocket();
 		
-		if ( CloseClientTCPclientTest.testID == 2) {
-			tcpclient_2 = new TCPclient();
-			tempServerSocket_2 = new ServerSocket();
-			
-			when(mockTCPserverTest.getServerSocket()).thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_2).thenReturn(tempServerSocket_2)
+		tcpclient_2 = new TCPclient();
+		tempServerSocket_2 = new ServerSocket();
+		when(mockTCPserverTest.getServerSocket()).thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_2).thenReturn(tempServerSocket_2)
 													 .thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_2).thenReturn(tempServerSocket_2); // teardown section
-		}
-		else {
-			when(mockTCPserverTest.getServerSocket()).thenReturn(tempServerSocket_1);
-		}
 		
 		// Mockito.doAnswer - to mock void method to do something (mock the behavior despite being void) - in this case it is used for TCPserver.startServer();
 		// the test uses this approach for the purpose of avoiding actual messages sent via TCP - it will be checked in the integration tests
@@ -225,34 +221,40 @@ public class CloseClientTCPclientTest {
 	@After
 	public void teardown() throws IOException, InterruptedException{
 	  
-	   System.out.println("\t\tTest Run "+CloseClientTCPclientTest.testID+" teardown section:");
-	   	   
+		System.out.println("\t\tTest Run "+CloseClientTCPclientTest.testID+" teardown section:");
+
+		if(tcpclient_1 != null) {
+			if(tcpclient_1.isClientRunning()){
+				tcpclient_1.closeClient(tcpclient_1);
+			}
+		}
+		if(tcpclient_2 != null){
+			if(tcpclient_2.isClientRunning()){
+				tcpclient_2.closeClient(tcpclient_2);
+			}
+		}
+		if(mockTCPserverTest != null){
+			if(!mockTCPserverTest.getServerSocket().isClosed()) {
+				mockTCPserverTest.getServerSocket().close();
+			}
+			if(!mockTCPserverTest.getServerSocket().isClosed()) {
+				mockTCPserverTest.getServerSocket().close();
+			}
+		}
+	   if(Local_1h_Watchdog.getInstance() != null) {
+		   Local_1h_Watchdog.getInstance().setM_instance(null);
+	   }
+	   
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
+
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);
 	   
-	   if(tcpclient_1 != null) {
-		   if(tcpclient_1.isClientRunning()){
-			   tcpclient_1.closeClient(tcpclient_1);
-		   }
-	   }
-	   if(tcpclient_2 != null){
-		   if(tcpclient_2.isClientRunning()){
-			   tcpclient_2.closeClient(tcpclient_2);
-		   
-		   }
-	   }
-	   if(mockTCPserverTest != null){
-		   if(!mockTCPserverTest.getServerSocket().isClosed()) {
-			   mockTCPserverTest.getServerSocket().close();
-		   }
-		   if(!mockTCPserverTest.getServerSocket().isClosed()) {
-			   mockTCPserverTest.getServerSocket().close();
-		   }
-	   }
-	   	  
+	   System.out.println("");
 	   incrementTestID();
 	}
-	
-	
+
 }
 

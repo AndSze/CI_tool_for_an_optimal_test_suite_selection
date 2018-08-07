@@ -103,6 +103,10 @@ public class PublicTCPclientTest {
 	   
 	   System.out.println("\t\tTest Run "+PublicTCPclientTest.testID+" teardown section:");
 	   
+	   if(Local_1h_Watchdog.getInstance() != null) {
+		   Local_1h_Watchdog.getInstance().setM_instance(null);
+	   }
+
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);
 	   

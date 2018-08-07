@@ -214,13 +214,13 @@ public class ReadMessageTest {
 		assertEquals(null, 							receivedMessage);
 		
 		mockClientManager.getOutputStream().writeObject(new ClientMessage_ACK(sensor_ID_1));
-		Thread.sleep(20);
+		Thread.sleep(50);
 		
 		assertNotEquals(null, 						receivedMessage);
 		receivedMessage_old = receivedMessage;
 		
 		mockClientManager.getOutputStream().writeObject(new ClientMessage_ACK(sensor_ID_1));
-		Thread.sleep(20);
+		Thread.sleep(50);
 		
 		assertNotEquals(null, 						receivedMessage);
 		receivedMessage_new = receivedMessage;
@@ -353,20 +353,10 @@ public class ReadMessageTest {
 	   
 	   System.out.println("\t\tTest Run "+ReadMessageTest.testID+" teardown section:");
 	   
-	   if(mockTCPserverTest.getServerSocket().isBound()) {
-		   mockTCPserverTest.getServerSocket().close();
-	   }
-	   if (mockClientManager.getInputReaderStream() != null) {
-		   mockClientManager.closeInStream();
-	   }
-	   if (mockClientManager.getOutputStream() != null){
-		   mockClientManager.closeOutStream();
-	   }
-	   if(testThread_readMessages != null) {
-		   if (testThread_readMessages.isAlive()) {
-			   testThread_readMessages.interrupt();
-		   }
-	   }
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
+	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);
 	   

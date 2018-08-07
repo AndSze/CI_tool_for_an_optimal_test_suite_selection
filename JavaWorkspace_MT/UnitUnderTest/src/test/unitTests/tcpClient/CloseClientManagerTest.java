@@ -23,6 +23,8 @@ import messages.ClientMessage_BootUp;
 import messages.Message_Interface;
 import tcpServer.ComputeEngine_Runnable;
 import tcpServer.TCPserver;
+import tcpServer.TCPserver_Teardown;
+import watchdog.Local_1h_Watchdog;
 
 public class CloseClientManagerTest {
 	
@@ -64,10 +66,8 @@ public class CloseClientManagerTest {
 	public void before() throws IOException {
 		
 		tcpclient_1 = new TCPclient();
-		
-		if (CloseClientManagerTest.testID == 5) {
-			tcpclient_2 = new TCPclient();
-		}
+		tcpclient_2 = new TCPclient();
+
 		
 		// mock Server Socket to enable the Client Socket to establish connection
 		mockTCPserverTest = mock(TCPserver.class);
@@ -270,9 +270,6 @@ public class CloseClientManagerTest {
 
 		System.out.println("\t\tTest Run "+CloseClientManagerTest.testID+" teardown section:");
 
-		// Time offset between consecutive test runs execution
-		Thread.sleep(100);
-
 		if(tcpclient_1 != null) {
 			if(tcpclient_1.isClientRunning()){
 				tcpclient_1.closeClient(tcpclient_1);
@@ -281,7 +278,6 @@ public class CloseClientManagerTest {
 		if(tcpclient_2 != null){
 			if(tcpclient_2.isClientRunning()){
 				tcpclient_2.closeClient(tcpclient_2);
-
 			}
 		}
 		if(mockTCPserverTest != null){
@@ -292,8 +288,19 @@ public class CloseClientManagerTest {
 				mockTCPserverTest.getServerSocket().close();
 			}
 		}
+	   if(Local_1h_Watchdog.getInstance() != null) {
+		   Local_1h_Watchdog.getInstance().setM_instance(null);
+	   }
+	   
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
 
-		incrementTestID();
+	   // Time offset between consecutive test runs execution
+	   Thread.sleep(100);
+	   
+	   System.out.println("");
+	   incrementTestID();
 	}
 
 }

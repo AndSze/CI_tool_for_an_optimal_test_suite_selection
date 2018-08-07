@@ -37,7 +37,7 @@ import tcpServer.TCPserver;
 public class Global_1h_Watchdog implements Runnable { 
  
     private static Global_1h_Watchdog m_instance; 
-    private double millisecondsLeftUntilExpiration; 
+	private double millisecondsLeftUntilExpiration; 
     private Thread _1h_WatchdogThread; 
     private Lock expirationDateLock; 
     // _1h_Watchdog expiration time is given in seconds
@@ -227,6 +227,9 @@ public class Global_1h_Watchdog implements Runnable {
 	public static void setServer_watchgod_scale_factor(double global_watchgod_scale_factor) {
 		server_watchgod_scale_factor = global_watchgod_scale_factor;
 	}
-
+	
+    public static void setM_instance(Global_1h_Watchdog m_instance) {
+		Global_1h_Watchdog.m_instance = m_instance;
+	}
 
 }

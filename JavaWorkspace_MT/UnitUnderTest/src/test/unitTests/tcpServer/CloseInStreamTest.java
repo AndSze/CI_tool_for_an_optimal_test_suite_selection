@@ -133,6 +133,7 @@ public class CloseInStreamTest {
 		// create ObjectOutputStream on the client side to activate mock_CER_ClientSocket = servSocket.accept() in mockServerThread
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, false);
 		Thread.sleep(20);
@@ -150,16 +151,13 @@ public class CloseInStreamTest {
 	   
 	   System.out.println("\t\tTest Run "+CloseInStreamTest.testID+" teardown section:");
 	   
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
+	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);
-	   
-	   if (mockClientManager.getOutputStream() != null){
-		   mockClientManager.closeOutStream();
-	   }
-	   if (mockTCPserverTest.getServerSocket().isBound()) {
-		   mockTCPserverTest.getServerSocket().close();
-	   }
-	   
+	  
 	   System.out.println("");
 	   incrementTestID();
     }

@@ -37,7 +37,7 @@ import tcpServer.TCPserver;
 public class Global_24h_Watchdog implements Runnable { 
  
     private static Global_24h_Watchdog m_instance; 
-    private double millisecondsLeftUntilExpiration; 
+	private double millisecondsLeftUntilExpiration; 
     private Thread _24h_WatchdogThread; 
     private Lock expirationDateLock; 
     // _24h_Watchdog expiration time is given in seconds
@@ -235,6 +235,10 @@ public class Global_24h_Watchdog implements Runnable {
 	
     public Thread get_24h_WatchdogThread() {
 		return _24h_WatchdogThread;
+	}
+    
+    public static void setM_instance(Global_24h_Watchdog m_instance) {
+		Global_24h_Watchdog.m_instance = m_instance;
 	}
 
 }

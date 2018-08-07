@@ -186,7 +186,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 			    					close_ComputeEngine_Runnable = true;
 			    				}
 			    				
-			    				if (sensor.getNumberOfMeasurements() == 23) {
+			    				if (sensor.getNumberOfMeasurements() == (TCPserver.getMeasurements_limit() - 1) ) {
 			    			        // update 24h local watchdog to ensure that its reading has current value
 			    			        setLocal_24h_watchdog(Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 			    				}
@@ -399,8 +399,8 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
         	System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] Error: when attempted to read Object from inputStream or write Object to outputStream on the server side");
         	IOex.printStackTrace();
         } catch (ClassNotFoundException CNFex) {
-        		System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] Error: when attempted to servialize/deserialize objects on the server side");
-        		CNFex.printStackTrace();
+    		System.out.println("[Compute engine Runnable " +sensor.getSensorID()+"] Error: when attempted to servialize/deserialize objects on the server side");
+    		CNFex.printStackTrace();
 		} finally {
 			if(sensor != null) {
 				// update watchdogs based on 1hWatchog_timestamp_table and 24hWatchog_timestamp_table one all sensors have finished their TCP connection

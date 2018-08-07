@@ -118,19 +118,17 @@ public class PublicTCPserverTest {
     public void teardown() throws IOException, InterruptedException{
 	   
 	   System.out.println("\t\tTest Run "+PublicTCPserverTest.testID+" teardown section:");
-	   
-	   if(tcpserver_1.getServerSocket() != null) {
-		   if(!tcpserver_1.getServerSocket().isClosed()){
-			   tcpserver_1.getServerSocket().close();
-		   }
-	   }
-	   if (tcpserver_1 != null) {
-		   tcpserver_1 = null;
-	   }
-	   
+
+	   // Time offset before running the reinitalize_to_default() function
+	   Thread.sleep(100);
+
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(tcpserver_1);
+
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);
-	   
+
 	   System.out.println("");
 	   incrementTestID();
     }

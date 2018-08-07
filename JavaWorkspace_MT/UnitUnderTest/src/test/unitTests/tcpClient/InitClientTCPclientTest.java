@@ -21,16 +21,17 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import tcpServer.ComputeEngine_Runnable;
 import tcpServer.TCPserver;
+import tcpServer.TCPserver_Teardown;
+import watchdog.Local_1h_Watchdog;
 
 public class InitClientTCPclientTest {
 
 	int port_1 = 9876;
 	int sensor_ID_1 = 1;
 	TCPclient tcpclient_1, tcpclient_4 = null;
-	int port_2 = 9877;
+	int port_2 = 9889;
 	int sensor_ID_2 = 2;
 	TCPclient tcpclient_2, tcpclient_5 = null;
-	int port_3 = 9877;
 	int sensor_ID_3 = 3;
 	TCPclient tcpclient_3, tcpclient_6 = null;
 	String serverHostName = "localhost";
@@ -75,16 +76,9 @@ public class InitClientTCPclientTest {
 			mockClientSocket = mock(Socket.class);
 			
 			tempServerSocket_1 = new ServerSocket();
+			tempServerSocket_2 = new ServerSocket();
 			
-			if ( InitClientTCPclientTest.testID == 4) {
-				tempServerSocket_2 = new ServerSocket();
-				when(mockTCPserverTest.getServerSocket()).thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_2).thenReturn(tempServerSocket_2)
-														 .thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_2).thenReturn(tempServerSocket_2); // teardown section
-			}
-			else {
-				when(mockTCPserverTest.getServerSocket()).thenReturn(tempServerSocket_1);
-			}
-
+			when(mockTCPserverTest.getServerSocket()).thenReturn(tempServerSocket_1); 
 
 			/* To avoid "remote deadlock" - there is a need to submit mockComputeEngine_Runnable to ThreadPoolExecutor 
 			 * The ObjectInputStream on the client is waiting for the object stream from the server before proceeding, but the server isn't going to send that, 
@@ -122,28 +116,6 @@ public class InitClientTCPclientTest {
 		// the test uses this approach for the purpose of avoiding actual messages sent via TCP - it will be checked in the integration tests
 		}
 		
-		if (InitClientTCPclientTest.testID == 3 || InitClientTCPclientTest.testID == 4)
-		{
-			tcpclient_2 = new TCPclient();
-			tcpclient_3 = new TCPclient();
-			tcpclient_4 = new TCPclient();
-			tcpclient_5 = new TCPclient();
-			tcpclient_6 = new TCPclient();
-		}
-		if (InitClientTCPclientTest.testID == 5)
-		{
-			serverHostName = "1.1.1.1";
-		}
-		if (InitClientTCPclientTest.testID == 6)
-		{
-			port_1 = 0;
-		}
-		/*
-		if (InitClientTCPclientTest.testID == 7)
-		{
-			serverHostName = "";
-		}*/
-		
 		System.out.println("\t\tTest Run "+InitClientTCPclientTest.testID+" Purpose:");
 		System.out.println(testPurpose[(InitClientTCPclientTest.testID-1)]);
 		System.out.println("\t\tTest Run "+InitClientTCPclientTest.testID+" Logic:");
@@ -180,9 +152,6 @@ public class InitClientTCPclientTest {
 		
 		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
 		assertTrue(tcpclient_1.isClientRunning());
-
-		//tempServer_OutputStream_1.writeObject(new ServerMessage_ACK(sensor_ID_1,mock_Watchdog.getTimeLeftBeforeExpiration(), mock_Watchdog.getTimeLeftBeforeExpiration()));
-		
 	}
 	
     /***********************************************************************************************************
@@ -194,6 +163,12 @@ public class InitClientTCPclientTest {
 	 ***********************************************************************************************************/
 	@Test
 	public void test_run_3() throws IOException {
+		
+		tcpclient_2 = new TCPclient();
+		tcpclient_3 = new TCPclient();
+		tcpclient_4 = new TCPclient();
+		tcpclient_5 = new TCPclient();
+		tcpclient_6 = new TCPclient();
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
@@ -219,13 +194,21 @@ public class InitClientTCPclientTest {
 	 ***********************************************************************************************************/
 	@Test
 	public void test_run_4() throws IOException, InterruptedException {
-	
-		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
-		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket()); 
-		mockServerThread.start();
+		
+		when(mockTCPserverTest.getServerSocket()).thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_1).thenReturn(tempServerSocket_2).thenReturn(tempServerSocket_2); 
+		
+		tcpclient_2 = new TCPclient();
+		tcpclient_3 = new TCPclient();
+		tcpclient_4 = new TCPclient();
+		tcpclient_5 = new TCPclient();
+		tcpclient_6 = new TCPclient();
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_2));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
+		mockServerThread.start();
+	
+		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
+		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket()); 
 		mockServerThread.start();
 		
 		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
@@ -255,8 +238,14 @@ public class InitClientTCPclientTest {
 	 ***********************************************************************************************************/
 	@Test(expected = ConnectException.class)
 	public void test_run_5() throws IOException {
+		
+		when(mockTCPserverTest.getServerSocket()).thenReturn(tempServerSocket_1);
+		
+		serverHostName = "1.1.1.1";
 
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
+		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket()); 
+		mockServerThread.start();
 		
 		// serverHostName = "1.1.1.1";
 		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
@@ -274,8 +263,12 @@ public class InitClientTCPclientTest {
 	 ***********************************************************************************************************/
 	@Test(expected = ConnectException.class)
 	public void test_run_6() throws IOException {
+		
+		port_1 = 0;
 
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
+		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket()); 
+		mockServerThread.start();
 		
 		// port_1 = 0
 		tcpclient_1 = tcpclient_1.initClient(sensor_ID_1, serverHostName, port_1);
@@ -284,26 +277,10 @@ public class InitClientTCPclientTest {
 		assertTrue(false);
 	}
 	
-	/*
-	@Test(expected = UnknownHostException.class)
-	public void test_run_6() throws IOException {
-
-		mockTCPserverTest_1.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
-		 
-		tcpclient_1 = tcpclient_1.initClient((new InetSocketAddress("google.com", 80)), port_1);
-		
-		// To prove that exception's stack trace reported by JUnit caught the UnknownHostException
-		assertTrue(false);
-	}*/
-
-
    @After
     public void teardown() throws IOException, InterruptedException{
 	  
 	   System.out.println("\t\tTest Run "+InitClientTCPclientTest.testID+" teardown section:");
-	   	   
-	   // Time offset between consecutive test runs execution
-	   Thread.sleep(100);
 	   
 	   if(tcpclient_1 != null) {
 		   if(tcpclient_1.isClientRunning()){
@@ -313,13 +290,11 @@ public class InitClientTCPclientTest {
 	   if(tcpclient_2 != null){
 		   if(tcpclient_2.isClientRunning()){
 			   tcpclient_2.closeClient(tcpclient_2);
-		   
 		   }
 	   }
 	   if(tcpclient_3 != null){
 		   if(tcpclient_3.isClientRunning()){
 			   tcpclient_3.closeClient(tcpclient_3);
-		   
 		   }
 	   }
 	   if(tcpclient_4 != null) {
@@ -330,24 +305,25 @@ public class InitClientTCPclientTest {
 	   if(tcpclient_5 != null){
 		   if(tcpclient_2.isClientRunning()){
 			   tcpclient_2.closeClient(tcpclient_2);
-		   
 		   }
 	   }
 	   if(tcpclient_6 != null){
 		   if(tcpclient_3.isClientRunning()){
 			   tcpclient_3.closeClient(tcpclient_3);
-		   
 		   }
 	   }
-	   if(mockTCPserverTest != null){
-		   if(!mockTCPserverTest.getServerSocket().isClosed()) {
-			   mockTCPserverTest.getServerSocket().close();
-		   }
-		   if(!mockTCPserverTest.getServerSocket().isClosed()) {
-			   mockTCPserverTest.getServerSocket().close();
-		   }
+	   if(Local_1h_Watchdog.getInstance() != null) {
+		   Local_1h_Watchdog.getInstance().setM_instance(null);
 	   }
-	   	   
+	   
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
+
+	   // Time offset between consecutive test runs execution
+	   Thread.sleep(100);
+	   
+	   System.out.println("");
 	   incrementTestID();
     }
 	

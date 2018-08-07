@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import java.awt.geom.Point2D;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -22,6 +23,7 @@ import messages.ServerMessage_SensorInfoQuerry;
 import sensor.SensorImpl;
 import tcpClient.ClientManager;
 import tcpClient.TCPclient;
+
 
 public class RunTest_ClientMessage_BootUp {
 
@@ -136,6 +138,8 @@ public class RunTest_ClientMessage_BootUp {
 					// To prove that exception's stack trace reported by JUnit caught ClassNotFoundException
 					assertTrue(false);
 					e.printStackTrace();
+				} catch (EOFException e) {
+					// DO Nothing since it is unable to prevent to throw this exception when Client Manager is either a Mock or a Spy
 				} catch (IOException e) {
 					// To prove that exception's stack trace reported by JUnit caught IOException
 					assertTrue(false);
@@ -203,14 +207,9 @@ public class RunTest_ClientMessage_BootUp {
 	   
 	   System.out.println("\t\tTest Run "+RunTest_ClientMessage_BootUp.testID+" teardown section:");
 	   
-	   if(mockTCPserverTest.getServerSocket().isBound()) {
-		   mockTCPserverTest.getServerSocket().close();
-	   }
-	   if(testThread_readMessages != null) {
-		   if (testThread_readMessages.isAlive()) {
-			   testThread_readMessages.interrupt();
-		   }
-	   }
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
 	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);

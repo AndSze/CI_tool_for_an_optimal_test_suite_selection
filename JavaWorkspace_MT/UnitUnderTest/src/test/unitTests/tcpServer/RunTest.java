@@ -5,6 +5,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.awt.geom.Point2D;
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -26,7 +27,6 @@ import messages.ServerMessage_SensorInfoUpdate;
 import sensor.SensorImpl;
 import tcpClient.ClientManager;
 import tcpClient.TCPclient;
-
 public class RunTest {
 
 	int port_1 = 9876;
@@ -144,6 +144,9 @@ public class RunTest {
 					// To prove that exception's stack trace reported by JUnit caught ClassNotFoundException
 					assertTrue(false);
 					e.printStackTrace();
+				} catch (EOFException e) {
+					// DO Nothing since it is unable to prevent to throw this exception when Client Manager is either a Mock or a Spy
+				
 				} catch (IOException e) {
 					// To prove that exception's stack trace reported by JUnit caught IOException
 					assertTrue(false);
@@ -203,7 +206,7 @@ public class RunTest {
 		Thread.sleep(20);
 		
 		mockClientManager.sendMessage(new ClientMessage_BootUp(sensor_ID_1), mockClientManager.getOutputStream());
-		Thread.sleep(50);
+		Thread.sleep(100);
 		
 		assertTrue(receivedMessage instanceof ServerMessage_SensorInfoQuerry);
 	}
@@ -248,25 +251,25 @@ public class RunTest {
 		assertTrue(comp_engine_1.isComputeEngine_Runnable_running());
 		
 		mockClientManager.sendMessage(new ClientMessage_BootUp(sensor_ID_1), mockClientManager.getOutputStream());
-		Thread.sleep(50);
+		Thread.sleep(100);
 		
 		assertTrue(receivedMessage instanceof ServerMessage_SensorInfoQuerry);
 		
 		SensorImpl temp_client_sensor = new SensorImpl(sensor_ID_1);
 		
 		mockClientManager.sendMessage(new ClientMessage_SensorInfo(temp_client_sensor), mockClientManager.getOutputStream());
-		Thread.sleep(50);
+		Thread.sleep(100);
 		
 		assertTrue(receivedMessage instanceof ServerMessage_SensorInfoUpdate);
 		
 		// send ClientMessage_ACK message - it is required to set compute engine runnable to false
 		mockClientManager.sendMessage(new ClientMessage_ACK(sensor_ID_1), mockClientManager.getOutputStream());
-		Thread.sleep(50);
+		Thread.sleep(100);
 		
 		assertFalse(comp_engine_1.isComputeEngine_Runnable_running());
 		
 		mockClientManager.sendMessage(new ClientMessage_BootUp(sensor_ID_1), mockClientManager.getOutputStream());
-		Thread.sleep(50);
+		Thread.sleep(100);
 		
 		assertFalse(receivedMessage instanceof ServerMessage_SensorInfoQuerry);
 	}
@@ -315,13 +318,13 @@ public class RunTest {
 		assertEquals(null, 							receivedMessage);
 		
 		mockClientManager.sendMessage(new ClientMessage_BootUp(sensor_ID_1), mockClientManager.getOutputStream());
-		Thread.sleep(50);
+		Thread.sleep(100);
 		
 		assertNotEquals(null, 						receivedMessage);
 		receivedMessage_old = receivedMessage;
 		
 		mockClientManager.sendMessage(new ClientMessage_BootUp(sensor_ID_1), mockClientManager.getOutputStream());
-		Thread.sleep(50);
+		Thread.sleep(100);
 		
 		assertNotEquals(null, 						receivedMessage);
 		receivedMessage_new = receivedMessage;
@@ -370,7 +373,7 @@ public class RunTest {
 		SensorImpl temp_client_sensor = new SensorImpl(sensor_ID_2);
 		
 		mockClientManager.sendMessage(new ClientMessage_SensorInfo(temp_client_sensor), mockClientManager.getOutputStream());
-		Thread.sleep(50);
+		Thread.sleep(100);
 		
 		assertFalse(receivedMessage instanceof ServerMessage_SensorInfoUpdate);
 		assertEquals(null, 				receivedMessage);
@@ -382,14 +385,9 @@ public class RunTest {
 	   
 	   System.out.println("\t\tTest Run "+RunTest.testID+" teardown section:");
 	   
-	   if(mockTCPserverTest.getServerSocket().isBound()) {
-		   mockTCPserverTest.getServerSocket().close();
-	   }
-	   if(testThread_readMessages != null) {
-		   if (testThread_readMessages.isAlive()) {
-			   testThread_readMessages.interrupt();
-		   }
-	   }
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
 	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);

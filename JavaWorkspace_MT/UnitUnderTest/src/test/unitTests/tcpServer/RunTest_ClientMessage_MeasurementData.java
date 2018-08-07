@@ -3,7 +3,6 @@ package tcpServer;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-
 import java.awt.geom.Point2D;
 import java.io.EOFException;
 import java.io.File;
@@ -13,7 +12,6 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.concurrent.ThreadLocalRandom;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,7 +19,6 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-
 import messages.ClientMessage_ACK;
 import messages.ClientMessage_MeasurementData;
 import messages.Message_Interface;
@@ -33,7 +30,7 @@ import sensor.SensorImpl;
 import tcpClient.ClientManager;
 import tcpClient.TCPclient;
 import watchdog.Global_1h_Watchdog;
-import watchdog.Global_24h_Watchdog;
+
 
 public class RunTest_ClientMessage_MeasurementData {
 
@@ -307,7 +304,7 @@ public class RunTest_ClientMessage_MeasurementData {
 		
 		// wait until the test thread leaves the _1h_Watchdog_close_to_expire() function that contains a delay
 		while (testThread_server.getState() == Thread.State.TIMED_WAITING) {
-			Thread.sleep(200);
+			Thread.sleep(250);
 		}
 		
 		assertTrue(receivedMessage instanceof ServerMessage_Request_MeasurementData);
@@ -485,25 +482,9 @@ public class RunTest_ClientMessage_MeasurementData {
 	   
 	   System.out.println("\t\tTest Run "+RunTest_ClientMessage_MeasurementData.testID+" teardown section:");
 	   
-	   if(mockTCPserverTest.getServerSocket().isBound()) {
-		   mockTCPserverTest.getServerSocket().close();
-	   }
-	   if(Global_1h_Watchdog.getInstance().getEnabled()) {
-		   Global_1h_Watchdog.getInstance().setEnabled(false);
-		   Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(Global_1h_Watchdog.getInstance().getExpiration() * global_watchdog_scale_factor);
-
-	   }
-	   if(Global_24h_Watchdog.getInstance().getEnabled()) {
-		   Global_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(Global_24h_Watchdog.getInstance().getExpiration() * global_watchdog_scale_factor * TCPserver.getMeasurements_limit());
-		   Global_24h_Watchdog.getInstance().setEnabled(false);
-	   }
-
-	   if(testThread_readMessages != null) {
-		   if (testThread_readMessages.isAlive()) {
-			   testThread_readMessages.interrupt();
-		   }
-	   }
-
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
 
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);

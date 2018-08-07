@@ -280,7 +280,7 @@ public class RunTest_ClientMessage_ACK {
 	 * Test Name: 					test_run_3
 	 * Description: 				Verify that the run() function updates both Local_1h_watchdog and Local_24h_watchdog based on Global_1h_Watchdog time left to expiration
 	 								by setting some delay in order to synchronize Locla_1h_Watchdogs for multiple sensor that are running in parallel threads
-	 								if ClientMessage_ACK has been received when Global_1h_Watchdog time left to expiration is lower than Watchdog_Thresholds.HIGH.",
+	 								if ClientMessage_ACK has been received when Global_1h_Watchdog time left to expiration is lower than Watchdog_Thresholds.HIGH.
 	 * Internal variables TBV:		local_1h_watchdog, local_24h_watchdog
 	 * Mocked objects:				TCPclient, TCPserver, ClientManager, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ClientManager.readMessage(), ClientManager.sendMessage()
@@ -736,25 +736,9 @@ public class RunTest_ClientMessage_ACK {
 	   
 	   System.out.println("\t\tTest Run "+RunTest_ClientMessage_ACK.testID+" teardown section:");
 	   
-	   if(mockTCPserverTest.getServerSocket().isBound()) {
-		   mockTCPserverTest.getServerSocket().close();
-	   }
-	   if(Global_1h_Watchdog.getInstance().getEnabled()) {
-		   Global_1h_Watchdog.getInstance().setEnabled(false);
-		   Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(Global_1h_Watchdog.getInstance().getExpiration() * global_watchdog_scale_factor);
-
-	   }
-	   if(Global_24h_Watchdog.getInstance().getEnabled()) {
-		   Global_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(Global_24h_Watchdog.getInstance().getExpiration() * global_watchdog_scale_factor * TCPserver.getMeasurements_limit());
-		   Global_24h_Watchdog.getInstance().setEnabled(false);
-	   }
-
-	   if(testThread_readMessages != null) {
-		   if (testThread_readMessages.isAlive()) {
-			   testThread_readMessages.interrupt();
-		   }
-	   }
-
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
 
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);

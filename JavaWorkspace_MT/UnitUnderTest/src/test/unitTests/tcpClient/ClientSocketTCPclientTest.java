@@ -22,6 +22,8 @@ import org.mockito.stubbing.Answer;
 
 import tcpServer.ComputeEngine_Runnable;
 import tcpServer.TCPserver;
+import tcpServer.TCPserver_Teardown;
+import watchdog.Local_1h_Watchdog;
 
 public class ClientSocketTCPclientTest {
 
@@ -60,7 +62,9 @@ public class ClientSocketTCPclientTest {
 	
 	@Before
 	public void before() throws IOException {
+		
 		tcpclient_1 = new TCPclient();
+		tcpclient_2 = new TCPclient();
 		
 		// mock Server Socket to enable the Client Socket to establish connection
 		mockTCPserverTest = mock(TCPserver.class);
@@ -98,10 +102,6 @@ public class ClientSocketTCPclientTest {
                 return mockServerThread;
             }
 		}).when(mockTCPserverTest).startServer(Matchers.any(ServerSocket.class));
-
-		if(CloseClientTCPclientTest.testID == 3) {
-			tcpclient_2 = new TCPclient();
-		}
 		
 		System.out.println("\t\tTest Run "+ClientSocketTCPclientTest.testID+" Purpose:");
 		System.out.println(testPurpose[(ClientSocketTCPclientTest.testID-1)]);
@@ -212,9 +212,6 @@ public class ClientSocketTCPclientTest {
 	  
 	   System.out.println("\t\tTest Run "+ClientSocketTCPclientTest.testID+" teardown section:");
 	   	   
-	   // Time offset between consecutive test runs execution
-	   Thread.sleep(100);
-	   
 	   if(tcpclient_1 != null) {
 		   if(tcpclient_1.isClientRunning()){
 			   tcpclient_1.closeClient(tcpclient_1);
@@ -226,15 +223,20 @@ public class ClientSocketTCPclientTest {
 		   
 		   }
 	   }
-	   if(mockTCPserverTest != null){
-		   if(!mockTCPserverTest.getServerSocket().isClosed()) {
-			   mockTCPserverTest.getServerSocket().close();
-		   }
+	   if(Local_1h_Watchdog.getInstance() != null) {
+		   Local_1h_Watchdog.getInstance().setM_instance(null);
 	   }
 	   
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
+
+	   // Time offset between consecutive test runs execution
+	   Thread.sleep(100);
+	   
+	   System.out.println("");
 	   incrementTestID();
-    }
-	
+   }
 	
 }
 

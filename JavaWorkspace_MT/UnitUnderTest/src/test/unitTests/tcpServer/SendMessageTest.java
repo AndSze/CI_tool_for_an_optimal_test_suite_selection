@@ -70,7 +70,7 @@ public class SendMessageTest {
 		// mocked objects 
 		mockTCPserverTest = mock(TCPserver.class);
 		mock_CER_ClientSocket = mock(Socket.class);
-		mockClientManager = mock(ClientManager.class);
+		mockClientManager = Mockito.spy(ClientManager.class);
 		mockTCPclient = mock(TCPclient.class);
 		
 		// create a real Server Socket for the TCPserver mock to enable the Client Socket to set up the TCP connection
@@ -138,9 +138,9 @@ public class SendMessageTest {
 		// create ObjectOutputStream on the client side to activate mock_CER_ClientSocket = servSocket.accept() in mockServerThread
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, false);
-		Thread.sleep(20);
 		
 		test_client_Thread = new Thread(new Runnable() {
 			//Runnable serverTask = new Runnable() {
@@ -150,7 +150,7 @@ public class SendMessageTest {
 					obj_in_stream = new ObjectInputStream(mockTCPclient.getClientSocket().getInputStream());
 					when(mockClientManager.getInputReaderStream()).thenReturn(obj_in_stream);
 					
-					receivedMessage = (Message_Interface) mockClientManager.getInputReaderStream().readObject();
+					receivedMessage = (Message_Interface) mockClientManager.readMessage(mockClientManager.getInputReaderStream());
 				} catch (ClassNotFoundException e) {
 					// To prove that exception's stack trace reported by JUnit caught ClassNotFoundException
 					assertTrue(false);
@@ -195,6 +195,7 @@ public class SendMessageTest {
 		// create ObjectOutputStream on the client side to activate mock_CER_ClientSocket = servSocket.accept() in mockServerThread
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, false);
 		Thread.sleep(20);
@@ -231,9 +232,9 @@ public class SendMessageTest {
 		// create ObjectOutputStream on the client side to activate mock_CER_ClientSocket = servSocket.accept() in mockServerThread
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, false);
-		Thread.sleep(20);
 		
 		@SuppressWarnings("serial")
 		class ClientMessage_NotSerializable extends Message_Interface{
@@ -255,20 +256,10 @@ public class SendMessageTest {
 	   
 	   System.out.println("\t\tTest Run "+SendMessageTest.testID+" teardown section:");
 	   
-	   if(mockTCPserverTest.getServerSocket().isBound()) {
-		   mockTCPserverTest.getServerSocket().close();
-	   }
-	   if (mockClientManager.getInputReaderStream() != null) {
-		   mockClientManager.closeInStream();
-	   }
-	   if (mockClientManager.getOutputStream() != null){
-		   mockClientManager.closeOutStream();
-	   }
-	   if(test_client_Thread != null) {
-		   if (test_client_Thread.isAlive()) {
-			   test_client_Thread.interrupt();
-		   }
-	   }
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
+	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);
 	   

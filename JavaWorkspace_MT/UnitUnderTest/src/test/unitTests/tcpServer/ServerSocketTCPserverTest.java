@@ -79,12 +79,12 @@ public class ServerSocketTCPserverTest {
     /***********************************************************************************************************
 	 * Test Name: 				test_run_2
 	 * Description: 			Verify that in case of an attempt to close a server socket that runs a thread currently blocked in serverSocket.accept(), the Socket Exception is returned
-	 * Internal variables TBV: 	serverSocket
 	 * Exceptions thrown TBV:	SocketException
+	 * Exceptions thrown:		IOException, InterruptedException 
 	 ***********************************************************************************************************/
 	@SuppressWarnings("static-access")
 	@Test()
-	public void test_run_2() throws IOException {
+	public void test_run_2() throws IOException, InterruptedException {
 		
 		tcpserver_1 = new TCPserver(port_1);
 		assertTrue(tcpserver_1.get_ServerRunning());
@@ -109,6 +109,8 @@ public class ServerSocketTCPserverTest {
 		        }
 		});
 		testThread.start();
+		
+		Thread.sleep(20);
 	}
 	
     /***********************************************************************************************************
@@ -173,21 +175,25 @@ public class ServerSocketTCPserverTest {
     public void teardown() throws IOException, InterruptedException{
 	  
 	   System.out.println("\t\tTest Run "+ServerSocketTCPserverTest.testID+" teardown section:");
+	   
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(tcpserver_1);
+	   
+	   if(serverSocket_1 != null) {
+		   if(serverSocket_1.isBound()) {
+			   serverSocket_1.close();
+		   }
+	   }
+	   
+	   if(serverSocket_2 != null) {
+		   if(serverSocket_2.isBound()) {
+			   serverSocket_2.close();
+		   }
+	   }
 	   	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(1000);
-	   
-	   if(tcpserver_1 != null) {
-		if(TCPserver.get_ServerRunning()){
-			   tcpserver_1.closeServer(tcpserver_1, port_1);
-		   }
-	   }
-	   if(serverSocket_1 != null){
-		   serverSocket_1.close();
-	   }
-	   if(serverSocket_2 != null){
-		   serverSocket_2.close();
-	   }
 	   
 	   incrementTestID();
     }

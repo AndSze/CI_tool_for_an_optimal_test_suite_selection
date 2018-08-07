@@ -1,6 +1,8 @@
 package tcpServer;
 
 import static org.junit.Assert.*;
+
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -9,7 +11,6 @@ import java.net.Socket;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
 import messages.ClientMessage_BootUp;
 import messages.Message_Interface;
 import messages.ServerMessage_SensorInfoQuerry;
@@ -20,7 +21,6 @@ import static org.mockito.Mockito.when;;
 
 public class StartServerTCPserverTest {
 	
-		
 	int port_1 = 9876;
 	TCPserver tcpserver_1 = null;
 	int port_2 = 9877;
@@ -31,6 +31,8 @@ public class StartServerTCPserverTest {
 	ClientManager mockClinetManagerTest = null;
 	TCPserver mockTCPServerTest = null;
 	final String serverHostName = "localhost";
+	SensorImpl sensor = null;
+	int sensor_ID_1 = 1;
 	
 	String[] testPurpose = { 	"Verify that once the startServer function is called, there is a new server thread created",
 								"Verify that once the startServer function is called, the server thread starts and it has the RUNNABLE thread state. Verify also that once the server socket is closed, the server thread state changes to the TERMINATED thread state",
@@ -45,10 +47,14 @@ public class StartServerTCPserverTest {
 	}	
 	
 	@Before
-	public void before() throws IOException {
+	public void before() throws IOException, ClassNotFoundException {
 		
 		tcpserver_1 = new TCPserver();
 		serverSocket_1 = new ServerSocket();
+		
+		TCPserver.processing_engine = new ComputeEngine_Processing();
+		sensor = new SensorImpl(sensor_ID_1);
+		TCPserver.Server_Sensors_LIST = TCPserver.processing_engine.updateServerSensorList(sensor);
 		
 		if(StartServerTCPserverTest.testID == 3) {
 			mockClinetManagerTest = mock(ClientManager.class);
@@ -227,6 +233,8 @@ public class StartServerTCPserverTest {
 			clientSocket = new Socket(serverHostName, port_1);
 		    try {
 		        when(mockClinetManagerTest.getOutputStream()).thenReturn(new ObjectOutputStream(clientSocket.getOutputStream()));
+			} catch (EOFException e) {
+				// DO Nothing since it is unable to prevent to throw this exception when Client Manager is either a Mock or a Spy
 		    } catch (IOException e) {
 		        fail(e.getMessage());
 		    }
@@ -251,16 +259,25 @@ public class StartServerTCPserverTest {
 	public void teardown() throws IOException, InterruptedException{
 	  
 	   System.out.println("\t\tTest Run "+StartServerTCPserverTest.testID+" teardown section:");
+	   
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(tcpserver_1);
+	   
+	   if(serverSocket_1 != null){
+		   if(serverSocket_1.isBound()) {
+			   serverSocket_1.close();
+		   }
+	   }
+	   if(serverSocket_2 != null){
+		   if(serverSocket_2.isBound()) {
+			   serverSocket_2.close();
+		   }
+	   }
+	   
 	   	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);
-	   
-	   if(serverSocket_1 != null){
-		   serverSocket_1.close();
-	   }
-	   if(serverSocket_2 != null){
-		   serverSocket_2.close();
-	   }
 	   
 	   incrementTestID();
 	}

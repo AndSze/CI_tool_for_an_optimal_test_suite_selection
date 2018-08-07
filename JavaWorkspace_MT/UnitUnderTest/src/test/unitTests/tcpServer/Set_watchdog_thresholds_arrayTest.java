@@ -16,6 +16,7 @@ import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import messages.Message_Interface;
+import sensor.SensorImpl;
 import tcpClient.ClientManager;
 import tcpClient.TCPclient;
 
@@ -23,6 +24,7 @@ public class Set_watchdog_thresholds_arrayTest {
 	
 	int port_1 = 9876;
 	int sensor_ID_1 = 1;
+	SensorImpl sensor = null;
 	final String serverHostName = "localhost";
 	double global_watchdog_scale_factor = 1.0;
 	ComputeEngine_Runnable comp_engine_1 = null;
@@ -61,7 +63,11 @@ public class Set_watchdog_thresholds_arrayTest {
 	}
 	
 	@Before
-	public void before() throws IOException {
+	public void before() throws IOException, ClassNotFoundException {
+		
+		TCPserver.processing_engine = new ComputeEngine_Processing();
+		sensor = new SensorImpl(sensor_ID_1);
+		TCPserver.Server_Sensors_LIST = TCPserver.processing_engine.updateServerSensorList(sensor);
 		
 		// mocked objects 
 		mockTCPserverTest = mock(TCPserver.class);
@@ -116,10 +122,10 @@ public class Set_watchdog_thresholds_arrayTest {
 	 * Test Name: 				test_run_1
 	 * Description: 			Verify default watchdog threshold values in watchdog_thresholds_array. This array has default values if watchdog_scale_factor equals 1
 	 * Internal variables TBV: 	watchdog_thresholds_array
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_1() throws IOException {
+	public void test_run_1() throws IOException, InterruptedException {
 		
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
@@ -130,6 +136,7 @@ public class Set_watchdog_thresholds_arrayTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
@@ -149,10 +156,10 @@ public class Set_watchdog_thresholds_arrayTest {
 	 * Test Name: 				test_run_2
 	 * Description: 			Verify that watchdog threshold values in watchdog_thresholds_array are scaled based on watchdog_scale_factor if it does not equal 1
 	 * Internal variables TBV: 	watchdog_thresholds_array
-     * Exceptions thrown: 		IOException
+     * Exceptions thrown: 		IOException, InterruptedException 
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_2() throws IOException {
+	public void test_run_2() throws IOException, InterruptedException {
 		
 		double temp_watchdog_scale_factor_1 = 0.01;
 		
@@ -165,6 +172,7 @@ public class Set_watchdog_thresholds_arrayTest {
 		
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, temp_watchdog_scale_factor_1, true);
 		
@@ -198,15 +206,12 @@ public class Set_watchdog_thresholds_arrayTest {
 	   
 	   System.out.println("\t\tTest Run "+Set_watchdog_thresholds_arrayTest.testID+" teardown section:");
 	   
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
+	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);
-	   
-	   if (mockClientManager.getOutputStream() != null){
-		   mockClientManager.closeOutStream();
-	   }
-	   if (mockTCPserverTest.getServerSocket().isBound()) {
-		   mockTCPserverTest.getServerSocket().close();
-	   }
 	   
 	   System.out.println("");
 	   incrementTestID();
