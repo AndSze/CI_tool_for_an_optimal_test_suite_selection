@@ -33,7 +33,7 @@ import tcpServer.TCPserver_Teardown;
 import watchdog.Local_1h_Watchdog;
 
 
-public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
+public class MessagesHandler_ServerMessage_SensorInfoUpdateTest {
 
 	ClientManager clientManager_1 = null;
     int port_1 = 9876;
@@ -74,7 +74,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		MessagesHandlerTest_ServerMessage_SensorInfoUpdate.testID += 1;
+		MessagesHandler_ServerMessage_SensorInfoUpdateTest.testID += 1;
 	}
 	
 	@SuppressWarnings("static-access")
@@ -133,7 +133,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		// Mockito.doAnswer - to mock void method to do something (mock the behavior despite being void) - in this case it is used for TCPserver.startServer();
 		
 		// there is not need to verify messages sent by the Client Manager in the last 2 test runs
-		if(MessagesHandlerTest_ServerMessage_SensorInfoUpdate.testID < 4) {
+		if(MessagesHandler_ServerMessage_SensorInfoUpdateTest.testID < 4) {
 			// test thread that listens for messages on the server side
 			testThread_server = new Thread(new Runnable() {
 			//Runnable serverTask = new Runnable() {
@@ -161,9 +161,9 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 			}
 		});
 		
-		System.out.println("\t\tTest Run "+MessagesHandlerTest_ServerMessage_SensorInfoUpdate.testID+" Purpose:");
-		System.out.println(testPurpose[(MessagesHandlerTest_ServerMessage_SensorInfoUpdate.testID-1)]);
-		System.out.println("\t\tTest Run "+MessagesHandlerTest_ServerMessage_SensorInfoUpdate.testID+" Logic:");
+		System.out.println("\t\tTest Run "+MessagesHandler_ServerMessage_SensorInfoUpdateTest.testID+" Purpose:");
+		System.out.println(testPurpose[(MessagesHandler_ServerMessage_SensorInfoUpdateTest.testID-1)]);
+		System.out.println("\t\tTest Run "+MessagesHandler_ServerMessage_SensorInfoUpdateTest.testID+" Logic:");
 	}
 	
    /***********************************************************************************************************
@@ -228,7 +228,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 												temp_sens_sent_1.getSensorState(),
 												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
 												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
-		Thread.sleep(20);
+		Thread.sleep(50);
 		
 		temp_sens_received_1 = mockTCPclientTest.searchInClientSensorList(sensorID);
 		
@@ -270,7 +270,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 												temp_sens_sent_2.getSensorState(),
 												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
 												temp_sens_sent_2.getLocal_watchdog_scale_factor(), temp_sens_sent_2.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
-		Thread.sleep(20);
+		Thread.sleep(50);
 		
 		temp_sens_received_2 = mockTCPclientTest.searchInClientSensorList(sensorID);
 		
@@ -287,7 +287,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensorID, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
-		Thread.sleep(20);
+		Thread.sleep(50);
 	}
 	/***********************************************************************************************************
 	 * Test Name: 					test_run_2
@@ -342,7 +342,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 												temp_sens_sent_1.getSensorState(),
 												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
 												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
-		Thread.sleep(20);
+		Thread.sleep(50);
 		
 		temp_sens_received_1 = mockTCPclientTest.searchInClientSensorList(sensorID);
 		
@@ -353,7 +353,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensorID, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
-		Thread.sleep(20);
+		Thread.sleep(50);
 	}	
 	
 	/***********************************************************************************************************
@@ -409,7 +409,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 												temp_sens_sent_1.getSensorState(),
 												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
 												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
-		Thread.sleep(20);
+		Thread.sleep(50);
 		
 		temp_sens_received_1 = mockTCPclientTest.searchInClientSensorList(sensorID);
 		
@@ -468,7 +468,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 												temp_sens_sent_1.getSensorState(),
 												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
 												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
-		Thread.sleep(20);
+		Thread.sleep(50);
 		
 		assertEquals(sens_watchdog_scale_factor_1, 			TCPclient.watchdogs_scale_factor, 0.01);
 		assertEquals(measurement_limit_1, 					TCPclient.measurements_limit, 0.01);
@@ -477,7 +477,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensorID, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
-		Thread.sleep(20);
+		Thread.sleep(50);
 	}	
 	
 	/***********************************************************************************************************
@@ -536,7 +536,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoUpdate {
 	@After
 	public void teardown() throws IOException, InterruptedException{
 	   
-	   System.out.println("\t\tTest Run "+MessagesHandlerTest_ServerMessage_SensorInfoUpdate.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+MessagesHandler_ServerMessage_SensorInfoUpdateTest.testID+" teardown section:");
 	   
 	   if (clientManager_1.getInputReaderStream() != null) {
 		   clientManager_1.closeInStream();

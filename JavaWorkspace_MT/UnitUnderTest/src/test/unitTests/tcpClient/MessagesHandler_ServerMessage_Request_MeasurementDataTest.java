@@ -3,6 +3,7 @@ package tcpClient;
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -22,12 +23,12 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
 import messages.ClientMessage_BootUp;
 import messages.ClientMessage_MeasurementData;
-import messages.ClientMessage_MeasurementHistory;
+import messages.ClientMessage_SensorInfo;
 import messages.Message_Interface;
 import messages.SensorState;
 import messages.ServerMessage_ACK;
 import messages.ServerMessage_Request_MeasurementData;
-import messages.ServerMessage_Request_MeasurementHistory;
+import messages.ServerMessage_SensorInfoQuerry;
 import messages.ServerMessage_SensorInfoUpdate;
 import sensor.MeasurementData;
 import sensor.SensorImpl;
@@ -36,7 +37,7 @@ import tcpServer.TCPserver;
 import tcpServer.TCPserver_Teardown;
 import watchdog.Local_1h_Watchdog;
 
-public class MessagesHandlerTest_ServerMessage_Request_MeasurementHistory {
+public class MessagesHandler_ServerMessage_Request_MeasurementDataTest {
 
 	ClientManager clientManager_1 = null;
     int port_1 = 9876;
@@ -66,14 +67,15 @@ public class MessagesHandlerTest_ServerMessage_Request_MeasurementHistory {
 	ExecutorService executor = Executors.newSingleThreadExecutor();
 	private final ThreadPoolExecutor auxiliaryServerThreadExecutor = new ThreadPoolExecutor(8, 8, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
 	
-	String[] testPurpose = { "Verify that the messagesHandler() function responds to ServerMessage_Request_MeasurementHistory with ClientMessage_MeasurementHistory if the wait_for_measurement_history flag is set to true as a result of reaching of the mesurement limit by the latest ServerMessage_Request_MeasurementData",
-							 "Verify that the messagesHandler() function ignores ServerMessage_Request_MeasurementHistory if the wait_for_measurement_history flag is NOT set to true",
-							 "Verify that the messagesHandler() function reads all measurement data from the current cycle and sends it in ClientMessage_MeasurementHistory. \nVerify also that the state machine of messagesHandler() resets the sensor instance upon completion of ServerMessage_Request_MeasurementHistory processing"};
+	String[] testPurpose = { "Verify that the messagesHandler() function responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData if the wait_for_measurement_data flag is set to true as a result of the prevoius processing of ServerMessage_SensorInfoUpdate by the state machine of messagesHandler()",
+							 "Verify that the messagesHandler() function ignores ServerMessage_Request_MeasurementData if the wait_for_measurement_data flag is NOT set to true",
+							 "Verify that the messagesHandler() function generates a new measurement that is sent in ClientMessage_MeasurementData. \nVerify also that the sensor instance in Client_Sensors_LIST is updated with the newest measurement and its numberOfMeasurements is increased.",
+							 "Verify that the messagesHandler() function sets back the wait_for_measurement_data to false, hence it is not possible to send more than one measurement data within one TCP connection cycle"};
 	
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		MessagesHandlerTest_ServerMessage_Request_MeasurementData.testID += 1;
+		MessagesHandler_ServerMessage_Request_MeasurementDataTest.testID += 1;
 	}
 	
 	@SuppressWarnings("static-access")
@@ -166,17 +168,17 @@ public class MessagesHandlerTest_ServerMessage_Request_MeasurementHistory {
 		temp_sens_sent_1 = new SensorImpl(sensorID, new Point2D.Float(sensor_coordinates_array_1[0][0], sensor_coordinates_array_1[0][1]), softwareImageID_1, measurement_limit_1);
 		temp_sens_sent_1.setSensorState(sens_state_1);
 		
-		System.out.println("\t\tTest Run "+MessagesHandlerTest_ServerMessage_Request_MeasurementHistory.testID+" Purpose:");
-		System.out.println(testPurpose[(MessagesHandlerTest_ServerMessage_Request_MeasurementHistory.testID-1)]);
-		System.out.println("\t\tTest Run "+MessagesHandlerTest_ServerMessage_Request_MeasurementHistory.testID+" Logic:");
+		System.out.println("\t\tTest Run "+MessagesHandler_ServerMessage_Request_MeasurementDataTest.testID+" Purpose:");
+		System.out.println(testPurpose[(MessagesHandler_ServerMessage_Request_MeasurementDataTest.testID-1)]);
+		System.out.println("\t\tTest Run "+MessagesHandler_ServerMessage_Request_MeasurementDataTest.testID+" Logic:");
 	}
 
    /***********************************************************************************************************
 	 * Test Name: 					test_run_1
-	 * Description: 				Verify that the messagesHandler() function responds to ServerMessage_Request_MeasurementHistory with ClientMessage_MeasurementHistory
-	  								if the wait_for_measurement_history flag is set to true as a result of reaching of the mesurement limit by the latest ServerMessage_Request_MeasurementData
-	 * External variables TBV:		ServerMessage_Request_MeasurementHistory, ClientMessage_MeasurementHistory
-	 * Local variables TBV:			wait_for_measurement_history
+	 * Description: 				Verify that the messagesHandler() function responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData
+	  								if the wait_for_measurement_data flag is set to true as a result of the previous processing of ServerMessage_SensorInfoUpdate by the state machine of messagesHandler()
+	 * External variables TBV:		ClientMessage_MeasurementData, ServerMessage_Request_MeasurementData
+	 * Local variables TBV:			wait_for_measurement_data
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
@@ -209,44 +211,36 @@ public class MessagesHandlerTest_ServerMessage_Request_MeasurementHistory {
 		when(mockComputeEngine_Runnable.getLocal_1h_watchdog()).thenReturn(received_Local_1h_watchdog);
 		temp_sens_sent_1.setSensor_watchdog_scale_factor(sens_watchdog_scale_factor_1);
 		
-		for (int measurements = 0; measurements < temp_sens_sent_1.getSensor_m_history_array_size(); measurements++) {
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
+												temp_sens_sent_1.getSensorState(),
+												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
+												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(50);
 		
-			mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
-													temp_sens_sent_1.getSensorState(),
-													mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
-													temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
-			Thread.sleep(20);
-			
-			// change sensor state to SensorState.OPERATIONAL what will result in setting wait_for_measurement_data to true in the state machine statement that processes the next ServerMessage_SensorInfoUpdate
-			SensorState sens_state_2 = SensorState.OPERATIONAL;
-			temp_sens_sent_1.setSensorState(sens_state_2);
-			
-			mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
-													temp_sens_sent_1.getSensorState(),
-													mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
-													temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
-			Thread.sleep(20);
-			
-			mockComputeEngine_Runnable.sendMessage(new ServerMessage_Request_MeasurementData(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
-			Thread.sleep(20);
-			
-			assertTrue(receivedMessage instanceof ClientMessage_MeasurementData);
-		}
-	
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_Request_MeasurementHistory(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
-		Thread.sleep(20);
+		// change sensor state to SensorState.OPERATIONAL what will result in setting wait_for_measurement_data to true in the state machine statement that processes the next ServerMessage_SensorInfoUpdate
+		SensorState sens_state_2 = SensorState.OPERATIONAL;
+		temp_sens_sent_1.setSensorState(sens_state_2);
 		
-		assertTrue(receivedMessage instanceof ClientMessage_MeasurementHistory);
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
+												temp_sens_sent_1.getSensorState(),
+												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
+												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(50);
+		
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_Request_MeasurementData(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(50);
+		
+		assertTrue(receivedMessage instanceof ClientMessage_MeasurementData);
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
-		Thread.sleep(20);
+		Thread.sleep(50);
 	}
 	
    /***********************************************************************************************************
 	 * Test Name: 					test_run_2
-	 * Description: 				Verify that the messagesHandler() function ignores ServerMessage_Request_MeasurementHistory if the wait_for_measurement_history flag is NOT set to true
-	 * Local variables TBV:			wait_for_measurement_history
+	 * Description: 				Verify that the messagesHandler() function ignores ServerMessage_Request_MeasurementData if the wait_for_measurement_data flag is NOT set to true
+	 * Local variables TBV:			wait_for_measurement_data
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
@@ -283,7 +277,7 @@ public class MessagesHandlerTest_ServerMessage_Request_MeasurementHistory {
 												temp_sens_sent_1.getSensorState(),
 												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
 												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
-		Thread.sleep(20);
+		Thread.sleep(50);
 		
 		// do not change sensor state to SensorState.OPERATIONAL what will result in omitting the state machine statement that sets wait_for_measurement_data to true
 		SensorState sens_state_2 = SensorState.PRE_OPERATIONAL;
@@ -293,26 +287,25 @@ public class MessagesHandlerTest_ServerMessage_Request_MeasurementHistory {
 												temp_sens_sent_1.getSensorState(),
 												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
 												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
-		Thread.sleep(20);
+		Thread.sleep(50);
 		
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_Request_MeasurementHistory(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
-		Thread.sleep(20);
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_Request_MeasurementData(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(50);
 		
-		// ClientMessage_BootUp is the response for ServerMessage_SensorInfoUpdate what means that ServerMessage_Request_MeasurementHistory was ignored
+		// ClientMessage_BootUp is the response for ServerMessage_SensorInfoUpdate what means that ServerMessage_Request_MeasurementData was ignored
 		assertTrue(receivedMessage instanceof ClientMessage_BootUp);
 		
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
-		Thread.sleep(20);
+		Thread.sleep(50);
 	}
-	
+
    /***********************************************************************************************************
 	 * Test Name: 					test_run_3
-	 * Description: 				Verify that the messagesHandler() function reads all measurement data from the current cycle and sends it in ClientMessage_MeasurementHistory. 
-	 								Verify also that the state machine of messagesHandler() resets the sensor instance upon completion of ServerMessage_Request_MeasurementHistory processing
-	 * External variables TBV:		ClientMessage_MeasurementData, ServerMessage_Request_MeasurementData, ClientMessage_MeasurementHistory, ClientMessage_MeasurementHistory
-	 								SensorImpl.numberOfMeasurements, MeasurementData.pm25, MeasurementData.pm10, MeasurementData.humidity, MeasurementData.temperature, MeasurementData.pressure,
-	 								SensorImpl.sensor_m_history,  Client_Sensors_LIST
+	 * Description: 				Verify that the messagesHandler() function generates a new measurement that is sent in ClientMessage_MeasurementData.
+	 								Verify also that the sensor instance in Client_Sensors_LIST is updated with the newest measurement and its numberOfMeasurements is increased. 
+	 * External variables TBV:		ClientMessage_MeasurementData, ServerMessage_Request_MeasurementData, Client_Sensors_LIST,
+	 								SensorImpl.numberOfMeasurements, MeasurementData.pm25, MeasurementData.pm20, MeasurementData.humidity, MeasurementData.temperature, MeasurementData.pressure
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException
@@ -335,7 +328,7 @@ public class MessagesHandlerTest_ServerMessage_Request_MeasurementHistory {
 		// start test Thread on the server side that is responsible for listening messages sent by TCPclient
 		testThread_server.start();
 		Thread.sleep(20);
-		
+	
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver and re-sending particular responses that are verified in the consecutive test runs
 		// method under test messagesHandler() is called in this thread
 		testThread_client.start();
@@ -346,72 +339,130 @@ public class MessagesHandlerTest_ServerMessage_Request_MeasurementHistory {
 		when(mockComputeEngine_Runnable.getLocal_1h_watchdog()).thenReturn(received_Local_1h_watchdog);
 		temp_sens_sent_1.setSensor_watchdog_scale_factor(sens_watchdog_scale_factor_1);
 		
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
+												temp_sens_sent_1.getSensorState(),
+												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
+												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(50);
+		
+		// change sensor state to SensorState.OPERATIONAL what will result in setting wait_for_measurement_data to true in the state machine statement that processes the next ServerMessage_SensorInfoUpdate
+		SensorState sens_state_2 = SensorState.OPERATIONAL;
+		temp_sens_sent_1.setSensorState(sens_state_2);
+		
 		SensorImpl temp_sens_received_1 = mockTCPclientTest.searchInClientSensorList(sensor_ID_1);
-		int number_of_measurements_0 = 0;
-		assertEquals(number_of_measurements_0, 			temp_sens_received_1.getNumberOfMeasurements());
+		int number_of_measurements_1 = 0;
+		assertEquals(number_of_measurements_1, 			temp_sens_received_1.getNumberOfMeasurements());
 		
-		for (int measurements = 0; measurements < temp_sens_sent_1.getSensor_m_history_array_size(); measurements++) {
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
+												temp_sens_sent_1.getSensorState(),
+												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
+												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(50);
 		
-			mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
-													temp_sens_sent_1.getSensorState(),
-													mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
-													temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
-			Thread.sleep(20);
-			
-			// change sensor state to SensorState.OPERATIONAL what will result in setting wait_for_measurement_data to true in the state machine statement that processes the next ServerMessage_SensorInfoUpdate
-			SensorState sens_state_2 = SensorState.OPERATIONAL;
-			temp_sens_sent_1.setSensorState(sens_state_2);
-			
-			mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
-													temp_sens_sent_1.getSensorState(),
-													mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
-													temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
-			Thread.sleep(20);
-			
-			mockComputeEngine_Runnable.sendMessage(new ServerMessage_Request_MeasurementData(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
-			Thread.sleep(30);
-			
-			assertTrue(receivedMessage instanceof ClientMessage_MeasurementData);
-			
-			temp_sens_received_1 = mockTCPclientTest.searchInClientSensorList(sensor_ID_1);
-			
-			assertEquals((measurements + 1), 			temp_sens_received_1.getNumberOfMeasurements());
-			
-		}
-	
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_Request_MeasurementData(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(50);
+		
+		assertTrue(receivedMessage instanceof ClientMessage_MeasurementData);
+		
 		temp_sens_received_1 = mockTCPclientTest.searchInClientSensorList(sensor_ID_1);
-		MeasurementData[] sens_received_measurement_hist = temp_sens_received_1.readMeasurementHistory();
+		MeasurementData sens_received_measurement_data = temp_sens_received_1.readLastMeasurementData();
 		
-		mockComputeEngine_Runnable.sendMessage(new ServerMessage_Request_MeasurementHistory(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
-		Thread.sleep(20);
+		ClientMessage_MeasurementData received_message_with_measurement_data = (ClientMessage_MeasurementData) receivedMessage;
 		
-		assertTrue(receivedMessage instanceof ClientMessage_MeasurementHistory);
-				
-		ClientMessage_MeasurementHistory received_message_with_measurement_history = (ClientMessage_MeasurementHistory) receivedMessage;
+		assertEquals(received_message_with_measurement_data.getMeasurementData().getPm10(), 		sens_received_measurement_data.getPm10(), 0.01);
+		assertEquals(received_message_with_measurement_data.getMeasurementData().getPm25(), 		sens_received_measurement_data.getPm25(), 0.01);
+		assertEquals(received_message_with_measurement_data.getMeasurementData().getPressure(), 	sens_received_measurement_data.getPressure());
+		assertEquals(received_message_with_measurement_data.getMeasurementData().getHumidity(),		sens_received_measurement_data.getHumidity());
+		assertEquals(received_message_with_measurement_data.getMeasurementData().getTemperature(), 	sens_received_measurement_data.getTemperature());
 		
-		for (int measurements = 0; measurements < temp_sens_sent_1.getSensor_m_history_array_size(); measurements++) {
-			MeasurementData sens_received_measurement_data = sens_received_measurement_hist[measurements];
-			MeasurementData received_message_with_measurement_data = received_message_with_measurement_history.getMes_history()[measurements];
-			assertEquals(received_message_with_measurement_data.getPm10(), 			sens_received_measurement_data.getPm10(), 0.01);
-			assertEquals(received_message_with_measurement_data.getPm25(), 			sens_received_measurement_data.getPm25(), 0.01);
-			assertEquals(received_message_with_measurement_data.getPressure(), 		sens_received_measurement_data.getPressure());
-			assertEquals(received_message_with_measurement_data.getHumidity(),		sens_received_measurement_data.getHumidity());
-			assertEquals(received_message_with_measurement_data.getTemperature(), 	sens_received_measurement_data.getTemperature());
-		}
+		int number_of_measurements_2 = 1;
+		assertEquals(number_of_measurements_2, 			temp_sens_received_1.getNumberOfMeasurements());
 		
-		// verify that resetSensor() function has been called what causes removing all measurements from sensor's memory
-		assertEquals(number_of_measurements_0, 			temp_sens_received_1.getNumberOfMeasurements());
-	
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(50);
+	}
+
+   /***********************************************************************************************************
+	 * Test Name: 					test_run_4
+	 * Description: 				Verify that the messagesHandler() function sets back the wait_for_measurement_data to false,
+	  								hence it is not possible to send more than one measurement data within one TCP connection cycle
+	 * External variables TBV:		ClientMessage_MeasurementData, ServerMessage_Request_MeasurementData
+	 * Local variables TBV:			wait_for_measurement_data
+	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
+	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
+     * Exceptions thrown: 			IOException, InterruptedException
+	 ***********************************************************************************************************/
+	@Test
+	public void test_run_4() throws IOException, InterruptedException {
+		
+		// bind server socket and start TCPserver
+		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
+		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
+		mockServerThread.start();
+		
+		TCPclientSocket = new Socket(serverHostName, port_1);
+		when(mockTCPclientTest.getClientSocket()).thenReturn(TCPclientSocket);	
+		
+		clientManager_1 = clientManager_1.initClientManager(mockTCPclientTest.getClientSocket(), sensor_ID_1);
 		Thread.sleep(20);
+		
+		// start test Thread on the server side that is responsible for listening messages sent by TCPclient
+		testThread_server.start();
+		Thread.sleep(20);
+	
+		// start test Thread on the client side that is responsible for listening messages sent by TCPserver and re-sending particular responses that are verified in the consecutive test runs
+		// method under test messagesHandler() is called in this thread
+		testThread_client.start();
+		Thread.sleep(20);
+		
+		double sens_watchdog_scale_factor_1 = 0.01;
+		double received_Local_1h_watchdog = 120 * sens_watchdog_scale_factor_1;
+		when(mockComputeEngine_Runnable.getLocal_1h_watchdog()).thenReturn(received_Local_1h_watchdog);
+		temp_sens_sent_1.setSensor_watchdog_scale_factor(sens_watchdog_scale_factor_1);
+		
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
+												temp_sens_sent_1.getSensorState(),
+												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
+												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(20);
+		
+		// change sensor state to SensorState.OPERATIONAL what will result in setting wait_for_measurement_data to true in the state machine statement that processes the next ServerMessage_SensorInfoUpdate
+		SensorState sens_state_2 = SensorState.OPERATIONAL;
+		temp_sens_sent_1.setSensorState(sens_state_2);
+		
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoUpdate(temp_sens_sent_1.getSensorID(), temp_sens_sent_1.getCoordinates(), temp_sens_sent_1.getSoftwareImageID(), 
+												temp_sens_sent_1.getSensorState(),
+												mockComputeEngine_Runnable.getLocal_1h_watchdog(), mockComputeEngine_Runnable.getLocal_24h_watchdog(),
+												temp_sens_sent_1.getLocal_watchdog_scale_factor(), temp_sens_sent_1.getSensor_m_history_array_size()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(50);
+		
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_Request_MeasurementData(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(50);
+		
+		assertTrue(receivedMessage instanceof ClientMessage_MeasurementData);
+		
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(50);
+			
+		assertTrue(receivedMessage instanceof ClientMessage_SensorInfo);
+		
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_Request_MeasurementData(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(50);
+		
+		// ClientMessage_BootUp is the response for ServerMessage_SensorInfoQuerry what means that ServerMessage_Request_MeasurementData was ignored
+		assertTrue(receivedMessage instanceof ClientMessage_SensorInfo);
+		
+		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
+		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());
+		Thread.sleep(50);
 	}
 		
 	@SuppressWarnings("static-access")
 	@After
 	public void teardown() throws IOException, InterruptedException{
 	   
-	   System.out.println("\t\tTest Run "+MessagesHandlerTest_ServerMessage_Request_MeasurementHistory.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+MessagesHandler_ServerMessage_Request_MeasurementDataTest.testID+" teardown section:");
 	   
 	   if (clientManager_1.getInputReaderStream() != null) {
 		   clientManager_1.closeInStream();
@@ -448,4 +499,3 @@ public class MessagesHandlerTest_ServerMessage_Request_MeasurementHistory {
 	}
 
 }
-

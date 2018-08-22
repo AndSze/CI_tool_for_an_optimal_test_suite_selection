@@ -19,6 +19,8 @@ import org.mockito.stubbing.Answer;
 import messages.ServerMessage_ACK;
 import tcpServer.ComputeEngine_Runnable;
 import tcpServer.TCPserver;
+import tcpServer.TCPserver_Teardown;
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -187,8 +189,11 @@ public class RunTheClientTest {
 		   UUT_TCPclient_1.closeTheClient(UUT_TCPclient_1.getINSTANCE());
 	   }
 
-	   // Time offset between consecutive test runs execution
-	   Thread.sleep(100);
+	   UUT_TCPclient_1.setINSTANCE(null);
+	   
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
 	   
 	   System.out.println("");
 	   incrementTestID();

@@ -133,7 +133,7 @@ public class UUT_TCPclient extends TCPclient implements Runnable {
 					}
 					else if (Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > (get_watchdog_threshold(Watchdog_Thresholds.HIGH, watchdog_thresholds_array))) {
 						print_loop_count++;
-						if (print_loop_count == 20) {
+						if (print_loop_count == 25) {
 							System.out.println("[UUT_TCPclient " + uut_TCPclient.getSensor_ID() + "]\t  Local_1h_Watchdog: "+ Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
 							print_loop_count = 0;
 						}
@@ -259,13 +259,13 @@ public class UUT_TCPclient extends TCPclient implements Runnable {
 		
 		if (watchdog_scale_factor != 1.0 ) {
 			temp_watchdog_thresholds_array[0] = 100 * watchdog_scale_factor;
-			temp_watchdog_thresholds_array[1] = 150 * watchdog_scale_factor;
+			temp_watchdog_thresholds_array[1] = 120 * watchdog_scale_factor;
 			temp_watchdog_thresholds_array[2] = 300 * watchdog_scale_factor;
 			temp_watchdog_thresholds_array[3] = 900 * watchdog_scale_factor;
 		}
 		else {
 			temp_watchdog_thresholds_array[0] = 100 * watchdog_scale_factor;
-			temp_watchdog_thresholds_array[1] = 150 * watchdog_scale_factor;
+			temp_watchdog_thresholds_array[1] = 120 * watchdog_scale_factor;
 			temp_watchdog_thresholds_array[2] = 300 * watchdog_scale_factor;
 			temp_watchdog_thresholds_array[3] = 900 * watchdog_scale_factor;
 		}

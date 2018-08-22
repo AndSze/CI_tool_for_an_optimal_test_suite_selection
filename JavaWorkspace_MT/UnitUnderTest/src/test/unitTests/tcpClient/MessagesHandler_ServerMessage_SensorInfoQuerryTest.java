@@ -29,7 +29,7 @@ import tcpServer.TCPserver;
 import tcpServer.TCPserver_Teardown;
 import watchdog.Local_1h_Watchdog;
 
-public class MessagesHandlerTest_ServerMessage_SensorInfoQuerry {
+public class MessagesHandler_ServerMessage_SensorInfoQuerryTest {
 	
 	ClientManager clientManager_1 = null;
     int port_1 = 9876;
@@ -64,7 +64,7 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoQuerry {
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		MessagesHandlerTest_ServerMessage_SensorInfoQuerry.testID += 1;
+		MessagesHandler_ServerMessage_SensorInfoQuerryTest.testID += 1;
 	}
 	
 	@SuppressWarnings("static-access")
@@ -148,9 +148,9 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoQuerry {
 			}
 		});
 		
-		System.out.println("\t\tTest Run "+MessagesHandlerTest_ServerMessage_SensorInfoQuerry.testID+" Purpose:");
-		System.out.println(testPurpose[(MessagesHandlerTest_ServerMessage_SensorInfoQuerry.testID-1)]);
-		System.out.println("\t\tTest Run "+MessagesHandlerTest_ServerMessage_SensorInfoQuerry.testID+" Logic:");
+		System.out.println("\t\tTest Run "+MessagesHandler_ServerMessage_SensorInfoQuerryTest.testID+" Purpose:");
+		System.out.println(testPurpose[(MessagesHandler_ServerMessage_SensorInfoQuerryTest.testID-1)]);
+		System.out.println("\t\tTest Run "+MessagesHandler_ServerMessage_SensorInfoQuerryTest.testID+" Logic:");
 	}
 
    /***********************************************************************************************************
@@ -185,20 +185,20 @@ public class MessagesHandlerTest_ServerMessage_SensorInfoQuerry {
 		Thread.sleep(20);
 		
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_SensorInfoQuerry(sensor_ID_1), mockComputeEngine_Runnable.getOutputStream());
-		Thread.sleep(20);
+		Thread.sleep(50);
 			
 		assertTrue(receivedMessage instanceof ClientMessage_SensorInfo);
 
 		// send ServerMessage_ACK message with respective watchdog values to close TCP connection - it is required to close ClientManager with no ConnectException thrown
 		mockComputeEngine_Runnable.sendMessage(new ServerMessage_ACK(sensor_ID_1, mockComputeEngine_Runnable.getLocal_1h_watchdog() ,mockComputeEngine_Runnable.getLocal_24h_watchdog()), mockComputeEngine_Runnable.getOutputStream());;
-		Thread.sleep(20);
+		Thread.sleep(50);
 	}
 	
 	@SuppressWarnings("static-access")
 	@After
 	public void teardown() throws IOException, InterruptedException{
 	   
-	   System.out.println("\t\tTest Run "+MessagesHandlerTest_ServerMessage_SensorInfoQuerry.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+MessagesHandler_ServerMessage_SensorInfoQuerryTest.testID+" teardown section:");
 	   
 	   if (clientManager_1.getInputReaderStream() != null) {
 		   clientManager_1.closeInStream();

@@ -25,7 +25,7 @@ import tcpClient.ClientManager;
 import tcpClient.TCPclient;
 
 
-public class RunTest_ClientMessage_BootUp {
+public class Run_ClientMessage_BootUpTest {
 
 	int port_1 = 9876;
 	int sensor_ID_1 = 1;
@@ -67,7 +67,7 @@ public class RunTest_ClientMessage_BootUp {
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		RunTest_ClientMessage_BootUp.testID += 1;
+		Run_ClientMessage_BootUpTest.testID += 1;
 	}
 
 	@Before
@@ -156,9 +156,9 @@ public class RunTest_ClientMessage_BootUp {
 			}
 		});
 		
-		System.out.println("\t\tTest Run "+RunTest_ClientMessage_BootUp.testID+" Purpose:");
-		System.out.println(testPurpose[(RunTest_ClientMessage_BootUp.testID-1)]);
-		System.out.println("\t\tTest Run "+RunTest_ClientMessage_BootUp.testID+" Logic:");
+		System.out.println("\t\tTest Run "+Run_ClientMessage_BootUpTest.testID+" Purpose:");
+		System.out.println(testPurpose[(Run_ClientMessage_BootUpTest.testID-1)]);
+		System.out.println("\t\tTest Run "+Run_ClientMessage_BootUpTest.testID+" Logic:");
 	}
 	
     /***********************************************************************************************************
@@ -205,7 +205,7 @@ public class RunTest_ClientMessage_BootUp {
 	@After
 	public void teardown() throws IOException, InterruptedException{
 	   
-	   System.out.println("\t\tTest Run "+RunTest_ClientMessage_BootUp.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+Run_ClientMessage_BootUpTest.testID+" teardown section:");
 	   
 	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
 	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();

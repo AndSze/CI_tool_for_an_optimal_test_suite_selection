@@ -299,7 +299,7 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 		out.writeObject(obj);
 		out.close();
 		fileOut.close();
-		System.out.println("Serialized data of a: " +obj.getClass().getName()+"class type is saved in " + path);
+		//System.out.println("Serialized data of a: " +obj.getClass().getName()+"class type is saved in " + path);
 		return true;
 	}
 

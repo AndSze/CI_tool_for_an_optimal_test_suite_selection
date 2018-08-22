@@ -112,6 +112,8 @@ public class UUT_TCPclientTest {
 	   
 	   System.out.println("\t\tTest Run "+UUT_TCPclientTest.testID+" teardown section:");
 	   
+	   UUT_TCPclient_1.setINSTANCE(null);
+	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);
 	   

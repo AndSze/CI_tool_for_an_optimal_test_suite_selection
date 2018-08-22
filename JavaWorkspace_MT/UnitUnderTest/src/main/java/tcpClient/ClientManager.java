@@ -31,8 +31,8 @@ public class ClientManager implements TCPclient_interface{
 	private ObjectInputStream inputStream = null;
 	private boolean isClientManagerRunning = false;
 	protected int sensor_ID = 0;
-	
-    /***********************************************************************************************************
+
+	/***********************************************************************************************************
 	 * Method Name: 				public ClientManager()
 	 * Description: 				ClientManager class default constructor
 	 ***********************************************************************************************************/
@@ -371,6 +371,10 @@ public class ClientManager implements TCPclient_interface{
 
 	public synchronized void setClientManagerRunning(boolean isClientManagerRunning) {
 		this.isClientManagerRunning = isClientManagerRunning;
+	}
+	
+    public void setSensor_ID(int sensor_ID) {
+		this.sensor_ID = sensor_ID;
 	}
 	
 }

@@ -100,6 +100,8 @@ public class Set_delays_arrayTest {
 	   
 	   System.out.println("\t\tTest Run "+Set_delays_arrayTest.testID+" teardown section:");
 	   
+	   UUT_TCPclient_1.setINSTANCE(null);
+	   
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);
 	   

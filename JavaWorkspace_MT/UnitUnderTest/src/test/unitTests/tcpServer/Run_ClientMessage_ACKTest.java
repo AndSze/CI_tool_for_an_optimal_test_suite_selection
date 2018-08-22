@@ -29,7 +29,7 @@ import tcpClient.TCPclient;
 import watchdog.Global_1h_Watchdog;
 import watchdog.Global_24h_Watchdog;
 
-public class RunTest_ClientMessage_ACK {
+public class Run_ClientMessage_ACKTest {
 
 	int port_1 = 9876;
 	int sensor_ID_1 = 1;
@@ -82,7 +82,7 @@ public class RunTest_ClientMessage_ACK {
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		RunTest_ClientMessage_ACK.testID += 1;
+		Run_ClientMessage_ACKTest.testID += 1;
 	}
 
 	@Before
@@ -176,9 +176,9 @@ public class RunTest_ClientMessage_ACK {
 			}
 		});
 		
-		System.out.println("\t\tTest Run "+RunTest_ClientMessage_ACK.testID+" Purpose:");
-		System.out.println(testPurpose[(RunTest_ClientMessage_ACK.testID-1)]);
-		System.out.println("\t\tTest Run "+RunTest_ClientMessage_ACK.testID+" Logic:");
+		System.out.println("\t\tTest Run "+Run_ClientMessage_ACKTest.testID+" Purpose:");
+		System.out.println(testPurpose[(Run_ClientMessage_ACKTest.testID-1)]);
+		System.out.println("\t\tTest Run "+Run_ClientMessage_ACKTest.testID+" Logic:");
 	}
 	
     /***********************************************************************************************************
@@ -734,7 +734,7 @@ public class RunTest_ClientMessage_ACK {
 	@After
 	public void teardown() throws IOException, InterruptedException{
 	   
-	   System.out.println("\t\tTest Run "+RunTest_ClientMessage_ACK.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+Run_ClientMessage_ACKTest.testID+" teardown section:");
 	   
 	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
 	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();

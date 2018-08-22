@@ -18,12 +18,15 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import tcpClient.TCPclient;
 import tcpServer.ComputeEngine_Runnable;
 import tcpServer.TCPserver;
+import tcpServer.TCPserver_Teardown;
 
 public class CloseTheClientManagerTest {
 	
 	UUT_TCPclient UUT_TCPclient_1 = null;
+	TCPclient tcp_client_1 = null;
     private int port_1 = 9876;
     private int sensor_ID_1 = 1;
     private String serverHostName  = "localhost";
@@ -118,39 +121,44 @@ public class CloseTheClientManagerTest {
 	@Test
 	public void test_run_1() throws IOException, InterruptedException {
 		
+		tcp_client_1 = UUT_TCPclient_1.getINSTANCE();
+		tcp_client_1 = UUT_TCPclient_1.getINSTANCE().initClient(sensor_ID_1, serverHostName, port_1);
+		UUT_TCPclient_1.setINSTANCE(tcp_client_1);
+		
 		testThread = new Thread(new Runnable() {
 			//Runnable serverTask = new Runnable() {
 			public void run() {
-				UUT_TCPclient_1.setINSTANCE(UUT_TCPclient_1.runTheClient(UUT_TCPclient_1.getINSTANCE(), port_1, serverHostName));
+				try {
+					Thread TCPclient_thread = new Thread(UUT_TCPclient_1.getINSTANCE(), "TCPclient Thread");
+					TCPclient_thread.run();
+				} catch (NullPointerException NPE) {
+					// DO NOTHING - it is impossible to prevent from this exception being thrown due to exception handling logic for ClientManager
+				}
+				
 			}
 		});
 		testThread.start();
-		Thread.sleep(500);
+		Thread.sleep(100);
 		
-		assertTrue(				UUT_TCPclient_1.getINSTANCE().getClientManager().isClientManagerRunning());
-		assertTrue(				UUT_TCPclient_1.getINSTANCE().isClientRunning());
+		assertTrue(UUT_TCPclient_1.getINSTANCE().getClientManager().isClientManagerRunning());
+		assertTrue(UUT_TCPclient_1.getINSTANCE().isClientRunning());
 		
 		UUT_TCPclient_1.setINSTANCE(UUT_TCPclient_1.closeTheClientManager(UUT_TCPclient_1.getINSTANCE()));
 				
-		assertFalse(			UUT_TCPclient_1.getINSTANCE().getClientManager().isClientManagerRunning());
-		assertTrue(				UUT_TCPclient_1.getINSTANCE().isClientRunning());
+		assertFalse(UUT_TCPclient_1.getINSTANCE().getClientManager().isClientManagerRunning());
+		assertTrue(UUT_TCPclient_1.getINSTANCE().isClientRunning());
 	}
 		
-   @SuppressWarnings("static-access")
    @After
     public void teardown() throws IOException, InterruptedException{
 	   
 	   System.out.println("\t\tTest Run "+CloseTheClientManagerTest.testID+" teardown section:");
 	   
-	   if(mockTCPserverTest.getServerSocket().isBound()) {
-		   mockTCPserverTest.getServerSocket().close();
-	   }
-	   if (UUT_TCPclient_1.getINSTANCE().getClientManager() != null) {
-		   UUT_TCPclient_1.closeTheClientManager(UUT_TCPclient_1.getINSTANCE());
-	   }
-	   if (UUT_TCPclient_1.getINSTANCE().getClientSocket() != null) {
-		   UUT_TCPclient_1.closeTheClient(UUT_TCPclient_1.getINSTANCE());
-	   }
+	   UUT_TCPclient_1.setINSTANCE(null);
+	   
+	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
+	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   tcp_server_teardown.reinitalize_to_default(mockTCPserverTest);
 
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);

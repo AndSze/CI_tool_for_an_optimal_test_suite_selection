@@ -32,7 +32,7 @@ import tcpClient.TCPclient;
 import watchdog.Global_1h_Watchdog;
 
 
-public class RunTest_ClientMessage_MeasurementData {
+public class Run_ClientMessage_MeasurementDataTest {
 
 	int port_1 = 9876;
 	int sensor_ID_1 = 1;
@@ -73,12 +73,12 @@ public class RunTest_ClientMessage_MeasurementData {
 	
 	String[] testPurpose = { "Verify that once the run() function receives ClientMessage_MeasurementData, this measurement data is serialized and saved in Sensors_PATH directory on the PC disc",
 						 	 "Verify that once the run() function receives ClientMessage_MeasurementData, the sensor instance in Server_Sensors_LIST is updated with this measurement data",
-						 	 "Verify that once the run() function if the request_measurement_data flag is to true, index that represents the sensor in_1hWatchog_timestamp_table is set to true and Local_1h_Watchdog is kicked",
+						 	 "Verify that the run() updates index that represents the sensor in _1hWatchog_timestamp_table to true and kicks Local_1h_Watchdog if ClientMessage_MeasurementData was received",
 						 	 "Verify that the run() function responds to ClientMessage_MeasurementData with ServerMessage_ACK"};
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		RunTest_ClientMessage_MeasurementData.testID += 1;
+		Run_ClientMessage_MeasurementDataTest.testID += 1;
 	}
 
 	@Before
@@ -175,9 +175,9 @@ public class RunTest_ClientMessage_MeasurementData {
 			}
 		});
 		
-		System.out.println("\t\tTest Run "+RunTest_ClientMessage_MeasurementData.testID+" Purpose:");
-		System.out.println(testPurpose[(RunTest_ClientMessage_MeasurementData.testID-1)]);
-		System.out.println("\t\tTest Run "+RunTest_ClientMessage_MeasurementData.testID+" Logic:");
+		System.out.println("\t\tTest Run "+Run_ClientMessage_MeasurementDataTest.testID+" Purpose:");
+		System.out.println(testPurpose[(Run_ClientMessage_MeasurementDataTest.testID-1)]);
+		System.out.println("\t\tTest Run "+Run_ClientMessage_MeasurementDataTest.testID+" Logic:");
 	}
 	
     /***********************************************************************************************************
@@ -338,8 +338,8 @@ public class RunTest_ClientMessage_MeasurementData {
 	
     /***********************************************************************************************************
 	 * Test Name: 					test_run_3
-	 * Description: 				Verify that once the run() function if the request_measurement_data flag is to true, 
-	 								index that represents the sensor in _1hWatchog_timestamp_table is set to true and local_1h_watchdog is kicked
+	 * Description: 				Verify that the run() updates index that represents the sensor in _1hWatchog_timestamp_table to true and kicks Local_1h_Watchdog
+	  								if ClientMessage_MeasurementData was received
 	 * Internal variables TBV:		local_1h_watchdog
 	 * External variables TBV:	 	TCPserver._1hWatchog_timestamp_table
 	 * Mocked objects:				TCPclient, TCPserver, ClientManager, Socket
@@ -399,7 +399,9 @@ public class RunTest_ClientMessage_MeasurementData {
 		
 		MeasurementData client_mes_data = temp_sensor_client.readLastMeasurementData();
 		
-		double expected_local_1h_watchdog = Global_1h_Watchdog.getInstance().getExpiration() * global_watchdog_scale_factor + comp_engine_1.getLocal_1h_watchdog();
+		double expected_local_1h_watchdog = Global_1h_Watchdog.getInstance().getExpiration() * global_watchdog_scale_factor + 0.5 * Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration();
+		
+		assertFalse(TCPserver.isIDTrue(TCPserver.get_1hWatchog_timestamp_table().get(), sensor_ID_1));
 		
 		mockClientManager.sendMessage(new ClientMessage_MeasurementData(sensor_ID_1, client_mes_data), mockClientManager.getOutputStream());
 		Thread.sleep(50);
@@ -480,7 +482,7 @@ public class RunTest_ClientMessage_MeasurementData {
 	@After
 	public void teardown() throws IOException, InterruptedException{
 	   
-	   System.out.println("\t\tTest Run "+RunTest_ClientMessage_MeasurementData.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+Run_ClientMessage_MeasurementDataTest.testID+" teardown section:");
 	   
 	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
 	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
