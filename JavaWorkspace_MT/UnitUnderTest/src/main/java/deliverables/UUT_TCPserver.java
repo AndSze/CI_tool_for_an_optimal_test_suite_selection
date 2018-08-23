@@ -7,6 +7,9 @@ import tcpServer.TCPserver;
 
 public class UUT_TCPserver{
 	
+    /***********************************************************************************************************
+	 * UUT_TCPserver - Class Attributes
+	 ***********************************************************************************************************/
     private static int port = 0;
 	private static int number_of_sensors = 0;
     private static double watchdog_scale_factor = 0.0;
