@@ -13,12 +13,11 @@ public class UUT_TCPserver{
     private static int measurements_limit = 0;
 	
     /***********************************************************************************************************
-	 * Method Name: 				UUT_TCPclient()
-	 * Description: 				UUT_TCPclient class default constructor
-	 * Affected internal variables: port, inputStream, sensor_ID, INSTANCE, serverHostName, delays_array, watchdog_thresholds_array
-	 * Affected external variables: TCPclient.sensor_ID
+	 * Method Name: 				UUT_TCPserver()
+	 * Description: 				UUT_TCPserver class default constructor
+	 * Affected internal variables: port, number_of_sensors, watchdog_scale_factor, measurements_limit
+	 * Called external functions:   TCPserver.getInstance()
 	 * Exceptions thrown: 			IOException
-     * @throws IOException 
 	 ***********************************************************************************************************/
 	UUT_TCPserver(int port, int number_of_sensors, int measurements_limit, double watchdog_scale_factor) throws IOException{
 		
@@ -37,6 +36,7 @@ public class UUT_TCPserver{
     /***********************************************************************************************************
 	* Method Name: 					public static void main() 
 	* Description: 				   	Calls constructors of the TCPserver class 
+	* Called internal functions:   	UUT_TCPserver()
 	* Called external functions:   	TCPserver.getInstance()
 	* Exceptions handled: 		   	IOException, BindException, SocketException
 	***********************************************************************************************************/
@@ -70,16 +70,12 @@ public class UUT_TCPserver{
 	}
 	
     /***********************************************************************************************************
-	 * Method Name: 				public static TCPclient closeTheClient()
-	 * Description: 				closes TCP connection with server by calling closeClient() function for TCPclient INSTANCE
-	 * Affected external variables: TCPclient.clientThread
-	 * Returned value				INSTANCE
-	 * Called external functions:   TCPclient.closeClient()
+	 * Method Name: 				public void closeTheServer
+	 * Description: 				closes TCP connection with client by calling closeServer() function for TCPserver INSTANCE
+	 * Called external functions:   TCPserver.getInstance(), TCPserver.closeServer()
 	 * Exceptions handled: 			IllegalArgumentException, IOException
 	 ***********************************************************************************************************/
 	public void closeTheServer(){
-		
-
 		try {
 			
 			TCPserver.getInstance(getPort(), getNumber_of_sensors(), getMeasurements_limit(), getWatchdog_scale_factor()).closeServer(getPort());

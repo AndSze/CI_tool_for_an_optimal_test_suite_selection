@@ -28,7 +28,7 @@ public class TCPclient implements Runnable {
 	protected static double watchdogs_scale_factor = 0.01;
 
     /***********************************************************************************************************
-	 * Method Name: 				public UUT_TCPclient()
+	 * Method Name: 				public TCPclient()
 	 * Description: 				UUT_TCPclient class default constructor
 	 * Affected internal variables: Client_Sensors_LIST
 	 * Affected external variables: Local_1h_Watchdog
@@ -53,7 +53,7 @@ public class TCPclient implements Runnable {
     }
     
     /***********************************************************************************************************
-	 * Method Name: 				private UUT_TCPclient()
+	 * Method Name: 				private TCPclient()
 	 * Description: 				UUT_TCPclient class overloaded constructor
 	 * Affected internal variables: clientSocket, sensor_ID, clientManager, clientRunning, Client_Sensors_LIST
 	 * Called internal functions:	searchInClientSensorList

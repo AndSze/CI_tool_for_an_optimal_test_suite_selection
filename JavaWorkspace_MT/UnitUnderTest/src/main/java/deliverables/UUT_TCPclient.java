@@ -37,6 +37,7 @@ public class UUT_TCPclient extends TCPclient implements Runnable {
 	 * Description: 				UUT_TCPclient class default constructor
 	 * Affected internal variables: port, inputStream, sensor_ID, INSTANCE, serverHostName, delays_array, watchdog_thresholds_array
 	 * Affected external variables: TCPclient.sensor_ID
+	 * Called external functions:   TCPclient()
 	 * Exceptions thrown: 			IOException
 	 ***********************************************************************************************************/
     UUT_TCPclient(int sensor_ID, int port, String serverHostName) throws IOException {
