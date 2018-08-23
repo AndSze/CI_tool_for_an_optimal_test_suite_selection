@@ -23,8 +23,8 @@ dir_repository_master = base_dir_path + r'master'
 dir_repository_master_sourceCode = dir_repository_master + r'\JavaWorkspace_MT\UnitUnderTest\src\main\java'
 dir_repository_older_commit_sourceCode = dir_repository_older_commit + r'\JavaWorkspace_MT\UnitUnderTest\src\main\java'
 dir_repository_newer_commit_sourceCode = dir_repository_newer_commit + r'\JavaWorkspace_MT\UnitUnderTest\src\main\java'
-dir_repository_master_unitTests = dir_repository_master + r'\JavaWorkspace_MT\UnitUnderTest\src\test\unitTests'
-dir_repository_master_integrationTests = dir_repository_master + r'\JavaWorkspace_MT\UnitUnderTest\src\test\integrationTests'
+dir_repository_master_unitTests = dir_repository_master + r'\JavaWorkspace_MT\UnitUnderTest\src\test\java'
+dir_repository_master_integrationTests = dir_repository_master + r'\JavaWorkspace_MT\UnitUnderTest\src\integration-test\java'
 dir_sourceCode_diff = base_dir_path_diff + r'CI_tool_diff_repo\master\JavaWorkspace_MT\UnitUnderTest\src\main\java'
 
 # All Files common
