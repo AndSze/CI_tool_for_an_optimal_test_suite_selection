@@ -13,6 +13,7 @@ public class ServerSocketTCPserverTest {
 	int port_1 = 9876;
 	TCPserver tcpserver_1 = null;
 	int port_2 = 9877;
+	int number_of_sensors = 1;
 	Thread testThread = null;
 	ServerSocket serverSocket_1 = null;
 	ServerSocket serverSocket_2 = null;
@@ -31,7 +32,8 @@ public class ServerSocketTCPserverTest {
 	
 	@Before
 	public void before() throws IOException {
-		tcpserver_1 = new TCPserver();
+
+		TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor());
 		
 		if(ServerSocketTCPserverTest.testID == 2) {
 			testThread = new Thread();
@@ -63,7 +65,7 @@ public class ServerSocketTCPserverTest {
 
 		ServerSocket oldSocket = tcpserver_1.getServerSocket();
 		
-		tcpserver_1.closeServer(tcpserver_1, port_1);
+		tcpserver_1.closeServer(port_1);
 		assertFalse(tcpserver_1.get_ServerRunning());
 		assertTrue(tcpserver_1.getServerSocket().isClosed());
 		

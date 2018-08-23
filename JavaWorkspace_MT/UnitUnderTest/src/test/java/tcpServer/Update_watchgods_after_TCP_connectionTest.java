@@ -36,6 +36,7 @@ public class Update_watchgods_after_TCP_connectionTest {
 	int sensor_ID_3 = 3;
 	int sensor_ID_4 = 4;
 	int sensor_ID_5 = 5;
+	int number_of_sensors = 5;
 	int meas_limit = 5;
 	SensorImpl sensor = null;
 	final String serverHostName = "localhost";
@@ -101,9 +102,9 @@ public class Update_watchgods_after_TCP_connectionTest {
 		tempServerSocket_1 = new ServerSocket();
 		when(mockTCPserverTest.getServerSocket()).thenReturn(tempServerSocket_1);
 		
+		TCPserver.getInstance(port_1, number_of_sensors, meas_limit, TCPserver.getWatchdogs_scale_factor());
 		TCPserver.processing_engine = new ComputeEngine_Processing();
-		TCPserver.processing_engine.deleteAllFilesFromDirectiory(TCPserver.Sensors_PATH);
-		TCPserver.setMeasurements_limit(meas_limit);
+		TCPserver.processing_engine.deleteAllFilesFromDirectiory(TCPserver.getSensorsPath());
 		
 		/* To avoid "remote deadlock" - there is a need to submit mockComputeEngine_Runnable to ThreadPoolExecutor 
 		 * The ObjectInputStream on the client is waiting for the object stream from the server before proceeding, but the server isn't going to send that, 
@@ -219,9 +220,9 @@ public class Update_watchgods_after_TCP_connectionTest {
 	public void test_run_2() throws IOException, InterruptedException {
 		
 		double input_watchdog = 100 * global_watchdog_scale_factor;
-		double expected_24h_Global_watchdog_readout = input_watchdog;
-		double expected_1h_Global_watchdog_readout = Global_1h_Watchdog.getInstance().getExpiration() * global_watchdog_scale_factor + input_watchdog * 0.5;
 		TCPserver.setComputing_time(input_watchdog * 1.5);
+		double expected_24h_Global_watchdog_readout = input_watchdog;
+		double expected_1h_Global_watchdog_readout = Global_1h_Watchdog.getInstance().getExpiration() * global_watchdog_scale_factor + input_watchdog * 0.75;
 		
 		boolean[] input_1hWatchog_timestamp_table = {true, true, true, true, true};
 		boolean[] input_24hWatchog_timestamp_table = {true, false, false, false, false};
@@ -280,7 +281,7 @@ public class Update_watchgods_after_TCP_connectionTest {
 	public void test_run_3() throws IOException, InterruptedException, ClassNotFoundException {		
 		
 		double input_watchdog = 600 * global_watchdog_scale_factor;
-		double expected_1h_Global_watchdog_readout = Global_1h_Watchdog.getInstance().getExpiration() * global_watchdog_scale_factor;
+		double expected_1h_Global_watchdog_readout = Global_1h_Watchdog.getInstance().getExpiration() * global_watchdog_scale_factor + input_watchdog * 0.5;
 		double expected_24h_Global_watchdog_readout = Global_24h_Watchdog.getInstance().getExpiration() * global_watchdog_scale_factor * TCPserver.getMeasurements_limit();
 		TCPserver.setComputing_time(input_watchdog * 1.5);
 		
@@ -403,7 +404,7 @@ public class Update_watchgods_after_TCP_connectionTest {
 		int actual_file_count_after = 0;
 		
 		File sensor_path = null;
-		sensor_path = new java.io.File(TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID()+ "\\" + "measurement_Datas");
+		sensor_path = new java.io.File(TCPserver.getSensorsPath() + "\\" + "sensor_" + sensor.getSensorID()+ "\\" + "measurement_Datas");
 		for (@SuppressWarnings("unused") File file :  sensor_path.listFiles()) {
 			actual_file_count_before += 1;
 		}

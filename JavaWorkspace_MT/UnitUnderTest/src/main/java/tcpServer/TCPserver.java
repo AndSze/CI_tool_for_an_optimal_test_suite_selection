@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -49,19 +50,16 @@ public class TCPserver {
 	protected static ArrayList<MeasurementData> MeasurementData_LIST= new ArrayList<>();
 	
 	// directory that determines where the serialized files for a particular sensor will be saved
-	protected static final String Sensors_PATH = "files\\sensors";
+	private static final String Sensors_PATH = "files\\sensors";
 
 	// data to be loaded to sensor instances after initializing them
-	protected float[][] sensor_coordinates_array = { {1.0f, 1.0f}, {2.0f, 1.0f}, {1.5f, 2.0f}, {2.5f, 0.5f}, {3.0f, 3.5f}};//  {1.0f, 3.5f}, {2.5f, 0.5f}, {0.5f, 2.5f}};
-	protected String softwareImageID = "Release 1";
-	
-	// initial values for the flags that indicate if the watchdogs have been kicked (it needs to be defined to have the fixed size of the flags array)
-	private static boolean _1hWatchog_timestamp_table_initial[] = {false, false, false, false, false};
-	private static boolean _24hWatchog_timestamp_table_initial[] = {false, false, false, false, false};
+	protected static float[][] sensor_coordinates_array = null;
 
+	protected static String softwareImageID = "Release 1";
+	
 	// initialize the flags arrays that indicate if the watchdogs have been kicked - AtomicReference is being used since the flags need to be accessible in parallel in different threads
-    private static AtomicReference<boolean[]> _1hWatchog_timestamp_table = new AtomicReference<boolean[]>(_1hWatchog_timestamp_table_initial);
-	private static AtomicReference<boolean[]> _24hWatchog_timestamp_table = new AtomicReference<boolean[]>(_24hWatchog_timestamp_table_initial);
+    private static AtomicReference<boolean[]> _1hWatchog_timestamp_table = null;
+	private static AtomicReference<boolean[]> _24hWatchog_timestamp_table = null;
 	
 	// measurement limit is a variable that determines after how many measurement datas, the measurement history request is sent
 	private static int measurements_limit = 24;
@@ -85,27 +83,22 @@ public class TCPserver {
 	 *		2) 24hWatchog - 864 [s]
 	 */	
 	private static double watchdogs_scale_factor = 0.01;
-	
+
 	// interface for testing purposes -> in tests it should be set to false to avoid hanging the execution in inputStream.readObject() in ComputeEngine_Runnable
 	private boolean computeEngineRunning = true;
 	
     /***********************************************************************************************************
 	 * Method Name: 				public TCPserver()
 	 * Description: 				TCPserver class default constructor
-	 * Affected external variables: Global_1h_Watchdog, Global_24h_Watchdog
-	 * Called external functions: 	Global_1h_Watchdog.getInstance()
 	 * Exceptions thrown:			IOException
 	 ***********************************************************************************************************/
 	public TCPserver() throws IOException{
 		// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
 		super();
-		
-		// watchdogs that are being checked on a regular basis - if they are about to expire, the server-client communication is being initialized. Afterward, the watchdogs are kicked and they continue to count down
-		Global_1h_Watchdog.getInstance();
-		Global_24h_Watchdog.getInstance();
+				
 	};
 
-    /***********************************************************************************************************
+	/***********************************************************************************************************
 	 * Method Name: 				private TCPserver()
 	 * Description: 				TCPserver class overloaded constructor
 	 * Affected internal variables: serverSocket, serverRunning, processing_engine, Server_Sensors_LIST, _1hWatchog_timestamp_table, _24hWatchog_timestamp_table, Sensors_PATH
@@ -142,7 +135,7 @@ public class TCPserver {
         }
 	    
 	    // delete all files on the server side
-	    processing_engine.deleteAllFilesFromDirectiory(Sensors_PATH);
+	    processing_engine.deleteAllFilesFromDirectiory(getSensorsPath());
 	    
 	    // create instances of sensors on the server side and add them to the Server_Sensors_LIST
     	for (int i = 1; i <= sensor_coordinates_array.length; i++) {
@@ -165,7 +158,6 @@ public class TCPserver {
             }	
  		}	
 	  
-    	
     	// server starts to listen messages from sensors
 	    startServer(serverSocket);
 	};
@@ -175,14 +167,39 @@ public class TCPserver {
 	 * Description: 				if this function is called for the first time, the default constructor of the TCPserver class is being called,
 	 								if this function is called for the second time, the overloaded constructor of the TCPserver class is being called,
 	 								otherwise, the already initialized instance of the TCPserver class is being returned
-	 * Affected internal variables: TCPserver_instance								
+	 * Affected internal variables: sensor_coordinates_array, measurements_limit, watchdogs_scale_factor, _1hWatchog_timestamp_table, _24hWatchog_timestamp_table
+	 * Affected external variables: Global_1h_Watchdog, Global_24h_Watchdog
+	 * Called external functions: 	Global_1h_Watchdog.getInstance()							
 	 * Returned value:				TCPserver_instance
 	 * Called internal functions: 	TCPserver()
 	 * Exceptions thrown: 			IOException
 	 ***********************************************************************************************************/
-    public static synchronized TCPserver getInstance(int port) throws IOException { 
+    public static synchronized TCPserver getInstance(int port, int number_of_sensors, int measurements_limit, double watchdog_scale_factor) throws IOException { 
         if (TCPserver_instance == null) { 
-        	TCPserver_instance = new TCPserver(); 
+        	
+        	TCPserver_instance = new TCPserver();
+        	
+    		float[][] sensor_coordinates_array = new float[number_of_sensors][2];
+    		boolean _1hWatchog_timestamp_table_initial[] = new boolean[number_of_sensors];
+    		boolean _24hWatchog_timestamp_table_initial[] = new boolean[number_of_sensors];
+    		
+    		for(int i = 0; i < number_of_sensors; i++) {
+    			sensor_coordinates_array[i][0] = (float) ThreadLocalRandom.current().nextDouble(0.0, 10.0);
+    			sensor_coordinates_array[i][1] = (float) ThreadLocalRandom.current().nextDouble(0.0, 10.0);
+    			_1hWatchog_timestamp_table_initial[i] = false;
+    			_24hWatchog_timestamp_table_initial[i] = false;
+    		}
+
+    		setMeasurements_limit(measurements_limit);
+    		setWatchdogs_scale_factor(watchdog_scale_factor);
+    	    setSensor_coordinates_array(sensor_coordinates_array);
+    		set_1hWatchog_timestamp_table(new AtomicReference<boolean[]>(_1hWatchog_timestamp_table_initial));
+    		set_24hWatchog_timestamp_table(new AtomicReference<boolean[]>(_24hWatchog_timestamp_table_initial));
+    		
+    		// watchdogs that are being checked on a regular basis - if they are about to expire, the server-client communication is being initialized. Afterward, the watchdogs are kicked and they continue to count down
+    		Global_1h_Watchdog.getInstance();
+    		Global_24h_Watchdog.getInstance();
+    		
         } 
         else if (!get_ServerRunning()) { 
         	TCPserver_instance = new TCPserver(port); 
@@ -197,7 +214,7 @@ public class TCPserver {
 	 * Affected external variables: Global_1h_Watchdog.millisecondsLeftUntilExpiration
 	 * Exceptions thrown: 			IOException, IllegalArgumentException
 	 ***********************************************************************************************************/
-	public void closeServer(TCPserver INSTANCE, int port) throws IOException{
+	public void closeServer(int port) throws IOException{
 	
 		if (get_ServerRunning()){
 			
@@ -443,4 +460,29 @@ public class TCPserver {
     public static void setTCPserver_instance(TCPserver tCPserver_instance) {
 		TCPserver_instance = tCPserver_instance;
 	}
+	
+    public static void setSensor_coordinates_array(float[][] sensor_coordinates_array) {
+    	TCPserver.sensor_coordinates_array = sensor_coordinates_array;
+	}
+    
+	public static void set_1hWatchog_timestamp_table(AtomicReference<boolean[]> _1hWatchog_timestamp_table) {
+		TCPserver._1hWatchog_timestamp_table = _1hWatchog_timestamp_table;
+	}
+
+	public static void set_24hWatchog_timestamp_table(AtomicReference<boolean[]> _24hWatchog_timestamp_table) {
+		TCPserver._24hWatchog_timestamp_table = _24hWatchog_timestamp_table;
+	}
+
+	public static String getSensorsPath() {
+		return Sensors_PATH;
+	}
+	
+	public static float[][] getSensor_coordinates_array() {
+		return sensor_coordinates_array;
+	}
+
+	public static String getSoftwareImageID() {
+		return softwareImageID;
+	}
+
 }

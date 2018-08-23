@@ -87,6 +87,10 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
         	setLocal_1h_watchdog(Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
         }
         
+    	// To be Deleted
+    	int temp = 0;
+
+        
         // set 24h local watchdog to 24h global watchdog time left before expiration
         setLocal_24h_watchdog(Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration());
         

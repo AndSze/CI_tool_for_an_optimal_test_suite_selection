@@ -15,6 +15,7 @@ public class CloseServerTCPserverTest {
 	 * CloseServerTCPserverTest - Class Attributes
 	 ***********************************************************************************************************/
 	int port_1 = 9876;
+	int number_of_sensors = 1;
 	TCPserver tempTCPserver = null;
 
 	String[] testPurpose = { "Verify that that once the previously created TCPserver instance is being closed, this instance is being overwritten with up-to-date attributes that indicate TCP communication is not active",
@@ -29,7 +30,7 @@ public class CloseServerTCPserverTest {
 	@Before
 	public void before() throws IOException {
 		
-		tempTCPserver = new TCPserver();
+		TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor());
 		
 		System.out.println("\t\tTest Run "+CloseServerTCPserverTest.testID+" Purpose:");
 		System.out.println(testPurpose[(CloseServerTCPserverTest.testID-1)]);
@@ -48,7 +49,7 @@ public class CloseServerTCPserverTest {
 		
 		tempTCPserver = new TCPserver(port_1);
 		
-		tempTCPserver.closeServer(tempTCPserver, port_1);
+		tempTCPserver.closeServer(port_1);
 		
 		assertTrue(tempTCPserver.getServerSocket().isClosed());
 		assertFalse(TCPserver.get_ServerRunning());
@@ -69,7 +70,7 @@ public class CloseServerTCPserverTest {
 		double prev = Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration();
 		double temp_1h_WatchdogExpiration =  Global_1h_Watchdog.getInstance().getExpiration() * TCPserver.getWatchdogs_scale_factor() ;
 		
-		tempTCPserver.closeServer(TCPserver.getInstance(port_1), port_1);
+		tempTCPserver.closeServer(port_1);
 		double curr_1 = Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration(); 
 		
 		assertEquals( temp_1h_WatchdogExpiration,	 curr_1, 0.001);
@@ -87,9 +88,9 @@ public class CloseServerTCPserverTest {
 		
 		tempTCPserver = new TCPserver(port_1);
 		
-		tempTCPserver.closeServer(tempTCPserver, port_1);
+		tempTCPserver.closeServer(port_1);
 		
-		tempTCPserver.closeServer(tempTCPserver, port_1);
+		tempTCPserver.closeServer(port_1);
 		
 		// To prove that exception's stack trace reported by JUnit caught the IllegalArgumentException
 		assertTrue(false);

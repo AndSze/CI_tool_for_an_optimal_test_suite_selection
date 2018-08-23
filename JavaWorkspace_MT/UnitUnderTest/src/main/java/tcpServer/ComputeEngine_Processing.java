@@ -22,7 +22,6 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
     	setSerializedObjectList(Server_Sensors_LIST, MeasurementData_LIST, MeasurementHistory_LIST);
 	}
 
-	
 	static void processingDelay(int msec) {
 	    try {
 	        Thread.sleep(msec);
@@ -30,7 +29,6 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 	        
 	    }
     }
-
 
 	public void processClinetMessage() {
 		// TODO Auto-generated method stub
@@ -45,10 +43,10 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 	@Override
 	public void setSerializedObjectList(ArrayList<SensorImpl> Server_Sensors_LIST, ArrayList<MeasurementData> mes_data_list, ArrayList<MeasurementData[]> mes_hist_list) throws ClassNotFoundException {
 		// Create a directory where Single Events will be saved on the server side
-		boolean success = (new File(TCPserver.Sensors_PATH)).mkdirs();
+		boolean success = (new File(TCPserver.getSensorsPath())).mkdirs();
 		if (!success) 
 		{
-			ArrayList<String> MySensors = getObjectList(new File(TCPserver.Sensors_PATH));
+			ArrayList<String> MySensors = getObjectList(new File(TCPserver.getSensorsPath()));
 			
             for (String sensor_path : MySensors)
             {
@@ -56,7 +54,7 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
             	
             	
             	for (String file : MySensorsData){
-            		String sensor_data_path = TCPserver.Sensors_PATH + "\\" + file;
+            		String sensor_data_path = TCPserver.getSensorsPath() + "\\" + file;
             		if ((file.substring(file.toString().length() - 11)).equals("sensor_info")){
             			SensorImpl new_sensor = (SensorImpl) deserialize(sensor_data_path, SensorImpl.class);
             			Server_Sensors_LIST.add(new_sensor);
@@ -164,7 +162,7 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 		// delete 24 MeasurementData files after saving the date in the getMeasurementHistoryPath
 		ArrayList<File> serialized_m_datas = new ArrayList<>();
 		File sensor_path = null;
-		sensor_path = new java.io.File(TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID()+ "\\" + "measurement_Datas");
+		sensor_path = new java.io.File(TCPserver.getSensorsPath() + "\\" + "sensor_" + sensor.getSensorID()+ "\\" + "measurement_Datas");
 		for (File file :  sensor_path.listFiles()) {
 			//System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] substring(file.toString().length() - 16): " + file.toString().toString().substring(file.toString().length() - 16));
 			if(file.toString().toString().substring(file.toString().length() - 16).equals("measurement_data")) {
@@ -212,12 +210,12 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 	public String getSensorPath(SensorImpl sensor, String info_type){
 		String sensor_path = null;
 		String sensor_serialized_file_path = null;
-		sensor_path = TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID();
+		sensor_path = TCPserver.getSensorsPath() + "\\" + "sensor_" + sensor.getSensorID();
 		boolean success = (new File(sensor_path)).mkdirs();
 		if(success) {
 			System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] New folder for a sensor instance created");
 		}
-		sensor_path = TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID() + "\\" + "sensor_Infos";
+		sensor_path = TCPserver.getSensorsPath() + "\\" + "sensor_" + sensor.getSensorID() + "\\" + "sensor_Infos";
 		success = (new File(sensor_path)).mkdirs();
 		if(success) {
 			System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] New folder for a sensor info created");
@@ -231,7 +229,7 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 	public String getMeasurementDataPath(SensorImpl sensor, MeasurementData m_data){
 		String sensor_path = null;
 		String measurementData_serialized_file_path = null;
-		sensor_path = TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID() + "\\" + "measurement_Datas";
+		sensor_path = TCPserver.getSensorsPath() + "\\" + "sensor_" + sensor.getSensorID() + "\\" + "measurement_Datas";
 		boolean success = (new File(sensor_path)).mkdirs();
 		if(success) {
 			System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] New folder for MeasurementData created");
@@ -246,13 +244,13 @@ public class ComputeEngine_Processing extends TCPserver implements TCPserver_int
 		String measurementHistory_serialized_file_path = null;
 		String date_Timestamp = null;
 		// remove time from the m_hist[0] element timestamp
-		date_Timestamp = m_hist[0].getTimestamp().substring(0, m_hist[0].getTimestamp().length() - 3);;
-		sensor_path = TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID() + "\\" + "measurement_Histories";
+		date_Timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(Calendar.getInstance().getTime());
+		sensor_path = TCPserver.getSensorsPath() + "\\" + "sensor_" + sensor.getSensorID() + "\\" + "measurement_Histories";
 		boolean success = (new File(sensor_path)).mkdirs();
 		if(success) {
 			System.out.println("[Compute engine Processing " +sensor.getSensorID()+"] New folder for MeasurementHistory created");
 		}
-		measurementHistory_serialized_file_path = sensor_path + "\\" + "measurement_" + date_Timestamp + ".measurement_history";
+		measurementHistory_serialized_file_path = sensor_path + "\\" + "measurements_" + date_Timestamp + ".measurement_history";
 		return measurementHistory_serialized_file_path;
 	}
 	

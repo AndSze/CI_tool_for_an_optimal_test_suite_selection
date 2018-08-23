@@ -44,7 +44,7 @@ public class Set_watchdog_thresholds_arrayTest {
 	public void test_run_1() {
 		
 		double temp_watchdog_thresholds_array_0 = 100;
-		double temp_watchdog_thresholds_array_1 = 150;
+		double temp_watchdog_thresholds_array_1 = 120;
 		double temp_watchdog_thresholds_array_2 = 300;
 		double temp_watchdog_thresholds_array_3 = 900;
 		
@@ -69,7 +69,7 @@ public class Set_watchdog_thresholds_arrayTest {
 		UUT_TCPclient.watchdog_thresholds_array = UUT_TCPclient_1.set_watchdog_thresholds_array(temp_watchdog_scale_factor_1, watchdog_thresholds_array_size);
 		
 		double temp_watchdog_thresholds_array_01 = 100 * temp_watchdog_scale_factor_1;
-		double temp_watchdog_thresholds_array_11 = 150 * temp_watchdog_scale_factor_1;
+		double temp_watchdog_thresholds_array_11 = 120 * temp_watchdog_scale_factor_1;
 		double temp_watchdog_thresholds_array_21 = 300 * temp_watchdog_scale_factor_1;
 		double temp_watchdog_thresholds_array_31 = 900 * temp_watchdog_scale_factor_1;
 		
@@ -83,7 +83,7 @@ public class Set_watchdog_thresholds_arrayTest {
 		UUT_TCPclient.watchdog_thresholds_array = UUT_TCPclient_1.set_watchdog_thresholds_array(temp_watchdog_scale_factor_2, watchdog_thresholds_array_size);
 		
 		double temp_watchdog_thresholds_array_02 = 100 * temp_watchdog_scale_factor_2;
-		double temp_watchdog_thresholds_array_12 = 150 * temp_watchdog_scale_factor_2;
+		double temp_watchdog_thresholds_array_12 = 120 * temp_watchdog_scale_factor_2;
 		double temp_watchdog_thresholds_array_22 = 300 * temp_watchdog_scale_factor_2;
 		double temp_watchdog_thresholds_array_32 = 900 * temp_watchdog_scale_factor_2;
 		

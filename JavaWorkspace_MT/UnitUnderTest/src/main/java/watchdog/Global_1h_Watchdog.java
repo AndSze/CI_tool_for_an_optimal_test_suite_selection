@@ -224,7 +224,7 @@ public class Global_1h_Watchdog implements Runnable {
 		return server_watchgod_scale_factor;
 	}
 
-	public static void setServer_watchgod_scale_factor(double global_watchgod_scale_factor) {
+	public void setServer_watchgod_scale_factor(double global_watchgod_scale_factor) {
 		server_watchgod_scale_factor = global_watchgod_scale_factor;
 	}
 	

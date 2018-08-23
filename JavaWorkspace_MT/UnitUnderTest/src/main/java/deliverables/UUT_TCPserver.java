@@ -7,6 +7,11 @@ import tcpServer.TCPserver;
 
 public class UUT_TCPserver{
 	
+    private static int port = 0;
+	private static int number_of_sensors = 0;
+    private static double watchdog_scale_factor = 0.0;
+    private static int measurements_limit = 0;
+	
     /***********************************************************************************************************
 	 * Method Name: 				UUT_TCPclient()
 	 * Description: 				UUT_TCPclient class default constructor
@@ -15,43 +20,51 @@ public class UUT_TCPserver{
 	 * Exceptions thrown: 			IOException
      * @throws IOException 
 	 ***********************************************************************************************************/
-	UUT_TCPserver(int port) throws IOException{
+	UUT_TCPserver(int port, int number_of_sensors, int measurements_limit, double watchdog_scale_factor) throws IOException{
+		
+		super();
+		
+		setPort(port);
+		setNumber_of_sensors(number_of_sensors);
+		setWatchdog_scale_factor(watchdog_scale_factor);
+		setMeasurements_limit(measurements_limit);
+		
 		// call the default constructor of the TCPserver class
-		TCPserver.getInstance(port);
+		TCPserver.getInstance(getPort(), getNumber_of_sensors(), getMeasurements_limit(), getWatchdog_scale_factor());
+
     }
 
     /***********************************************************************************************************
-	* Method Name: 					public static void main(String []args) 
+	* Method Name: 					public static void main() 
 	* Description: 				   	Calls constructors of the TCPserver class 
 	* Called external functions:   	TCPserver.getInstance()
 	* Exceptions handled: 		   	IOException, BindException, SocketException
 	***********************************************************************************************************/
-	public static void main(String []args){
+	public static void main(int port, int number_of_sensors, int measurements_limit, double watchdog_scale_factor){
 		
 		// local variable that determines the port on which the TCP communication is going to take place
-		int temp_port = 9876;
 		@SuppressWarnings("unused")
 		UUT_TCPserver uut_tcp_server = null;
 		
 		// call the default constructor of the TCPserver class
 		try {
-			uut_tcp_server = new UUT_TCPserver(temp_port);
+			uut_tcp_server = new UUT_TCPserver(port, number_of_sensors, measurements_limit, watchdog_scale_factor);
 		} catch (IOException IOEx) {
-			System.out.println("Error: Instance for the TCP server at port: "+temp_port+" cannot be created");
+			System.out.println("Error: Instance for the TCP server at port: "+port+" cannot be created");
 			IOEx.printStackTrace();
 		}
 		
 		// call the overloaded constructor of the TCPserver class that triggers entire communication handling on the server side
 		try {	
-			TCPserver.getInstance(temp_port);
+			TCPserver.getInstance(getPort(), getNumber_of_sensors(), getMeasurements_limit(), getWatchdog_scale_factor());
 		} catch (BindException BindEx) { // exception is being thrown if program was started more than once
-			System.out.println("Error: The server with port: "+temp_port+" already exists and cannot be bound to the requested port ");
+			System.out.println("Error: The server with port: "+getPort()+" already exists and cannot be bound to the requested port ");
 			BindEx.printStackTrace();
 		} catch (SocketException socketEx) { // exception is being thrown if there was an attempt to run more than one server instance regardless of the port number
-	    	System.out.println("Error: The server with port="+temp_port+" returns the SocketException if there is an issue in the underlying protocol, such as a TCP error");
+	    	System.out.println("Error: The server with port="+getPort()+" returns the SocketException if there is an issue in the underlying protocol, such as a TCP error");
 	    	socketEx.printStackTrace();
 	    } catch (IOException IOEx) {
-	    	System.out.println("Error: The server with port="+temp_port+" returns the IOException if the bind operation fails, or if the socket is already bound.");
+	    	System.out.println("Error: The server with port="+getPort()+" returns the IOException if the bind operation fails, or if the socket is already bound.");
 	    	IOEx.printStackTrace();
 	    } 
 	}
@@ -66,11 +79,10 @@ public class UUT_TCPserver{
 	 ***********************************************************************************************************/
 	public void closeTheServer(){
 		
-		int temp_port = 9876;
-		
+
 		try {
 			
-			TCPserver.getInstance(temp_port).closeServer(TCPserver.getInstance(temp_port), temp_port);
+			TCPserver.getInstance(getPort(), getNumber_of_sensors(), getMeasurements_limit(), getWatchdog_scale_factor()).closeServer(getPort());
 			
 		} catch (IllegalArgumentException illPTREx ){
 			System.out.println("Error: UUT TCP server returns IllegalArgumentException if there was an attempt to close the server socket that has not been initialized");
@@ -80,5 +92,37 @@ public class UUT_TCPserver{
 			IOEx.printStackTrace();
 		}
 	}	
+	
+    public static int getPort() {
+		return port;
+	}
+
+	public void setPort(int port) {
+		UUT_TCPserver.port = port;
+	}
+
+	public static int getNumber_of_sensors() {
+		return number_of_sensors;
+	}
+
+	public void setNumber_of_sensors(int number_of_sensors) {
+		UUT_TCPserver.number_of_sensors = number_of_sensors;
+	}
+
+	public static double getWatchdog_scale_factor() {
+		return watchdog_scale_factor;
+	}
+
+	public void setWatchdog_scale_factor(double watchdog_scale_factor) {
+		UUT_TCPserver.watchdog_scale_factor = watchdog_scale_factor;
+	}
+
+	public static int getMeasurements_limit() {
+		return measurements_limit;
+	}
+
+	public void setMeasurements_limit(int measurements_limit) {
+		UUT_TCPserver.measurements_limit = measurements_limit;
+	}
 }
     

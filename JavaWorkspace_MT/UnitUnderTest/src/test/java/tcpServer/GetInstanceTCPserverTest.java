@@ -16,6 +16,7 @@ public class GetInstanceTCPserverTest {
 	 ***********************************************************************************************************/
 	int port_1 = 9876;
 	int port_2 = 9877;
+	int number_of_sensors = 1;
 	TCPserver temp_TCPserver = null;
 	
 	String[] testPurpose = { 	"Verify that once the getInstance() function is called for the first time, the default constructor of the TCPclass is being called and the TCPclass instance with its attributes set to inial values is returned",
@@ -47,7 +48,7 @@ public class GetInstanceTCPserverTest {
 	@Test
 	public void test_run_1() throws IOException{
 		
-		temp_TCPserver = TCPserver.getInstance(port_1);
+		temp_TCPserver = TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor());
 		
 		assertNotEquals(null,		temp_TCPserver);
 		assertEquals(	null,		temp_TCPserver.getServerSocket());
@@ -65,9 +66,9 @@ public class GetInstanceTCPserverTest {
 	@Test
 	public void test_run_2() throws IOException {
 		
-		temp_TCPserver = TCPserver.getInstance(port_1);
+		temp_TCPserver = TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor());
 		
-		temp_TCPserver = TCPserver.getInstance(port_1);
+		temp_TCPserver = TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor());
 		
 		assertNotEquals(null,		temp_TCPserver);
 		assertNotEquals(null,		temp_TCPserver.getServerSocket());
@@ -85,25 +86,25 @@ public class GetInstanceTCPserverTest {
 	@Test
 	public void test_run_3() throws IOException {
 		
-		temp_TCPserver = TCPserver.getInstance(port_1);
+		temp_TCPserver = TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor());
 		
-		temp_TCPserver = TCPserver.getInstance(port_1);
+		temp_TCPserver = TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor());
 		
 		assertNotEquals(null,		temp_TCPserver);
 		assertNotEquals(null,		temp_TCPserver.getServerSocket());
 		assertNotEquals(null,		temp_TCPserver.getServerThread());
 		assertTrue(TCPserver.get_ServerRunning());
 		
-		TCPserver temp_TCPserver_prev = TCPserver.getInstance(port_1);
+		TCPserver temp_TCPserver_prev = TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor());
 		ServerSocket temp_ServerSocket_prev = temp_TCPserver.getServerSocket();
 		Thread temp_ServerThread_prev = temp_TCPserver.getServerThread();
 		
 		// close the server instance to prevent the Bind Exception from being thrown due to an attempt to bind a server socket twice to the same port
-		TCPserver.getInstance(port_1).closeServer(TCPserver.getInstance(port_1), port_1);
+		TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor()).closeServer(port_1);
 		
-		temp_TCPserver = TCPserver.getInstance(port_1);
+		temp_TCPserver = TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor());
 
-		temp_TCPserver = TCPserver.getInstance(port_1);
+		temp_TCPserver = TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor());
 		
 		assertNotEquals(temp_TCPserver_prev,		temp_TCPserver);
 		assertNotEquals(temp_ServerSocket_prev,		temp_TCPserver.getServerSocket());
@@ -121,16 +122,15 @@ public class GetInstanceTCPserverTest {
 	@Test
 	public void test_run_4() throws IOException {
 		
-		temp_TCPserver = TCPserver.getInstance(port_1);
+		temp_TCPserver = TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor());
 		
-		temp_TCPserver = TCPserver.getInstance(port_1);
+		temp_TCPserver = TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor());
 		
 		assertNotEquals(null,		temp_TCPserver);
 		assertTrue(TCPserver.get_ServerRunning());
 		
-		assertEquals(temp_TCPserver.getServerSocket(), 	TCPserver.getInstance(port_1).getServerSocket());
-		TCPserver.getInstance(port_1);
-		assertEquals(temp_TCPserver, 					TCPserver.getInstance(port_1));
+		assertEquals(temp_TCPserver.getServerSocket(), 	TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor()).getServerSocket());
+		assertEquals(temp_TCPserver, 					TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor()));
 	}
 	
     /***********************************************************************************************************
@@ -143,16 +143,15 @@ public class GetInstanceTCPserverTest {
 	@Test
 	public void test_run_5() throws IOException {
 		
-		temp_TCPserver = TCPserver.getInstance(port_1);
+		temp_TCPserver = TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor());
 		
-		temp_TCPserver = TCPserver.getInstance(port_1);
+		temp_TCPserver = TCPserver.getInstance(port_1, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor());
 		
 		assertNotEquals(null,		temp_TCPserver);
 		assertTrue(TCPserver.get_ServerRunning());
 		
-		assertEquals(temp_TCPserver.getServerSocket(), 	TCPserver.getInstance(port_2).getServerSocket());
-		TCPserver.getInstance(port_2);
-		assertEquals(temp_TCPserver, 					TCPserver.getInstance(port_2));
+		assertEquals(temp_TCPserver.getServerSocket(), 	TCPserver.getInstance(port_2, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor()).getServerSocket());
+		assertEquals(temp_TCPserver, 					TCPserver.getInstance(port_2, number_of_sensors, TCPserver.getMeasurements_limit(), TCPserver.getWatchdogs_scale_factor()));
 	}
 	
    @After
@@ -163,9 +162,6 @@ public class GetInstanceTCPserverTest {
 		// Time offset before running the reinitalize_to_default() function
 		Thread.sleep(100);
 	
-		// close the server instance to prevent the Bind Exception from being thrown due to an attempt to bind a server socket twice to the same port
-		TCPserver.getInstance(port_1).closeServer(TCPserver.getInstance(port_1), port_1);
-			
 		// run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
 		TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
 		tcp_server_teardown.reinitalize_to_default(temp_TCPserver);

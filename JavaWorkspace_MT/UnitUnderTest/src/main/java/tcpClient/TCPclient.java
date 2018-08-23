@@ -44,6 +44,9 @@ public class TCPclient implements Runnable {
     		System.out.println("[TCPclient " + getSensor_ID() +"] Client_Sensors_LIST created");
     	}
     	
+    	// To be Deleted
+    	int temp = 0;
+    	
     	// create 1h watchdog that are being checked on a regular basis - if they are about to expire, the server-client communication is being initialized. Afterward, the watchdogs are kicked and they continue to count down
         // 1h watchdog on the client side are being synchronized with the 1h watchdog on the server side in messages sent from the server
     	Local_1h_Watchdog.getInstance();
@@ -113,6 +116,7 @@ public class TCPclient implements Runnable {
 			IOex.printStackTrace();
 		}
 	
+	 	// launch state machine for TCP connection on the client side
     	clientManager.messagesHandler(clientManager.getOutputStream(), clientManager.getInputReaderStream());
     	
 	}
@@ -167,6 +171,11 @@ public class TCPclient implements Runnable {
 	 ***********************************************************************************************************/
 	public static synchronized ArrayList<SensorImpl> updateClientSensorList(SensorImpl sensor){
 		int itemIndex = 0;
+
+    	// To be Deleted
+    	int temp = 0;
+
+    	
 		if (Client_Sensors_LIST.size() == 0) {
 			Client_Sensors_LIST.add(sensor);
 		}

@@ -71,7 +71,7 @@ public class ReadMessageTest {
 		// mocked objects 
 		mockTCPserverTest = mock(TCPserver.class);
 		mock_CER_ClientSocket = mock(Socket.class);
-		mockClientManager = mock(ClientManager.class);
+		mockClientManager = Mockito.spy(ClientManager.class);
 		mockTCPclient = mock(TCPclient.class);
 		
 		// create a real Server Socket for the TCPserver mock to enable the Client Socket to set up the TCP connection
@@ -162,17 +162,19 @@ public class ReadMessageTest {
 		// create ObjectOutputStream on the client side to activate mock_CER_ClientSocket = servSocket.accept() in mockServerThread
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		// create ObjectInputStream on the client to once a ComputeEngine_Runnable class instance is created
 		obj_in_stream = new ObjectInputStream(mockTCPclient.getClientSocket().getInputStream());
 		when(mockClientManager.getInputReaderStream()).thenReturn(obj_in_stream);
+		Thread.sleep(20);
 		
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver
 		testThread_readMessages.start();
 		Thread.sleep(20);
 		
-		mockClientManager.getOutputStream().writeObject(new ClientMessage_ACK(sensor_ID_1));
-		Thread.sleep(20);
+		mockClientManager.sendMessage(new ClientMessage_ACK(sensor_ID_1), mockClientManager.getOutputStream());
+		Thread.sleep(50);
 		
 		assertTrue(receivedMessage instanceof ClientMessage_ACK);
 	}
@@ -199,10 +201,12 @@ public class ReadMessageTest {
 		// create ObjectOutputStream on the client side to activate mock_CER_ClientSocket = servSocket.accept() in mockServerThread
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		// create ObjectInputStream on the client to once a ComputeEngine_Runnable class instance is created
 		obj_in_stream = new ObjectInputStream(mockTCPclient.getClientSocket().getInputStream());
 		when(mockClientManager.getInputReaderStream()).thenReturn(obj_in_stream);
+		Thread.sleep(20);
 		
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver
 		testThread_readMessages.start();
@@ -213,13 +217,13 @@ public class ReadMessageTest {
 			
 		assertEquals(null, 							receivedMessage);
 		
-		mockClientManager.getOutputStream().writeObject(new ClientMessage_ACK(sensor_ID_1));
+		mockClientManager.sendMessage(new ClientMessage_ACK(sensor_ID_1), mockClientManager.getOutputStream());
 		Thread.sleep(50);
 		
 		assertNotEquals(null, 						receivedMessage);
 		receivedMessage_old = receivedMessage;
 		
-		mockClientManager.getOutputStream().writeObject(new ClientMessage_ACK(sensor_ID_1));
+		mockClientManager.sendMessage(new ClientMessage_ACK(sensor_ID_1), mockClientManager.getOutputStream());
 		Thread.sleep(50);
 		
 		assertNotEquals(null, 						receivedMessage);
@@ -251,10 +255,12 @@ public class ReadMessageTest {
 		// create ObjectOutputStream on the client side to activate mock_CER_ClientSocket = servSocket.accept() in mockServerThread
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		// create ObjectInputStream on the client to once a ComputeEngine_Runnable class instance is created
 		obj_in_stream = new ObjectInputStream(mockTCPclient.getClientSocket().getInputStream());
 		when(mockClientManager.getInputReaderStream()).thenReturn(obj_in_stream);
+		Thread.sleep(20);
 		
 		final String expected_exception_name = "java.net.SocketException";
 		
@@ -310,10 +316,12 @@ public class ReadMessageTest {
 		// create ObjectOutputStream on the client side to activate mock_CER_ClientSocket = servSocket.accept() in mockServerThread
 		obj_out_stream = new ObjectOutputStream(mockTCPclient.getClientSocket().getOutputStream());
 		when(mockClientManager.getOutputStream()).thenReturn(obj_out_stream);
+		Thread.sleep(20);
 		
 		// create ObjectInputStream on the client to once a ComputeEngine_Runnable class instance is created
 		obj_in_stream = new ObjectInputStream(mockTCPclient.getClientSocket().getInputStream());
 		when(mockClientManager.getInputReaderStream()).thenReturn(obj_in_stream);
+		Thread.sleep(20);
 		
 		final String expected_exception_name = "java.lang.ClassCastException";
 		

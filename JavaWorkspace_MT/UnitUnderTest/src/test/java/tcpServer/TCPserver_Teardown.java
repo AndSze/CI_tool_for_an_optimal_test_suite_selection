@@ -24,8 +24,12 @@ public class TCPserver_Teardown {
 			}
 			tcp_server.set_ComputeEngineRunning(false);
 			TCPserver.set_ServerRunning(false);
-			TCPserver.set_24hWatchog_Allfalse();
-			TCPserver.set_1hWatchog_Allfalse();   
+			if(TCPserver.get_1hWatchog_timestamp_table() != null) {
+				TCPserver.set_1hWatchog_Allfalse(); 
+			}
+			if(TCPserver.get_24hWatchog_timestamp_table() != null) {
+				TCPserver.set_24hWatchog_Allfalse();
+			}
 		}
 
 		if(Global_1h_Watchdog.getInstance().getEnabled()) {
@@ -58,7 +62,7 @@ public class TCPserver_Teardown {
 			TCPserver.MeasurementData_LIST.clear();
 		}
 		if (TCPserver.getProcessing_engine() != null) {
-			TCPserver.getProcessing_engine().deleteAllFilesFromDirectiory(TCPserver.Sensors_PATH);
+			TCPserver.getProcessing_engine().deleteAllFilesFromDirectiory(TCPserver.getSensorsPath());
 		}
 		
 		TCPserver.setTCPserver_instance(null);

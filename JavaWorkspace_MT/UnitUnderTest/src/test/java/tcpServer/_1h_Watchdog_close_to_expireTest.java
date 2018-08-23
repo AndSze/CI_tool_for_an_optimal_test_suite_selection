@@ -144,8 +144,8 @@ public class _1h_Watchdog_close_to_expireTest {
 		
 		double input_1h_watchdog = 200 * global_watchdog_scale_factor;
 		double expected_1h_watchdog_readout = input_1h_watchdog * 0.25;
-		double expected_1h_Global_watchdog_readout = input_1h_watchdog * 0.5;
-		double expected_24h_Global_watchdog_readout = input_1h_watchdog * 0.5;
+		double expected_1h_Global_watchdog_readout = input_1h_watchdog * 0.75;
+		double expected_24h_Global_watchdog_readout = input_1h_watchdog * 0.75;
 		int no_of_measurements = 22;
 		
 		Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(input_1h_watchdog);
@@ -187,7 +187,7 @@ public class _1h_Watchdog_close_to_expireTest {
 		comp_engine_1.setSensor(new SensorImpl(sensor_ID_1));
 		
 		double input_1h_watchdog = 120 * global_watchdog_scale_factor;
-		double expected_1h_watchdog_readout = input_1h_watchdog * 0.75;
+		double expected_1h_watchdog_readout = input_1h_watchdog * 0.5;
 		double expected_1h_Global_watchdog_readout = input_1h_watchdog * 0.75;
 		double expected_24h_Global_watchdog_readout = input_1h_watchdog * 0.75;
 		int no_of_measurements = 22;
@@ -276,7 +276,7 @@ public class _1h_Watchdog_close_to_expireTest {
 		
 		double input_1h_watchdog = 200 * global_watchdog_scale_factor;
 		double expected_1h_watchdog_readout = input_1h_watchdog * 0.25;
-		double expected_1h_Global_watchdog_readout = input_1h_watchdog * 0.5;
+		double expected_1h_Global_watchdog_readout = input_1h_watchdog * 0.75;
 		double expected_24h_Global_watchdog_readout = input_1h_watchdog * 1;
 		int no_of_measurements = TCPserver.getMeasurements_limit() - 1;
 		

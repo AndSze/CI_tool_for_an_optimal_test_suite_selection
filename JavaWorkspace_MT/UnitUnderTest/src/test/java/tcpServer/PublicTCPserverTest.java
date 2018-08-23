@@ -69,8 +69,8 @@ public class PublicTCPserverTest {
 	@Test
 	public void test_run_3() {
 
-		assertEquals(tcpserver_1.sensor_coordinates_array.length, TCPserver.get_1hWatchog_timestamp_table().get().length);
-		assertEquals(tcpserver_1.sensor_coordinates_array.length, TCPserver.get_24hWatchog_timestamp_table().get().length);
+		assertEquals(TCPserver.sensor_coordinates_array.length, TCPserver.get_1hWatchog_timestamp_table().get().length);
+		assertEquals(TCPserver.sensor_coordinates_array.length, TCPserver.get_24hWatchog_timestamp_table().get().length);
 	}
 	
     /***********************************************************************************************************

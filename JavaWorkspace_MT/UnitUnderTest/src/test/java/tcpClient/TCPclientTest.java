@@ -248,7 +248,7 @@ public class TCPclientTest {
    @After
     public void teardown() throws IOException, InterruptedException{
 	   
-	   System.out.println("\t\tTest Run "+PublicTCPclientTest.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+TCPclientTest.testID+" teardown section:");
 	   
 	   if(tcpclient_1.searchInClientSensorList(sensor_ID_1) != null) {
 		   tcpclient_1.Client_Sensors_LIST.remove(tcpclient_1.searchInClientSensorList(sensor_ID_1));

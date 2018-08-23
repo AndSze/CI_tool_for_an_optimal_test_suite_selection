@@ -19,20 +19,20 @@ import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
+import messages.ClientMessage_ACK;
 import messages.ClientMessage_MeasurementData;
-import messages.ClientMessage_MeasurementHistory;
 import messages.Message_Interface;
 import messages.SensorState;
 import messages.ServerMessage_ACK;
-import messages.ServerMessage_SensorInfoUpdate;
+import messages.ServerMessage_Request_MeasurementData;
 import sensor.MeasurementData;
 import sensor.SensorImpl;
 import tcpClient.ClientManager;
 import tcpClient.TCPclient;
 import watchdog.Global_1h_Watchdog;
-import watchdog.Global_24h_Watchdog;
 
-public class Run_ClientMessage_MeasurementHistoryTest {
+
+public class Run_ClientMessage_MeasurementDataTest {
 
 	int port_1 = 9876;
 	int sensor_ID_1 = 1;
@@ -71,15 +71,14 @@ public class Run_ClientMessage_MeasurementHistoryTest {
 	// to mock server threads
 	Thread mockServerThread = null;
 	
-	String[] testPurpose = { "Verify that the run() function responds to ClientMessage_MeasurementHistory with ServerMessage_SensorInfoUpdate",
-							 "Verify that the run() updates index that represents the sensor in _24hWatchog_timestamp_table to true and kicks Local_24h_Watchdog if ClientMessage_MeasurementHistory was received",
-							 "Verify that once the run() function receives ClientMessage_MeasurementHistory, this measurement history is serialized and saved in Sensors_PATH directory on the disc",
-							 "Verify that once the run() function receives ClientMessage_MeasurementHistory, after saving the measurement history, the sesnor is reset and its instance in Server_Sensors_LIST is updated"};
-
+	String[] testPurpose = { "Verify that once the run() function receives ClientMessage_MeasurementData, this measurement data is serialized and saved in Sensors_PATH directory on the PC disc",
+						 	 "Verify that once the run() function receives ClientMessage_MeasurementData, the sensor instance in Server_Sensors_LIST is updated with this measurement data",
+						 	 "Verify that the run() updates index that represents the sensor in _1hWatchog_timestamp_table to true and kicks Local_1h_Watchdog if ClientMessage_MeasurementData was received",
+						 	 "Verify that the run() function responds to ClientMessage_MeasurementData with ServerMessage_ACK"};
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		Run_ClientMessage_MeasurementHistoryTest.testID += 1;
+		Run_ClientMessage_MeasurementDataTest.testID += 1;
 	}
 
 	@Before
@@ -96,7 +95,7 @@ public class Run_ClientMessage_MeasurementHistoryTest {
 		when(mockTCPserverTest.getServerSocket()).thenReturn(tempServerSocket_1);
 		
 		TCPserver.processing_engine = new ComputeEngine_Processing();
-		TCPserver.processing_engine.deleteAllFilesFromDirectiory(TCPserver.Sensors_PATH);
+		TCPserver.processing_engine.deleteAllFilesFromDirectiory(TCPserver.getSensorsPath());
 		
 		sensor = new SensorImpl(sensor_ID_1, new Point2D.Float(sensor_coordinates_array[sensor_ID_1-1][0], sensor_coordinates_array[sensor_ID_1-1][1]), softwareImageID, TCPserver.getMeasurements_limit());
 		sensor.setSensorState(SensorState.OPERATIONAL);
@@ -176,15 +175,16 @@ public class Run_ClientMessage_MeasurementHistoryTest {
 			}
 		});
 		
-		System.out.println("\t\tTest Run "+Run_ClientMessage_MeasurementHistoryTest.testID+" Purpose:");
-		System.out.println(testPurpose[(Run_ClientMessage_MeasurementHistoryTest.testID-1)]);
-		System.out.println("\t\tTest Run "+Run_ClientMessage_MeasurementHistoryTest.testID+" Logic:");
+		System.out.println("\t\tTest Run "+Run_ClientMessage_MeasurementDataTest.testID+" Purpose:");
+		System.out.println(testPurpose[(Run_ClientMessage_MeasurementDataTest.testID-1)]);
+		System.out.println("\t\tTest Run "+Run_ClientMessage_MeasurementDataTest.testID+" Logic:");
 	}
 	
     /***********************************************************************************************************
 	 * Test Name: 					test_run_1
-	 * Description: 				Verify that the run() function responds to ClientMessage_MeasurementHistory with ServerMessage_SensorInfoUpdate
-	 * External variables TBV:	 	ClientMessage_MeasurementHistory, ServerMessage_SensorInfoUpdate
+	 * Description: 				Verify that once the run() function receives ClientMessage_MeasurementData,
+	  								this measurement data is serialized and saved in Sensors_PATH directory on the disc
+	 * External variables TBV:	 	TCPserver.Sensors_PATH, MeasurementData.pm25, MeasurementData.pm20, MeasurementData.humidity, MeasurementData.temperature, MeasurementData.pressure
 	 * Mocked objects:				TCPclient, TCPserver, ClientManager, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ClientManager.readMessage(), ClientManager.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException, ClassNotFoundException
@@ -206,10 +206,8 @@ public class Run_ClientMessage_MeasurementHistoryTest {
 		Thread.sleep(20);
 		
 		Global_1h_Watchdog.getInstance().setEnabled(true);
-		Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(80 * global_watchdog_scale_factor);
-		Global_24h_Watchdog.getInstance().setEnabled(true);
-		Global_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(80 * global_watchdog_scale_factor);
-		
+		Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(120 * global_watchdog_scale_factor);
+
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver
@@ -221,39 +219,58 @@ public class Run_ClientMessage_MeasurementHistoryTest {
 		testThread_server.start();
 		Thread.sleep(20);
 
+		mockClientManager.sendMessage(new ClientMessage_ACK(sensor_ID_1), mockClientManager.getOutputStream());
+		Thread.sleep(50);
+		
+		// wait until the test thread leaves the _1h_Watchdog_close_to_expire() function that contains a delay
+		while (testThread_server.getState() == Thread.State.TIMED_WAITING) {
+			Thread.sleep(200);
+		}
+		
+		assertTrue(receivedMessage instanceof ServerMessage_Request_MeasurementData);
+		Thread.sleep(50);
+
 		SensorImpl temp_sensor_client = new SensorImpl(sensor_ID_1, new Point2D.Float(sensor_coordinates_array[sensor_ID_1-1][0], sensor_coordinates_array[sensor_ID_1-1][1]), softwareImageID, TCPserver.getMeasurements_limit());
 		temp_sensor_client.setSensorState(SensorState.OPERATIONAL);
 		
-		for (int measurements = 0; measurements < sensor.getSensor_m_history_array_size() - 1; measurements++) {
-			double pm25 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
-			double pm10 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
-			int humidity = ThreadLocalRandom.current().nextInt(0, 101);
-			int temperature = ThreadLocalRandom.current().nextInt(0, 30);
-			int pressure = ThreadLocalRandom.current().nextInt(960, 1030);
-			temp_sensor_client.addMeasurement(pm25, pm10, humidity, temperature, pressure);
-		}
+		double pm25 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
+		double pm10 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
+		int humidity = ThreadLocalRandom.current().nextInt(0, 101);
+		int temperature = ThreadLocalRandom.current().nextInt(0, 30);
+		int pressure = ThreadLocalRandom.current().nextInt(960, 1030);
+		temp_sensor_client.addMeasurement(pm25, pm10, humidity, temperature, pressure);
 		
-		MeasurementData[] client_mes_hist = temp_sensor_client.readMeasurementHistory();
+		MeasurementData client_mes_data = temp_sensor_client.readLastMeasurementData();
 		
-		mockClientManager.sendMessage(new ClientMessage_MeasurementHistory(sensor_ID_1, client_mes_hist), mockClientManager.getOutputStream());
+		mockClientManager.sendMessage(new ClientMessage_MeasurementData(sensor_ID_1, client_mes_data), mockClientManager.getOutputStream());
 		Thread.sleep(50);
 		
-		assertTrue(receivedMessage instanceof ServerMessage_SensorInfoUpdate);
+		File sensor_path = null;
+		MeasurementData server_mes_data = null;
+		sensor_path = new java.io.File(TCPserver.getSensorsPath() + "\\" + "sensor_" + sensor.getSensorID()+ "\\" + "measurement_Datas");
+		for ( File file :  sensor_path.listFiles()) {
+			server_mes_data = (MeasurementData) TCPserver.processing_engine.deserialize(file.getAbsolutePath(), MeasurementData.class);
+		}
+		
+		assertEquals(client_mes_data.getPm10(), 			server_mes_data.getPm10(), 0.01);
+		assertEquals(client_mes_data.getPm25(), 			server_mes_data.getPm25(), 0.01);
+		assertEquals(client_mes_data.getPressure(), 		server_mes_data.getPressure());
+		assertEquals(client_mes_data.getHumidity(),			server_mes_data.getHumidity());
+		assertEquals(client_mes_data.getTemperature(), 		server_mes_data.getTemperature());
 		Thread.sleep(50);
 	}
 	
     /***********************************************************************************************************
 	 * Test Name: 					test_run_2
-	 * Description: 				Verify that the run() updates index that represents the sensor in _24hWatchog_timestamp_table to true
-	  								and kicks Local_24h_Watchdog if ClientMessage_MeasurementHistory was received
-	 * Internal variables TBV:		local_24h_watchdog
-	 * External variables TBV:	 	TCPserver._24hWatchog_timestamp_table
+	 * Description: 				Verify that once the run() function receives ClientMessage_MeasurementData,
+	  								the sensor instance in Server_Sensors_LIST is updated with this measurement data
+	 * External variables TBV:	 	TCPserver.Server_Sensors_LIST, MeasurementData.pm25, MeasurementData.pm20, MeasurementData.humidity, MeasurementData.temperature, MeasurementData.pressure
 	 * Mocked objects:				TCPclient, TCPserver, ClientManager, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ClientManager.readMessage(), ClientManager.sendMessage()
-     * Exceptions thrown: 			IOException, InterruptedException, ClassNotFoundException
+     * Exceptions thrown: 			IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_2() throws IOException, InterruptedException, ClassNotFoundException {
+	public void test_run_2() throws IOException, InterruptedException {
 		
 		// bind server socket and start TCPserver
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
@@ -269,10 +286,8 @@ public class Run_ClientMessage_MeasurementHistoryTest {
 		Thread.sleep(20);
 		
 		Global_1h_Watchdog.getInstance().setEnabled(true);
-		Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(80 * global_watchdog_scale_factor);
-		Global_24h_Watchdog.getInstance().setEnabled(true);
-		Global_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(80 * global_watchdog_scale_factor);
-		
+		Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(120 * global_watchdog_scale_factor);
+
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver
@@ -284,45 +299,55 @@ public class Run_ClientMessage_MeasurementHistoryTest {
 		testThread_server.start();
 		Thread.sleep(20);
 
+		mockClientManager.sendMessage(new ClientMessage_ACK(sensor_ID_1), mockClientManager.getOutputStream());
+		Thread.sleep(50);
+		
+		// wait until the test thread leaves the _1h_Watchdog_close_to_expire() function that contains a delay
+		while (testThread_server.getState() == Thread.State.TIMED_WAITING) {
+			Thread.sleep(250);
+		}
+		
+		assertTrue(receivedMessage instanceof ServerMessage_Request_MeasurementData);
+		Thread.sleep(50);
+
 		SensorImpl temp_sensor_client = new SensorImpl(sensor_ID_1, new Point2D.Float(sensor_coordinates_array[sensor_ID_1-1][0], sensor_coordinates_array[sensor_ID_1-1][1]), softwareImageID, TCPserver.getMeasurements_limit());
 		temp_sensor_client.setSensorState(SensorState.OPERATIONAL);
 		
-		for (int measurements = 0; measurements < sensor.getSensor_m_history_array_size() - 1; measurements++) {
-			double pm25 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
-			double pm10 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
-			int humidity = ThreadLocalRandom.current().nextInt(0, 101);
-			int temperature = ThreadLocalRandom.current().nextInt(0, 30);
-			int pressure = ThreadLocalRandom.current().nextInt(960, 1030);
-			temp_sensor_client.addMeasurement(pm25, pm10, humidity, temperature, pressure);
-		}
+		double pm25 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
+		double pm10 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
+		int humidity = ThreadLocalRandom.current().nextInt(0, 101);
+		int temperature = ThreadLocalRandom.current().nextInt(0, 30);
+		int pressure = ThreadLocalRandom.current().nextInt(960, 1030);
+		temp_sensor_client.addMeasurement(pm25, pm10, humidity, temperature, pressure);
 		
-		MeasurementData[] client_mes_hist = temp_sensor_client.readMeasurementHistory();
+		MeasurementData client_mes_data = temp_sensor_client.readLastMeasurementData();
 		
-		double local_24h_watchdog_before_meas_data = Global_24h_Watchdog.getInstance().getTimeLeftBeforeExpiration();
-		double local_24h_watchdog_after_meas_data = Global_24h_Watchdog.getInstance().getExpiration() * global_watchdog_scale_factor * TCPserver.getMeasurements_limit();
-		
-		assertEquals(local_24h_watchdog_before_meas_data,  			comp_engine_1.getLocal_24h_watchdog(), 0.1);
-		assertFalse(TCPserver.isIDTrue(TCPserver.get_24hWatchog_timestamp_table().get(), sensor_ID_1));
-		
-		mockClientManager.sendMessage(new ClientMessage_MeasurementHistory(sensor_ID_1, client_mes_hist), mockClientManager.getOutputStream());
+		mockClientManager.sendMessage(new ClientMessage_MeasurementData(sensor_ID_1, client_mes_data), mockClientManager.getOutputStream());
 		Thread.sleep(50);
 		
-		assertEquals(local_24h_watchdog_after_meas_data,  			comp_engine_1.getLocal_24h_watchdog(), 0.1);
-		assertTrue(TCPserver.isIDTrue(TCPserver.get_24hWatchog_timestamp_table().get(), sensor_ID_1));
+		SensorImpl temp_sensor_server = TCPserver.processing_engine.searchInServerSensorList(sensor_ID_1);
+		MeasurementData server_mes_data = temp_sensor_server.readLastMeasurementData();
 		
+		assertEquals(client_mes_data.getPm10(), 			server_mes_data.getPm10(), 0.01);
+		assertEquals(client_mes_data.getPm25(), 			server_mes_data.getPm25(), 0.01);
+		assertEquals(client_mes_data.getPressure(), 		server_mes_data.getPressure());
+		assertEquals(client_mes_data.getHumidity(),			server_mes_data.getHumidity());
+		assertEquals(client_mes_data.getTemperature(), 		server_mes_data.getTemperature());
 		Thread.sleep(50);
 	}
 	
     /***********************************************************************************************************
 	 * Test Name: 					test_run_3
-	 * Description: 				Verify that once the run() function receives ClientMessage_MeasurementHistory, this measurement history is serialized and saved in Sensors_PATH directory on the disc
-	 * External variables TBV:	 	TCPserver.Sensors_PATH, SensorImpl.sensor_m_history
+	 * Description: 				Verify that the run() updates index that represents the sensor in _1hWatchog_timestamp_table to true and kicks Local_1h_Watchdog
+	  								if ClientMessage_MeasurementData was received
+	 * Internal variables TBV:		local_1h_watchdog
+	 * External variables TBV:	 	TCPserver._1hWatchog_timestamp_table
 	 * Mocked objects:				TCPclient, TCPserver, ClientManager, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ClientManager.readMessage(), ClientManager.sendMessage()
-     * Exceptions thrown: 			IOException, InterruptedException, ClassNotFoundException
+     * Exceptions thrown: 			IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_3() throws IOException, InterruptedException, ClassNotFoundException {
+	public void test_run_3() throws IOException, InterruptedException {
 		
 		// bind server socket and start TCPserver
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
@@ -338,8 +363,8 @@ public class Run_ClientMessage_MeasurementHistoryTest {
 		Thread.sleep(20);
 		
 		Global_1h_Watchdog.getInstance().setEnabled(true);
-		Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(80 * global_watchdog_scale_factor);
-		
+		Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(120 * global_watchdog_scale_factor);
+
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver
@@ -351,65 +376,51 @@ public class Run_ClientMessage_MeasurementHistoryTest {
 		testThread_server.start();
 		Thread.sleep(20);
 
+		mockClientManager.sendMessage(new ClientMessage_ACK(sensor_ID_1), mockClientManager.getOutputStream());
+		Thread.sleep(50);
+		
+		// wait until the test thread leaves the _1h_Watchdog_close_to_expire() function that contains a delay
+		while (testThread_server.getState() == Thread.State.TIMED_WAITING) {
+			Thread.sleep(200);
+		}
+		
+		assertTrue(receivedMessage instanceof ServerMessage_Request_MeasurementData);
+		Thread.sleep(50);
+
 		SensorImpl temp_sensor_client = new SensorImpl(sensor_ID_1, new Point2D.Float(sensor_coordinates_array[sensor_ID_1-1][0], sensor_coordinates_array[sensor_ID_1-1][1]), softwareImageID, TCPserver.getMeasurements_limit());
 		temp_sensor_client.setSensorState(SensorState.OPERATIONAL);
 		
-		for (int measurements = 0; measurements < sensor.getSensor_m_history_array_size(); measurements++) {
-			double pm25 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
-			double pm10 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
-			int humidity = ThreadLocalRandom.current().nextInt(0, 101);
-			int temperature = ThreadLocalRandom.current().nextInt(0, 30);
-			int pressure = ThreadLocalRandom.current().nextInt(960, 1030);
-			temp_sensor_client.addMeasurement(pm25, pm10, humidity, temperature, pressure);
-			
-			MeasurementData client_mes_data = temp_sensor_client.readLastMeasurementData();
-			
-			Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(80 * global_watchdog_scale_factor);
-			
-			mockClientManager.sendMessage(new ClientMessage_MeasurementData(sensor_ID_1, client_mes_data), mockClientManager.getOutputStream());
-			Thread.sleep(50);
-			
-			assertTrue(receivedMessage instanceof ServerMessage_ACK);
-			Thread.sleep(50);
-		}
+		double pm25 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
+		double pm10 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
+		int humidity = ThreadLocalRandom.current().nextInt(0, 101);
+		int temperature = ThreadLocalRandom.current().nextInt(0, 30);
+		int pressure = ThreadLocalRandom.current().nextInt(960, 1030);
+		temp_sensor_client.addMeasurement(pm25, pm10, humidity, temperature, pressure);
 		
-		MeasurementData[] client_mes_hist = temp_sensor_client.readMeasurementHistory();
+		MeasurementData client_mes_data = temp_sensor_client.readLastMeasurementData();
 		
-		Global_24h_Watchdog.getInstance().setEnabled(true);
-		Global_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(120 * global_watchdog_scale_factor);
+		double expected_local_1h_watchdog = Global_1h_Watchdog.getInstance().getExpiration() * global_watchdog_scale_factor + comp_engine_1.getLocal_1h_watchdog();
 		
-		mockClientManager.sendMessage(new ClientMessage_MeasurementHistory(sensor_ID_1, client_mes_hist), mockClientManager.getOutputStream());
+		assertFalse(TCPserver.isIDTrue(TCPserver.get_1hWatchog_timestamp_table().get(), sensor_ID_1));
+		
+		mockClientManager.sendMessage(new ClientMessage_MeasurementData(sensor_ID_1, client_mes_data), mockClientManager.getOutputStream());
 		Thread.sleep(50);
-		
-		File sensor_path = null;
-		MeasurementData[] server_mes_hist = null;
-		sensor_path = new java.io.File(TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID()+ "\\" + "measurement_Histories");
-		for ( File file :  sensor_path.listFiles()) {
-			server_mes_hist = (MeasurementData[]) TCPserver.processing_engine.deserialize(file.getAbsolutePath(), MeasurementData[].class);
-		}
-		
-		for (int measurements = 0; measurements < sensor.getSensor_m_history_array_size(); measurements++) {
-			assertEquals(client_mes_hist[measurements].getPm10(), 				server_mes_hist[measurements].getPm10(), 0.01);
-			assertEquals(client_mes_hist[measurements].getPm25(), 				server_mes_hist[measurements].getPm25(), 0.01);
-			assertEquals(client_mes_hist[measurements].getPressure(), 			server_mes_hist[measurements].getPressure());
-			assertEquals(client_mes_hist[measurements].getHumidity(),			server_mes_hist[measurements].getHumidity());
-			assertEquals(client_mes_hist[measurements].getTemperature(), 		server_mes_hist[measurements].getTemperature());
-		}
-		
+	
+		assertTrue(TCPserver.isIDTrue(TCPserver.get_1hWatchog_timestamp_table().get(), sensor_ID_1));
+		assertEquals(expected_local_1h_watchdog, 	 	comp_engine_1.getLocal_1h_watchdog(), 0.2);
 		Thread.sleep(50);
 	}
 	
     /***********************************************************************************************************
 	 * Test Name: 					test_run_4
-	 * Description: 				Verify that once the run() function receives ClientMessage_MeasurementHistory, after saving the measurement history,
-	  								the sensor is reset and its instance in Server_Sensors_LIST is updated
-	 * External variables TBV:	 	TCPserver.Sensors_PATH, SensorImpl.sensor_m_history, SensorImpl.sensorState, SensorImpl.numberOfMeasurements
+	 * Description: 				Verify that the run() function responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+	 * External variables TBV:	 	ClientMessage_MeasurementData, ServerMessage_ACK
 	 * Mocked objects:				TCPclient, TCPserver, ClientManager, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ClientManager.readMessage(), ClientManager.sendMessage()
-     * Exceptions thrown: 			IOException, InterruptedException, ClassNotFoundException
+     * Exceptions thrown: 			IOException, InterruptedException
 	 ***********************************************************************************************************/
 	@Test
-	public void test_run_4() throws IOException, InterruptedException, ClassNotFoundException {
+	public void test_run_4() throws IOException, InterruptedException {
 		
 		// bind server socket and start TCPserver
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
@@ -425,8 +436,8 @@ public class Run_ClientMessage_MeasurementHistoryTest {
 		Thread.sleep(20);
 		
 		Global_1h_Watchdog.getInstance().setEnabled(true);
-		Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(80 * global_watchdog_scale_factor);
-		
+		Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(120 * global_watchdog_scale_factor);
+
 		comp_engine_1 = new ComputeEngine_Runnable(mock_CER_ClientSocket, global_watchdog_scale_factor, true);
 		
 		// start test Thread on the client side that is responsible for listening messages sent by TCPserver
@@ -438,68 +449,40 @@ public class Run_ClientMessage_MeasurementHistoryTest {
 		testThread_server.start();
 		Thread.sleep(20);
 
+		mockClientManager.sendMessage(new ClientMessage_ACK(sensor_ID_1), mockClientManager.getOutputStream());
+		Thread.sleep(50);
+		
+		// wait until the test thread leaves the _1h_Watchdog_close_to_expire() function that contains a delay
+		while (testThread_server.getState() == Thread.State.TIMED_WAITING) {
+			Thread.sleep(200);
+		}
+		
+		assertTrue(receivedMessage instanceof ServerMessage_Request_MeasurementData);
+		Thread.sleep(50);
+
 		SensorImpl temp_sensor_client = new SensorImpl(sensor_ID_1, new Point2D.Float(sensor_coordinates_array[sensor_ID_1-1][0], sensor_coordinates_array[sensor_ID_1-1][1]), softwareImageID, TCPserver.getMeasurements_limit());
 		temp_sensor_client.setSensorState(SensorState.OPERATIONAL);
 		
-		for (int measurements = 0; measurements < sensor.getSensor_m_history_array_size(); measurements++) {
-			double pm25 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
-			double pm10 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
-			int humidity = ThreadLocalRandom.current().nextInt(0, 101);
-			int temperature = ThreadLocalRandom.current().nextInt(0, 30);
-			int pressure = ThreadLocalRandom.current().nextInt(960, 1030);
-			temp_sensor_client.addMeasurement(pm25, pm10, humidity, temperature, pressure);
-			
-			MeasurementData client_mes_data = temp_sensor_client.readLastMeasurementData();
-			
-			Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(80 * global_watchdog_scale_factor);
-			
-			mockClientManager.sendMessage(new ClientMessage_MeasurementData(sensor_ID_1, client_mes_data), mockClientManager.getOutputStream());
-			Thread.sleep(50);
-			
-			assertTrue(receivedMessage instanceof ServerMessage_ACK);
-			Thread.sleep(50);
-		}
+		double pm25 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
+		double pm10 = ThreadLocalRandom.current().nextDouble(0.0, 101.0);
+		int humidity = ThreadLocalRandom.current().nextInt(0, 101);
+		int temperature = ThreadLocalRandom.current().nextInt(0, 30);
+		int pressure = ThreadLocalRandom.current().nextInt(960, 1030);
+		temp_sensor_client.addMeasurement(pm25, pm10, humidity, temperature, pressure);
 		
-		MeasurementData[] client_mes_hist = temp_sensor_client.readMeasurementHistory();
+		MeasurementData client_mes_data = temp_sensor_client.readLastMeasurementData();
 		
-		SensorImpl server_sensor_before_meas_hist = null;
-		SensorImpl server_sensor_after_meas_hist = null;
-		
-		server_sensor_before_meas_hist = TCPserver.getProcessing_engine().searchInServerSensorList(sensor_ID_1);
-		int expected_no_of_meas_before_reset = 24;
-		
-		MeasurementData[] server_mes_hist = server_sensor_before_meas_hist.readMeasurementHistory();
-		
-		assertEquals(expected_no_of_meas_before_reset, 		server_sensor_before_meas_hist.getNumberOfMeasurements());
-		
-		for (int measurements = 0; measurements < sensor.getSensor_m_history_array_size(); measurements++) {
-			assertEquals(client_mes_hist[measurements].getPm10(), 				server_mes_hist[measurements].getPm10(), 0.01);
-			assertEquals(client_mes_hist[measurements].getPm25(), 				server_mes_hist[measurements].getPm25(), 0.01);
-			assertEquals(client_mes_hist[measurements].getPressure(), 			server_mes_hist[measurements].getPressure());
-			assertEquals(client_mes_hist[measurements].getHumidity(),			server_mes_hist[measurements].getHumidity());
-			assertEquals(client_mes_hist[measurements].getTemperature(), 		server_mes_hist[measurements].getTemperature());
-		}
-		
-		Global_24h_Watchdog.getInstance().setEnabled(true);
-		Global_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(80 * global_watchdog_scale_factor);
-				
-		mockClientManager.sendMessage(new ClientMessage_MeasurementHistory(sensor_ID_1, client_mes_hist), mockClientManager.getOutputStream());
+		mockClientManager.sendMessage(new ClientMessage_MeasurementData(sensor_ID_1, client_mes_data), mockClientManager.getOutputStream());
 		Thread.sleep(50);
 		
-		server_sensor_after_meas_hist = TCPserver.getProcessing_engine().searchInServerSensorList(sensor_ID_1);
-		int expected_no_of_meas_after_reset = 0;
-		SensorState expected_sensor_state_after_reset = SensorState.PRE_OPERATIONAL;
-		
-		assertEquals(expected_no_of_meas_after_reset, 		server_sensor_after_meas_hist.getNumberOfMeasurements());
-		assertEquals(expected_sensor_state_after_reset, 	server_sensor_after_meas_hist.getSensorState());
-		
+		assertTrue(receivedMessage instanceof ServerMessage_ACK);
 		Thread.sleep(50);
 	}
 	
 	@After
 	public void teardown() throws IOException, InterruptedException{
 	   
-	   System.out.println("\t\tTest Run "+Run_ClientMessage_MeasurementHistoryTest.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+Run_ClientMessage_MeasurementDataTest.testID+" teardown section:");
 	   
 	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
 	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
@@ -511,5 +494,4 @@ public class Run_ClientMessage_MeasurementHistoryTest {
 	   System.out.println("");
 	   incrementTestID();
 	}
-
 }

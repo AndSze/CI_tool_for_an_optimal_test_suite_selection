@@ -92,7 +92,7 @@ public class Run_ClientMessage_SensorInfoTest {
 		when(mockTCPserverTest.getServerSocket()).thenReturn(tempServerSocket_1);
 		
 		TCPserver.processing_engine = new ComputeEngine_Processing();
-		TCPserver.processing_engine.deleteAllFilesFromDirectiory(TCPserver.Sensors_PATH);
+		TCPserver.processing_engine.deleteAllFilesFromDirectiory(TCPserver.getSensorsPath());
 		
 		sensor = new SensorImpl(sensor_ID_1, new Point2D.Float(sensor_coordinates_array[sensor_ID_1-1][0], sensor_coordinates_array[sensor_ID_1-1][1]), softwareImageID, TCPserver.getMeasurements_limit());
 		sensor.setSensorState(SensorState.OPERATIONAL);
@@ -349,7 +349,7 @@ public class Run_ClientMessage_SensorInfoTest {
 		assertEquals(temp_sensor_client.getLocal_watchdog_scale_factor(),	server_sensor_before_sensor_info.getLocal_watchdog_scale_factor(), 0.01);
 		
 		// prior to sending ClientMessage_SensorInfo, all file are removed from the Sensors_PATH directory (e.g. _sensorINITIALIZATION.sensor_info)
-		TCPserver.processing_engine.deleteAllFilesFromDirectiory(TCPserver.Sensors_PATH);
+		TCPserver.processing_engine.deleteAllFilesFromDirectiory(TCPserver.getSensorsPath());
 		
 		mockClientManager.sendMessage(new ClientMessage_SensorInfo(temp_sensor_client), mockClientManager.getOutputStream());
 		Thread.sleep(50);
@@ -364,7 +364,7 @@ public class Run_ClientMessage_SensorInfoTest {
 		File sensor_path = null;
 		File temp_file = null;
 		SensorImpl sensor_info_saved = null;
-		sensor_path = new java.io.File(TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID()+ "\\" + "sensor_Infos");
+		sensor_path = new java.io.File(TCPserver.getSensorsPath() + "\\" + "sensor_" + sensor.getSensorID()+ "\\" + "sensor_Infos");
 		for ( File file :  sensor_path.listFiles()) {
 			sensor_info_saved = (SensorImpl) TCPserver.processing_engine.deserialize(file.getAbsolutePath(), SensorImpl.class);
 			temp_file = file;
@@ -435,7 +435,7 @@ public class Run_ClientMessage_SensorInfoTest {
 		assertEquals(temp_sensor_client.getLocal_watchdog_scale_factor(),	server_sensor_before_sensor_info.getLocal_watchdog_scale_factor(), 0.01);
 		
 		// prior to sending ClientMessage_SensorInfo, all file are removed from the Sensors_PATH directory (e.g. _sensorINITIALIZATION.sensor_info)
-		TCPserver.processing_engine.deleteAllFilesFromDirectiory(TCPserver.Sensors_PATH);
+		TCPserver.processing_engine.deleteAllFilesFromDirectiory(TCPserver.getSensorsPath());
 		
 		mockClientManager.sendMessage(new ClientMessage_SensorInfo(temp_sensor_client), mockClientManager.getOutputStream());
 		Thread.sleep(50);
@@ -450,7 +450,7 @@ public class Run_ClientMessage_SensorInfoTest {
 		File sensor_path = null;
 		File temp_file = null;
 		SensorImpl sensor_info_saved = null;
-		sensor_path = new java.io.File(TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID()+ "\\" + "sensor_Infos");
+		sensor_path = new java.io.File(TCPserver.getSensorsPath() + "\\" + "sensor_" + sensor.getSensorID()+ "\\" + "sensor_Infos");
 		for ( File file :  sensor_path.listFiles()) {
 			sensor_info_saved = (SensorImpl) TCPserver.processing_engine.deserialize(file.getAbsolutePath(), SensorImpl.class);
 			temp_file = file;
@@ -518,7 +518,7 @@ public class Run_ClientMessage_SensorInfoTest {
 		assertEquals(temp_sensor_client.getLocal_watchdog_scale_factor(),	server_sensor_before_sensor_info.getLocal_watchdog_scale_factor(), 0.01);
 		
 		// prior to sending ClientMessage_SensorInfo, all file are removed from the Sensors_PATH directory (e.g. _sensorINITIALIZATION.sensor_info)
-		TCPserver.processing_engine.deleteAllFilesFromDirectiory(TCPserver.Sensors_PATH);
+		TCPserver.processing_engine.deleteAllFilesFromDirectiory(TCPserver.getSensorsPath());
 		
 		mockClientManager.sendMessage(new ClientMessage_SensorInfo(temp_sensor_client), mockClientManager.getOutputStream());
 		Thread.sleep(50);
@@ -533,7 +533,7 @@ public class Run_ClientMessage_SensorInfoTest {
 		File sensor_path = null;
 		File temp_file = null;
 		SensorImpl sensor_info_saved = null;
-		sensor_path = new java.io.File(TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID()+ "\\" + "sensor_Infos");
+		sensor_path = new java.io.File(TCPserver.getSensorsPath() + "\\" + "sensor_" + sensor.getSensorID()+ "\\" + "sensor_Infos");
 		for ( File file :  sensor_path.listFiles()) {
 			sensor_info_saved = (SensorImpl) TCPserver.processing_engine.deserialize(file.getAbsolutePath(), SensorImpl.class);
 			temp_file = file;
@@ -598,7 +598,7 @@ public class Run_ClientMessage_SensorInfoTest {
 		assertNotEquals(temp_sensor_client.getSensorState(),				server_sensor_before_sensor_info.getSensorState());
 		
 		// prior to sending ClientMessage_SensorInfo, all file are removed from the Sensors_PATH directory (e.g. _sensorINITIALIZATION.sensor_info)
-		TCPserver.processing_engine.deleteAllFilesFromDirectiory(TCPserver.Sensors_PATH);
+		TCPserver.processing_engine.deleteAllFilesFromDirectiory(TCPserver.getSensorsPath());
 
 		mockClientManager.sendMessage(new ClientMessage_SensorInfo(temp_sensor_client), mockClientManager.getOutputStream());
 		Thread.sleep(50);
@@ -613,7 +613,7 @@ public class Run_ClientMessage_SensorInfoTest {
 		File sensor_path = null;
 		File temp_file = null;
 		SensorImpl sensor_info_saved = null;
-		sensor_path = new java.io.File(TCPserver.Sensors_PATH + "\\" + "sensor_" + sensor.getSensorID()+ "\\" + "sensor_Infos");
+		sensor_path = new java.io.File(TCPserver.getSensorsPath() + "\\" + "sensor_" + sensor.getSensorID()+ "\\" + "sensor_Infos");
 		for ( File file :  sensor_path.listFiles()) {
 			sensor_info_saved = (SensorImpl) TCPserver.processing_engine.deserialize(file.getAbsolutePath(), SensorImpl.class);
 			temp_file = file;

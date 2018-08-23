@@ -221,7 +221,7 @@ public class Global_24h_Watchdog implements Runnable {
 		return server_watchgod_scale_factor;
 	}
 
-	public static void setServer_watchdog_scale_factor(double global_watchgod_scale_factor) {
+	public void setServer_watchdog_scale_factor(double global_watchgod_scale_factor) {
 		server_watchgod_scale_factor = global_watchgod_scale_factor;
 	}
 	

@@ -56,7 +56,6 @@ public class UUT_TCPclient extends TCPclient implements Runnable {
 	 * Description: 				handles TCP connection with server based on a local watchdog that is synchronized with the global watchdog in messages from the TCP server sent to sensors via TCP connection
 	 * Affected internal variables: delays_array, watchdog_thresholds_array
 	 * Called internal functions:   UUT_TCPclient(), setINSTANCE(), runTheClient(), closeTheClient(), closeTheClientManager(), set_delays_array(), set_watchdog_thresholds_array(), processingDelay()
-	 								get_watchdog_threshold(), get_delays()
 	 * Called external functions:   TCPclient.searchInClientSensorList()
 	 * Exceptions thrown: 			IOException
 	 ***********************************************************************************************************/

@@ -79,7 +79,7 @@ public class UUT_TCPclientTest {
 		int temp_delays_array_2 = 100000;
 		int temp_delays_array_3 = 1000000;
 		double temp_watchdog_thresholds_array_0 = 100;
-		double temp_watchdog_thresholds_array_1 = 150;
+		double temp_watchdog_thresholds_array_1 = 120;
 		double temp_watchdog_thresholds_array_2 = 300;
 		double temp_watchdog_thresholds_array_3 = 900;
 		

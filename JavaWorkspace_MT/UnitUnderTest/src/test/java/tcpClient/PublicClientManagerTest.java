@@ -18,7 +18,7 @@ public class PublicClientManagerTest {
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		PublicTCPclientTest.testID += 1;
+		PublicClientManagerTest.testID += 1;
 	}
 
 	@Before

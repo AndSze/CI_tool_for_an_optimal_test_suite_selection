@@ -331,7 +331,7 @@ public class Run_ClientMessage_ACKTest {
 		Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(120 * global_watchdog_scale_factor);
 		Global_24h_Watchdog.getInstance().setTimeLeftBeforeExpiration(200 * global_watchdog_scale_factor);
 		double expected_Local_24h_watchdog_after_22_messages = 300 * global_watchdog_scale_factor;
-		double expected_Local_1h_watchdog_after_22_messages = 120 * global_watchdog_scale_factor * 0.75;
+		double expected_Local_1h_watchdog_after_22_messages = 120 * global_watchdog_scale_factor * 0.5;
 		
 		mockClientManager.sendMessage(new ClientMessage_ACK(sensor_ID_1), mockClientManager.getOutputStream());
 		Thread.sleep(50);
@@ -576,7 +576,7 @@ public class Run_ClientMessage_ACKTest {
 			Thread.sleep(200);
 		}
 		
-		assertEquals(expected_Local_24h_watchdog,		comp_engine_1.getLocal_24h_watchdog(), 0.1);	
+		assertEquals(expected_Local_24h_watchdog,		comp_engine_1.getLocal_24h_watchdog(), 0.2);	
 		Thread.sleep(50);
 	}
 	

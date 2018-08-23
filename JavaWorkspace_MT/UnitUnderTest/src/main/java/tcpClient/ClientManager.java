@@ -63,6 +63,10 @@ public class ClientManager implements TCPclient_interface{
 	 ***********************************************************************************************************/
 	public ClientManager initClientManager(Socket clientSocket, int sensor_ID) throws IOException{
 		// it activates serverSocket.accept() on the server side
+
+    	// To be Deleted
+    	int temp = 0;
+
 		outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         inputStream = new ObjectInputStream(clientSocket.getInputStream());
         return (new ClientManager(outputStream, inputStream, sensor_ID));
