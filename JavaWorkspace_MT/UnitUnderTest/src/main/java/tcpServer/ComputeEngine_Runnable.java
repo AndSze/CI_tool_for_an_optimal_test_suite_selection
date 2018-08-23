@@ -106,7 +106,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	public void sendMessage(Message_Interface message, ObjectOutputStream out_stream) throws IOException {
 		
     	// To be Deleted
-    	int temp = 0;
+    	int temp_1 = 0;
     	
 		if (out_stream != null) {
 			// sends message from the server via its output stream to the client input stream
