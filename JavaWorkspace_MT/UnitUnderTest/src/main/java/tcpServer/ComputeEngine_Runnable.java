@@ -62,9 +62,6 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	public ComputeEngine_Runnable(Socket clientSocket, double global_watchdog_scale_factor, boolean isComputeEngine_Runnable_running) throws IOException  {
 		super();
 		
-		// code change to trigger selection of optimal test suite by the CI tool
-		int change_to_ComputeEngine_Runnable = 0;
-		
 		// create object output/input streams
 		outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         inputStream = new ObjectInputStream(clientSocket.getInputStream());
@@ -104,9 +101,6 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 * Exceptions thrown: 			IOException
 	 ***********************************************************************************************************/
 	public void sendMessage(Message_Interface message, ObjectOutputStream out_stream) throws IOException {
-		
-		// code change to trigger selection of optimal test suite by the CI tool
-		int change_to_sendMessage = 0;
 		
 		if (out_stream != null) {
 			// sends message from the server via its output stream to the client input stream
