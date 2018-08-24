@@ -26,6 +26,8 @@ dir_repository_newer_commit_sourceCode = dir_repository_newer_commit + r'\JavaWo
 dir_repository_master_unitTests = dir_repository_master + r'\JavaWorkspace_MT\UnitUnderTest\src\test\java'
 dir_repository_master_integrationTests = dir_repository_master + r'\JavaWorkspace_MT\UnitUnderTest\src\integration-test\java'
 dir_sourceCode_diff = base_dir_path_diff + r'CI_tool_diff_repo\master\JavaWorkspace_MT\UnitUnderTest\src\main\java'
+dir_repository_default_pom_file = base_dir_path + r'master\JavaWorkspace_MT\UnitUnderTest\pom.xml'
+dir_repository_updated_pom_file = base_dir_path + r'master\JavaWorkspace_MT\UnitUnderTest\updated_pom.xml'
 
 # All Files common
 elem_start = "/********"

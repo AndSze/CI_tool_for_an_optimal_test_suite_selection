@@ -7,6 +7,83 @@ import time
 from ConstantsDefinition import *
 from AuxiliaryScripts import *
 
+def update_pom(resulted_optimal_unit_tests_suite):
+
+	with open(dir_repository_default_pom_file, 'r') as file:
+		# read a list of lines into data
+		data = file.readlines()
+		
+	lookup = '<!-- magic is going to happen here -->'
+
+	line_with_string = 0
+	with open(dir_repository_default_pom_file) as myFile:
+		for num, line in enumerate(myFile, 1):
+			if lookup in line:
+				line_with_string = num
+				
+	pom_chunk_to_be_inserted = []
+	pom_chunk_to_be_inserted.append('\t\t\t\t\t<excludes>\n')
+	pom_chunk_to_be_inserted.append('\t\t\t\t\t\t<exclude>"**/*Test.java"</exclude>\n')
+	pom_chunk_to_be_inserted.append('\t\t\t\t\t\t<exclude>"**/*Tests.java"</exclude>\n')
+	pom_chunk_to_be_inserted.append('\t\t\t\t\t\t<exclude>"**/Test*.java"</exclude>\n')
+	pom_chunk_to_be_inserted.append('\t\t\t\t\t\t<exclude>"**/Test*.java"</exclude>\n')
+	pom_chunk_to_be_inserted.append('\t\t\t\t\t</excludes>\n')
+	pom_chunk_to_be_inserted.append('\t\t\t\t\t<includes>\n')
+
+	for unit_test_to_be_executed in resulted_optimal_unit_tests_suite:
+		pom_chunk_to_be_inserted.append('\t\t\t\t\t\t' + unit_test_to_be_executed + '\n')
+
+	pom_chunk_to_be_inserted.append('\t\t\t\t\t</includes>\n')
+
+	iterator = 0
+	for index in range(line_with_string, (len(pom_chunk_to_be_inserted) + line_with_string)):
+		data.insert(index, pom_chunk_to_be_inserted[iterator]) 
+		iterator += 1
+
+	# and write everything back
+	with open(dir_repository_updated_pom_file, 'w') as file:
+		file.writelines( data )
+
+
+def build_resulted_array_of_aggregated_affected_methods(resulted_array_of_normalized_file_and_its_methods_under_analysis, array_of_methods_already_appened):
+
+	resulted_array_of_aggregated_affected_methods = array_of_methods_already_appened
+
+	for normalized_file_and_its_methods_under_analysis in resulted_array_of_normalized_file_and_its_methods_under_analysis:
+
+		# handle case for normalized path of files
+		for normalized_file_and_its_methods_allready_appended in array_of_methods_already_appened:
+			normalized_file_already_exist = False
+			if (normalized_file_and_its_methods_under_analysis[0] == normalized_file_and_its_methods_allready_appended[0]):
+				normalized_file_already_exist = True
+				break
+		
+		# if normalized path of file has not existed, add it with all affected methods in the file to resulted_array_of_aggregated_affected_methods
+		if(normalized_file_already_exist == False):
+			resulted_array_of_aggregated_affected_methods.append(normalized_file_and_its_methods_under_analysis)
+			# already appended, hence there is no need to further processing
+			continue
+		
+		# handle case for affected methods in already existing normalized path of file in array_of_methods_already_appened
+		for normalized_file_and_its_methods_allready_appended in array_of_methods_already_appened:
+			if (normalized_file_and_its_methods_under_analysis[0] == normalized_file_and_its_methods_allready_appended[0]):
+				for method_with_removed_lines_index in range(1, len(normalized_file_and_its_methods_under_analysis)):
+					method_already_exists = False
+					for method_already_appended_index in range(1, len(normalized_file_and_its_methods_allready_appended)):
+						if(normalized_file_and_its_methods_under_analysis[method_with_removed_lines_index] == normalized_file_and_its_methods_allready_appended[method_already_appended_index]):
+							method_already_exists = True
+							break
+					
+					# if affected method has not existed, add it at the index dedicated to normalized path of file with the affected method
+					if(method_already_exists == False):
+						print 'method_with_removed_lines: ' + str(normalized_file_and_its_methods_under_analysis[method_with_removed_lines_index])
+						index_to_be_changed_inresulted_array_of_affected_methods = array_of_methods_already_appened.index(normalized_file_and_its_methods_allready_appended)
+						normalized_file_and_its_methods_allready_appended.append(normalized_file_and_its_methods_under_analysis[method_with_removed_lines_index])
+						array_of_methods_already_appened[index_to_be_changed_inresulted_array_of_affected_methods] = normalized_file_and_its_methods_allready_appended
+				
+
+	return resulted_array_of_aggregated_affected_methods
+	
 def browse_for_an_optimal_unit_tests_suite(resulted_list_of_changed_methods, resulted_list_of_normalized_files_of_changed_methods, resulted_list_of_methods_that_calls_changed_internal_method, resulted_list_of_methods_that_calls_changed_external_method):
 
 	resulted_optimal_unit_tests_suite = []
@@ -389,10 +466,10 @@ def build_resulted_array_of_removed_lines_numbers(resulted_array_of_removed_line
 					method_brackets_iterator = method_brackets_iterator + 1
 				for changed_line_number in changed_lines_numbers_for_a_file_list:
 					changed_method_name = ''
-					# add 'Class Attributes' to changed_method_names_for_a_file_list if changed line number is lesser than line number for the first method in a file under analysis
+					# if 'Class Attributes' has changed - add constructor to the changed method list, since default values of class attributes are verified in the tests for class constructors
 					if list_of_method_name_line_numbers.index(method_name_line_number) == 0 and len(list_of_method_name_line_numbers) > 1 :
 						if changed_line_number < method_name_line_number:
-							changed_method_name = 'Class Attributes'
+							changed_method_name = list_of_changed_methods[list_of_method_name_line_numbers.index(method_name_line_number)]
 					# add method name to changed_method_names_for_a_file_list if:
 					# changed line number is inside the method's body (it means between the changed method header and header for consecutive method)
 					# changed line number is higher than line number for the last method in a file under analysis
@@ -497,10 +574,10 @@ def build_resulted_array_of_added_lines_numbers(resulted_array_of_added_lines, l
 					method_brackets_iterator = method_brackets_iterator + 1
 				for changed_line_number in changed_lines_numbers_for_a_file_list:
 					changed_method_name = ''
-					# add 'Class Attributes' to changed_method_names_for_a_file_list if changed line number is lesser than line number for the first method in a file under analysis
+					# if 'Class Attributes' has changed - add constructor to the changed method list, since default values of class attributes are verified in the tests for class constructors
 					if list_of_method_name_line_numbers.index(method_name_line_number) == 0 and len(list_of_method_name_line_numbers) > 1 :
 						if changed_line_number < method_name_line_number:
-							changed_method_name = 'Class Attributes'
+							changed_method_name = list_of_changed_methods[list_of_method_name_line_numbers.index(method_name_line_number)]
 					# add method name to changed_method_names_for_a_file_list if:
 					# changed line number is inside the method's body (it means between the changed method header and header for consecutive method)
 					# changed line number is higher than line number for the last method in a file under analysis
