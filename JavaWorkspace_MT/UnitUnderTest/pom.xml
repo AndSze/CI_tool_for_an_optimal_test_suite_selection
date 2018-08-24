@@ -95,7 +95,7 @@
                             </includes>
                             <!--
                                 Skips integration tests if the value of skip.integration.tests
-                                property is true
+                                property is true (dev profile is active)
                             -->
                             <skipTests>${skip.integration.tests}</skipTests>
                         </configuration>
@@ -110,7 +110,7 @@
 					<!-- magic is going to happen here -->
                  	<!--
                         Skips unit tests if the value of skip.unit.tests
-                        property is true
+                        property is true (integration-test profile is active)
                     -->
                     <skipTests>${skip.unit.tests}</skipTests>
                 </configuration>
