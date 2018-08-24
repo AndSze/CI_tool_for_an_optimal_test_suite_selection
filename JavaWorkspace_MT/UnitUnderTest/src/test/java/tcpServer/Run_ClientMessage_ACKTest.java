@@ -33,6 +33,8 @@ public class Run_ClientMessage_ACKTest {
 
 	int port_1 = 9876;
 	int sensor_ID_1 = 1;
+	int number_of_sensors = 1;
+	int measurements_limit = 24;
 	final String serverHostName = "localhost";
 	double global_watchdog_scale_factor = 0.01;
 	ComputeEngine_Runnable comp_engine_1 = null;
@@ -98,6 +100,7 @@ public class Run_ClientMessage_ACKTest {
 		tempServerSocket_1 = new ServerSocket();
 		when(mockTCPserverTest.getServerSocket()).thenReturn(tempServerSocket_1);
 		
+		TCPserver.getInstance(port_1, number_of_sensors, measurements_limit, TCPserver.getWatchdogs_scale_factor());
 		TCPserver.processing_engine = new ComputeEngine_Processing();
 		sensor = new SensorImpl(sensor_ID_1, new Point2D.Float(sensor_coordinates_array[sensor_ID_1-1][0], sensor_coordinates_array[sensor_ID_1-1][1]), softwareImageID, TCPserver.getMeasurements_limit());
 		sensor.setSensorState(SensorState.OPERATIONAL);

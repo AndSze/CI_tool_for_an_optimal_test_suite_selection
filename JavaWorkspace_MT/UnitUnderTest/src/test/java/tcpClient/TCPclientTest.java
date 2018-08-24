@@ -52,7 +52,10 @@ public class TCPclientTest {
 							 "Verify that once the overloaded constructor of the TCPclient class is being called, the client manager for the TCPclient class instance is initialized with input and output streams",
 							 "Verify that once the overloaded constructor of the TCPclient class is being called, the clientRunning flag is set to true",
 							 "Verify that once the overloaded constructor of the TCPclient class is being called with a unique senor ID , Client_Sensors_LIST is updated with the newly created SensorImpl class instance with specified sensorID",
-							 "Verify that once the overloaded constructor of the TCPclient class is being called with a senor ID that already exists for a sensor in Client_Sensors_LIST, the list is not being updated and no SensorImpl class instance is created"};
+							 "Verify that once the overloaded constructor of the TCPclient class is being called with a senor ID that already exists for a sensor in Client_Sensors_LIST, the list is not being updated and no SensorImpl class instance is created",
+							 "Verify that once the default constructor of the TCPclient class is being called for the first time, Client_Sensors_LIST is created",
+							 "Verify that once the default constructor of the TCPclient class is being called multiple times, Client_Sensors_LIST from first call of the constructor is used",
+							 "Verify that once the default constructor of the TCPclient class is being called for the first time, instance of Local_1h_Watchdog is created.\n Verify also that if the default constructor of the TCPclient class is called multiple times, Local_1h_Watchdog instance from first call of the constructor is used"};
 							 
 	static int testID = 1;
 	
@@ -62,9 +65,6 @@ public class TCPclientTest {
 	
 	@Before
 	public void before() throws IOException {
-		
-		// to initialize Client_Sensors_LIST
-		new TCPclient();
 		
 		if(TCPclientTest.testID > 1 ) {
 			// mock Server Socket to enable the Client Socket to establish connection
@@ -124,6 +124,9 @@ public class TCPclientTest {
 	@Test(expected = ConnectException.class)
 	public void test_run_1() throws IOException {
 		
+		// to initialize Client_Sensors_LIST
+		new TCPclient();
+		
 		tcpclient_1 = new TCPclient(sensor_ID_1, serverHostName, port_1);
 		
 		// To prove that exception's stack trace reported by JUnit caught the ConnectException
@@ -143,6 +146,9 @@ public class TCPclientTest {
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
 		mockServerThread.start();
+		
+		// to initialize Client_Sensors_LIST
+		new TCPclient();
 				
 		tcpclient_1 = new TCPclient(sensor_ID_1, serverHostName, port_1);
 		
@@ -164,6 +170,9 @@ public class TCPclientTest {
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
 		mockServerThread.start();
+		
+		// to initialize Client_Sensors_LIST
+		new TCPclient();
 		
 		tcpclient_1 = new TCPclient(sensor_ID_1, serverHostName, port_1);
 		
@@ -187,6 +196,9 @@ public class TCPclientTest {
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
 		mockServerThread.start();
 		
+		// to initialize Client_Sensors_LIST
+		new TCPclient();
+		
 		tcpclient_1 = new TCPclient(sensor_ID_1, serverHostName, port_1);
 		
 		assertTrue(tcpclient_1.isClientRunning());
@@ -206,6 +218,9 @@ public class TCPclientTest {
 		mockTCPserverTest.getServerSocket().bind(new java.net.InetSocketAddress(port_1));
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
 		mockServerThread.start();
+		
+		// to initialize Client_Sensors_LIST
+		new TCPclient();
 		
 		assertEquals(null,  						tcpclient_1.searchInClientSensorList(sensor_ID_1));
 
@@ -232,6 +247,9 @@ public class TCPclientTest {
 		mockTCPserverTest.startServer(mockTCPserverTest.getServerSocket());
 		mockServerThread.start();
 		
+		// to initialize Client_Sensors_LIST
+		new TCPclient();
+		
 		tcpclient_1 = new TCPclient(sensor_ID_1, serverHostName, port_1);
 		
 		int sensor_list_size_1 = tcpclient_1.Client_Sensors_LIST.size();
@@ -242,6 +260,63 @@ public class TCPclientTest {
 		
 		assertEquals(sensor_list_size_1,  				sensor_list_size_2);
 		assertEquals(tcpclient_1.Client_Sensors_LIST,  	tcpclient_2.Client_Sensors_LIST);
+	}
+	
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_7
+	 * Description: 			Verify that once the default constructor of the TCPclient class is being called for the first time, Client_Sensors_LIST is created
+	 * Internal variables TBV: 	Client_Sensors_LIST
+	 ***********************************************************************************************************/
+	@SuppressWarnings("static-access")
+	@Test
+	public void test_run_7() {
+		
+		tcpclient_1 = new TCPclient();
+		
+		assertNotEquals(null, 	tcpclient_1.Client_Sensors_LIST);
+	}
+	
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_8
+	 * Description: 			Verify that once the default constructor of the TCPclient class is being called multiple times, Client_Sensors_LIST from first call of the constructor is used
+	 * Internal variables TBV: 	Client_Sensors_LIST
+	 ***********************************************************************************************************/
+	@SuppressWarnings("static-access")
+	@Test
+	public void test_run_8() {
+		
+		tcpclient_1 = new TCPclient();
+		
+		assertEquals(tcpclient_2.Client_Sensors_LIST, 	tcpclient_1.Client_Sensors_LIST);
+	}
+	
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_9
+	 * Description: 			Verify that once the default constructor of the TCPclient class is being called for the first time, instance of Local_1h_Watchdog is created.
+	  							Verify also that if the default constructor of the TCPclient class is called multiple times, Local_1h_Watchdog instance from first call of the constructor is used
+	 * Internal variables TBV: 	Local_1h_Watchdog.isPaused, Local_1h_Watchdog._1h_WatchdogThread, Local_1h_Watchdog.millisecondsLeftUntilExpiration
+     * Exceptions thrown: 		InterruptedException
+	 ***********************************************************************************************************/
+	@Test
+	public void test_run_9() throws InterruptedException {
+		
+		tcpclient_1 = new TCPclient();
+		
+		Local_1h_Watchdog.getInstance().setEnabled(true);
+		
+		// to prove that 1h_watchdog is decreasing
+		Thread.sleep(100);
+		
+		Thread prev_thread = Local_1h_Watchdog.getInstance().get_1h_WatchdogThread();
+		double prev = Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration();
+		
+		tcpclient_2 = new TCPclient();
+		
+		Thread curr_thread = Local_1h_Watchdog.getInstance().get_1h_WatchdogThread();
+		double curr = Local_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration();
+		
+		assertEquals(prev,			curr, 0.001);
+		assertEquals(prev_thread,	curr_thread);
 	}
 
    @SuppressWarnings("static-access")

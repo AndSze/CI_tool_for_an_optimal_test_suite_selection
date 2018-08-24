@@ -52,7 +52,8 @@ public class ClientManagerTest {
 	private final ThreadPoolExecutor auxiliaryServerThreadExecutor = new ThreadPoolExecutor(8, 8, 0L, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<Runnable>());
 	
 	String[] testPurpose = { "Verify that once the overloaded constructor of the ClientManager class is being called, sensor_ID, input and output stream for the ClientManger class instance are set",
-							 "Verify that once the overloaded constructor of the ClientManager class is being called, the isClientManagerRunning flag that indicates if  the ClientManger class is active is set to true"};
+							 "Verify that once the overloaded constructor of the ClientManager class is being called, the isClientManagerRunning flag that indicates if  the ClientManger class is active is set to true",
+							 "Verify that once the default constructor of the ClientManager class is being called, an instance of the ClientManager class is created with its attributes set to default values"};
 	
 	static int testID = 1;
 	
@@ -161,6 +162,25 @@ public class ClientManagerTest {
 		clientManager_1 = new ClientManager(tempOutputStream, tempInputStream, sensor_ID_1);
 
 		assertTrue(clientManager_1.isClientManagerRunning());
+	}
+	
+    /***********************************************************************************************************
+	 * Test Name: 				test_run_3
+	 * Description: 			Verify that once the default constructor of the ClientManager class is being called, an instance of the ClientManager class is created with its attributes set to default values
+	 * Internal variables TBV: 	outputStream, inputStream, isClientManagerRunning, sensor_ID
+	 ***********************************************************************************************************/
+	@Test
+	public void test_run_3() {
+		
+		clientManager_1 = new ClientManager();
+		
+		int default_sensor_ID = 0;
+		
+		assertEquals(null,						clientManager_1.getInputReaderStream());	
+		assertEquals(null,						clientManager_1.getOutputStream());			
+		assertEquals(default_sensor_ID,			clientManager_1.sensor_ID);	
+		assertFalse(clientManager_1.isClientManagerRunning());
+
 	}
 	
    @After

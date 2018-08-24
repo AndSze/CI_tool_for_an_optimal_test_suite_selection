@@ -62,11 +62,8 @@ public class ClientManager implements TCPclient_interface{
 	 * Exceptions thrown: 			IOException
 	 ***********************************************************************************************************/
 	public ClientManager initClientManager(Socket clientSocket, int sensor_ID) throws IOException{
+		
 		// it activates serverSocket.accept() on the server side
-
-    	// To be Deleted
-    	int temp = 0;
-
 		outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         inputStream = new ObjectInputStream(clientSocket.getInputStream());
         return (new ClientManager(outputStream, inputStream, sensor_ID));
@@ -81,9 +78,6 @@ public class ClientManager implements TCPclient_interface{
 	 ***********************************************************************************************************/
 	public void sendMessage(Message_Interface message, ObjectOutputStream out_stream) throws IOException {
 		
-    	// To be Deleted
-    	int temp_1 = 0;
-    	
 		if (out_stream != null) {
 			// sends message from the client via its output stream to the server input stream
 			out_stream.writeObject(message); 
