@@ -1,0 +1,145 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>andsze</groupId>
+	<artifactId>UnitUnderTest</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	
+	<properties>
+        <jdk.version>1.8</jdk.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <skip.unit.tests>false</skip.unit.tests>
+        <skip.integration.tests>true</skip.integration.tests>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <packaging.type>pom</packaging.type>
+            </properties>
+        </profile>
+        <profile>
+            <id>integration-test</id>
+            <properties>
+                <!--
+                    Only integration tests are run when the integration-test profile is active
+                -->
+                <skip.integration.tests>false</skip.integration.tests>
+                <skip.unit.tests>true</skip.unit.tests>
+                <packaging.type>jar</packaging.type>
+            </properties>
+        </profile>
+    </profiles>
+
+	<dependencies>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-all</artifactId>
+			<version>1.10.19</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+		    <groupId>org.apache.sling</groupId>
+		    <artifactId>org.apache.sling.commons.testing</artifactId>
+		    <version>2.0.8</version>
+		    <scope>compile</scope>
+		</dependency>
+	</dependencies>
+	
+    <build>
+        <finalName>UnitUnderTest</finalName>	
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5</version>
+                <configuration>
+                	<fork>true</fork>
+                    <executable>${JAVA_HOME}\bin\javac</executable>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <phase>test-compile</phase>
+                    <goals>
+                        <goal>testCompile</goal>
+                    </goals>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.19.1</version>
+                <executions>
+                    <execution>
+                        <id>integration-tests</id>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                        <configuration>
+                            <includes>
+                                <include>**/*IT.java</include>
+                            </includes>
+                            <!--
+                                Skips integration tests if the value of skip.integration.tests
+                                property is true
+                            -->
+                            <skipTests>${skip.integration.tests}</skipTests>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.19.1</version>
+                <configuration>
+					<!-- magic is going to happen here -->
+					<excludes>
+						<exclude>"**/*Test.java"</exclude>
+						<exclude>"**/*Tests.java"</exclude>
+						<exclude>"**/Test*.java"</exclude>
+						<exclude>"**/Test*.java"</exclude>
+					</excludes>
+					<includes>
+						<include>**/tcpClient/ClientManagerTest.java</include>
+						<include>**/tcpClient/InitClientManagerTest.java</include>
+						<include>**/tcpClient/SendMessageTest.java</include>
+						<include>**/tcpServer/ComputeEngine_RunnableTest.java</include>
+						<include>**/tcpServer/SendMessageTest.java</include>
+						<include>**/tcpClient/MessagesHandlerTest.java</include>
+						<include>**/tcpClient/MessagesHandler_ServerMessage_ACKTest.java</include>
+						<include>**/tcpClient/MessagesHandler_ServerMessage_Request_MeasurementDataTest.java</include>
+						<include>**/tcpClient/MessagesHandler_ServerMessage_Request_MeasurementHistoryTest.java</include>
+						<include>**/tcpClient/MessagesHandler_ServerMessage_SensorInfoQuerryTest.java</include>
+						<include>**/tcpClient/MessagesHandler_ServerMessage_SensorInfoUpdateTest.java</include>
+						<include>**/tcpServer/RunTest.java</include>
+						<include>**/tcpServer/Run_ClientMessage_ACKTest.java</include>
+						<include>**/tcpServer/Run_ClientMessage_BootUpTest.java</include>
+						<include>**/tcpServer/Run_ClientMessage_MeasurementDataTest.java</include>
+						<include>**/tcpServer/Run_ClientMessage_MeasurementHistoryTest.java</include>
+						<include>**/tcpServer/Run_ClientMessage_SensorInfoTest.java</include>
+					</includes>
+                 	<!--
+                        Skips unit tests if the value of skip.unit.tests
+                        property is true
+                    -->
+                    <skipTests>${skip.unit.tests}</skipTests>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
