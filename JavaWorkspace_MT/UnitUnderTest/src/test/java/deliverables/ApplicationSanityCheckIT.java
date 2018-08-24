@@ -83,12 +83,12 @@ public class ApplicationSanityCheckIT {
 		}
 		
 	    // define threshold for test execution pass
-	    int successful_TCPconenctions_threshold = 3;
+	    int successful_TCPconenctions_threshold = 2;
 	    int successful_TCPconnections_number = 0;
 	    boolean initial_check = true;
 	    
 		// execute the test until watchodgs have expired or any of comparison statement has failed 
-		// otherwise, if the test reaches 3 successful whole TCP connection cycles ( whole cycle means that _1h_Watchdog is kicked measurement_limit times and _24h_Watchdog is kicked once)
+		// otherwise, if the test reaches 2 successful whole TCP connection cycles ( whole cycle means that _1h_Watchdog is kicked measurement_limit times and _24h_Watchdog is kicked once)
 		while(true){
 			
 			int cut_seconds = 3;
@@ -376,7 +376,7 @@ public class ApplicationSanityCheckIT {
 				break;
 			}
 			if(successful_TCPconnections_number == successful_TCPconenctions_threshold) {
-				// stop successful test execution since 3 whole TCP connection cycles have been launched without errors
+				// stop successful test execution since 2 whole TCP connection cycles have been launched without errors
 				System.out.println("[ApplicationSanityCheckIT] passed since number of TCPconnections reached the threshold");
 				break;
 			}

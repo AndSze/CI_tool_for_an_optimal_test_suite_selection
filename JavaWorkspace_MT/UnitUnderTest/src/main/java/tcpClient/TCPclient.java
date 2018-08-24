@@ -39,6 +39,9 @@ public class TCPclient implements Runnable {
     	// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
     	super();
     	
+		// code change to trigger selection of optimal test suite by the CI tool
+		int change_to_TCPclient = 0;
+    	
     	if (Client_Sensors_LIST == null) {
     		Client_Sensors_LIST = new ArrayList<>();
     		System.out.println("[TCPclient " + getSensor_ID() +"] Client_Sensors_LIST created");
