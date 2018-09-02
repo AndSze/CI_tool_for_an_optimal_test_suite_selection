@@ -9,8 +9,10 @@ from AuxiliaryScripts import *
 from OptimalTestSuiteSelector_AuxiliaryScripts import *
 
 commit_newer_id = 0
-commit_older_id = 2
+commit_older_id = 1
 
+
+print base_dir_path
 # Set HEAD of Git repository to commits under analysis
 commit_newer, commit_older = get_commit_from_repository(dir_repository_master, commit_newer_id, commit_older_id)	
 
@@ -35,17 +37,24 @@ print '\t len(list_of_added_files_to_be_processed): ' + str(len(list_of_added_fi
 print '\n'
 
 # Parse git diff log to separate file blocks (method body) for methods with added lines
-resulted_array_of_added_lines_in_changed_file_blocks = build_resulted_array_of_changed_file_blocks(list_of_modified_files_to_be_processed, diff_data_head_to_commit, list_of_all_changed_files)
+resulted_array_of_all_changes_in_file_blocks = build_resulted_array_of_changed_file_blocks(list_of_modified_files_to_be_processed, diff_data_head_to_commit, list_of_all_changed_files)
 
 print '4) Parse git diff log to separate file blocks (method body) for methods with added lines \n'
-print '\t len(resulted_array_of_added_lines_in_changed_file_blocks): ' + str(len(resulted_array_of_added_lines_in_changed_file_blocks))
+print '\t len(resulted_array_of_all_changes_in_file_blocks): ' + str(len(resulted_array_of_all_changes_in_file_blocks))
 print '\n'
 
 # Parse git diff log to separate file blocks (method body) for methods with removed lines
-resulted_array_of_removed_lines_in_changed_file_blocks = build_resulted_array_of_removed_lines(resulted_array_of_added_lines_in_changed_file_blocks, list_of_modified_files_to_be_processed)
+resulted_array_of_removed_lines_in_changed_file_blocks = build_resulted_array_of_removed_lines(resulted_array_of_all_changes_in_file_blocks, list_of_modified_files_to_be_processed)
 
 print '5) Parse git diff log to separate file blocks (method body) for methods with removed lines \n'
 print '\t len(resulted_array_of_removed_lines_in_changed_file_blocks): ' + str(len(resulted_array_of_removed_lines_in_changed_file_blocks))
+print '\n'
+
+# Parse git diff log to separate file blocks (method body) for methods with added lines
+resulted_array_of_added_lines_in_changed_file_blocks = build_resulted_array_of_added_lines(resulted_array_of_all_changes_in_file_blocks, list_of_modified_files_to_be_processed)
+
+print '5) Parse git diff log to separate file blocks (method body) for methods with added lines \n'
+print '\t len(resulted_array_of_added_lines_in_changed_file_blocks): ' + str(len(resulted_array_of_added_lines_in_changed_file_blocks))
 print '\n'
 
 # Parse git diff log to separate file blocks (method body) for methods that have been added
@@ -63,12 +72,16 @@ for methods_with_added_lines_numbers in resulted_array_of_methods_with_added_lin
 	print '\t normalized path of file and its methods with added lines:'  + str(methods_with_added_lines_numbers)
 print '\n'
 
-# Parse file blocks (method body) for methods with removed lines to separate names of the methods, as an output the normalized path to the file that contains the methods is also returned
-resulted_array_of_methods_with_removed_lines_numbers = build_resulted_array_of_removed_lines_numbers(resulted_array_of_removed_lines_in_changed_file_blocks, list_of_modified_files_to_be_processed, commit_older, dir_repository_older_commit)
+resulted_array_of_methods_with_removed_lines_numbers = []
 
+# Parse file blocks (method body) for methods with removed lines to separate names of the methods, as an output the normalized path to the file that contains the methods is also returned
 print '8) Parse file blocks (method body) for methods with removed lines to separate names of the methods, as an output the normalized path to the file that contains the methods is also returned \n'
-for methods_with_removed_lines_numbers in resulted_array_of_methods_with_removed_lines_numbers:
-	print '\t normalized path of file and its methods with removed lines: ' + str(methods_with_removed_lines_numbers)
+if (len(resulted_array_of_removed_lines_in_changed_file_blocks) != 0):
+	resulted_array_of_methods_with_removed_lines_numbers = build_resulted_array_of_removed_lines_numbers(resulted_array_of_removed_lines_in_changed_file_blocks, list_of_modified_files_to_be_processed, commit_older, dir_repository_older_commit)
+	for methods_with_removed_lines_numbers in resulted_array_of_methods_with_removed_lines_numbers:
+		print '\t normalized path of file and its methods with removed lines: ' + str(methods_with_removed_lines_numbers)
+else:
+	print '\t normalized path of file and its methods with removed lines does not contain any elments'
 print '\n'
 
 # Parse file blocks (method body) for methods that have been added to separate names of the methods, as an output the normalized path to the file that contains the methods is also returned	
@@ -81,12 +94,16 @@ print '\n'
 
 # Concatenate the results from points 7., 8. and 9. (i.e. build lists of all methods that have been affected with normalized path to the file that contains the methods)
 resulted_array_of_affected_methods = []
+resulted_array_of_aggregated_affected_methods = []
 
 for normalized_file_and_its_methods_with_added_lines in resulted_array_of_methods_with_added_lines_numbers:
 	resulted_array_of_affected_methods.append(normalized_file_and_its_methods_with_added_lines)
-	
-resulted_array_of_aggregated_affected_methods = build_resulted_array_of_aggregated_affected_methods(resulted_array_of_methods_with_removed_lines_numbers, resulted_array_of_affected_methods)
-resulted_array_of_aggregated_affected_methods = build_resulted_array_of_aggregated_affected_methods(resulted_array_of_methods_in_added_files, resulted_array_of_affected_methods)
+
+
+if (len(resulted_array_of_methods_with_removed_lines_numbers) != 0):
+	resulted_array_of_aggregated_affected_methods = build_resulted_array_of_aggregated_affected_methods(resulted_array_of_methods_with_removed_lines_numbers, resulted_array_of_affected_methods)
+if (len(resulted_array_of_methods_in_added_files) != 0):
+	resulted_array_of_aggregated_affected_methods = build_resulted_array_of_aggregated_affected_methods(resulted_array_of_methods_in_added_files, resulted_array_of_affected_methods)
 
 print '10) Concatenate the results from points 7., 8. and 9. (i.e. build single list of all methods that have been affected with normalized path to the file that contains the methods) \n'
 for aggregated_affected_method in resulted_array_of_aggregated_affected_methods:

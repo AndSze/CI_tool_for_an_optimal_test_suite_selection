@@ -54,9 +54,10 @@ def build_resulted_array_of_aggregated_affected_methods(resulted_array_of_normal
 		# handle case for normalized path of files
 		for normalized_file_and_its_methods_allready_appended in array_of_methods_already_appened:
 			normalized_file_already_exist = False
-			if (normalized_file_and_its_methods_under_analysis[0] == normalized_file_and_its_methods_allready_appended[0]):
-				normalized_file_already_exist = True
-				break
+			if ( (len(normalized_file_and_its_methods_under_analysis) != 0 ) and (len(normalized_file_and_its_methods_under_analysis) != 0 ) ):
+				if (normalized_file_and_its_methods_under_analysis[0] == normalized_file_and_its_methods_allready_appended[0]):
+					normalized_file_already_exist = True
+					break
 		
 		# if normalized path of file has not existed, add it with all affected methods in the file to resulted_array_of_aggregated_affected_methods
 		if(normalized_file_already_exist == False):
@@ -732,7 +733,7 @@ def build_resulted_array_of_added_lines(resulted_array_of_changed_file_blocks, l
 					else:
 						file_block[temp_index] = file_block[temp_index].replace('-', " ")
 						changed_lines_list.append(file_block[temp_index])
-						#print 'changed_lines_list.append(file_block[temp_index]): ' + str(file_block[temp_index])
+						print 'changed_lines_list.append(file_block[temp_index]): ' + str(file_block[temp_index])
 		
 		resulted_array_of_added_lines[iterator] = changed_lines_list
 		iterator = iterator + 1
@@ -785,13 +786,25 @@ def build_resulted_array_of_removed_lines(resulted_array_of_changed_file_blocks,
 					else:
 						file_block[temp_index] = file_block[temp_index].replace('+', " ")
 						removed_lines_list.append(file_block[temp_index]) 
-						#print 'removed_lines_list.append(file_block[temp_index]): ' + str(file_block[temp_index])
+						print 'removed_lines_list.append(file_block[temp_index]): ' + str(file_block[temp_index])
 		resulted_array_of_removed_lines[iterator] = removed_lines_list
 		iterator = iterator + 1
 	
 	end = time.time()
 	#print '\n\n\nbuilding arrays (resulted_array_of_removed_lines) execution time\t\t\t: ' + str((end - start)) + '\n\n\n'
 	
+	empty_array = False
+	for i in resulted_array_of_removed_lines:
+		if (len(i) == 0):
+			empty_array = True
+		else:
+			empty_array = False
+			break
+			
+	if(empty_array):
+		print 'xxx'
+		resulted_array_of_removed_lines = []
+	print 'xxx'		
 	return resulted_array_of_removed_lines
 
 # /************************************************************
