@@ -161,9 +161,9 @@ public class MessagesHandlerTest {
 	
     /***********************************************************************************************************
 	 * Test Name: 					test_run_1
-	 * Description: 				Verify that once the messagesHandler() function is called while the isClientManagerRunning flag is equal to true,
-	  								the client manager class instance that runs the messagesHandler() function is able to read messages send from TCPserver
-	 * Internal variables TBV:		inputStream, outputStream, isClientManagerRunning
+	 * Description: 				Verify that once the messagesHandler() function is called while the isClientManagerRunning flag is equal to true
+	  								the client manager class instance that runs the messagesHandler() function is able to read messages received from TCPserver
+	 * Internal variables TBV:		isClientManagerRunning
 	 * Mocked objects:				TCPclient, TCPserver, ComputeEngine_Runnable, Socket
 	 * Mocks methods called:		TCPserver.startServer(), ComputeEngine_Runnable.readMessage(), ComputeEngine_Runnable.sendMessage()
      * Exceptions thrown: 			IOException, InterruptedException

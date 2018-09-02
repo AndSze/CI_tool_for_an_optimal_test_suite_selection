@@ -118,7 +118,8 @@ public class SendMessageTest {
 	
     /***********************************************************************************************************
 	 * Test Name: 					test_run_1
-	 * Description: 				Verify that the sendMessage() function for a ComputeEngine_Runnable class instance writes an object to the previously opened object output stream
+	 * Description: 				Verify that the sendMessage() function for a ComputeEngine_Runnable class
+	  								instance writes an object to the previously opened object output stream
 	 * Internal variables TBV:		outputStream
 	 * External variables TBV:		ServerMessage_ACK, Message_Interface
 	 * Mocked objects:				TCPserver, TCPclient, ClientManager, Socket
@@ -149,7 +150,6 @@ public class SendMessageTest {
 					// create ObjectInputStream on the client to once a ComputeEngine_Runnable class instance is created
 					obj_in_stream = new ObjectInputStream(mockTCPclient.getClientSocket().getInputStream());
 					when(mockClientManager.getInputReaderStream()).thenReturn(obj_in_stream);
-					
 					receivedMessage = (Message_Interface) mockClientManager.readMessage(mockClientManager.getInputReaderStream());
 				} catch (ClassNotFoundException e) {
 					// To prove that exception's stack trace reported by JUnit caught ClassNotFoundException
@@ -165,7 +165,8 @@ public class SendMessageTest {
 		test_client_Thread.start();
 		Thread.sleep(20);
 		
-		comp_engine_1.sendMessage(new ServerMessage_ACK(sensor_ID_1, comp_engine_1.getLocal_1h_watchdog() ,comp_engine_1.getLocal_24h_watchdog()), comp_engine_1.getOutputStream());
+		comp_engine_1.sendMessage(new ServerMessage_ACK(sensor_ID_1, comp_engine_1.getLocal_1h_watchdog(), 
+								comp_engine_1.getLocal_24h_watchdog()), comp_engine_1.getOutputStream());
 		Thread.sleep(20);
 		
 		assertTrue(receivedMessage instanceof ServerMessage_ACK);
@@ -175,7 +176,8 @@ public class SendMessageTest {
     /***********************************************************************************************************
 	 * Test Name: 				test_run_2
 	 * Description: 			Verify that SocketException is thrown if there was an attempt to
-	  							call the sendMessage() function for a ComputeEngine_Runnable class instance that has its object output stream closed
+	  							call the sendMessage() function for a ComputeEngine_Runnable class instance
+	  							that has its object output stream closed
 	 * Mocked objects:			TCPserver, TCPclient, ClientManager, Socket
 	 * Mocks methods called:	TCPserver.startServer()
 	 * Exceptions thrown TBV:	SocketException
@@ -202,7 +204,8 @@ public class SendMessageTest {
 		
 		comp_engine_1.closeOutStream();
 		
-		comp_engine_1.sendMessage(new ServerMessage_ACK(sensor_ID_1, comp_engine_1.getLocal_1h_watchdog() ,comp_engine_1.getLocal_24h_watchdog()), comp_engine_1.getOutputStream());
+		comp_engine_1.sendMessage(new ServerMessage_ACK(sensor_ID_1, comp_engine_1.getLocal_1h_watchdog(),
+								  comp_engine_1.getLocal_24h_watchdog()), comp_engine_1.getOutputStream());
 		Thread.sleep(20);
 		
 		// To prove that exception's stack trace reported by JUnit caught SocketException
@@ -211,8 +214,9 @@ public class SendMessageTest {
 	
     /***********************************************************************************************************
 	 * Test Name: 				test_run_3
-	 * Description: 			Verify that NotSerializableException is thrown if there was an attempt to send a message that does not implement serializable interface
-	  							via the sendMessage() function for a ComputeEngine_Runnable class instance
+	 * Description: 			Verify that NotSerializableException is thrown if there was an attempt to send
+	  							a message that does not implement serializable interface calling the sendMessage() 
+	  							function for a ComputeEngine_Runnable class instance
 	 * Mocked objects:			TCPserver, TCPclient, ClientManager, Socket
 	 * Mocks methods called:	TCPserver.startServer()
 	 * Exceptions thrown TBV:	NotSerializableException
