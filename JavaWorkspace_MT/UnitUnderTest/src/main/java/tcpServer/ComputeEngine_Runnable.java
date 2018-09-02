@@ -57,10 +57,14 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 * Method Name: 				public ComputeEngine_Runnable()
 	 * Description: 				ComputeEngine_Runnable class default constructor
 	 * Affected internal variables: outputStream, inputStream, isComputeEngine_Runnable_running, local_1h_watchdog, local_24h_watchdog, local_watchdog_scale_factor, delays_array, watchdog_thresholds_array
+	 * Called internal functions:	set_delays_array(), set_watchdog_thresholds_array()
 	 * Exceptions thrown: 			IOException
 	 ***********************************************************************************************************/
 	public ComputeEngine_Runnable(Socket clientSocket, double global_watchdog_scale_factor, boolean isComputeEngine_Runnable_running) throws IOException  {
 		super();
+		
+		// temporary code added to validate the script for an optimal test suite selecetion
+		boolean temp_boolean = false;
 		
 		// create object output/input streams
 		outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
@@ -141,7 +145,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 * Affected external variables: SensorImpl, TCPserver._1hWatchog_timestamp_table, TCPserver._24hWatchog_timestamp_table, TCPserver.processing_engine, TCPserver.Server_Sensors_LIST,
 	 								TCPserver.MeasurementHistory_LIST, TCPserver.MeasurementData_LIST
 	 * Local variables:				close_ComputeEngine_Runnable, request_measurement_history, request_measurement_data, receivedMessage
-	 * Called internal functions: 	setLocal_1h_watchdog(), setLocal_24h_watchdog, setDelay(), sendMessage(), closeOutStream(), closeInStream(), processingDelay()
+	 * Called internal functions: 	sendMessage(), closeOutStream(), closeInStream(), processingDelay()
 	 * Called external functions: 	ServerMessage_SensorInfoQuerry(), ServerMessage_SensorInfoUpdate(), ServerMessage_ACK(), ServerMessage_Request_MeasurementData(), 
 	 								ServerMessage_Request_MeasurementHistory(), ComputeEngine_Processing.updateServerSensorList(), ComputeEngine_Processing.saveSensorInfo(),
 	 								ComputeEngine_Processing.saveMeasurementDataInfo(), ComputeEngine_Processing.saveMeasurementHistoryInfo(), SensorImpl.resetSensor(),

@@ -51,12 +51,6 @@
 			<version>1.10.19</version>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-		    <groupId>org.apache.sling</groupId>
-		    <artifactId>org.apache.sling.commons.testing</artifactId>
-		    <version>2.0.8</version>
-		    <scope>compile</scope>
-		</dependency>
 	</dependencies>
 	
     <build>
@@ -67,8 +61,6 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5</version>
                 <configuration>
-                	<fork>true</fork>
-                    <executable>${JAVA_HOME}\bin\javac</executable>
                     <source>${jdk.version}</source>
                     <target>${jdk.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
@@ -95,7 +87,7 @@
                             </includes>
                             <!--
                                 Skips integration tests if the value of skip.integration.tests
-                                property is true
+                                property is true (dev profile is active)
                             -->
                             <skipTests>${skip.integration.tests}</skipTests>
                         </configuration>
@@ -116,8 +108,8 @@
 					</excludes>
 					<includes>
 						<include>**/tcpClient/ClientManagerTest.java</include>
-						<include>**/tcpClient/InitClientManagerTest.java</include>
 						<include>**/tcpClient/SendMessageTest.java</include>
+						<include>**/tcpClient/TCPclientTest.java</include>
 						<include>**/tcpServer/ComputeEngine_RunnableTest.java</include>
 						<include>**/tcpServer/SendMessageTest.java</include>
 						<include>**/tcpClient/MessagesHandlerTest.java</include>
@@ -135,7 +127,7 @@
 					</includes>
                  	<!--
                         Skips unit tests if the value of skip.unit.tests
-                        property is true
+                        property is true (integration-test profile is active)
                     -->
                     <skipTests>${skip.unit.tests}</skipTests>
                 </configuration>

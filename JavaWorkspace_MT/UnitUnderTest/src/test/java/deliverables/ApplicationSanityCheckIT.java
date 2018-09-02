@@ -3,17 +3,14 @@ package deliverables;
 import static org.junit.Assert.assertEquals;
 
 import static org.junit.Assert.assertTrue;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import tcpServer.TCPserver;
-import tcpServer.TCPserver_Teardown;
 import watchdog.Global_1h_Watchdog;
 import watchdog.Global_24h_Watchdog;
 
@@ -22,7 +19,7 @@ public class ApplicationSanityCheckIT {
 	UUT_TCPclient[] uut_tcp_clients;
 	UUT_TCPserver uut_tcp_server_1 = null;
     int port = 8765;
-    int number_of_sensors = 8;
+    int number_of_sensors = 5;
     double watchdog_scale_factor = 0.002;
     int measurements_limit = 24;
     String serverHostName  = "localhost";
@@ -83,7 +80,7 @@ public class ApplicationSanityCheckIT {
 		}
 		
 	    // define threshold for test execution pass
-	    int successful_TCPconenctions_threshold = 2;
+	    int successful_TCPconenctions_threshold = 3;
 	    int successful_TCPconnections_number = 0;
 	    boolean initial_check = true;
 	    
@@ -110,7 +107,7 @@ public class ApplicationSanityCheckIT {
 					// in case files are serialized just after a new minute has stared - ignore check of minutes in files' timestamps due to possibility of mismatch between test and serialization timestamps 
 					boolean ignore_minutes = false;				
 					if( Integer.parseInt(temp_timestamp_sec.substring(temp_timestamp_sec.length() - 2)) < cut_minutes_threshold) {
-						System.out.println("Integer.parseInt(temp_timestamp_sec: " + (temp_timestamp_sec.substring(temp_timestamp_sec.length() - 2)) );
+						//System.out.println("Integer.parseInt(temp_timestamp_sec: " + (temp_timestamp_sec.substring(temp_timestamp_sec.length() - 2)) );
 						ignore_minutes = true;
 					}
 
@@ -186,7 +183,7 @@ public class ApplicationSanityCheckIT {
 					// in case files are serialized just after a new minute has stared - ignore check of minutes in files' timestamps due to possibility of mismatch between test and serialization timestamps 
 					boolean ignore_minutes = false;
 					if( Integer.parseInt(temp_timestamp_sec.substring(temp_timestamp_sec.length() - 2)) < cut_minutes_threshold) {
-						System.out.println("Integer.parseInt(temp_timestamp_sec: " + (temp_timestamp_sec.substring(temp_timestamp_sec.length() - 2)) );
+						//System.out.println("Integer.parseInt(temp_timestamp_sec: " + (temp_timestamp_sec.substring(temp_timestamp_sec.length() - 2)) );
 						ignore_minutes = true;
 					}
 
@@ -273,7 +270,7 @@ public class ApplicationSanityCheckIT {
 					// in case files are serialized just after a new minute has stared - ignore check of minutes in files' timestamps due to possibility of mismatch between test and serialization timestamps 
 					boolean ignore_minutes = false;
 					if( Integer.parseInt(temp_timestamp_sec.substring(temp_timestamp_sec.length() - 1)) < cut_minutes_threshold) {
-						System.out.println("Integer.parseInt(temp_timestamp_sec: " + Integer.parseInt(temp_timestamp_sec.substring(temp_timestamp_sec.length() - 1)) );
+						//System.out.println("Integer.parseInt(temp_timestamp_sec: " + Integer.parseInt(temp_timestamp_sec.substring(temp_timestamp_sec.length() - 1)) );
 						ignore_minutes = true;
 					}
 
@@ -304,6 +301,12 @@ public class ApplicationSanityCheckIT {
 								// check only the newest file
 								number_of_files = files_to_be_verified_path.listFiles().length;
 								File file = files_to_be_verified_path.listFiles()[number_of_files - 1];
+								
+								// this if statement is intended to adjust set the right expected extension name, since it is impossible to determine
+								// which of the files that are saved in parallel is actually processed
+								if (file.getName().length() == 58) {
+									file = files_to_be_verified_path.listFiles()[number_of_files - 2];
+								}
 
 								System.out.println("[ApplicationSanityCheckIT sensor: " +(i+1)+ "] Sensor Info check file.getName(): \t\t" + file.getName());
 
@@ -389,8 +392,8 @@ public class ApplicationSanityCheckIT {
 	   System.out.println("\t\tTest Run "+ApplicationSanityCheckIT.testID+" teardown section:");
 	   
 	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
-	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
-	   tcp_server_teardown.reinitalize_to_default(TCPserver.getInstance(port, number_of_sensors, measurements_limit, watchdog_scale_factor));
+	   //TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
+	   //tcp_server_teardown.reinitalize_to_default(TCPserver.getInstance(port, number_of_sensors, measurements_limit, watchdog_scale_factor));
 
 	   // Time offset between consecutive test runs execution
 	   Thread.sleep(100);
