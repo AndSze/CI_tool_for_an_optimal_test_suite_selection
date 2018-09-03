@@ -99,7 +99,7 @@ public class TCPserver {
 	};
 
 	/***********************************************************************************************************
-	 * Method Name: 				private TCPserver()
+	 * Method Name: 				protected TCPserver()
 	 * Description: 				TCPserver class overloaded constructor
 	 * Affected internal variables: serverSocket, serverRunning, processing_engine, Server_Sensors_LIST, _1hWatchog_timestamp_table, _24hWatchog_timestamp_table, Sensors_PATH
 	 * Affected external variables: Global_1h_Watchdog, Global_24h_Watchdog, SensorImpl
@@ -109,7 +109,10 @@ public class TCPserver {
 	 * Exceptions thrown: 			IOException
 	 * Exceptions handled: 			ClassNotFoundException, FileNotFoundException, NotSerializableException
 	 ***********************************************************************************************************/
-	TCPserver(int port) throws IOException{
+	protected TCPserver(int port) throws IOException{
+		
+		// temporary code added to validate the script for an optimal test suite selecetion
+		int temp_int = 0;
 		
 		// communication stuff
 		serverSocket = new ServerSocket();

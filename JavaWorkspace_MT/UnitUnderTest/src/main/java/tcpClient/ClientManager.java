@@ -42,7 +42,7 @@ public class ClientManager implements TCPclient_interface{
 	}
 	
     /***********************************************************************************************************
-	 * Method Name: 				ClientManager()
+	 * Method Name: 				protected ClientManager()
 	 * Description: 				ClientManager class overloaded constructor
 	 * Affected internal variables: outputStream, inputStream, sensor_ID, isClientManagerRunning
 	 ***********************************************************************************************************/
@@ -79,9 +79,6 @@ public class ClientManager implements TCPclient_interface{
 	 ***********************************************************************************************************/
 	public void sendMessage(Message_Interface message, ObjectOutputStream out_stream) throws IOException {		
 		
-		// temporary code added to validate the script for an optimal test suite selecetion
-		boolean temp_bool = false;
-	
 		if (out_stream != null) {
 			// sends message from the client via its output stream to the server input stream
 			out_stream.writeObject(message); 
