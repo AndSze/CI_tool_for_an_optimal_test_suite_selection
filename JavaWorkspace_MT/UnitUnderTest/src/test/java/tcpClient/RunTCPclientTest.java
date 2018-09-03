@@ -28,7 +28,7 @@ import tcpServer.TCPserver;
 import tcpServer.TCPserver_Teardown;
 import watchdog.Local_1h_Watchdog;
 
-public class RunTCPclientTest {
+public class RunTest {
 
 	TCPclient tcpclient_1 = null;
     int port_1 = 9876;
@@ -64,7 +64,7 @@ public class RunTCPclientTest {
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		RunTCPclientTest.testID += 1;
+		RunTest.testID += 1;
 	}
 	
 	@Before
@@ -112,9 +112,9 @@ public class RunTCPclientTest {
 		}).when(mockTCPserverTest).startServer(Matchers.any(ServerSocket.class)); 
 		// Mockito.doAnswer - to mock void method to do something (mock the behavior despite being void) - in this case it is used for TCPserver.startServer();
 		
-		System.out.println("\t\tTest Run "+RunTCPclientTest.testID+" Purpose:");
-		System.out.println(testPurpose[(RunTCPclientTest.testID-1)]);
-		System.out.println("\t\tTest Run "+RunTCPclientTest.testID+" Logic:");
+		System.out.println("\t\tTest Run "+RunTest.testID+" Purpose:");
+		System.out.println(testPurpose[(RunTest.testID-1)]);
+		System.out.println("\t\tTest Run "+RunTest.testID+" Logic:");
 	}
 	
     /***********************************************************************************************************
@@ -237,7 +237,7 @@ public class RunTCPclientTest {
    @After
     public void teardown() throws IOException, InterruptedException{
 	   
-	   System.out.println("\t\tTest Run "+RunTCPclientTest.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+RunTest.testID+" teardown section:");
 	   
 	   if (tcpclient_1.getClientManager() != null) {
 		   tcpclient_1.closeClientManager(tcpclient_1);
