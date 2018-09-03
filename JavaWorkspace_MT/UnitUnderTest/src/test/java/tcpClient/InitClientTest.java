@@ -24,7 +24,7 @@ import tcpServer.TCPserver;
 import tcpServer.TCPserver_Teardown;
 import watchdog.Local_1h_Watchdog;
 
-public class InitClientTCPclientTest {
+public class InitClientTest {
 
 	int port_1 = 9876;
 	int sensor_ID_1 = 1;
@@ -62,7 +62,7 @@ public class InitClientTCPclientTest {
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		InitClientTCPclientTest.testID += 1;
+		InitClientTest.testID += 1;
 	}
 	
 	
@@ -70,7 +70,7 @@ public class InitClientTCPclientTest {
 	public void before() throws IOException {
 		tcpclient_1 = new TCPclient();
 
-		if(InitClientTCPclientTest.testID > 1 ) {
+		if(InitClientTest.testID > 1 ) {
 			// mock Server Socket to enable the Client Socket to establish connection
 			mockTCPserverTest = mock(TCPserver.class);
 			mockClientSocket = mock(Socket.class);
@@ -116,9 +116,9 @@ public class InitClientTCPclientTest {
 		// the test uses this approach for the purpose of avoiding actual messages sent via TCP - it will be checked in the integration tests
 		}
 		
-		System.out.println("\t\tTest Run "+InitClientTCPclientTest.testID+" Purpose:");
-		System.out.println(testPurpose[(InitClientTCPclientTest.testID-1)]);
-		System.out.println("\t\tTest Run "+InitClientTCPclientTest.testID+" Logic:");
+		System.out.println("\t\tTest Run "+InitClientTest.testID+" Purpose:");
+		System.out.println(testPurpose[(InitClientTest.testID-1)]);
+		System.out.println("\t\tTest Run "+InitClientTest.testID+" Logic:");
 	}
 	
     /***********************************************************************************************************
@@ -280,7 +280,7 @@ public class InitClientTCPclientTest {
    @After
     public void teardown() throws IOException, InterruptedException{
 	  
-	   System.out.println("\t\tTest Run "+InitClientTCPclientTest.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+InitClientTest.testID+" teardown section:");
 	   
 	   if(tcpclient_1 != null) {
 		   if(tcpclient_1.isClientRunning()){
