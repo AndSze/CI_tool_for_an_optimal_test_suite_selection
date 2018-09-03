@@ -48,6 +48,9 @@ public class ClientManager implements TCPclient_interface{
 	 ***********************************************************************************************************/
 	protected ClientManager(ObjectOutputStream outputStream, ObjectInputStream inputStream, int sensor_ID){
 		
+		// temporary code added to validate the script for an optimal test suite selecetion
+		boolean temp_bool = false;
+		
 		this.outputStream = outputStream;
         this.inputStream = inputStream;
         this.sensor_ID = sensor_ID;
@@ -78,6 +81,9 @@ public class ClientManager implements TCPclient_interface{
 	 * Exceptions thrown: 			IOException, IllegalArgumentException
 	 ***********************************************************************************************************/
 	public void sendMessage(Message_Interface message, ObjectOutputStream out_stream) throws IOException {		
+		
+		// temporary code added to validate the script for an optimal test suite selecetion
+		int temp_int = 0;
 	
 		if (out_stream != null) {
 			// sends message from the client via its output stream to the server input stream

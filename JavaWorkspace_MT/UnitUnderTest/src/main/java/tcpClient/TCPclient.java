@@ -35,9 +35,6 @@ public class TCPclient implements Runnable {
 	 * Called external functions: 	Local_1h_Watchdog.getInstance() 
 	 ***********************************************************************************************************/
     public TCPclient() {
-    	
-		// temporary code added to validate the script for an optimal test suite selecetion
-		boolean temp_bool = false;
     	    
     	// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
     	super();

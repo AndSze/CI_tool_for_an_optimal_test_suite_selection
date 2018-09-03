@@ -19,7 +19,7 @@ import tcpClient.ClientManager;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;;
 
-public class StartServerTCPserverTest {
+public class StartServerTest {
 	
 	int port_1 = 9876;
 	TCPserver tcpserver_1 = null;
@@ -43,7 +43,7 @@ public class StartServerTCPserverTest {
 	static int testID = 1;
 	
 	public static void incrementTestID() {
-		StartServerTCPserverTest.testID += 1;
+		StartServerTest.testID += 1;
 	}	
 	
 	@Before
@@ -56,16 +56,16 @@ public class StartServerTCPserverTest {
 		sensor = new SensorImpl(sensor_ID_1);
 		TCPserver.Server_Sensors_LIST = TCPserver.processing_engine.updateServerSensorList(sensor);
 		
-		if(StartServerTCPserverTest.testID == 3) {
+		if(StartServerTest.testID == 3) {
 			mockClinetManagerTest = mock(ClientManager.class);
 			mockTCPServerTest = mock(TCPserver.class);
 		}
-		if(StartServerTCPserverTest.testID > 3) {
+		if(StartServerTest.testID > 3) {
 			mockClinetManagerTest = mock(ClientManager.class);
 		}
-		System.out.println("\t\tTest Run "+StartServerTCPserverTest.testID+" Purpose:");
-		System.out.println(testPurpose[(StartServerTCPserverTest.testID-1)]);
-		System.out.println("\t\tTest Run "+StartServerTCPserverTest.testID+" Logic:");
+		System.out.println("\t\tTest Run "+StartServerTest.testID+" Purpose:");
+		System.out.println(testPurpose[(StartServerTest.testID-1)]);
+		System.out.println("\t\tTest Run "+StartServerTest.testID+" Logic:");
 	}
 	
     /***********************************************************************************************************
@@ -258,7 +258,7 @@ public class StartServerTCPserverTest {
 	@After
 	public void teardown() throws IOException, InterruptedException{
 	  
-	   System.out.println("\t\tTest Run "+StartServerTCPserverTest.testID+" teardown section:");
+	   System.out.println("\t\tTest Run "+StartServerTest.testID+" teardown section:");
 	   
 	   // run the reinitalize_to_default() function that sets all attributes of a static class TCPserver to default
 	   TCPserver_Teardown tcp_server_teardown = new TCPserver_Teardown();
