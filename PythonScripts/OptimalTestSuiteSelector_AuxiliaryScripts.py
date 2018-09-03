@@ -54,7 +54,7 @@ def build_resulted_array_of_aggregated_affected_methods(resulted_array_of_normal
 		# handle case for normalized path of files
 		for normalized_file_and_its_methods_allready_appended in array_of_methods_already_appened:
 			normalized_file_already_exist = False
-			if ( (len(normalized_file_and_its_methods_under_analysis) != 0 ) and (len(normalized_file_and_its_methods_under_analysis) != 0 ) ):
+			if ( (len(normalized_file_and_its_methods_under_analysis) != 0 ) and (len(normalized_file_and_its_methods_allready_appended) != 0 ) ):
 				if (normalized_file_and_its_methods_under_analysis[0] == normalized_file_and_its_methods_allready_appended[0]):
 					normalized_file_already_exist = True
 					break
@@ -67,17 +67,18 @@ def build_resulted_array_of_aggregated_affected_methods(resulted_array_of_normal
 		
 		# handle case for affected methods in already existing normalized path of file in array_of_methods_already_appened
 		for normalized_file_and_its_methods_allready_appended in array_of_methods_already_appened:
-			if (normalized_file_and_its_methods_under_analysis[0] == normalized_file_and_its_methods_allready_appended[0]):
-				for method_with_removed_lines_index in range(1, len(normalized_file_and_its_methods_under_analysis)):
-					method_already_exists = False
-					for method_already_appended_index in range(1, len(normalized_file_and_its_methods_allready_appended)):
-						if(normalized_file_and_its_methods_under_analysis[method_with_removed_lines_index] == normalized_file_and_its_methods_allready_appended[method_already_appended_index]):
-							method_already_exists = True
-							break
+			if ( (len(normalized_file_and_its_methods_under_analysis) != 0 ) and (len(normalized_file_and_its_methods_allready_appended) != 0 ) ):
+				if (normalized_file_and_its_methods_under_analysis[0] == normalized_file_and_its_methods_allready_appended[0]):
+					for method_with_removed_lines_index in range(1, len(normalized_file_and_its_methods_under_analysis)):
+						method_already_exists = False
+						for method_already_appended_index in range(1, len(normalized_file_and_its_methods_allready_appended)):
+							if(normalized_file_and_its_methods_under_analysis[method_with_removed_lines_index] == normalized_file_and_its_methods_allready_appended[method_already_appended_index]):
+								method_already_exists = True
+								break
 					
 					# if affected method has not existed, add it at the index dedicated to normalized path of file with the affected method
 					if(method_already_exists == False):
-						print 'method_with_removed_lines: ' + str(normalized_file_and_its_methods_under_analysis[method_with_removed_lines_index])
+						#print 'method_with_removed_lines: ' + str(normalized_file_and_its_methods_under_analysis[method_with_removed_lines_index])
 						index_to_be_changed_inresulted_array_of_affected_methods = array_of_methods_already_appened.index(normalized_file_and_its_methods_allready_appended)
 						normalized_file_and_its_methods_allready_appended.append(normalized_file_and_its_methods_under_analysis[method_with_removed_lines_index])
 						array_of_methods_already_appened[index_to_be_changed_inresulted_array_of_affected_methods] = normalized_file_and_its_methods_allready_appended
@@ -85,7 +86,7 @@ def build_resulted_array_of_aggregated_affected_methods(resulted_array_of_normal
 
 	return resulted_array_of_aggregated_affected_methods
 	
-def browse_for_an_optimal_unit_tests_suite(resulted_list_of_changed_methods, resulted_list_of_normalized_files_of_changed_methods, resulted_list_of_methods_that_calls_changed_internal_method, resulted_list_of_methods_that_calls_changed_external_method):
+def browse_for_an_optimal_unit_tests_suite(resulted_list_of_changed_methods, resulted_list_of_normalized_files_of_changed_methods, resulted_list_of_methods_that_calls_changed_internal_method, resulted_list_of_methods_that_calls_changed_external_method, methods_that_calls_changed_internal_method_packages, methods_that_calls_changed_external_method_packages):
 
 	resulted_optimal_unit_tests_suite = []
 
@@ -135,19 +136,20 @@ def browse_for_an_optimal_unit_tests_suite(resulted_list_of_changed_methods, res
 						unit_test_to_be_executed = '<include>**/' +str(unit_test[0]) + '/' + str(unit_test[1]) + '</include>'
 						if (unit_test_to_be_executed not in resulted_optimal_unit_tests_suite):
 							resulted_optimal_unit_tests_suite.append(unit_test_to_be_executed)
+							
+	iterator = 0
 						
 	for methods_that_calls_changed_internal_method in resulted_list_of_methods_that_calls_changed_internal_method:
-
+	
+		method_package = methods_that_calls_changed_internal_method_packages[iterator]
 		methods_that_calls_changed_internal_method = methods_that_calls_changed_internal_method.replace('()', "Test.java")
-		#print 'methods_that_calls_changed_internal_method ' + str(methods_that_calls_changed_internal_method)
-		#print 'changed_method package ' + str(normalized_file_to_be_processed[0][3])
-		
+
 		for unit_test in normalized_list_of_list_of_unitTests:
-			if (unit_test[1].lower() == methods_that_calls_changed_internal_method.lower()):
+			if (unit_test[1].lower() == methods_that_calls_changed_internal_method.lower()  and (unit_test[0] == method_package) ):
 				unit_test_to_be_executed = '<include>**/' +str(unit_test[0]) + '/' + str(unit_test[1]) + '</include>'
 				if (unit_test_to_be_executed not in resulted_optimal_unit_tests_suite):
 					resulted_optimal_unit_tests_suite.append(unit_test_to_be_executed)
-			elif (unit_test[1].find("ClientMessage") != -1) or (unit_test[1].find("ServerMessage") != -1):
+			elif ( ((unit_test[1].find("ClientMessage") != -1) or (unit_test[1].find("ServerMessage") != -1)) and (unit_test[0] == method_package) ):
 				for space_index in range(len(unit_test[1])):
 					if (unit_test[1].startswith("_ClientMessage_", space_index) or unit_test[1].startswith("_ServerMessage_", space_index)):
 						cut_string_index = space_index
@@ -157,19 +159,23 @@ def browse_for_an_optimal_unit_tests_suite(resulted_list_of_changed_methods, res
 					unit_test_to_be_executed = '<include>**/' +str(unit_test[0]) + '/' + str(unit_test[1]) + '</include>'
 					if (unit_test_to_be_executed not in resulted_optimal_unit_tests_suite):
 						resulted_optimal_unit_tests_suite.append(unit_test_to_be_executed)
+						
+		iterator += 1
+		
+	iterator = 0
 					
 	for methods_that_calls_changed_external_method in resulted_list_of_methods_that_calls_changed_external_method:
-
+	
+		method_package = methods_that_calls_changed_external_method_packages[iterator]
 		methods_that_calls_changed_external_method = methods_that_calls_changed_external_method.replace('()', "Test.java")
-		#print 'methods_that_calls_changed_external_method ' + str(methods_that_calls_changed_external_method)
-		#print 'changed_method package ' + str(normalized_file_to_be_processed[0][3])
 		
 		for unit_test in normalized_list_of_list_of_unitTests:
-			if (unit_test[1].lower() == methods_that_calls_changed_external_method.lower()):
+		
+			if ( (unit_test[1].lower() == methods_that_calls_changed_external_method.lower()) and (unit_test[0] == method_package) ):
 				unit_test_to_be_executed = '<include>**/' +str(unit_test[0]) + '/' + str(unit_test[1]) + '</include>'
 				if (unit_test_to_be_executed not in resulted_optimal_unit_tests_suite):
 					resulted_optimal_unit_tests_suite.append(unit_test_to_be_executed)
-			elif (unit_test[1].find("ClientMessage") != -1) or (unit_test[1].find("ServerMessage") != -1):
+			elif ( ((unit_test[1].find("ClientMessage") != -1) or (unit_test[1].find("ServerMessage") != -1)) and (unit_test[0] == method_package) ):
 				for space_index in range(len(unit_test[1])):
 					if (unit_test[1].startswith("_ClientMessage_", space_index) or unit_test[1].startswith("_ServerMessage_", space_index)):
 						cut_string_index = space_index
@@ -179,7 +185,9 @@ def browse_for_an_optimal_unit_tests_suite(resulted_list_of_changed_methods, res
 					unit_test_to_be_executed = '<include>**/' +str(unit_test[0]) + '/' + str(unit_test[1]) + '</include>'
 					if (unit_test_to_be_executed not in resulted_optimal_unit_tests_suite):
 						resulted_optimal_unit_tests_suite.append(unit_test_to_be_executed)
-						
+		
+		iterator += 1
+		
 	return resulted_optimal_unit_tests_suite
 
 def build_resulted_list_of_changed_methods(resulted_array_of_affected_methods):
@@ -231,10 +239,131 @@ def build_resulted_list_of_changed_methods(resulted_array_of_affected_methods):
 	
 	return resulted_list_of_changed_methods, resulted_list_of_normalized_files_of_changed_methods
 
-def build_resulted_list_of_methods_that_calls_changed_method(resulted_array_of_affected_lines_numbers):
+def build_resulted_list_of_methods_that_calls_internal_changed_method(resulted_array_of_affected_lines_numbers):
 
 	resulted_list_of_methods_that_calls_changed_internal_method = []
+	methods_that_calls_changed_internal_method_packages = []
+
+	# build list_of_sourceFiles_from_newer_commit that contains only source code files from dir_repository_newer_commit_sourceCode
+	list_of_sourceFiles_from_newer_commit = list_files(dir_repository_newer_commit_sourceCode)
+
+	normalized_list_of_sourceFiles_from_newer_commit = []
+
+	# build normalized_list_of_sourceFiles_from_newer_commit that contains normalized paths for list_of_sourceFiles_from_newer_commit
+	for source_file in list_of_sourceFiles_from_newer_commit: 
+		
+		index = list_of_sourceFiles_from_newer_commit.index(source_file)
+		
+		source_file = os.path.normpath(source_file)
+		source_file = source_file.split(os.sep)
+		source_file = source_file[-5: len(source_file)]
+		
+		normalized_list_of_sourceFiles_from_newer_commit.append(source_file)
+
+	for normalized_file_to_be_processed in resulted_array_of_affected_lines_numbers:
+		# iterate through all source files
+		for normalized_file in normalized_list_of_sourceFiles_from_newer_commit:
+			if (len( normalized_file_to_be_processed) != 0 and (len( normalized_file_to_be_processed) != 1)):
+				if normalized_file != normalized_file_to_be_processed[0]:
+					continue
+				else:
+					#print 'normalized_file ' + str(normalized_file)
+					for changed_method in normalized_file_to_be_processed:
+					# do not process serialized string e.g. ['src', 'main', 'java', 'deliverables', 'UUT_TCPclient.java']
+						if changed_method == normalized_file_to_be_processed[0]:
+							continue
+						else:
+							if (changed_method == "Class Attributes"):
+								continue
+							else:
+								# delete public static void etc. from method name
+								changed_method = str(changed_method)
+								cut_string_index = 0
+								for space_index in range(len(changed_method)):
+									if changed_method.startswith(" ", space_index):
+										cut_string_index = space_index
+								changed_method = changed_method[cut_string_index:]
+								changed_method = changed_method.replace(' ', "")
+								changed_method_name_for_internal_classes = changed_method
+								#print 'changed_method_name_for_internal_classes: ' + str(changed_method_name_for_internal_classes)
+								
+								# (len(normalized_file_to_be_processed[4]) - 4) - delete .java
+								# "Called external functions" contains class name prior to method name hence class name is added
+								method_class = normalized_file_to_be_processed[0][4][: (len(normalized_file_to_be_processed[0][4]) - 5)];
+				
+					
+					# elements to be found in method's header
+					element_to_be_found_1 = "Method Name"
+					element_to_be_found_2 = "Called internal functions"
+					
+					# create list of methods in a source file
+					source_file = list_of_sourceFiles_from_newer_commit[normalized_list_of_sourceFiles_from_newer_commit.index(normalized_file)]
+					list_of_method_name_line_numbers, list_of_methods_in_source_file = build_element_line_numbers_list_for_a_file(source_file, element_to_be_found_1)
+					
+					iterator = 0
+					
+					# iterate through all methods in a source file
+					for method_in_source_file in list_of_methods_in_source_file:
+						called_internal_functions_names = []
+						
+						method_in_source_file = str(method_in_source_file)
+						cut_string_index = 0
+						for space_index in range(len(method_in_source_file)):
+							if method_in_source_file.startswith(" ", space_index):
+								cut_string_index = space_index
+						#print 'cut_string_index: ' + str(cut_string_index)
+						method_in_source_file = method_in_source_file[cut_string_index:]
+						method_in_source_file = method_in_source_file.replace(' ', "")
+						
+						#print 'Start line' + str(list_of_method_name_line_numbers[iterator])
+						if ( (iterator + 1)!= len(list_of_methods_in_source_file) ):
+							#print 'End line' + str(list_of_method_name_line_numbers[iterator + 1])
+							# read lines from a file from file_dir
+							lines_file = [line.rstrip('\n') for line in open(source_file)]
+							method_lines_file = lines_file[list_of_method_name_line_numbers[iterator] : list_of_method_name_line_numbers[iterator + 1]]
+							
+							# search for called_internal_functions_names  in a method's header
+							for line in method_lines_file:
+								if (element_to_be_found_2 not in line):
+									continue
+								else:
+									line_index = method_lines_file.index(line)
+									# remove unnecessary characters from the line that contains called_internal_functions_names
+									called_internal_functions_names = lines_file[lines_file.index(line)]
+									called_internal_functions_names = called_internal_functions_names.replace('\t', "")
+									called_internal_functions_names = called_internal_functions_names.replace(element_to_be_found_2, "")
+									called_internal_functions_names = called_internal_functions_names.replace('*', "")
+									colon_id = called_internal_functions_names.index(':')
+									called_internal_functions_names = called_internal_functions_names[(colon_id + 2):]
+									called_internal_functions_names = called_internal_functions_names.replace(' ', "")	
+									
+									# check if a method_in_source_file calls an internal method that has been changed
+									if (len(called_internal_functions_names) != 0):
+										#print ' method_in_source_file if len(called_internal_functions_names) != 0: ' + str(method_in_source_file)
+										list_of_called_internal_functions_names = called_internal_functions_names.split(',')
+										for list_of_called_internal_function_name in list_of_called_internal_functions_names:
+											#print 'called_internal_functions_names: ' + str(list_of_called_internal_function_name)
+											if (list_of_called_internal_function_name == changed_method_name_for_internal_classes):
+												#print 'method_in_source_file_that_calls_changed_internal_method: ' + method_in_source_file
+												if (method_in_source_file != '') and (method_in_source_file not in resulted_list_of_methods_that_calls_changed_internal_method):
+													resulted_list_of_methods_that_calls_changed_internal_method.append(method_in_source_file)
+													noramalized_source_file = os.path.normpath(source_file)
+													noramalized_source_file = noramalized_source_file.split(os.sep)
+													# delete base directory ('C:', 'Projects', 'Test_Integration_Jenkins', 'CI_tool', 'master', 'JavaWorkspace_MT', 'UnitUnderTest', 'src', 'test', 'java')
+													noramalized_source_file = noramalized_source_file[-2: len(noramalized_source_file)]
+													# insert only noramalized_source_file[0] that contains package name of method_in_source_file
+													methods_that_calls_changed_internal_method_packages.append(noramalized_source_file[0])
+										
+									break
+							
+							iterator += 1
+
+	return [resulted_list_of_methods_that_calls_changed_internal_method, methods_that_calls_changed_internal_method_packages]
+
+def build_resulted_list_of_methods_that_calls_external_changed_method(resulted_array_of_affected_lines_numbers):
+
 	resulted_list_of_methods_that_calls_changed_external_method = []
+	methods_that_calls_changed_external_method_packages = []
 
 	# build list_of_sourceFiles_from_newer_commit that contains only source code files from dir_repository_newer_commit_sourceCode
 	list_of_sourceFiles_from_newer_commit = list_files(dir_repository_newer_commit_sourceCode)
@@ -294,91 +423,72 @@ def build_resulted_list_of_methods_that_calls_changed_method(resulted_array_of_a
 					
 					# elements to be found in method's header
 					element_to_be_found_1 = "Method Name"
-					element_to_be_found_2 = "Called internal functions"
 					element_to_be_found_3 = "Called external functions"
 					
 					# create list of methods in a source file
-					source_file = list_of_sourceFiles_from_newer_commit[normalized_list_of_sourceFiles_from_newer_commit.index(normalized_file)]
-					list_of_method_name_line_numbers, list_of_methods_in_source_file = build_element_line_numbers_list_for_a_file(source_file, element_to_be_found_1)
-					
-					iterator = 0
-					
-					# iterate through all methods in a source file
-					for method_in_source_file in list_of_methods_in_source_file:
-						called_internal_functions_names = []
-						called_external_functions_names = []
+					for source_file in list_of_sourceFiles_from_newer_commit: #[normalized_list_of_sourceFiles_from_newer_commit.index(normalized_file)]
+						list_of_method_name_line_numbers, list_of_methods_in_source_file = build_element_line_numbers_list_for_a_file(source_file, element_to_be_found_1)
 						
-						method_in_source_file = str(method_in_source_file)
-						cut_string_index = 0
-						for space_index in range(len(method_in_source_file)):
-							if method_in_source_file.startswith(" ", space_index):
-								cut_string_index = space_index
-						#print 'cut_string_index: ' + str(cut_string_index)
-						method_in_source_file = method_in_source_file[cut_string_index:]
-						method_in_source_file = method_in_source_file.replace(' ', "")
+						iterator = 0
 						
-						#print 'Start line' + str(list_of_method_name_line_numbers[iterator])
-						if ( (iterator + 1)!= len(list_of_methods_in_source_file) ):
-							#print 'End line' + str(list_of_method_name_line_numbers[iterator + 1])
-							# read lines from a file from file_dir
-							lines_file = [line.rstrip('\n') for line in open(source_file)]
-							method_lines_file = lines_file[list_of_method_name_line_numbers[iterator] : list_of_method_name_line_numbers[iterator + 1]]
+						# iterate through all methods in a source file
+						for method_in_source_file in list_of_methods_in_source_file:
+							called_external_functions_names = []
 							
-							# search for called_internal_functions_names  in a method's header
-							for line in method_lines_file:
-								if (element_to_be_found_2 not in line):
-									continue
-								else:
-									line_index = method_lines_file.index(line)
-									# remove unnecessary characters from the line that contains called_internal_functions_names
-									called_internal_functions_names = lines_file[lines_file.index(line)]
-									called_internal_functions_names = called_internal_functions_names.replace('\t', "")
-									called_internal_functions_names = called_internal_functions_names.replace(element_to_be_found_2, "")
-									called_internal_functions_names = called_internal_functions_names.replace('*', "")
-									colon_id = called_internal_functions_names.index(':')
-									called_internal_functions_names = called_internal_functions_names[(colon_id + 2):]
-									called_internal_functions_names = called_internal_functions_names.replace(' ', "")	
-									
-									# check if a method_in_source_file calls an internal method that has been changed
-									if (len(called_internal_functions_names) != 0):
-										list_of_called_internal_functions_names = called_internal_functions_names.split(',')
-										for list_of_called_internal_function_name in list_of_called_internal_functions_names:
-											if (list_of_called_internal_function_name == changed_method_name_for_internal_classes):
-												#print 'method_in_source_file_that_calls_changed_internal_method: ' + method_in_source_file
-												if (method_in_source_file != '') and (method_in_source_file not in resulted_list_of_methods_that_calls_changed_internal_method):
-													resulted_list_of_methods_that_calls_changed_internal_method.append(method_in_source_file)
+							method_in_source_file = str(method_in_source_file)
+							cut_string_index = 0
+							for space_index in range(len(method_in_source_file)):
+								if method_in_source_file.startswith(" ", space_index):
+									cut_string_index = space_index
+							#print 'cut_string_index: ' + str(cut_string_index)
+							method_in_source_file = method_in_source_file[cut_string_index:]
+							method_in_source_file = method_in_source_file.replace(' ', "")
+							
+							#print 'Start line' + str(list_of_method_name_line_numbers[iterator])
+							if ( (iterator + 1)!= len(list_of_methods_in_source_file) ):
+								#print 'End line' + str(list_of_method_name_line_numbers[iterator + 1])
+								# read lines from a file from file_dir
+								lines_file = [line.rstrip('\n') for line in open(source_file)]
+								method_lines_file = lines_file[list_of_method_name_line_numbers[iterator] : list_of_method_name_line_numbers[iterator + 1]]
+								
+								
+								# search for called_external_functions_names  in a method's header							
+								for line in method_lines_file:
+									if (element_to_be_found_3 not in line):
+										continue
+									else:
+										line_index = method_lines_file.index(line)
+										# remove unnecessary characters from the line that contains called_external_functions_names
+										called_external_functions_names = lines_file[lines_file.index(line)]
+										called_external_functions_names = called_external_functions_names.replace('\t', "")
+										called_external_functions_names = called_external_functions_names.replace(element_to_be_found_3, "")
+										called_external_functions_names = called_external_functions_names.replace('*', "")
+										colon_id = called_external_functions_names.index(':')
+										called_external_functions_names = called_external_functions_names[(colon_id + 2):]	
+										called_external_functions_names = called_external_functions_names.replace(' ', "")
 										
-									break
-							
-							# search for called_external_functions_names  in a method's header							
-							for line in method_lines_file:
-								if (element_to_be_found_3 not in line):
-									continue
-								else:
-									line_index = method_lines_file.index(line)
-									# remove unnecessary characters from the line that contains called_external_functions_names
-									called_external_functions_names = lines_file[lines_file.index(line)]
-									called_external_functions_names = called_external_functions_names.replace('\t', "")
-									called_external_functions_names = called_external_functions_names.replace(element_to_be_found_3, "")
-									called_external_functions_names = called_external_functions_names.replace('*', "")
-									colon_id = called_external_functions_names.index(':')
-									called_external_functions_names = called_external_functions_names[(colon_id + 2):]	
-									called_external_functions_names = called_external_functions_names.replace(' ', "")
-									
-									# check if a method_in_source_file calls an external method that have been changed
-									if (len(called_external_functions_names) != 0):
-										list_of_called_external_functions_names = called_external_functions_names.split(',')
-										for called_external_function_name in list_of_called_external_functions_names:
-											if (called_external_function_name == changed_method_name_for_external_classes):
-												#print 'method_in_source_file_that_calls_changed_external_method: ' + method_in_source_file
-												if (method_in_source_file != '') and (method_in_source_file not in resulted_list_of_methods_that_calls_changed_external_method):
-													resulted_list_of_methods_that_calls_changed_external_method.append(method_in_source_file)
-									
-									break
-							
-							iterator += 1
+										# check if a method_in_source_file calls an external method that have been changed
+										if (len(called_external_functions_names) != 0):
+											#print ' method_in_source_file if len(called_external_functions_names) != 0: ' + str(method_in_source_file)
+											list_of_called_external_functions_names = called_external_functions_names.split(',')
+											for called_external_function_name in list_of_called_external_functions_names:
+												#print 'called_external_functions_names: ' + called_external_function_name
+												if (called_external_function_name == changed_method_name_for_external_classes):
+													#print 'method_in_source_file_that_calls_changed_external_method: ' + method_in_source_file
+													if (method_in_source_file != '') and (method_in_source_file not in resulted_list_of_methods_that_calls_changed_external_method):
+														resulted_list_of_methods_that_calls_changed_external_method.append(method_in_source_file)
+														noramalized_source_file = os.path.normpath(source_file)
+														noramalized_source_file = noramalized_source_file.split(os.sep)
+														# delete base directory ('C:', 'Projects', 'Test_Integration_Jenkins', 'CI_tool', 'master', 'JavaWorkspace_MT', 'UnitUnderTest', 'src', 'test', 'java')
+														noramalized_source_file = noramalized_source_file[-2: len(noramalized_source_file)]
+														# insert only noramalized_source_file[0] that contains package name of method_in_source_file
+														methods_that_calls_changed_external_method_packages.append(noramalized_source_file[0])
+										
+										break
+								
+								iterator += 1
 
-	return [resulted_list_of_methods_that_calls_changed_internal_method, resulted_list_of_methods_that_calls_changed_external_method]
+	return [resulted_list_of_methods_that_calls_changed_external_method, methods_that_calls_changed_external_method_packages]
 	
 def build_resulted_array_of_removed_lines_numbers(resulted_array_of_removed_lines, list_of_modified_files_to_be_processed, commit_older, repo_directory_address_diff): 
 
@@ -649,7 +759,7 @@ def build_resulted_array_of_added_files(resulted_array_of_added_file_blocks, lis
 	# build resulted_array_of_added_files 
 	iterator = 0
 	for file_block in resulted_array_of_added_file_blocks:			
-		added_lines_list = []	
+		added_lines_list_in_new_files = []	
 		for line in file_block:
 			if len(line) > 0:
 				# build list of lines that have been added - what is indicated by '+' in the diff log file
@@ -662,27 +772,27 @@ def build_resulted_array_of_added_files(resulted_array_of_added_file_blocks, lis
 					
 					# process line if it contains at least 2 characters
 					if len(temp_line) > 1:
-						#if a line contains either commentary or header that has been changed, do not add it to added_lines_list
+						#if a line contains either commentary or header that has been changed, do not add it to added_lines_list_in_new_files
 						if temp_line[0] == '*' or temp_line[0] == '/':
 							continue
-						#if a line contains package name or imported dependencies, do not add it to added_lines_list
+						#if a line contains package name or imported dependencies, do not add it to added_lines_list_in_new_files
 						elif 'package' in temp_line:
 							continue
 						elif 'import' in temp_line:
 							continue
-					# if a line contains less than 2 characters, do not add it to added_lines_list
+					# if a line contains less than 2 characters, do not add it to added_lines_list_in_new_files
 					else:
 						continue
 						
-					# do not add a changed line if it already exists in added_lines_list
-					if file_block[temp_index] in added_lines_list:
+					# do not add a changed line if it already exists in added_lines_list_in_new_files
+					if file_block[temp_index] in added_lines_list_in_new_files:
 						continue
-					# add line to added_lines_list
+					# add line to added_lines_list_in_new_files
 					else:
 						file_block[temp_index] = file_block[temp_index].replace('+', " ")
-						added_lines_list.append(file_block[temp_index]) 
-						#print 'added_lines_list.append(file_block[temp_index]): ' + str(file_block[temp_index])
-		resulted_array_of_added_files[iterator] = added_lines_list
+						added_lines_list_in_new_files.append(file_block[temp_index]) 
+						#print 'added_lines_list_in_new_files.append(file_block[temp_index]): ' + str(file_block[temp_index])
+		resulted_array_of_added_files[iterator] = added_lines_list_in_new_files
 		iterator = iterator + 1
 
 	end = time.time()
@@ -705,8 +815,8 @@ def build_resulted_array_of_added_lines(resulted_array_of_changed_file_blocks, l
 	
 	# build resulted_array_of_added_lines
 	iterator = 0
-	for file_block in resulted_array_of_changed_file_blocks:			
-		changed_lines_list = []	
+	for file_block in resulted_array_of_changed_file_blocks:
+		added_lines_list = []
 		for line in file_block:
 			if len(line) > 0:
 				# build list of lines that have changed - what is indicated by '-' in the diff log
@@ -718,29 +828,29 @@ def build_resulted_array_of_added_lines(resulted_array_of_changed_file_blocks, l
 					temp_line = temp_line.replace('-', "")
 					temp_line = temp_line.replace(" ", "")
 					
-					# if a line contains either commentary or header that has been removed, do not add it to changed_lines_list
+					# if a line contains either commentary or header that has been removed, do not add it to added_lines_list
 					if len(temp_line) > 1:
 						if temp_line[0] == '*' or temp_line[0] == '/':
 							continue
-					# if a line contains less than 2 characters, do not add it to changed_lines_list
+					# if a line contains less than 2 characters, do not add it to added_lines_list
 					else:
 						continue
 						
-					# do not add a removed line if it already exists in changed_lines_list
-					if file_block[temp_index] in changed_lines_list:
+					# do not add a removed line if it already exists in added_lines_list
+					if file_block[temp_index] in added_lines_list:
 						continue
-					# add line to changed_lines_list
+					# add line to added_lines_list
 					else:
 						file_block[temp_index] = file_block[temp_index].replace('-', " ")
-						changed_lines_list.append(file_block[temp_index])
-						print 'changed_lines_list.append(file_block[temp_index]): ' + str(file_block[temp_index])
+						added_lines_list.append(file_block[temp_index])
+						#print 'added_lines_list.append(file_block[temp_index]): ' + str(file_block[temp_index])
 		
-		resulted_array_of_added_lines[iterator] = changed_lines_list
+		resulted_array_of_added_lines[iterator] = added_lines_list
 		iterator = iterator + 1
-		
+	
 	end = time.time()
 	#print '\n\n\nbuilding arrays (resulted_array_of_added_lines) execution time\t\t\t: ' + str((end - start)) + '\n\n\n'
-	
+
 	return resulted_array_of_added_lines
 	
 # /************************************************************
@@ -760,7 +870,6 @@ def build_resulted_array_of_removed_lines(resulted_array_of_changed_file_blocks,
 	iterator = 0
 	for file_block in resulted_array_of_changed_file_blocks:			
 		removed_lines_list = []	
-		changed_lines_list = []	
 		for line in file_block:
 			if len(line) > 0:
 				# build list of lines that have been removed - what is indicated by '+' in the diff log
@@ -786,25 +895,13 @@ def build_resulted_array_of_removed_lines(resulted_array_of_changed_file_blocks,
 					else:
 						file_block[temp_index] = file_block[temp_index].replace('+', " ")
 						removed_lines_list.append(file_block[temp_index]) 
-						print 'removed_lines_list.append(file_block[temp_index]): ' + str(file_block[temp_index])
+						#print 'removed_lines_list.append(file_block[temp_index]): ' + str(file_block[temp_index])
 		resulted_array_of_removed_lines[iterator] = removed_lines_list
 		iterator = iterator + 1
 	
 	end = time.time()
 	#print '\n\n\nbuilding arrays (resulted_array_of_removed_lines) execution time\t\t\t: ' + str((end - start)) + '\n\n\n'
 	
-	empty_array = False
-	for i in resulted_array_of_removed_lines:
-		if (len(i) == 0):
-			empty_array = True
-		else:
-			empty_array = False
-			break
-			
-	if(empty_array):
-		print 'xxx'
-		resulted_array_of_removed_lines = []
-	print 'xxx'		
 	return resulted_array_of_removed_lines
 
 # /************************************************************

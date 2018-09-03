@@ -1,10 +1,20 @@
 JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpClient/ClientManager.java
 =======================================================
-lhs: 100644 | 02064d90b8fcc40a47d9a47c2ec28c7a7a285905
-rhs: 100644 | fc9f5e050c708bd71193691407d61f1ac5e83fc0
----@@ -78,9 +78,6 @@ public class ClientManager implements TCPclient_interface{
+lhs: 100644 | b2b0680ecb013febc53f51bd60b8cd38cf49f6ce
+rhs: 100644 | 9b5c2948ec57a0a755a612bcec1fea445a5d986c
+---@@ -48,9 +48,6 @@ public class ClientManager implements TCPclient_interface{
  	 ***********************************************************************************************************/
- 	public void sendMessage(Message_Interface message, ObjectOutputStream out_stream) throws IOException {
+ 	protected ClientManager(ObjectOutputStream outputStream, ObjectInputStream inputStream, int sensor_ID){
+ 		
+-		// temporary code added to validate the script for an optimal test suite selecetion
+-		boolean temp_bool = false;
+-		
+ 		this.outputStream = outputStream;
+         this.inputStream = inputStream;
+         this.sensor_ID = sensor_ID;
+@@ -82,9 +79,6 @@ public class ClientManager implements TCPclient_interface{
+ 	 ***********************************************************************************************************/
+ 	public void sendMessage(Message_Interface message, ObjectOutputStream out_stream) throws IOException {		
  	
 -		// temporary code added to validate the script for an optimal test suite selecetion
 -		int temp_int = 0;
@@ -15,29 +25,29 @@ rhs: 100644 | fc9f5e050c708bd71193691407d61f1ac5e83fc0
 
 ---JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpClient/TCPclient.java
 =======================================================
-lhs: 100644 | 96d7af34262f3f06c4ea94fce3e85d204e08a40c
-rhs: 100644 | 2dc0047b94e59ce36be05d987e99c381da00efdb
----@@ -58,9 +58,6 @@ public class TCPclient implements Runnable {
+lhs: 100644 | aaf76cb6e0f4b278bf4c5ca647a1d32d95409713
+rhs: 100644 | 7065a848d5322f9620cd9a4f3e18cf13ae9f3418
+---@@ -36,6 +36,9 @@ public class TCPclient implements Runnable {
  	 ***********************************************************************************************************/
-     TCPclient(int sensor_ID, String serverHostName, int port) throws IOException {
+     public TCPclient() {
      	
--		// temporary code added to validate the script for an optimal test suite selecetion
--		String temp_string = new String(" ");
--    	
- 		// create TCP client socket
- 	    setClientSocket(new Socket(serverHostName, port));
- 	    System.out.println("[TCPclient " + getSensor_ID() +"] Client Socket created on port = "+port);
++		// temporary code added to validate the script for an optimal test suite selecetion
++		boolean temp_bool = false;
++    	    
+     	// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
+     	super();
+     	
 
 ---JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java
 =======================================================
-lhs: 100644 | 346e6ac0ee03196a1ef8c01f507ee7b6485315e6
+lhs: 100644 | e37143dd4c7b6cee2366e17d0328d4b143f6c2fb
 rhs: 100644 | 14a8ac77b8ebbfe6f2f323a428b8da8d2c5c231b
 ---@@ -63,9 +63,6 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
  	public ComputeEngine_Runnable(Socket clientSocket, double global_watchdog_scale_factor, boolean isComputeEngine_Runnable_running) throws IOException  {
  		super();
  		
 -		// temporary code added to validate the script for an optimal test suite selecetion
--		boolean temp_boolean = false;
+-		float temp_float = 0.0f;
 -		
  		// create object output/input streams
  		outputStream = new ObjectOutputStream(clientSocket.getOutputStream());

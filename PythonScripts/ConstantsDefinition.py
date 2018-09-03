@@ -16,7 +16,7 @@ for i in range(0, len(base_dir_path_norm)):
 		base_dir_path = base_dir_path + base_dir_path_norm[i] + '\\'
 		break
 
-base_dir_path = r'E:\Praca magisterska\\'
+#base_dir_path = r'C:\Projects\Test_Integration_Jenkins\CI_tool\\'
 # directories definition
 dir_repository_older_commit = base_dir_path + r'CI_tool_diff_older_commit\master'
 dir_repository_newer_commit = base_dir_path + r'CI_tool_diff_newer_commit\master'
