@@ -42,11 +42,15 @@ public class ClientManager implements TCPclient_interface{
 	}
 	
     /***********************************************************************************************************
-	 * Method Name: 				ClientManager()
+	 * Method Name: 				protected ClientManager()
 	 * Description: 				ClientManager class overloaded constructor
 	 * Affected internal variables: outputStream, inputStream, sensor_ID, isClientManagerRunning
 	 ***********************************************************************************************************/
-	ClientManager(ObjectOutputStream outputStream, ObjectInputStream inputStream, int sensor_ID){
+	protected ClientManager(ObjectOutputStream outputStream, ObjectInputStream inputStream, int sensor_ID){
+		
+		// temporary code added to validate the script for an optimal test suite selecetion
+		boolean temp_bool = false;
+		
 		this.outputStream = outputStream;
         this.inputStream = inputStream;
         this.sensor_ID = sensor_ID;
@@ -76,7 +80,7 @@ public class ClientManager implements TCPclient_interface{
 	 * Affected internal variables: outputStream
 	 * Exceptions thrown: 			IOException, IllegalArgumentException
 	 ***********************************************************************************************************/
-	public void sendMessage(Message_Interface message, ObjectOutputStream out_stream) throws IOException {
+	public void sendMessage(Message_Interface message, ObjectOutputStream out_stream) throws IOException {		
 		
 		// temporary code added to validate the script for an optimal test suite selecetion
 		int temp_int = 0;
@@ -114,15 +118,18 @@ public class ClientManager implements TCPclient_interface{
 	
     /***********************************************************************************************************
 	 * Method Name: 				public void messagesHandler()
-	 * Description: 				State machine for massages sent to the TCP server based on received messages via TCP connection and watchdogs time left to expiration
+	 * Description: 				State machine that processes data received from TCP server and sends particular responses  
+	 								over the TCP network. The state machine updates sensor settings and the sensor watchdog as well.
 	 * Affected internal variables: isClientManagerRunning
-	 * Affected external variables: TCPclient.Client_Sensors_LIST, SensorImpl.sensorID, SensorImpl.coordinates, SensorImpl.softwareImageID, SensorImpl.sensorState,
-	  								SensorImpl.sensor_m_history, Local_1h_Watchdog.millisecondsLeftUntilExpiration, Local_1h_Watchdog.isPaused, Local_1h_Watchdog.local_watchgod_scale_factor, 
+	 * Affected external variables: TCPclient.Client_Sensors_LIST, SensorImpl.sensorID, SensorImpl.coordinates, SensorImpl.sensorState,
+	 								SensorImpl.softwareImageID, SensorImpl.sensor_m_history, Local_1h_Watchdog.isPaused, 
+	 								Local_1h_Watchdog.millisecondsLeftUntilExpiration, Local_1h_Watchdog.local_watchgod_scale_factor, 
 	  								TCPclient.measurements_limit, TCPclient.watchdogs_scale_factor
 	 * Local variables:			    sensor, receivedMessage, wait_for_measurement_history, wait_for_measurement_data
 	 * Called internal functions:   sendMessage()
-	 * Called external functions:   SensorImpl.addMeasurement(), SensorImpl.resetSensor(), SensorImpl(), TCPclient.updateClientSensorList(), ClientMessage_MeasurementData(), 
-	 								ClientMessage_MeasurementHistory(), ClientMessage_SensorInfo(), ClientMessage_ACK(), ClientMessage_BootUp()
+	 * Called external functions:   SensorImpl.addMeasurement(), SensorImpl.resetSensor(), SensorImpl(), ClientMessage_MeasurementData(), 
+	 								TCPclient.updateClientSensorList(), ClientMessage_MeasurementHistory(), ClientMessage_SensorInfo(),
+	 								ClientMessage_ACK(), ClientMessage_BootUp()
 	 * Exceptions handled: 			IOException, ClassNotFoundException
 	 ***********************************************************************************************************/
 	public void messagesHandler(ObjectOutputStream outputStream, ObjectInputStream inputStream) {

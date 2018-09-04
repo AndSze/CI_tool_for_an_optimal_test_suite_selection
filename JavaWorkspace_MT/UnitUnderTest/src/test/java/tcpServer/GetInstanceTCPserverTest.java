@@ -10,7 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class GetInstanceTCPserverTest {
+public class GetInstanceTest {
 	/***********************************************************************************************************
 	 * StartTCPserverTest - Class Attributes
 	 ***********************************************************************************************************/
@@ -27,15 +27,15 @@ public class GetInstanceTCPserverTest {
 	static int testID = 1;
 
 	public static void incrementTestID() {
-		GetInstanceTCPserverTest.testID += 1;
+		GetInstanceTest.testID += 1;
 	}
 	
 	@Before
 	public void before() throws IOException {
 		
-		System.out.println("\t\tTest Run "+GetInstanceTCPserverTest.testID+" Purpose:");
-		System.out.println(testPurpose[(GetInstanceTCPserverTest.testID-1)]);
-		System.out.println("\t\tTest Run "+GetInstanceTCPserverTest.testID+" Logic:");
+		System.out.println("\t\tTest Run "+GetInstanceTest.testID+" Purpose:");
+		System.out.println(testPurpose[(GetInstanceTest.testID-1)]);
+		System.out.println("\t\tTest Run "+GetInstanceTest.testID+" Logic:");
 	}
 	 
     /***********************************************************************************************************
@@ -157,7 +157,7 @@ public class GetInstanceTCPserverTest {
    @After
     public void teardown() throws IOException, InterruptedException{
 	  
-		System.out.println("\t\tTest Run "+GetInstanceTCPserverTest.testID+" teardown section:");
+		System.out.println("\t\tTest Run "+GetInstanceTest.testID+" teardown section:");
 		   
 		// Time offset before running the reinitalize_to_default() function
 		Thread.sleep(100);

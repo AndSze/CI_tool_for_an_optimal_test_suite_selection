@@ -99,7 +99,7 @@ public class TCPserver {
 	};
 
 	/***********************************************************************************************************
-	 * Method Name: 				private TCPserver()
+	 * Method Name: 				protected TCPserver()
 	 * Description: 				TCPserver class overloaded constructor
 	 * Affected internal variables: serverSocket, serverRunning, processing_engine, Server_Sensors_LIST, _1hWatchog_timestamp_table, _24hWatchog_timestamp_table, Sensors_PATH
 	 * Affected external variables: Global_1h_Watchdog, Global_24h_Watchdog, SensorImpl
@@ -109,7 +109,7 @@ public class TCPserver {
 	 * Exceptions thrown: 			IOException
 	 * Exceptions handled: 			ClassNotFoundException, FileNotFoundException, NotSerializableException
 	 ***********************************************************************************************************/
-	TCPserver(int port) throws IOException{
+	protected TCPserver(int port) throws IOException{
 		
 		// communication stuff
 		serverSocket = new ServerSocket();
@@ -206,34 +206,7 @@ public class TCPserver {
         } 
         return TCPserver_instance; 
     } 
- 
-    /***********************************************************************************************************
-	 * Method Name: 				public void closeServer()
-	 * Description: 				Closes server socket for TCPserver and kicks 1h_Watchdog since server socket has been closed intentionally
-	 * Affected internal variables: serverSocket, serverRunning, serverThread
-	 * Affected external variables: Global_1h_Watchdog.millisecondsLeftUntilExpiration
-	 * Exceptions thrown: 			IOException, IllegalArgumentException
-	 ***********************************************************************************************************/
-	public void closeServer(int port) throws IOException{
-	
-		if (get_ServerRunning()){
-			
-			getServerSocket().close();
-			getServerThread().interrupt();
-			
-			// set to 1hWatchdog its expiration time to activate the client socket when Watchdog time before expiration reaches its specified level (client-socket opening level)
-			Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(Global_1h_Watchdog.getInstance().getExpiration() * getWatchdogs_scale_factor());
-			
-			// reinitialize set_ServerRunning to false
-			set_ServerRunning(false);
-			
-			System.out.println("[TCPserver] Socket for the server with port: "+port+" closed successfully");
-		} 
-		else {
-			throw new IllegalArgumentException();
-		}
-	}
-	
+ 	
     /***********************************************************************************************************
 	 * Method Name: 				public void startServer()
 	 * Description: 				Listens for connection from the client side. Handles each incoming connection in a separate thread.
@@ -285,6 +258,33 @@ public class TCPserver {
 		});
 		// create new thread for the object defined in the runnable interface and then start run() method for that object
 	    serverThread.start();
+	}
+	
+    /***********************************************************************************************************
+	 * Method Name: 				public void closeServer()
+	 * Description: 				Closes server socket for TCPserver and kicks 1h_Watchdog since server socket has been closed intentionally
+	 * Affected internal variables: serverSocket, serverRunning, serverThread
+	 * Affected external variables: Global_1h_Watchdog.millisecondsLeftUntilExpiration
+	 * Exceptions thrown: 			IOException, IllegalArgumentException
+	 ***********************************************************************************************************/
+	public void closeServer(int port) throws IOException{
+	
+		if (get_ServerRunning()){
+			
+			getServerSocket().close();
+			getServerThread().interrupt();
+			
+			// set to 1hWatchdog its expiration time to activate the client socket when Watchdog time before expiration reaches its specified level (client-socket opening level)
+			Global_1h_Watchdog.getInstance().setTimeLeftBeforeExpiration(Global_1h_Watchdog.getInstance().getExpiration() * getWatchdogs_scale_factor());
+			
+			// reinitialize set_ServerRunning to false
+			set_ServerRunning(false);
+			
+			System.out.println("[TCPserver] Socket for the server with port: "+port+" closed successfully");
+		} 
+		else {
+			throw new IllegalArgumentException();
+		}
 	}
 	
     /***********************************************************************************************************

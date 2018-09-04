@@ -35,7 +35,7 @@ public class TCPclient implements Runnable {
 	 * Called external functions: 	Local_1h_Watchdog.getInstance() 
 	 ***********************************************************************************************************/
     public TCPclient() {
-    
+    	    
     	// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
     	super();
     	
@@ -50,16 +50,16 @@ public class TCPclient implements Runnable {
     }
     
     /***********************************************************************************************************
-	 * Method Name: 				private TCPclient()
+	 * Method Name: 				protected TCPclient()
 	 * Description: 				UUT_TCPclient class overloaded constructor
 	 * Affected internal variables: clientSocket, sensor_ID, clientManager, clientRunning, Client_Sensors_LIST
 	 * Called internal functions:	searchInClientSensorList
 	 * Called external functions: 	ClientManager(), ClientManager.initClientManager(), SensorImpl()
 	 ***********************************************************************************************************/
-    TCPclient(int sensor_ID, String serverHostName, int port) throws IOException {
+    protected TCPclient(int sensor_ID, String serverHostName, int port) throws IOException {
     	
 		// temporary code added to validate the script for an optimal test suite selecetion
-		String temp_string = new String(" ");
+		float temp_float = 0.0f;
     	
 		// create TCP client socket
 	    setClientSocket(new Socket(serverHostName, port));
@@ -251,8 +251,7 @@ public class TCPclient implements Runnable {
 	public synchronized void setSensor_ID(int sensor_ID) {
 		this.sensor_ID = sensor_ID;
 	}
-	
-	
+
 	public synchronized Thread getClientThread() {
 		return clientThread;
 	}
@@ -276,5 +275,5 @@ public class TCPclient implements Runnable {
 	public static void setWatchdogs_scale_factor(double watchdogs_scale_factor) {
 		TCPclient.watchdogs_scale_factor = watchdogs_scale_factor;
 	}
-	
+
 }

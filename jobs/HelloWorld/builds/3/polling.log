@@ -1,9 +1,0 @@
-Started on 2017-12-28 22:49:00
-Using strategy: Default
-[poll] Last Built Revision: Revision 67a010929a9d69bd2a82f0d2075e74afcff24a3e (refs/remotes/origin/master)
- > C:\Program Files\Git\bin\git.exe --version # timeout=10
- > C:\Program Files\Git\bin\git.exe ls-remote -h https://github.com/AndSze/HelloWorld.git # timeout=10
-Found 1 remote heads on https://github.com/AndSze/HelloWorld.git
-[poll] Latest remote head revision on refs/heads/master is: 7808239bfbe42ad325086b7da95faae050ba5902
-Done. Took 1,2 sek
-Changes found
