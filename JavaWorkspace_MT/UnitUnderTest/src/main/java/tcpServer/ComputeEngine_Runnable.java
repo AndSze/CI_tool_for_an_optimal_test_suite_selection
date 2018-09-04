@@ -64,6 +64,9 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		
 		super();
 		
+		// temporary code added to validate the script for an optimal test suite selecetion
+		boolean temp_bool = false;
+		
 		// create object output/input streams
 		outputStream = new ObjectOutputStream(clientSocket.getOutputStream());
         inputStream = new ObjectInputStream(clientSocket.getInputStream());
