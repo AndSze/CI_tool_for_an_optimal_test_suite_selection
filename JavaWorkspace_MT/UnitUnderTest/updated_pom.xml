@@ -107,18 +107,12 @@
 						<exclude>"**/Test*.java"</exclude>
 					</excludes>
 					<includes>
-						<include>**/tcpClient/ClientManagerTest.java</include>
 						<include>**/tcpClient/SendMessageTest.java</include>
+						<include>**/tcpClient/ClientManagerTest.java</include>
 						<include>**/tcpServer/ComputeEngine_RunnableTest.java</include>
 						<include>**/tcpClient/TCPclientTest.java</include>
-						<include>**/tcpClient/MessagesHandlerTest.java</include>
-						<include>**/tcpClient/MessagesHandler_ServerMessage_ACKTest.java</include>
-						<include>**/tcpClient/MessagesHandler_ServerMessage_Request_MeasurementDataTest.java</include>
-						<include>**/tcpClient/MessagesHandler_ServerMessage_Request_MeasurementHistoryTest.java</include>
-						<include>**/tcpClient/MessagesHandler_ServerMessage_SensorInfoQuerryTest.java</include>
-						<include>**/tcpClient/MessagesHandler_ServerMessage_SensorInfoUpdateTest.java</include>
+						<include>**/tcpClient/InitClientManagerTest.java</include>
 						<include>**/tcpClient/InitClientTest.java</include>
-						<include>**/tcpClient/RunTest.java</include>
 						<include>**/tcpServer/StartServerTest.java</include>
 						<include>**/deliverables/UUT_TCPclientTest.java</include>
 					</includes>
