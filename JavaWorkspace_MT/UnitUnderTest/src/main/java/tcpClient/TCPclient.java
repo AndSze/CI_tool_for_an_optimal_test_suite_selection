@@ -57,9 +57,9 @@ public class TCPclient implements Runnable {
 	 * Called external functions: 	ClientManager(), ClientManager.initClientManager(), SensorImpl()
 	 ***********************************************************************************************************/
     protected TCPclient(int sensor_ID, String serverHostName, int port) throws IOException {
-    	
+    			
 		// temporary code added to validate the script for an optimal test suite selecetion
-		float temp_float = 0.0f;
+		boolean temp_bool = false;
     	
 		// create TCP client socket
 	    setClientSocket(new Socket(serverHostName, port));
