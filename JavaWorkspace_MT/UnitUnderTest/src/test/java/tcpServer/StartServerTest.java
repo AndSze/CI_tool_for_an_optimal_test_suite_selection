@@ -33,6 +33,8 @@ public class StartServerTest {
 	final String serverHostName = "localhost";
 	SensorImpl sensor = null;
 	int sensor_ID_1 = 1;
+	int number_of_sensors = 1;
+	int measurements_limit = 24;
 	
 	String[] testPurpose = { 	"Verify that once the startServer function is called, there is a new server thread created",
 								"Verify that once the startServer function is called, the server thread starts and it has the RUNNABLE thread state. Verify also that once the server socket is closed, the server thread state changes to the TERMINATED thread state",
@@ -52,6 +54,7 @@ public class StartServerTest {
 		tcpserver_1 = new TCPserver();
 		serverSocket_1 = new ServerSocket();
 		
+		TCPserver.getInstance(port_1, number_of_sensors, measurements_limit, TCPserver.getWatchdogs_scale_factor());
 		TCPserver.processing_engine = new ComputeEngine_Processing();
 		sensor = new SensorImpl(sensor_ID_1);
 		TCPserver.Server_Sensors_LIST = TCPserver.processing_engine.updateServerSensorList(sensor);

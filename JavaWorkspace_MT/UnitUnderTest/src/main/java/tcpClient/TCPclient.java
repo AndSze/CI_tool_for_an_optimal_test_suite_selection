@@ -40,8 +40,8 @@ public class TCPclient implements Runnable {
     	super();
     	
 		// temporary code added to validate the script for an optimal test suite selecetion
-		float temp_float = 0.0f;
-    	
+		boolean temp_bool = false;
+
     	if (Client_Sensors_LIST == null) {
     		Client_Sensors_LIST = new ArrayList<>();
     		System.out.println("[TCPclient " + getSensor_ID() +"] Client_Sensors_LIST created");
