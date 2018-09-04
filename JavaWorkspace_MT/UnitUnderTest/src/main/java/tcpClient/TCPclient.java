@@ -38,9 +38,9 @@ public class TCPclient implements Runnable {
     	    
     	// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
     	super();
-    			
+    	
 		// temporary code added to validate the script for an optimal test suite selecetion
-		boolean temp_bool = false;
+		int temp_int = 0;
     	
     	if (Client_Sensors_LIST == null) {
     		Client_Sensors_LIST = new ArrayList<>();
