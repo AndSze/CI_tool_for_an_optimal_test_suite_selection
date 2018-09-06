@@ -272,7 +272,7 @@ public class Run_ClientMessage_ACKTest {
 		
 		// wait until the test thread leaves the _1h_Watchdog_close_to_expire() function that contains a delay
 		while (testThread_server.getState() == Thread.State.TIMED_WAITING) {
-			Thread.sleep(0);
+			Thread.sleep(250);
 		}
 		
 		assertTrue(receivedMessage instanceof ServerMessage_Request_MeasurementData);
