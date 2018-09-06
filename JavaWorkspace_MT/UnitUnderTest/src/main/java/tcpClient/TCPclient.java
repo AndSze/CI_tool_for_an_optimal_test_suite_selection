@@ -38,9 +38,6 @@ public class TCPclient implements Runnable {
     	    
     	// if there will be any class attribute initialized to default value in the declaration section, here its value will be reinitialized
     	super();
-    	
-		// temporary code added to validate the script for an optimal test suite selecetion
-		int temp_int = 0;
 
     	if (Client_Sensors_LIST == null) {
     		Client_Sensors_LIST = new ArrayList<>();
@@ -50,6 +47,10 @@ public class TCPclient implements Runnable {
     	// create 1h watchdog that are being checked on a regular basis - if they are about to expire, the server-client communication is being initialized. Afterward, the watchdogs are kicked and they continue to count down
         // 1h watchdog on the client side are being synchronized with the 1h watchdog on the server side in messages sent from the server
     	Local_1h_Watchdog.getInstance();
+    	
+		// temporary code added to validate the script for an optimal test suite selecetion
+		float temp_float = 0.0f;
+		
     }
     
     /***********************************************************************************************************
