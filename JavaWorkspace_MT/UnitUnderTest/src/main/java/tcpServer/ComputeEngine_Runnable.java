@@ -430,8 +430,8 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	protected double _1h_Watchdog_close_to_expire(double _1h_watchdog, double watchdog_scale_factor, int sensor_number_of_measurements ) {
 		
 		// define duration of an additional delay that is used for watchdogs synchronization
-		double global_delay_factor = 0.20;
-		double local_delay_factor = 0.60;
+		double global_delay_factor = 0.25;
+		double local_delay_factor = 0.50;
 		
 		//Global_1h_Watchdog.getInstance().setEnabled(false);
 		if ( sensor_number_of_measurements == (TCPserver.getMeasurements_limit() - 1) ){
@@ -474,7 +474,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		Global_1h_Watchdog.getInstance().setEnabled(false);
 		
 		// determine duration of an additional delay that is used for watchdogs synchronization
-		double delay_factor = 0.5;
+		double delay_factor = 0.50;
 
 		if( (_24h_watchdog < get_watchdog_threshold(Watchdog_Thresholds.LOWEST, getWatchdog_thresholds_array())) && (Global_1h_Watchdog.getInstance().getTimeLeftBeforeExpiration() > get_watchdog_threshold(Watchdog_Thresholds.LOWEST, getWatchdog_thresholds_array())) ){
 			// DO NOTHING - 24h watchdog does not require any changes
