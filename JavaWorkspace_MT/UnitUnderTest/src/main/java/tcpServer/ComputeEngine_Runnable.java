@@ -146,7 +146,7 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 * Affected external variables: SensorImpl, TCPserver._1hWatchog_timestamp_table, TCPserver._24hWatchog_timestamp_table, TCPserver.processing_engine, TCPserver.Server_Sensors_LIST,
 	 								TCPserver.MeasurementHistory_LIST, TCPserver.MeasurementData_LIST
 	 * Local variables:				close_ComputeEngine_Runnable, request_measurement_history, request_measurement_data, receivedMessage
-	 * Called internal functions: 	sendMessage(), closeOutStream(), closeInStream(), processingDelay()
+	 * Called internal functions: 	sendMessage(), closeOutStream(), closeInStream(), _1h_Watchdog_close_to_expire(), update_watchgods_after_TCP_connection()
 	 * Called external functions: 	ServerMessage_SensorInfoQuerry(), ServerMessage_SensorInfoUpdate(), ServerMessage_ACK(), ServerMessage_Request_MeasurementData(), 
 	 								ServerMessage_Request_MeasurementHistory(), ComputeEngine_Processing.updateServerSensorList(), ComputeEngine_Processing.saveSensorInfo(),
 	 								ComputeEngine_Processing.saveMeasurementDataInfo(), ComputeEngine_Processing.saveMeasurementHistoryInfo(), SensorImpl.resetSensor(),
@@ -429,9 +429,10 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 	 ***********************************************************************************************************/
 	protected double _1h_Watchdog_close_to_expire(double _1h_watchdog, double watchdog_scale_factor, int sensor_number_of_measurements ) {
 		
-		// determine duration of an additional delay that is used for watchdogs synchronization
-		double global_delay_factor = 0.25;
-		double local_delay_factor = 0.5;
+		// define duration of an additional delay that is used for watchdogs synchronization
+		double global_delay_factor = 0.20;
+		double local_delay_factor = 0.60;
+		
 		//Global_1h_Watchdog.getInstance().setEnabled(false);
 		if ( sensor_number_of_measurements == (TCPserver.getMeasurements_limit() - 1) ){
 			Global_24h_Watchdog.getInstance().setEnabled(false);
