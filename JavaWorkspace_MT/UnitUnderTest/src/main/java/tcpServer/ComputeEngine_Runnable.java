@@ -432,7 +432,6 @@ public class ComputeEngine_Runnable extends TCPserver implements Runnable {
 		// define duration of an additional delay that is used for watchdogs synchronization
 		double global_delay_factor = 0.20;
 		double local_delay_factor = 0.60;
-		double local_delay_factor = 0.60;
 		
 		//Global_1h_Watchdog.getInstance().setEnabled(false);
 		if ( sensor_number_of_measurements == (TCPserver.getMeasurements_limit() - 1) ){
