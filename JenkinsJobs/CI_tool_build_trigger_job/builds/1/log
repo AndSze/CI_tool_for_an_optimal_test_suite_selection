@@ -1,0 +1,54 @@
+Started by user [8mha:////4EdD9UM5KdDpn/jCiCpN2Fu0oJiFmCGa45AympJ/V112AAAAmB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy2EgYe/dLi1CL9xLyU4qpUADhs7M7BAAAA[0mAndSze
+Building in workspace C:\Projects\Test_Integration_Jenkins\CI_tool\Jenkins\workspace\CI_tool_build_trigger_job
+Cloning the remote Git repository
+Cloning repository https://gitlab.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git
+ > git.exe init C:\Projects\Test_Integration_Jenkins\CI_tool\Jenkins\workspace\CI_tool_build_trigger_job # timeout=10
+Fetching upstream changes from https://gitlab.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git
+ > git.exe --version # timeout=10
+ > git.exe fetch --tags --progress https://gitlab.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git +refs/heads/*:refs/remotes/origin/*
+ > git.exe config remote.origin.url https://gitlab.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git # timeout=10
+ > git.exe config --add remote.origin.fetch +refs/heads/*:refs/remotes/origin/* # timeout=10
+ > git.exe config remote.origin.url https://gitlab.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git # timeout=10
+Fetching upstream changes from https://gitlab.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git
+ > git.exe fetch --tags --progress https://gitlab.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git +refs/heads/*:refs/remotes/origin/*
+ > git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
+ > git.exe rev-parse "refs/remotes/origin/origin/master^{commit}" # timeout=10
+Merging Revision 962ceeedf953448a9145193c229a0e98eed3c91f (refs/remotes/origin/master) to origin/production, UserMergeOptions{mergeRemote='origin', mergeTarget='production', mergeStrategy='default', fastForwardMode='--ff'}
+ > git.exe rev-parse "origin/production^{commit}" # timeout=10
+ > git.exe config core.sparsecheckout # timeout=10
+ > git.exe checkout -f origin/production
+FATAL: Could not checkout origin/production
+hudson.plugins.git.GitException: Command "git.exe checkout -f origin/production" returned status code 1:
+stdout: 
+stderr: error: unable to create file JavaWorkspace_MT/UnitUnderTest/Bugs Found/ClientManager - compare to receivedMessage.getSensorID() not to sensorID/application was crashing previously - now we are asking.txt: Filename too long
+Note: checking out 'origin/production'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -b with the checkout command again. Example:
+
+  git checkout -b <new-branch-name>
+
+HEAD is now at b534ed3 temp changes to verify if algoritm is working ver_2
+
+	at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.launchCommandIn(CliGitAPIImpl.java:2016)
+	at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.access$800(CliGitAPIImpl.java:72)
+	at org.jenkinsci.plugins.gitclient.CliGitAPIImpl$9.execute(CliGitAPIImpl.java:2315)
+Caused: hudson.plugins.git.GitException: Could not checkout origin/production
+	at org.jenkinsci.plugins.gitclient.CliGitAPIImpl$9.execute(CliGitAPIImpl.java:2339)
+	at hudson.plugins.git.extensions.impl.PreBuildMerge.decorateRevisionToBuild(PreBuildMerge.java:72)
+	at hudson.plugins.git.GitSCM.determineRevisionToBuild(GitSCM.java:1094)
+	at hudson.plugins.git.GitSCM.checkout(GitSCM.java:1187)
+	at hudson.scm.SCM.checkout(SCM.java:504)
+	at hudson.model.AbstractProject.checkout(AbstractProject.java:1208)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.defaultCheckout(AbstractBuild.java:574)
+	at jenkins.scm.SCMCheckoutStrategy.checkout(SCMCheckoutStrategy.java:86)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.run(AbstractBuild.java:499)
+	at hudson.model.Run.execute(Run.java:1794)
+	at hudson.model.FreeStyleBuild.run(FreeStyleBuild.java:43)
+	at hudson.model.ResourceController.execute(ResourceController.java:97)
+	at hudson.model.Executor.run(Executor.java:429)
+Finished: FAILURE

@@ -1,0 +1,11 @@
+commit 830e640f5978bb480a11e607402ce2522795eade
+tree 8e98069dc86c52ada1fda134155e5aad54986e41
+parent c01c08284c2c106bf6da4b430f3d69e2609823be
+author AndSze <andrzejszewczyk94@gmail.com> 2018-09-09 21:48:17 +0200
+committer AndSze <andrzejszewczyk94@gmail.com> 2018-09-09 21:48:17 +0200
+
+    CI tool validation for malfunctioning software
+
+
+
+:100644 100644 3327dda6ecd4ae419dd9705eb63a4ac6bb0c279f 080ac11529e8afbb5447abe908fc1063610e27fb M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java

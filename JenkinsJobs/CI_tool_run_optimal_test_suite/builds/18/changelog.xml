@@ -1,0 +1,11 @@
+commit 908e1cde20be4afa5176972d3f44090047cf7b4f
+tree f63b1e5465022c1d2d597ca2f51c4fbfc67c1512
+parent d78467e7c1425590f09ba5ee8bc37a9e7fd6f0f9
+author AndSze <andrzejszewczyk94@gmail.com> 2018-09-06 22:46:49 +0200
+committer AndSze <andrzejszewczyk94@gmail.com> 2018-09-06 22:46:49 +0200
+
+    06-09-2018 CI tool official dry run with malfunctioning software
+
+
+
+:100644 100644 06e24bac1718352678ab28d651cacaf9547e175c 080ac11529e8afbb5447abe908fc1063610e27fb M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java

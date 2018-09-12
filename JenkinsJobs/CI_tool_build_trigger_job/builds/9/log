@@ -1,0 +1,39 @@
+Started by user [8mha:////4EdD9UM5KdDpn/jCiCpN2Fu0oJiFmCGa45AympJ/V112AAAAmB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy2EgYe/dLi1CL9xLyU4qpUADhs7M7BAAAA[0mAndSze
+Building in workspace C:\Projects\Test_Integration_Jenkins\CI_tool\Jenkins\workspace\CI_tool_build_trigger_job
+ > git.exe rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > git.exe config remote.origin.url git@gitlab.com:AndSze/CI_tool_for_an_optimal_test_suite_selection.git # timeout=10
+Fetching upstream changes from git@gitlab.com:AndSze/CI_tool_for_an_optimal_test_suite_selection.git
+ > git.exe --version # timeout=10
+using GIT_ASKPASS to set credentials 
+ > git.exe fetch --tags --progress git@gitlab.com:AndSze/CI_tool_for_an_optimal_test_suite_selection.git +refs/heads/*:refs/remotes/origin/*
+ERROR: Error fetching remote repo 'origin'
+hudson.plugins.git.GitException: Failed to fetch from git@gitlab.com:AndSze/CI_tool_for_an_optimal_test_suite_selection.git
+	at hudson.plugins.git.GitSCM.fetchFrom(GitSCM.java:888)
+	at hudson.plugins.git.GitSCM.retrieveChanges(GitSCM.java:1155)
+	at hudson.plugins.git.GitSCM.checkout(GitSCM.java:1186)
+	at hudson.scm.SCM.checkout(SCM.java:504)
+	at hudson.model.AbstractProject.checkout(AbstractProject.java:1208)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.defaultCheckout(AbstractBuild.java:574)
+	at jenkins.scm.SCMCheckoutStrategy.checkout(SCMCheckoutStrategy.java:86)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.run(AbstractBuild.java:499)
+	at hudson.model.Run.execute(Run.java:1794)
+	at hudson.model.FreeStyleBuild.run(FreeStyleBuild.java:43)
+	at hudson.model.ResourceController.execute(ResourceController.java:97)
+	at hudson.model.Executor.run(Executor.java:429)
+Caused by: hudson.plugins.git.GitException: Command "git.exe fetch --tags --progress git@gitlab.com:AndSze/CI_tool_for_an_optimal_test_suite_selection.git +refs/heads/*:refs/remotes/origin/*" returned status code 128:
+stdout: 
+stderr: Host key verification failed.
+fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+
+	at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.launchCommandIn(CliGitAPIImpl.java:2016)
+	at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.launchCommandWithCredentials(CliGitAPIImpl.java:1735)
+	at org.jenkinsci.plugins.gitclient.CliGitAPIImpl.access$300(CliGitAPIImpl.java:72)
+	at org.jenkinsci.plugins.gitclient.CliGitAPIImpl$1.execute(CliGitAPIImpl.java:420)
+	at hudson.plugins.git.GitSCM.fetchFrom(GitSCM.java:886)
+	... 11 more
+ERROR: Error fetching remote repo 'origin'
+Finished: FAILURE

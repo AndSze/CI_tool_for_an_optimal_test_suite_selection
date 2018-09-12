@@ -1,0 +1,18 @@
+Started by GitHub push by AndSze
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_build_trigger_job
+ > E:\Program Files\Git\bin\git.exe rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > E:\Program Files\Git\bin\git.exe config remote.origin.url https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git # timeout=10
+Fetching upstream changes from https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git
+ > E:\Program Files\Git\bin\git.exe --version # timeout=10
+using GIT_ASKPASS to set credentials Github-password
+ > E:\Program Files\Git\bin\git.exe fetch --tags --progress https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git +refs/heads/*:refs/remotes/origin/*
+ > E:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
+ > E:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/origin/master^{commit}" # timeout=10
+Checking out Revision aa327c29b3950686c56010309ad610c99f877559 (refs/remotes/origin/master)
+ > E:\Program Files\Git\bin\git.exe config core.sparsecheckout # timeout=10
+ > E:\Program Files\Git\bin\git.exe checkout -f aa327c29b3950686c56010309ad610c99f877559
+Commit message: "CI tool official dry run"
+ > E:\Program Files\Git\bin\git.exe rev-list --no-walk 74264d01e1697a3d5662123cfcd71c1ee279b484 # timeout=10
+Triggering a new build of [8mha:////4FcV0BSA0fLAJfDImX4HnM0cio8KzN7KNbNRe+ezBQ2TAAAAuB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy1EgYd/az8JH1nz/iS/Pyc+OLKvOSMovy8zKrU+Jz85MSc+KLUgvzizJL8oszUYn0AxXsr3+EAAAA=[0mCI_tool_synchronize_local_repositories
+Finished: SUCCESS

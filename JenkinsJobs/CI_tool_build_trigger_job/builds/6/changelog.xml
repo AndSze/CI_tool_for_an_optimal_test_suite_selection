@@ -1,0 +1,22 @@
+commit 1b117cf3fac9a5e6f170e724b74871ef81c17e0f
+tree e12b4feeeda0a949bc9e9f0d150ecb7946e659db
+parent 3ac888ffe98f80f2d9007f057e616ef428199732
+author AndSze <andrzejszewczyk94@gmail.com> 2018-08-24 18:22:09 +0200
+committer AndSze <andrzejszewczyk94@gmail.com> 2018-08-24 18:22:09 +0200
+
+    attempt to trigger jenkins job by commit
+
+
+
+:100644 100644 f18c6e33e84284274d250779fe163005c06d09aa ecc3503937a0ff0a3d7e0e39d6970ce8ea962c2c M	JavaWorkspace_MT/UnitUnderTest/.classpath
+commit 3ac888ffe98f80f2d9007f057e616ef428199732
+tree fe4a0b4189f61ebd1c09b27620c3b4ae753ed448
+parent 2bcfcb22193e950a0a6d09969d8662bb6d059fb9
+author AndSze <andrzejszewczyk94@gmail.com> 2018-08-24 18:14:17 +0200
+committer AndSze <andrzejszewczyk94@gmail.com> 2018-08-24 18:14:17 +0200
+
+    updated pom added
+
+
+
+:000000 100644 0000000000000000000000000000000000000000 65732b2795bd6e76dd6a836e5cd6e66d99cbea5c A	JavaWorkspace_MT/UnitUnderTest/updated_pom.xml

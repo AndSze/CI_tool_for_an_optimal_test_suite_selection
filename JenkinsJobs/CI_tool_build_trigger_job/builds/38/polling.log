@@ -1,0 +1,11 @@
+Started on 2018-09-09 21:48:34
+Started by event from 192.30.252.36 ? http://c477e526.ngrok.io:9090/github-webhook/ on N wrz 09 21:48:34 CEST 2018
+Using strategy: Default
+[poll] Last Built Revision: Revision c01c08284c2c106bf6da4b430f3d69e2609823be (refs/remotes/origin/develop)
+ > E:\Program Files\Git\bin\git.exe --version # timeout=10
+using GIT_ASKPASS to set credentials Github-password
+ > E:\Program Files\Git\bin\git.exe ls-remote -h https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git # timeout=10
+Found 3 remote heads on https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git
+[poll] Latest remote head revision on refs/heads/develop is: 830e640f5978bb480a11e607402ce2522795eade
+Done. Took 6,6 sek
+Changes found

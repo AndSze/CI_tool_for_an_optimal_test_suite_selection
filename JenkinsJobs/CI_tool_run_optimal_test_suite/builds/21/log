@@ -1,0 +1,798 @@
+Started by user unknown or anonymous
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_run_optimal_test_suite
+ > E:\Program Files\Git\bin\git.exe rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > E:\Program Files\Git\bin\git.exe config remote.origin.url https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git # timeout=10
+Fetching upstream changes from https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git
+ > E:\Program Files\Git\bin\git.exe --version # timeout=10
+using GIT_ASKPASS to set credentials Github-password
+ > E:\Program Files\Git\bin\git.exe fetch --tags --progress https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git +refs/heads/*:refs/remotes/origin/*
+ > E:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
+ > E:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/origin/master^{commit}" # timeout=10
+Checking out Revision 73f810d44a2afe6d465924e9d93dc00aef97af4d (refs/remotes/origin/master)
+ > E:\Program Files\Git\bin\git.exe config core.sparsecheckout # timeout=10
+ > E:\Program Files\Git\bin\git.exe checkout -f 73f810d44a2afe6d465924e9d93dc00aef97af4d
+Commit message: "06-09-2018 CI tool official dry run with malfunctioning software"
+ > E:\Program Files\Git\bin\git.exe rev-list --no-walk 73f810d44a2afe6d465924e9d93dc00aef97af4d # timeout=10
+[CI_tool_run_optimal_test_suite] $ cmd.exe /C "mvn -f '"E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\updated_pom.xml"' clean test -P dev && exit %%ERRORLEVEL%%"
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< andsze:UnitUnderTest >------------------------
+[INFO] Building UnitUnderTest 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ UnitUnderTest ---
+[INFO] Deleting E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ UnitUnderTest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\src\main\resources
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-compiler-plugin:3.5:compile (default-compile) @ UnitUnderTest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 36 source files to E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target\classes
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ UnitUnderTest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\src\test\resources
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-compiler-plugin:3.5:testCompile (default-testCompile) @ UnitUnderTest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 50 source files to E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target\test-classes
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-surefire-plugin:2.19.1:test (default-test) @ UnitUnderTest ---
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running tcpServer.RunTest
+		Test Run 1 Purpose:
+Verify that once the run() function is called while the isComputeEngine_Runnable_running flag is equal to true, the ComputeEngine_Runnable class instance that runs the run() function is able to read messages send from TCPserver
+		Test Run 1 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_BootUp from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+		Test Run 1 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 2 Purpose:
+Verify that once the run() function is called while the isComputeEngine_Runnable_running flag is equal to false, the ComputeEngine_Runnable class instance that runs the run() function is NOT able to read messages send from TCPserver
+		Test Run 2 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_BootUp from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[Compute engine Runnable 1] ClientMessage_SensorInfo message from sensor: 1 has been received.
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+[Compute engine Runnable 1] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 1] send new setting (go to MAINTENANCE) to sensor: 1
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] ClientMessage_ACK received when neither 1h_watchdog: 36.0 [s] nor 24h_watchdog: 864.0 [s] is close to expire
+[Compute engine Runnable 1] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 1] TCP connection with sensor: 1 is being closed
+Exception in thread "Thread-4" java.lang.NullPointerException
+	at tcpServer.ComputeEngine_Runnable.run(ComputeEngine_Runnable.java:410)
+	at tcpServer.RunTest$3.run(RunTest.java:162)
+	at java.lang.Thread.run(Thread.java:748)
+		Test Run 2 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 3 Purpose:
+Verify that once the run() function is called, it hangs in the readMessage() function until it gets a new message from TCPsclient. 
+It is verified also that the state machine of run() function is executed for all messages received from TCPclient, but every time the currently processing message is different from the previous
+		Test Run 3 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_BootUp from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[Compute engine Runnable 1] ClientMessage_BootUp from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+		Test Run 3 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 4 Purpose:
+Verify that once the run() function receives any message from TCPclinet that has a sensor ID that is not defined for any sensor in Server_Sensors_LIST, 
+the state machine of run() function ignores this message and waits for a next message
+		Test Run 4 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 4 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.803 sec - in tcpServer.RunTest
+Running tcpServer.Run_ClientMessage_ACKTest
+		Test Run 1 Purpose:
+Verify that the run() function does not update the request_measurement_data flag to true if Global_1h_Watchdog time left to expiration is higher than Watchdog_Thresholds.HIGH. 
+Verify also that in this case the close_ComputeEngine_Runnable flag is set to true
+		Test Run 1 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] ClientMessage_ACK received when neither 1h_watchdog: 36.0 [s] nor 24h_watchdog: 864.0 [s] is close to expire
+[Compute engine Runnable 1] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 1] TCP connection with sensor: 1 is being closed
+[Compute engine Runnable 1] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 1] there are 24 measurement(s) more remaining to kick 24hWatchdog
+		Test Run 1 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 2 Purpose:
+Verify that the run() function updates the request_measurement_data flag to true if ClientMessage_ACK has been received when Global_1h_Watchdog time left to expiration is lower than Watchdog_Thresholds.HIGH.
+		Test Run 2 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] _1h_watchdog equals : 0.48 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 0.923 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] 1h_Watchdog global: 	0.923
+[Compute engine Runnable 1] 24h_Watchdog global: 	864.0
+[Compute engine Runnable 1] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.48
+		Test Run 2 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+[Compute engine Runnable 1] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 1] Request_MeasurementData is sent to sensor ID: 1
+
+		Test Run 3 Purpose:
+Verify that the run() function updates both Local_1h_watchdog and Local_24h_watchdog based on Global_1h_Watchdog time left to expiration by setting some delay 
+in order to synchronize Locla_1h_Watchdogs for multiple sensor that are running in parallel threads if ClientMessage_ACK has been received when Global_1h_Watchdog time left to expiration is lower than Watchdog_Thresholds.HIGH.
+		Test Run 3 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] _1h_watchdog equals : 0.48 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 0.9580000000000001 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] 1h_Watchdog global: 	0.9580000000000001
+[Compute engine Runnable 1] 24h_Watchdog global: 	1.76
+[Compute engine Runnable 1] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.48
+[Compute engine Runnable 1] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 1] Request_MeasurementData is sent to sensor ID: 1
+		Test Run 3 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 4 Purpose:
+Verify that the run() function does not update the request_measurement_data flag to true while it sets the close_ComputeEngine_Runnable flag to true if ClientMessage_ACK has been received when Global_1h_Watchdog has expired
+		Test Run 4 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] _1h_watchdog equals : 0.0 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 0.0 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] 1h_Watchdog global: 	0.0
+[Compute engine Runnable 1] 24h_Watchdog global: 	864.0
+[Compute engine Runnable 1] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.0
+[Compute engine Runnable 1] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 1] TCP connection with sensor: 1 is being closed
+[Compute engine Runnable 1] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 1] there are 24 measurement(s) more remaining to kick 24hWatchdog
+		Test Run 4 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 5 Purpose:
+Verify that the run() function does not update the request_measurement_history flag to true if Global_24h_Watchdog time left to expiration is higher than Watchdog_Thresholds.HIGHEST. 
+Verify also that in this case the close_ComputeEngine_Runnable flag is set to true and the TCP conenction is closed
+		Test Run 5 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] ClientMessage_ACK received when neither 1h_watchdog: 36.0 [s] nor 24h_watchdog: 10.0 [s] is close to expire
+[Compute engine Runnable 1] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 1] TCP connection with sensor: 1 is being closed
+[Compute engine Runnable 1] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+		Test Run 5 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 6 Purpose:
+Verify that the run() function updates the request_measurement_history flag to true if ClientMessage_ACK has been received when Global_24h_Watchdog time left to expiration is lower than Watchdog_Thresholds.HIGHEST.
+		Test Run 6 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] 1h_Watchdog global: 	35.953
+[Compute engine Runnable 1] 24h_Watchdog global: 	0.56
+[Compute engine Runnable 1] 24h_Watchdog with delay for ServerMessage_Request_MeasurementHistory (Local_24h_watchdog): 	0.56
+[Compute engine Runnable 1] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementHistory.
+[Compute engine Runnable 1] Request_MeasurementHistory is sent to sensor ID: 1
+		Test Run 6 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 7 Purpose:
+Verify that the run() function updates Local_24h_watchdog based on Global_24h_Watchdog time left to expiration by setting some delay 
+in order to synchronize Local_24h_Watchdogs for multiple sensor that are running in parallel threads if ClientMessage_ACK has been received when Global_24h_Watchdog time left to expiration is lower than Watchdog_Thresholds.HIGHEST.
+		Test Run 7 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] 1h_Watchdog global: 	35.958
+[Compute engine Runnable 1] 24h_Watchdog global: 	0.56
+[Compute engine Runnable 1] 24h_Watchdog with delay for ServerMessage_Request_MeasurementHistory (Local_24h_watchdog): 	0.56
+[Compute engine Runnable 1] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementHistory.
+[Compute engine Runnable 1] Request_MeasurementHistory is sent to sensor ID: 1
+		Test Run 7 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 8 Purpose:
+Verify that the run() function does not update the request_measurement_history flag to true while it sets the close_ComputeEngine_Runnable flag to true if ClientMessage_ACK has been received when Global_24h_Watchdog has expired
+		Test Run 8 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] 1h_Watchdog global: 	35.959
+[Compute engine Runnable 1] 24h_Watchdog global: 	0.0
+[Compute engine Runnable 1] 24h_Watchdog with delay for ServerMessage_Request_MeasurementHistory (Local_24h_watchdog): 	0.0
+[Compute engine Runnable 1] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 1] TCP connection with sensor: 1 is being closed
+[Compute engine Runnable 1] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+		Test Run 8 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 9 Purpose:
+Verify that the run() function responds to ClientMessage_ACK as follows: 
+1) with ServerMessage_Request_MeasurementData if request_measurement_data is set to true, 
+ 2) with ServerMessage_Request_MeasurementHistory if request_measurement_history is set to true, 
+ 3) does not respond and sets the isComputeEngine_Runnable_running to false if close_ComputeEngine_Runnable is set to true
+		Test Run 9 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] _1h_watchdog equals : 0.32000000000000006 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 0.753 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] 1h_Watchdog global: 	0.752
+[Compute engine Runnable 1] 24h_Watchdog global: 	0.8
+[Compute engine Runnable 1] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.32000000000000006
+[Compute engine Runnable 1] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 1] Request_MeasurementData is sent to sensor ID: 1
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] 1h_Watchdog global: 	35.999
+[Compute engine Runnable 1] 24h_Watchdog global: 	0.8
+[Compute engine Runnable 1] 24h_Watchdog with delay for ServerMessage_Request_MeasurementHistory (Local_24h_watchdog): 	0.8
+[Compute engine Runnable 1] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementHistory.
+[Compute engine Runnable 1] Request_MeasurementHistory is sent to sensor ID: 1
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] ClientMessage_ACK received when neither 1h_watchdog: 36.0 [s] nor 24h_watchdog: 864.0 [s] is close to expire
+[Compute engine Runnable 1] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 1] TCP connection with sensor: 1 is being closed
+[Compute engine Runnable 1] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 1] there are 1 measurement(s) more remaining to kick 24hWatchdog
+		Test Run 9 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 9, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 7.959 sec <<< FAILURE! - in tcpServer.Run_ClientMessage_ACKTest
+test_run_2(tcpServer.Run_ClientMessage_ACKTest)  Time elapsed: 0.429 sec  <<< FAILURE!
+java.lang.AssertionError
+	at tcpServer.Run_ClientMessage_ACKTest.test_run_2(Run_ClientMessage_ACKTest.java:278)
+
+test_run_3(tcpServer.Run_ClientMessage_ACKTest)  Time elapsed: 0.522 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<0.6> but was:<0.48>
+	at tcpServer.Run_ClientMessage_ACKTest.test_run_3(Run_ClientMessage_ACKTest.java:347)
+
+Running tcpServer.Run_ClientMessage_BootUpTest
+		Test Run 1 Purpose:
+Verify that the run() function responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry
+		Test Run 1 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_BootUp from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+		Test Run 1 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.168 sec - in tcpServer.Run_ClientMessage_BootUpTest
+Running tcpServer.Run_ClientMessage_MeasurementDataTest
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+		Test Run 1 Purpose:
+Verify that once the run() function receives ClientMessage_MeasurementData, this measurement data is serialized and saved in Sensors_PATH directory on the PC disc
+		Test Run 1 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] _1h_watchdog equals : 0.48 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 0.919 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] 1h_Watchdog global: 	0.919
+[Compute engine Runnable 1] 24h_Watchdog global: 	864.0
+[Compute engine Runnable 1] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.48
+[Compute engine Runnable 1] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 1] Request_MeasurementData is sent to sensor ID: 1
+[Compute engine Processing 1] New folder for MeasurementData created
+[Compute engine Runnable 1] Local_1h_watchdog has been kicked for sensor: 1 and it is equal to: 36.48
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+		Test Run 1 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+		Test Run 2 Purpose:
+Verify that once the run() function receives ClientMessage_MeasurementData, the sensor instance in Server_Sensors_LIST is updated with this measurement data
+		Test Run 2 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] _1h_watchdog equals : 0.4796 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 0.919 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] 1h_Watchdog global: 	0.919
+[Compute engine Runnable 1] 24h_Watchdog global: 	864.0
+[Compute engine Runnable 1] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.4796
+[Compute engine Runnable 1] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 1] Request_MeasurementData is sent to sensor ID: 1
+[Compute engine Processing 1] New folder for MeasurementData created
+[Compute engine Runnable 1] Local_1h_watchdog has been kicked for sensor: 1 and it is equal to: 36.4796
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+		Test Run 2 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+		Test Run 3 Purpose:
+Verify that the run() updates index that represents the sensor in _1hWatchog_timestamp_table to true and kicks Local_1h_Watchdog if ClientMessage_MeasurementData was received
+		Test Run 3 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] _1h_watchdog equals : 0.48 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 0.921 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] 1h_Watchdog global: 	0.921
+[Compute engine Runnable 1] 24h_Watchdog global: 	864.0
+[Compute engine Runnable 1] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.48
+[Compute engine Runnable 1] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 1] Request_MeasurementData is sent to sensor ID: 1
+[Compute engine Processing 1] New folder for MeasurementData created
+[Compute engine Runnable 1] Local_1h_watchdog has been kicked for sensor: 1 and it is equal to: 36.48
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+		Test Run 3 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+		Test Run 4 Purpose:
+Verify that the run() function responds to ClientMessage_MeasurementData with ServerMessage_ACK
+		Test Run 4 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] ClientMessage_ACK received when neither 1h_watchdog: 35.999 [s] nor 24h_watchdog: 864.0 [s] is close to expire
+[Compute engine Runnable 1] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 1] TCP connection with sensor: 1 is being closed
+[Compute engine Runnable 1] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 1] there are 24 measurement(s) more remaining to kick 24hWatchdog
+		Test Run 4 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 4, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 3.391 sec <<< FAILURE! - in tcpServer.Run_ClientMessage_MeasurementDataTest
+test_run_4(tcpServer.Run_ClientMessage_MeasurementDataTest)  Time elapsed: 1.218 sec  <<< FAILURE!
+java.lang.AssertionError
+	at tcpServer.Run_ClientMessage_MeasurementDataTest.test_run_4(Run_ClientMessage_MeasurementDataTest.java:463)
+
+Running tcpServer.Run_ClientMessage_MeasurementHistoryTest
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+		Test Run 1 Purpose:
+Verify that the run() function responds to ClientMessage_MeasurementHistory with ServerMessage_SensorInfoUpdate
+		Test Run 1 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] MeasurementHistory from sensor: 1 has been received.
+[Compute engine Processing 1] New folder for MeasurementHistory created
+[Compute engine Runnable 1] Local_24h_watchdog has been kicked for sensor: 1 and it is equal to: 864.0
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementHistory with ServerMessage_SensorInfoUpdate.
+		Test Run 1 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+		Test Run 2 Purpose:
+Verify that the run() updates index that represents the sensor in _24hWatchog_timestamp_table to true and kicks Local_24h_Watchdog if ClientMessage_MeasurementHistory was received
+		Test Run 2 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] MeasurementHistory from sensor: 1 has been received.
+[Compute engine Processing 1] New folder for MeasurementHistory created
+[Compute engine Runnable 1] Local_24h_watchdog has been kicked for sensor: 1 and it is equal to: 864.0
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementHistory with ServerMessage_SensorInfoUpdate.
+		Test Run 2 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+		Test Run 3 Purpose:
+Verify that once the run() function receives ClientMessage_MeasurementHistory, this measurement history is serialized and saved in Sensors_PATH directory on the disc
+		Test Run 3 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Processing 1] New folder for MeasurementData created
+[Compute engine Runnable 1] Local_1h_watchdog has been kicked for sensor: 1 and it is equal to: 36.8
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] MeasurementHistory from sensor: 1 has been received.
+[Compute engine Processing 1] New folder for MeasurementHistory created
+[Compute engine Runnable 1] Local_24h_watchdog has been kicked for sensor: 1 and it is equal to: 864.0
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementHistory with ServerMessage_SensorInfoUpdate.
+		Test Run 3 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+		Test Run 4 Purpose:
+Verify that once the run() function receives ClientMessage_MeasurementHistory, after saving the measurement history, the sesnor is reset and its instance in Server_Sensors_LIST is updated
+		Test Run 4 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Processing 1] New folder for MeasurementData created
+[Compute engine Runnable 1] Local_1h_watchdog has been kicked for sensor: 1 and it is equal to: 36.8
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 1] MeasurementHistory from sensor: 1 has been received.
+[Compute engine Processing 1] New folder for MeasurementHistory created
+[Compute engine Runnable 1] Local_24h_watchdog has been kicked for sensor: 1 and it is equal to: 864.0
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementHistory with ServerMessage_SensorInfoUpdate.
+		Test Run 4 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 5.926 sec - in tcpServer.Run_ClientMessage_MeasurementHistoryTest
+Running tcpServer.Run_ClientMessage_SensorInfoTest
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+		Test Run 1 Purpose:
+Verify that the run() function responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate in case of configuration match between sensors on the server and client side
+		Test Run 1 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_SensorInfo message from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 1] send go to OPERATIONAL to sensor: 1
+		Test Run 1 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+		Test Run 2 Purpose:
+Verify that the run() function responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate in case of configuration mismatch between sensors on the server and client side
+		Test Run 2 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_SensorInfo message from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 1] send new setting (go to MAINTENANCE) to sensor: 1
+		Test Run 2 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+		Test Run 3 Purpose:
+Verify that the run() function updates SensorState to OPERATIONAL and saves the current sensor info on PC disc with the "_gotoOPERATIONALafterRESET " extension if 
+ ClientMessage_SensorInfo is received when sensor was in PRE_OPERATIONAL SensorState
+		Test Run 3 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_SensorInfo message from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+[Compute engine Runnable 1] send go to OPERATIONAL to sensor: 1
+		Test Run 3 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+		Test Run 4 Purpose:
+Verify that the run() function updates SensorState to OPERATIONAL and saves the current sensor info on PC disc with the "gotoOPERATIONALafterCONFIGURATION " extension if 
+ ClientMessage_SensorInfo is received when sensor was in MAINETANCE SensorState
+		Test Run 4 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_SensorInfo message from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+[Compute engine Runnable 1] send go to OPERATIONAL to sensor: 1
+		Test Run 4 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+		Test Run 5 Purpose:
+Verify that the run() function updates SensorState to OPERATIONAL and saves the current sensor info on PC disc with the "stayinOPERATIONAL " extension if 
+ ClientMessage_SensorInfo is received when sensor was in OPERATIONAL SensorState
+		Test Run 5 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_SensorInfo message from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+[Compute engine Runnable 1] send go to OPERATIONAL to sensor: 1
+		Test Run 5 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+		Test Run 6 Purpose:
+Verify that the run() function updates SensorState to MAINETANCE and saves the current sensor info on PC disc with the "gotoMAINTENANCEafterINITIALIZATION " extension if 
+ ClientMessage_SensorInfo is received when there was configuration mismatch between sensors on the server and client side
+		Test Run 6 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] ClientMessage_SensorInfo message from sensor: 1 has been received.
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+[Compute engine Runnable 1] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 1] send new setting (go to MAINTENANCE) to sensor: 1
+		Test Run 6 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.63 sec - in tcpServer.Run_ClientMessage_SensorInfoTest
+Running tcpServer._1h_Watchdog_close_to_expireTest
+		Test Run 1 Purpose:
+Verify outputs of the _1h_Watchdog_close_to_expire() function call for input_1h_watchdog higher than Watchdog_Thresholds.MEDIUM and no_of_measurements different than TCPserver.getMeasurements_limit() - 1
+		Test Run 1 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] _1h_watchdog equals : 0.32000000000000006 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 1.6 when leaving _1h_Watchdog_close_to_expire()
+		Test Run 1 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 2 Purpose:
+Verify outputs of the _1h_Watchdog_close_to_expire() function call for input_1h_watchdog higher than Watchdog_Thresholds.LOWEST and no_of_measurements different than TCPserver.getMeasurements_limit() - 1
+		Test Run 2 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] _1h_watchdog equals : 0.48 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 0.96 when leaving _1h_Watchdog_close_to_expire()
+		Test Run 2 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 3 Purpose:
+Verify outputs of the _1h_Watchdog_close_to_expire() function call for input_1h_watchdog lower than Watchdog_Thresholds.LOWEST and no_of_measurements different than TCPserver.getMeasurements_limit() - 1
+		Test Run 3 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] _1h_watchdog equals : 0.32000000000000006 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 0.8 when leaving _1h_Watchdog_close_to_expire()
+		Test Run 3 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 4 Purpose:
+Verify outputs of the _1h_Watchdog_close_to_expire() function call for input_1h_watchdog higher than Watchdog_Thresholds.MEDIUM and no_of_measurements equal to TCPserver.getMeasurements_limit() - 1
+		Test Run 4 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] _1h_watchdog equals : 0.32000000000000006 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 1.604 when leaving _1h_Watchdog_close_to_expire()
+		Test Run 4 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 5 Purpose:
+Verify outputs of the _1h_Watchdog_close_to_expire() function call for input_1h_watchdog higher than Watchdog_Thresholds.LOWEST and no_of_measurements equal to TCPserver.getMeasurements_limit() - 1
+		Test Run 5 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] _1h_watchdog equals : 0.48 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 1.2 when leaving _1h_Watchdog_close_to_expire()
+		Test Run 5 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 6 Purpose:
+Verify outputs of the _1h_Watchdog_close_to_expire() function call for input_1h_watchdog lower than Watchdog_Thresholds.LOWEST and no_of_measurements equal to TCPserver.getMeasurements_limit() - 1
+		Test Run 6 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+[Compute engine Runnable 1] _1h_watchdog equals : 0.32000000000000006 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 0.8 when leaving _1h_Watchdog_close_to_expire()
+		Test Run 6 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 6, Failures: 4, Errors: 0, Skipped: 0, Time elapsed: 1.796 sec <<< FAILURE! - in tcpServer._1h_Watchdog_close_to_expireTest
+test_run_1(tcpServer._1h_Watchdog_close_to_expireTest)  Time elapsed: 0.526 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<0.5> but was:<0.32000000000000006>
+	at tcpServer._1h_Watchdog_close_to_expireTest.test_run_1(_1h_Watchdog_close_to_expireTest.java:159)
+
+test_run_2(tcpServer._1h_Watchdog_close_to_expireTest)  Time elapsed: 0.364 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<0.6> but was:<0.48>
+	at tcpServer._1h_Watchdog_close_to_expireTest.test_run_2(_1h_Watchdog_close_to_expireTest.java:203)
+
+test_run_4(tcpServer._1h_Watchdog_close_to_expireTest)  Time elapsed: 0.528 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<0.5> but was:<0.32000000000000006>
+	at tcpServer._1h_Watchdog_close_to_expireTest.test_run_4(_1h_Watchdog_close_to_expireTest.java:291)
+
+test_run_5(tcpServer._1h_Watchdog_close_to_expireTest)  Time elapsed: 0.125 sec  <<< FAILURE!
+java.lang.AssertionError: expected:<0.6> but was:<0.48>
+	at tcpServer._1h_Watchdog_close_to_expireTest.test_run_5(_1h_Watchdog_close_to_expireTest.java:335)
+
+
+Results :
+
+Failed tests: 
+  Run_ClientMessage_ACKTest.test_run_2:278
+  Run_ClientMessage_ACKTest.test_run_3:347 expected:<0.6> but was:<0.48>
+  Run_ClientMessage_MeasurementDataTest.test_run_4:463
+  _1h_Watchdog_close_to_expireTest.test_run_1:159 expected:<0.5> but was:<0.32000000000000006>
+  _1h_Watchdog_close_to_expireTest.test_run_2:203 expected:<0.6> but was:<0.48>
+  _1h_Watchdog_close_to_expireTest.test_run_4:291 expected:<0.5> but was:<0.32000000000000006>
+  _1h_Watchdog_close_to_expireTest.test_run_5:335 expected:<0.6> but was:<0.48>
+
+Tests run: 34, Failures: 7, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 28.286 s
+[INFO] Finished at: 2018-09-06T23:06:57+02:00
+[INFO] ------------------------------------------------------------------------
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] Failed to execute goal org.apache.maven.plugins:maven-surefire-plugin:2.19.1:test (default-test) on project UnitUnderTest: There are test failures.
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] 
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] Please refer to E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target\surefire-reports for the individual test results.
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] -> [Help 1]
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] 
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] 
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+Build step 'Invoke top-level Maven targets' marked build as failure
+Triggering a new build of [8mha:////4CVmjY8/WKgB0+MRykK0UildHXnVlFnWRstFwebJZUqpAAAAtR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzlEgZN/az8JH1nz/iS/Pyc+KLSvPjMvJLU9KLEksz8vPjixLzMksr4ktTiEn0A1siGYN4AAAA=[0mCI_tool_run_integration_sanity_test
+Finished: FAILURE

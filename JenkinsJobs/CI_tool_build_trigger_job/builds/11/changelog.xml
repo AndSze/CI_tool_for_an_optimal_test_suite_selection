@@ -1,0 +1,29 @@
+commit cbf991276abba1b8f29bd2d4fa0ee90a793dd641
+tree 2a62ebfbda719c27746e6e00e00ef7867a834418
+parent cb5ad4528783f71bda41ed82c16ba25343c46912
+author AndSze <andrzejszewczyk94@gmail.com> 2018-08-24 19:03:21 +0200
+committer AndSze <andrzejszewczyk94@gmail.com> 2018-08-24 19:03:21 +0200
+
+    delete of temporary changes to source code to trigger optimal test suite
+    selection
+
+
+
+:100644 100644 6156b609391619a4f406521fbbf6e3626d1b6b23 ca8f5acaf9ff86204238a743f713af5a8536195c M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpClient/ClientManager.java
+:100644 100644 39fac46464203f31f83acb6bf4876841854e8dd1 92f9692e89e44589c7f5e88b6b8e2ad0dedd042e M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpClient/TCPclient.java
+:100644 100644 0c361fbf2629c823e5c3af9ad226db683e4800ea b1e3a7ab8419bf9fd725ddbaa810e980bcd52a55 M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java
+commit cb5ad4528783f71bda41ed82c16ba25343c46912
+tree 6cd1fc0e7481340b3c35488261456c8881c7de62
+parent 99e5d50327e74ec91d16d303aeddc3a110f9d3c1
+author AndSze <andrzejszewczyk94@gmail.com> 2018-08-24 19:01:26 +0200
+committer AndSze <andrzejszewczyk94@gmail.com> 2018-08-24 19:01:26 +0200
+
+    temporary changes to source code to trigger optimal test suite selection
+
+
+
+:100644 100644 ca8f5acaf9ff86204238a743f713af5a8536195c 6156b609391619a4f406521fbbf6e3626d1b6b23 M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpClient/ClientManager.java
+:100644 100644 92f9692e89e44589c7f5e88b6b8e2ad0dedd042e 39fac46464203f31f83acb6bf4876841854e8dd1 M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpClient/TCPclient.java
+:100644 100644 b4074b38619700b3663e51c9a448a1589f366dd5 0c361fbf2629c823e5c3af9ad226db683e4800ea M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java
+:100644 100644 ca80031ab832d79ef08d4666c7d10830f6b71992 6ee8a5249a3accdd74c4d78f9a06f8ea1d86e44b M	JavaWorkspace_MT/UnitUnderTest/src/test/java/deliverables/ApplicationSanityCheckIT.java
+:100644 000000 6b675f40dc7795fc03ebb52a15c9abb336f910c2 0000000000000000000000000000000000000000 D	JavaWorkspace_MT/UnitUnderTest/src/test/java/deliverables/TCPserverIT.java

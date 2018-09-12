@@ -1,0 +1,47 @@
+Started by upstream project "[8mha:////4IwxdtnW96BpfkVlIrUOL4Sg1jk8EVGWIs1nx9M8xS+vAAAAwB+LCAAAAAAAAP9djbENwjAURD9BMAAlomGBuKOBVGlAAhoGsEz4Shw+/pb9g8garAENQzAOOxCJilxzp9PT3fMDoxhgXjWnyC4t2EUmTHd8Qlq3HgNZd96zIPw0SABuAWY9/g9dZI9XdvfvBJINjAldKdUWhk0ggcm2NlejyLhSHSRYVy67uWlvLv95/9d3YSGwUjUfVb7Rwkw6NE77Vip2OhbBeulqHZGwEM1e7MWQFoyiY2MF1Re4Ebpr8QAAAA==[0mCI_tool_run_python_script_to_select_optimal_test_suite" build number [8mha:////4PqNjANsif4ycJr1u8j805GycGdrixoy/s26Q9MO9mtPAAAAwx+LCAAAAAAAAP9djbENwjAURD9BMAAlomGBWDRQIGhoQAIaBrBC8pU4fPwt+weRNVgDGoZgHHYgUipyzZ1OT3evLwyCh2lRZYFtnLINTBgfOEPa1g49GXs5siC06kUAdw+TDv+HzlfP9+rhPhFEOxgS2lyKPfQrTwKjfZncEkWJzdVJvLH5spkbd+Y2rXd/XRMigbUq+aw2Oy3MpH1ltaulYKtD6o2TptYBCVPR7MRcE9KCQXSojKCaLX6l9OHq8wAAAA==[0m17
+originally caused by:
+ Started by upstream project "[8mha:////4FcV0BSA0fLAJfDImX4HnM0cio8KzN7KNbNRe+ezBQ2TAAAAuB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy1EgYd/az8JH1nz/iS/Pyc+OLKvOSMovy8zKrU+Jz85MSc+KLUgvzizJL8oszUYn0AxXsr3+EAAAA=[0mCI_tool_synchronize_local_repositories" build number [8mha:////4NLpYCMI0Oh7PWA2rp+OL9ekYq3W71io1iXo9cp+2gHXAAAAuh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgY9/az8JH1nz/iS/Pyc+OLKvOSMovy8zKrU+Jz85MSc+KLUgvzizJL8oszUYn1DSwCm1ida4wAAAA==[0m19
+ originally caused by:
+  Started by upstream project "[8mha:////4K2a1Cvzhfet/BSZHuoya5P0UDYDhEJJ1KC49INzxpPwAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzJEgZ5/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGQC0MYaa1AAAAA==[0mCI_tool_build_trigger_job" build number [8mha:////4JkYBAzraK/NNUmjvrTUGJd3ftgcFg8bHlLWSuLe8GHwAAAAqh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgZF/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGSNLAIWylIzWAAAA[0m29
+  originally caused by:
+   Started by GitHub push by AndSze
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_run_optimal_test_suite
+ > E:\Program Files\Git\bin\git.exe rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > E:\Program Files\Git\bin\git.exe config remote.origin.url https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git # timeout=10
+Fetching upstream changes from https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git
+ > E:\Program Files\Git\bin\git.exe --version # timeout=10
+using GIT_ASKPASS to set credentials Github-password
+ > E:\Program Files\Git\bin\git.exe fetch --tags --progress https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git +refs/heads/*:refs/remotes/origin/*
+ > E:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
+ > E:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/origin/master^{commit}" # timeout=10
+Checking out Revision 9778dc580f66ed32e6d36171c91bba8bde93d6be (refs/remotes/origin/master)
+ > E:\Program Files\Git\bin\git.exe config core.sparsecheckout # timeout=10
+ > E:\Program Files\Git\bin\git.exe checkout -f 9778dc580f66ed32e6d36171c91bba8bde93d6be
+Commit message: "06-09-2018 CI tool official dry run with malfunctioning software"
+ > E:\Program Files\Git\bin\git.exe rev-list --no-walk a12a46289b27a34612cca9a159e271d8f05776bf # timeout=10
+[CI_tool_run_optimal_test_suite] $ cmd.exe /C "mvn -f '"E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\updated_pom.xml"' clean test -P dev && exit %%ERRORLEVEL%%"
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< andsze:UnitUnderTest >------------------------
+[INFO] Building UnitUnderTest 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ UnitUnderTest ---
+[INFO] Deleting E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1.488 s
+[INFO] Finished at: 2018-09-06T23:25:09+02:00
+[INFO] ------------------------------------------------------------------------
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] Failed to execute goal org.apache.maven.plugins:maven-clean-plugin:2.5:clean (default-clean) on project UnitUnderTest: Failed to clean project: Failed to delete E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target\UnitUnderTest.jar -> [Help 1]
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] 
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] 
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoExecutionException
+Build step 'Invoke top-level Maven targets' marked build as failure
+Triggering a new build of [8mha:////4CVmjY8/WKgB0+MRykK0UildHXnVlFnWRstFwebJZUqpAAAAtR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzlEgZN/az8JH1nz/iS/Pyc+KLSvPjMvJLU9KLEksz8vPjixLzMksr4ktTiEn0A1siGYN4AAAA=[0mCI_tool_run_integration_sanity_test
+Finished: FAILURE

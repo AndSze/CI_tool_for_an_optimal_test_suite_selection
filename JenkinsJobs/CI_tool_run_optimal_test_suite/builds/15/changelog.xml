@@ -1,0 +1,13 @@
+commit 7694a035745b2a521a0fc9735d0147bf59e167a9
+tree 61a5c56e0e2edf0c3ebc84114efc1ac433c7ec44
+parent aa327c29b3950686c56010309ad610c99f877559
+author AndSze <andrzejszewczyk94@gmail.com> 2018-09-06 21:36:31 +0200
+committer AndSze <andrzejszewczyk94@gmail.com> 2018-09-06 21:36:31 +0200
+
+    06-09-2018 official dry run
+
+
+
+:100644 100644 0bb9c00765867482ea4defab8fdb1e8b7c73e544 b28b26745353aa440a81dd78b3e4dc4823a8104c M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpClient/ClientManager.java
+:100644 100644 fafa8a7675e2bf9b11c9dcb0402a21748cc6ea1c 17c647d2927df640a133a4cbb590c89a8b8dd938 M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpClient/TCPclient.java
+:100644 100644 191ffe05e0abd4b40bba4e3139fc7445ca4a2cf5 81a8abd632e9c774e4c4bf963930185e2a9b82b7 M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java

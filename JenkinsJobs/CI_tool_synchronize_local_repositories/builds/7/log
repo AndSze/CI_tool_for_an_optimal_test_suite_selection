@@ -1,0 +1,20 @@
+Started by upstream project "[8mha:////4MuHVOlvhDOr6u2K9Q6fnJxW37dsh4h3GWWeBr3bNQCMAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzJEgZ5/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGQC0MYaa1AAAAA==[0mCI_tool_build_trigger_job" build number [8mha:////4CWpiI2uJ6O9aM2PWbMHllaA8+10OlhoSrPn2Yu7QamPAAAAqh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgZF/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGUNzAEHMAUDWAAAA[0m17
+originally caused by:
+ Started by user [8mha:////4EdD9UM5KdDpn/jCiCpN2Fu0oJiFmCGa45AympJ/V112AAAAmB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy2EgYe/dLi1CL9xLyU4qpUADhs7M7BAAAA[0mAndSze
+Building in workspace C:\Projects\Test_Integration_Jenkins\CI_tool\Jenkins\workspace\CI_tool_synchronize_local_repositories
+[CI_tool_synchronize_local_repositories] $ cmd /c call C:\Users\w19220\AppData\Local\Temp\jenkins7177607123086200842.bat
+
+C:\Projects\Test_Integration_Jenkins\CI_tool\Jenkins\workspace\CI_tool_synchronize_local_repositories>cd C:\Projects\Test_Integration_Jenkins\CI_tool\CI_tool_diff_newer_commit\master 
+
+C:\Projects\Test_Integration_Jenkins\CI_tool\CI_tool_diff_newer_commit\master>git fetch 
+
+C:\Projects\Test_Integration_Jenkins\CI_tool\CI_tool_diff_newer_commit\master>exit 0 
+[CI_tool_synchronize_local_repositories] $ cmd /c call C:\Users\w19220\AppData\Local\Temp\jenkins7305517104218550072.bat
+
+C:\Projects\Test_Integration_Jenkins\CI_tool\Jenkins\workspace\CI_tool_synchronize_local_repositories>cd C:\Projects\Test_Integration_Jenkins\CI_tool\CI_tool_diff_older_commit\master 
+
+C:\Projects\Test_Integration_Jenkins\CI_tool\CI_tool_diff_older_commit\master>git fetch 
+
+C:\Projects\Test_Integration_Jenkins\CI_tool\CI_tool_diff_older_commit\master>exit 0 
+Triggering a new build of [8mha:////4BVBxT9v/iS6BuLx4cgdTd5Bnq/1vGAYPwRYiQz/PZlCAAAAwB+LCAAAAAAAAP9djbENwjAURD9BMAAlomGBuKOBVGlAAhoGsEz4Shw+/pb9g8garAENQzAOOxCJilxzp9PT3fMDoxhgXjWnyC4t2EUmTHd8Qlq3HgNZd96zIPw0SABuAWY9/g9dZI9XdvfvBJINjAldKdUWhk0ggcm2NlejyLhSHSRYVy67uWlvLv95/9d3YSGwUjUfVb7Rwkw6NE77Vip2OhbBeulqHZGwEM1e7MWQFoyiY2MF1Re4Ebpr8QAAAA==[0mCI_tool_run_python_script_to_select_optimal_test_suite
+Finished: SUCCESS

@@ -1,0 +1,11 @@
+commit d78467e7c1425590f09ba5ee8bc37a9e7fd6f0f9
+tree 55d83cf10340331e64fad58d09832e3df1de199d
+parent 3a187929bb49322330a9aadcdc1dbaad446ca346
+author AndSze <andrzejszewczyk94@gmail.com> 2018-09-06 22:42:43 +0200
+committer AndSze <andrzejszewczyk94@gmail.com> 2018-09-06 22:42:43 +0200
+
+    reverting changes from last commit
+
+
+
+:100644 100644 e7f387d5c318b4f12f1be7c2abf52f58d98c476c 06e24bac1718352678ab28d651cacaf9547e175c M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java

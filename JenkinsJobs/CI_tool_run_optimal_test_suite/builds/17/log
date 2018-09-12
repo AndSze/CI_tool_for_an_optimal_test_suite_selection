@@ -1,0 +1,105 @@
+Started by upstream project "[8mha:////4IwxdtnW96BpfkVlIrUOL4Sg1jk8EVGWIs1nx9M8xS+vAAAAwB+LCAAAAAAAAP9djbENwjAURD9BMAAlomGBuKOBVGlAAhoGsEz4Shw+/pb9g8garAENQzAOOxCJilxzp9PT3fMDoxhgXjWnyC4t2EUmTHd8Qlq3HgNZd96zIPw0SABuAWY9/g9dZI9XdvfvBJINjAldKdUWhk0ggcm2NlejyLhSHSRYVy67uWlvLv95/9d3YSGwUjUfVb7Rwkw6NE77Vip2OhbBeulqHZGwEM1e7MWQFoyiY2MF1Re4Ebpr8QAAAA==[0mCI_tool_run_python_script_to_select_optimal_test_suite" build number [8mha:////4CQqm37IK9zO7Wklan7WyM8QicUarit2YXbXB1opmbiWAAAAwx+LCAAAAAAAAP9djbENwjAURD9BMAAlomGBWFDQIGhoQAIaBrBC8pU4fPwt+weRNVgDGoZgHHYgUipyzZ1OT3evLwyCh2lRZYFtnLINTBgfOEPa1g49GXs5siC06kUAdw+TDv+HLlbP9+rhPhFEOxgS2lyKPfQrTwKjfZncEkWJzdVJvLH5spkbd+Y2rXd/XRMigbUq+aw2Oy3MpH1ltaulYKtD6o2TptYBCVPR7MRcE9KCQXSojKCazX8qAIua8wAAAA==[0m12
+originally caused by:
+ Started by upstream project "[8mha:////4FcV0BSA0fLAJfDImX4HnM0cio8KzN7KNbNRe+ezBQ2TAAAAuB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy1EgYd/az8JH1nz/iS/Pyc+OLKvOSMovy8zKrU+Jz85MSc+KLUgvzizJL8oszUYn0AxXsr3+EAAAA=[0mCI_tool_synchronize_local_repositories" build number [8mha:////4Pv4f0f2di8gSMPgafF/ts5JeLuQDeQ+5fvTEiJzUgdIAAAAuh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgY9/az8JH1nz/iS/Pyc+OLKvOSMovy8zKrU+Jz85MSc+KLUgvzizJL8oszUYn1DEwAbqpYk4wAAAA==[0m14
+ originally caused by:
+  Started by upstream project "[8mha:////4K2a1Cvzhfet/BSZHuoya5P0UDYDhEJJ1KC49INzxpPwAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzJEgZ5/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGQC0MYaa1AAAAA==[0mCI_tool_build_trigger_job" build number [8mha:////4MzDxfa8JjrXAv+DcEIVlwxYbAGQIeAtbMPICznKpnk6AAAAqh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgZF/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGSMTADjOJfLWAAAA[0m24
+  originally caused by:
+   Started by GitHub push by AndSze
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_run_optimal_test_suite
+ > E:\Program Files\Git\bin\git.exe rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > E:\Program Files\Git\bin\git.exe config remote.origin.url https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git # timeout=10
+Fetching upstream changes from https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git
+ > E:\Program Files\Git\bin\git.exe --version # timeout=10
+using GIT_ASKPASS to set credentials Github-password
+ > E:\Program Files\Git\bin\git.exe fetch --tags --progress https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git +refs/heads/*:refs/remotes/origin/*
+ > E:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
+ > E:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/origin/master^{commit}" # timeout=10
+Checking out Revision d78467e7c1425590f09ba5ee8bc37a9e7fd6f0f9 (refs/remotes/origin/master)
+ > E:\Program Files\Git\bin\git.exe config core.sparsecheckout # timeout=10
+ > E:\Program Files\Git\bin\git.exe checkout -f d78467e7c1425590f09ba5ee8bc37a9e7fd6f0f9
+Commit message: "reverting changes from last commit"
+ > E:\Program Files\Git\bin\git.exe rev-list --no-walk 9ab177a21a1acec9a08114cd410e0ba0aa536004 # timeout=10
+[CI_tool_run_optimal_test_suite] $ cmd.exe /C "mvn -f '"E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\updated_pom.xml"' clean test -P dev && exit %%ERRORLEVEL%%"
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< andsze:UnitUnderTest >------------------------
+[INFO] Building UnitUnderTest 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ UnitUnderTest ---
+[INFO] Deleting E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ UnitUnderTest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\src\main\resources
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-compiler-plugin:3.5:compile (default-compile) @ UnitUnderTest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 36 source files to E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target\classes
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ UnitUnderTest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\src\test\resources
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-compiler-plugin:3.5:testCompile (default-testCompile) @ UnitUnderTest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 50 source files to E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target\test-classes
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-surefire-plugin:2.19.1:test (default-test) @ UnitUnderTest ---
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running deliverables.UUT_TCPclientTest
+[TCPclient 0] Client_Sensors_LIST created
+		Test Run 1 Purpose:
+Verify that once the default constructor of the UUT_TCPclient class is called, all class attributes are updated based on the input arguments
+		Test Run 1 Logic:
+		Test Run 1 teardown section:
+
+		Test Run 2 Purpose:
+Verify that once the default constructor of the UUT_TCPclient class is called, the TCPclient class instance is created with a respective sensor_ID
+		Test Run 2 Logic:
+		Test Run 2 teardown section:
+
+		Test Run 3 Purpose:
+Verify that once the default constructor of the UUT_TCPclient class is called, the interfaces that parameterize times dependencies for the testing purposes are initiated to its default value
+		Test Run 3 Logic:
+		Test Run 3 teardown section:
+
+		Test Run 4 Purpose:
+Verify that once the default constructor of the UUT_TCPclient class is called, there is no attempt to set up connection via TCP, hence attributes of the TCPclass responsible for connection are not initialized
+		Test Run 4 Logic:
+		Test Run 4 teardown section:
+
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.475 sec - in deliverables.UUT_TCPclientTest
+Running tcpClient.InitClientManagerTest
+		Test Run 1 Purpose:
+Verify that once the initClientManager() function is called, ObjectOutputStream and ObjectInputStream is created based on the input and output streams of a client socket given as an input argument
+		Test Run 1 Logic:
+		Test Run 1 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+[Compute engine Runnable] Multithreaded Server Service has been started
+
+		Test Run 2 Purpose:
+Verify that once the initClientManager() function is called, the overloaded constructor of the ClientManager class is called - it is verified by proving that he isClientManagerRunning flag is set to true
+		Test Run 2 Logic:
+		Test Run 2 teardown section:
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 3 Purpose:
+Verify that ConnectException is thrown if there was an attempt to call the initClientManager() function for a client socket that has not established TCP connection with TCPserver
+		Test Run 3 Logic:
+		Test Run 3 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.559 sec - in tcpClient.InitClientManagerTest
+Running tcpClient.InitClientTest
+		Test Run 1 Purpose:
+Verify that the Connect Exception is returned if there was an attempt to create the client without a server instance initialized previously
+		Test Run 1 Logic:
+Build was aborted
+Aborted by [8mha:////4IYaEtX9ef7VzIxwA8r8VWUZ0uhrQHESKZDFlo0w+HZOAAAAmR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAz2EgZe/dLi1CL90rzsvPzyPAATbMabwgAAAA==[0munknown
+Finished: ABORTED

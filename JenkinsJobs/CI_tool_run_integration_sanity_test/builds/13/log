@@ -1,0 +1,1681 @@
+Started by upstream project "[8mha:////4JDrvNGBUQdPuOp/kpdDattsvmBvuVZS5fHb8rvUXnMfAAAAsB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy5EgYV/az8JH1nz/iS/Pyc+KLSvPj8gpLM3MSc+JLU4pL44tLMklR9AG+UlqfZAAAA[0mCI_tool_run_optimal_test_suite" build number [8mha:////4JXureEOn4burrp3MCrW18eBy/MdFK1ZtC6wJNHd6oeZAAAAsh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgY1/az8JH1nz/iS/Pyc+KLSvPj8gpLM3MSc+JLU4pL44tLMklR9Q0sAFklMo9sAAAA=[0m19
+originally caused by:
+ Started by upstream project "[8mha:////4IwxdtnW96BpfkVlIrUOL4Sg1jk8EVGWIs1nx9M8xS+vAAAAwB+LCAAAAAAAAP9djbENwjAURD9BMAAlomGBuKOBVGlAAhoGsEz4Shw+/pb9g8garAENQzAOOxCJilxzp9PT3fMDoxhgXjWnyC4t2EUmTHd8Qlq3HgNZd96zIPw0SABuAWY9/g9dZI9XdvfvBJINjAldKdUWhk0ggcm2NlejyLhSHSRYVy67uWlvLv95/9d3YSGwUjUfVb7Rwkw6NE77Vip2OhbBeulqHZGwEM1e7MWQFoyiY2MF1Re4Ebpr8QAAAA==[0mCI_tool_run_python_script_to_select_optimal_test_suite" build number [8mha:////4H5aGj8lTGPRhchWmCir4le2AjsO0VooS+RoT7SOuyMEAAAAwx+LCAAAAAAAAP9djbENwjAURD9BMAAlomGBWBTQIGhoQAIaBrBC8pU4fPwt+weRNVgDGoZgHHYgUipyzZ1OT3evLwyCh2lRZYFtnLINTBgfOEPa1g49GXs5siC06kUAdw+TDv+HLlbP9+rhPhFEOxgS2lyKPfQrTwKjfZncEkWJzdVJvLH5spkbd+Y2rXd/XRMigbUq+aw2Oy3MpH1ltaulYKtD6o2TptYBCVPR7MRcE9KCQXSojKCazX+Jle8E8wAAAA==[0m15
+ originally caused by:
+  Started by upstream project "[8mha:////4FcV0BSA0fLAJfDImX4HnM0cio8KzN7KNbNRe+ezBQ2TAAAAuB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy1EgYd/az8JH1nz/iS/Pyc+OLKvOSMovy8zKrU+Jz85MSc+KLUgvzizJL8oszUYn0AxXsr3+EAAAA=[0mCI_tool_synchronize_local_repositories" build number [8mha:////4KmftRAHW6PAPvGk44R4BUYhwyavxoX3C9AggLMpAHWtAAAAuR+LCAAAAAAAAP9djbENwjAQRY8gGIAS0bBALBooUKo0RAo0DGCZcEocTj7LdhBhDNaAhiEYhx2IlIr85v/i6f3XFybewbJqzp5NXLDxTBjv+Yy0ay060uZy4IDQZxQB3BwsBvwfuk6e7+RhPxFEGUwJTRmqHMaNowCzvFZXJUiZUhyD06bcdrr5QJf2Pfy13YgCxKLmk0gzGZhJ+tYUlWOj7yiJC0XSoWWvAzuNXqw2P6H7n73jAAAA[0m17
+  originally caused by:
+   Started by upstream project "[8mha:////4K2a1Cvzhfet/BSZHuoya5P0UDYDhEJJ1KC49INzxpPwAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzJEgZ5/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGQC0MYaa1AAAAA==[0mCI_tool_build_trigger_job" build number [8mha:////4GVERICFDuAp7/T18mx/SN6pamNDVYp7IgXg8ws3jNFbAAAAqh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgZF/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGSNzAIKfLGvWAAAA[0m27
+   originally caused by:
+    Started by GitHub push by AndSze
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_run_integration_sanity_test
+ > E:\Program Files\Git\bin\git.exe rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > E:\Program Files\Git\bin\git.exe config remote.origin.url https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git # timeout=10
+Fetching upstream changes from https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git
+ > E:\Program Files\Git\bin\git.exe --version # timeout=10
+using GIT_ASKPASS to set credentials Github-password
+ > E:\Program Files\Git\bin\git.exe fetch --tags --progress https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git +refs/heads/*:refs/remotes/origin/*
+ > E:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
+ > E:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/origin/master^{commit}" # timeout=10
+Checking out Revision 73f810d44a2afe6d465924e9d93dc00aef97af4d (refs/remotes/origin/master)
+ > E:\Program Files\Git\bin\git.exe config core.sparsecheckout # timeout=10
+ > E:\Program Files\Git\bin\git.exe checkout -f 73f810d44a2afe6d465924e9d93dc00aef97af4d
+Commit message: "06-09-2018 CI tool official dry run with malfunctioning software"
+ > E:\Program Files\Git\bin\git.exe rev-list --no-walk 908e1cde20be4afa5176972d3f44090047cf7b4f # timeout=10
+[CI_tool_run_integration_sanity_test] $ cmd.exe /C "mvn -f '"E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\pom.xml"' clean verify -P integration-test && exit %%ERRORLEVEL%%"
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< andsze:UnitUnderTest >------------------------
+[INFO] Building UnitUnderTest 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ UnitUnderTest ---
+[INFO] Deleting E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ UnitUnderTest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\src\main\resources
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-compiler-plugin:3.5:compile (default-compile) @ UnitUnderTest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 36 source files to E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target\classes
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ UnitUnderTest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\src\test\resources
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-compiler-plugin:3.5:testCompile (default-testCompile) @ UnitUnderTest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 50 source files to E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target\test-classes
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-surefire-plugin:2.19.1:test (default-test) @ UnitUnderTest ---
+[INFO] Tests are skipped.
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-jar-plugin:2.4:jar (default-jar) @ UnitUnderTest ---
+[INFO] Building jar: E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target\UnitUnderTest.jar
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-failsafe-plugin:2.19.1:integration-test (integration-tests) @ UnitUnderTest ---
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running deliverables.ApplicationSanityCheckIT
+		 Creating uut_tcp_clients: [1]
+[TCPclient 0] Client_Sensors_LIST created
+		 Creating uut_tcp_clients: [2]
+		 Creating uut_tcp_clients: [3]
+		 Creating uut_tcp_clients: [4]
+		 Creating uut_tcp_clients: [5]
+		Test Run 1 Purpose:
+Verify that once the application is stared it is endlessly sending messages via TCP connection between TCPserver and multiple TCPclients  in parallel threads. 
+Verification is done for application outputs that are serialized files saved after each TCP connection cycle on PC disc.
+		Test Run 1 Logic:
+[TCPserver] server created and bound at port = 8765
+[Compute engine Processing 1] New folder for a sensor instance created
+[Compute engine Processing 1] New folder for a sensor info created
+[Compute engine Processing 2] New folder for a sensor instance created
+[Compute engine Processing 2] New folder for a sensor info created
+[Compute engine Processing 3] New folder for a sensor instance created
+[Compute engine Processing 3] New folder for a sensor info created
+[Compute engine Processing 4] New folder for a sensor instance created
+[Compute engine Processing 4] New folder for a sensor info created
+[Compute engine Processing 5] New folder for a sensor instance created
+[Compute engine Processing 5] New folder for a sensor info created
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+		 Launching main method for uut_tcp_clients: [1]
+		 uut_tcp_clients length: [5]
+[TCPclient 0] Client Socket created on port = 8765
+[TCPserver] 1st ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 6.148 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when Global_24h_Watchdog 171.744 [s]
+[TCPserver] Number of Active Threads: 0
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[TCPclient 1] Client_Sensors_LIST is updated with sensor instace with ID: 1
+[TCPclient 1] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 1]	 loop counter: 1	with the following sensor ID:	1
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 1]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[Compute engine Runnable 1] ClientMessage_BootUp from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 1] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 1] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 1] ClientMessage_SensorInfo message from sensor: 1 has been received.
+		 Launching main method for uut_tcp_clients: [2]
+		 uut_tcp_clients length: [5]
+[TCPclient 0] Client Socket created on port = 8765
+[TCPserver] Number of Active Threads: 1
+[TCPclient 2] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 2] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 2] Client_Sensors_LIST is updated with sensor instace with ID: 2
+[TCPclient 2] Client_Sensors_LIST has the following sensor instances:
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 2]	 loop counter: 1	with the following sensor ID:	1
+[TCPclient 2]	 loop counter: 2	with the following sensor ID:	2
+[TCPclient 2]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[Compute engine Runnable 2] ClientMessage_BootUp from sensor: 2 has been received.
+[Compute engine Runnable 2] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 2] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 2] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 2] ClientMessage_SensorInfo message from sensor: 2 has been received.
+[Compute engine Runnable 2] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 2] send new setting (go to MAINTENANCE) to sensor: 2
+[Compute engine Runnable 1] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 1] send new setting (go to MAINTENANCE) to sensor: 1
+[ClientManager 1] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 2] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 1] responds to ServerMessage_SensorInfoUpdate with ClientMessage_BootUp.
+[ClientManager 1] Sensor is being reset once ClientMessage_BootUp is being sent
+[TCPclient 1] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 1] Local_1h_Watchdog for the sensor has been synchronized and it equals: 6.053 [s]
+[ClientManager 1] ServerMessage_SensorInfoUpdate has the following SensorState: MAINTENANCE
+[ClientManager 2] responds to ServerMessage_SensorInfoUpdate with ClientMessage_BootUp.
+[ClientManager 2] Sensor is being reset once ClientMessage_BootUp is being sent
+[TCPclient 2] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 2] Local_1h_Watchdog for the sensor has been synchronized and it equals: 6.053 [s]
+[ClientManager 2] ServerMessage_SensorInfoUpdate has the following SensorState: MAINTENANCE
+[Compute engine Runnable 2] ClientMessage_BootUp from sensor: 2 has been received.
+[Compute engine Runnable 1] ClientMessage_BootUp from sensor: 1 has been received.
+[Compute engine Runnable 2] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 2] ServerMessage_SensorInfoQuerry has been received.
+[Compute engine Runnable 1] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 1] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 2] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[ClientManager 1] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 2] ClientMessage_SensorInfo message from sensor: 2 has been received.
+[Compute engine Runnable 2] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 2] send go to OPERATIONAL to sensor: 2
+[ClientManager 2] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 2] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 2] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 2] Local_1h_Watchdog for the sensor has been synchronized and it equals: 6.049 [s]
+[ClientManager 2] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[ClientManager 2] if sensor receives go to OPERATIONAL message, ClientManager is being closed since its Local_1h_Watchdog is not close to expire
+[ClientManager 2] it will be launched agan once its Local_1h_Watchdog: 6.049[s] will reach threshold for launching the TCP connection.
+[ClientManager 2] is being closed for sensor ID: 2
+[TCPclient 2] Socket for the sensor closed successfully
+[TCPclient 2] ClientManager for the sensor closed successfully
+[Compute engine Runnable 2] ClientMessage_ACK from sensor: 2 has been received.
+[Compute engine Runnable 2] ClientMessage_ACK received when neither 1h_watchdog: 6.069 [s] nor 24h_watchdog: 171.66400000000002 [s] is close to expire
+[Compute engine Runnable 2] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 2] TCP connection with sensor: 2 is being closed
+[Compute engine Runnable 2] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 2] there are 24 measurement(s) more remaining to kick 24hWatchdog
+[Compute engine Runnable 1] ClientMessage_SensorInfo message from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 1] send go to OPERATIONAL to sensor: 1
+[ClientManager 1] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 1] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 1] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 1] Local_1h_Watchdog for the sensor has been synchronized and it equals: 6.047 [s]
+[ClientManager 1] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[ClientManager 1] if sensor receives go to OPERATIONAL message, ClientManager is being closed since its Local_1h_Watchdog is not close to expire
+[ClientManager 1] it will be launched agan once its Local_1h_Watchdog: 6.047[s] will reach threshold for launching the TCP connection.
+[ClientManager 1] is being closed for sensor ID: 1
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPclient 1] ClientManager for the sensor closed successfully
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] ClientMessage_ACK received when neither 1h_watchdog: 6.088 [s] nor 24h_watchdog: 171.68 [s] is close to expire
+[Compute engine Runnable 1] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 1] TCP connection with sensor: 1 is being closed
+[Compute engine Runnable 1] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 1] there are 24 measurement(s) more remaining to kick 24hWatchdog
+		 Launching main method for uut_tcp_clients: [3]
+		 uut_tcp_clients length: [5]
+[TCPclient 0] Client Socket created on port = 8765
+[TCPserver] Number of Active Threads: 2
+[TCPclient 3] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 3] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 3] Client_Sensors_LIST is updated with sensor instace with ID: 3
+[TCPclient 3] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 3]	 loop counter: 1	with the following sensor ID:	1
+[TCPclient 3]	 loop counter: 2	with the following sensor ID:	2
+[TCPclient 3]	 loop counter: 3	with the following sensor ID:	3
+[TCPclient 3]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[Compute engine Runnable 3] ClientMessage_BootUp from sensor: 3 has been received.
+[Compute engine Runnable 3] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 3] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 3] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 3] ClientMessage_SensorInfo message from sensor: 3 has been received.
+[Compute engine Runnable 3] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 3] send new setting (go to MAINTENANCE) to sensor: 3
+[ClientManager 3] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 3] responds to ServerMessage_SensorInfoUpdate with ClientMessage_BootUp.
+[ClientManager 3] Sensor is being reset once ClientMessage_BootUp is being sent
+[TCPclient 3] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 3] Local_1h_Watchdog for the sensor has been synchronized and it equals: 5.982 [s]
+[ClientManager 3] ServerMessage_SensorInfoUpdate has the following SensorState: MAINTENANCE
+[Compute engine Runnable 3] ClientMessage_BootUp from sensor: 3 has been received.
+[Compute engine Runnable 3] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 3] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 3] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 3] ClientMessage_SensorInfo message from sensor: 3 has been received.
+[Compute engine Runnable 3] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[ClientManager 3] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 3] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 3] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 3] Local_1h_Watchdog for the sensor has been synchronized and it equals: 5.9750000000000005 [s]
+[ClientManager 3] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[ClientManager 3] if sensor receives go to OPERATIONAL message, ClientManager is being closed since its Local_1h_Watchdog is not close to expire
+[ClientManager 3] it will be launched agan once its Local_1h_Watchdog: 5.9750000000000005[s] will reach threshold for launching the TCP connection.
+[ClientManager 3] is being closed for sensor ID: 3
+[TCPclient 3] Socket for the sensor closed successfully
+[TCPclient 3] ClientManager for the sensor closed successfully
+[Compute engine Runnable 3] send go to OPERATIONAL to sensor: 3
+[Compute engine Runnable 3] ClientMessage_ACK from sensor: 3 has been received.
+[Compute engine Runnable 3] ClientMessage_ACK received when neither 1h_watchdog: 5.9910000000000005 [s] nor 24h_watchdog: 171.568 [s] is close to expire
+[Compute engine Runnable 3] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 3] TCP connection with sensor: 3 is being closed
+[Compute engine Runnable 3] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 3] there are 24 measurement(s) more remaining to kick 24hWatchdog
+		 Launching main method for uut_tcp_clients: [4]
+		 uut_tcp_clients length: [5]
+[TCPclient 0] Client Socket created on port = 8765
+[TCPserver] Number of Active Threads: 3
+[TCPclient 4] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 4] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 4] Client_Sensors_LIST is updated with sensor instace with ID: 4
+[TCPclient 4] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 4]	 loop counter: 1	with the following sensor ID:	1
+[TCPclient 4]	 loop counter: 2	with the following sensor ID:	2
+[TCPclient 4]	 loop counter: 3	with the following sensor ID:	3
+[TCPclient 4]	 loop counter: 4	with the following sensor ID:	4
+[TCPclient 4]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[Compute engine Runnable 4] ClientMessage_BootUp from sensor: 4 has been received.
+[Compute engine Runnable 4] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 4] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 4] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 4] ClientMessage_SensorInfo message from sensor: 4 has been received.
+[Compute engine Runnable 4] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 4] send new setting (go to MAINTENANCE) to sensor: 4
+[ClientManager 4] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 4] responds to ServerMessage_SensorInfoUpdate with ClientMessage_BootUp.
+[Compute engine Runnable 4] ClientMessage_BootUp from sensor: 4 has been received.
+[ClientManager 4] Sensor is being reset once ClientMessage_BootUp is being sent
+[TCPclient 4] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 4] Local_1h_Watchdog for the sensor has been synchronized and it equals: 5.884 [s]
+[ClientManager 4] ServerMessage_SensorInfoUpdate has the following SensorState: MAINTENANCE
+[Compute engine Runnable 4] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 4] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 4] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 4] ClientMessage_SensorInfo message from sensor: 4 has been received.
+[Compute engine Runnable 4] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[ClientManager 4] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 4] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 4] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 4] Local_1h_Watchdog for the sensor has been synchronized and it equals: 5.873 [s]
+[ClientManager 4] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[ClientManager 4] if sensor receives go to OPERATIONAL message, ClientManager is being closed since its Local_1h_Watchdog is not close to expire
+[ClientManager 4] it will be launched agan once its Local_1h_Watchdog: 5.873[s] will reach threshold for launching the TCP connection.
+[ClientManager 4] is being closed for sensor ID: 4
+[TCPclient 4] Socket for the sensor closed successfully
+[TCPclient 4] ClientManager for the sensor closed successfully
+[Compute engine Runnable 4] send go to OPERATIONAL to sensor: 4
+[Compute engine Runnable 4] ClientMessage_ACK from sensor: 4 has been received.
+[Compute engine Runnable 4] ClientMessage_ACK received when neither 1h_watchdog: 5.892 [s] nor 24h_watchdog: 171.472 [s] is close to expire
+[Compute engine Runnable 4] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 4] TCP connection with sensor: 4 is being closed
+[Compute engine Runnable 4] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 4] there are 24 measurement(s) more remaining to kick 24hWatchdog
+		 Launching main method for uut_tcp_clients: [5]
+		 uut_tcp_clients length: [5]
+[TCPclient 0] Client Socket created on port = 8765
+[TCPserver] Number of Active Threads: 2
+[TCPclient 5] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 5] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 5] Client_Sensors_LIST is updated with sensor instace with ID: 5
+[TCPclient 5] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 5]	 loop counter: 1	with the following sensor ID:	1
+[TCPclient 5]	 loop counter: 2	with the following sensor ID:	2
+[TCPclient 5]	 loop counter: 3	with the following sensor ID:	3
+[TCPclient 5]	 loop counter: 4	with the following sensor ID:	4
+[TCPclient 5]	 loop counter: 5	with the following sensor ID:	5
+[TCPclient 5]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[Compute engine Runnable 5] ClientMessage_BootUp from sensor: 5 has been received.
+[Compute engine Runnable 5] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 5] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 5] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 5] ClientMessage_SensorInfo message from sensor: 5 has been received.
+[Compute engine Runnable 5] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 5] send new setting (go to MAINTENANCE) to sensor: 5
+[ClientManager 5] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 5] responds to ServerMessage_SensorInfoUpdate with ClientMessage_BootUp.
+[ClientManager 5] Sensor is being reset once ClientMessage_BootUp is being sent
+[TCPclient 5] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 5] Local_1h_Watchdog for the sensor has been synchronized and it equals: 5.783 [s]
+[ClientManager 5] ServerMessage_SensorInfoUpdate has the following SensorState: MAINTENANCE
+[Compute engine Runnable 5] ClientMessage_BootUp from sensor: 5 has been received.
+[Compute engine Runnable 5] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 5] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 5] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 5] ClientMessage_SensorInfo message from sensor: 5 has been received.
+[Compute engine Runnable 5] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[ClientManager 5] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 5] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 5] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 5] Local_1h_Watchdog for the sensor has been synchronized and it equals: 5.7780000000000005 [s]
+[ClientManager 5] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[ClientManager 5] if sensor receives go to OPERATIONAL message, ClientManager is being closed since its Local_1h_Watchdog is not close to expire
+[ClientManager 5] it will be launched agan once its Local_1h_Watchdog: 5.7780000000000005[s] will reach threshold for launching the TCP connection.
+[ClientManager 5] is being closed for sensor ID: 5
+[TCPclient 5] Socket for the sensor closed successfully
+[TCPclient 5] ClientManager for the sensor closed successfully
+[Compute engine Runnable 5] send go to OPERATIONAL to sensor: 5
+[Compute engine Runnable 5] ClientMessage_ACK from sensor: 5 has been received.
+[Compute engine Runnable 5] ClientMessage_ACK received when neither 1h_watchdog: 5.792 [s] nor 24h_watchdog: 171.36 [s] is close to expire
+[Compute engine Runnable 5] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 5] TCP connection with sensor: 5 is being closed
+[Compute engine Runnable 5] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 5] there are 24 measurement(s) more remaining to kick 24hWatchdog
+[ApplicationSanityCheckIT sensor: 1] Sensor Info check file.getName(): 	sensor_1_2018-09-06_22-59-22_sensorINITIALIZATION.sensor_info
+[ApplicationSanityCheckIT sensor: 1] Sensor Info check file.getName(): 	sensor_1_2018-09-06_22-59-23_gotoMAINTENANCEafterINITIALIZATION.sensor_info
+[ApplicationSanityCheckIT sensor: 1] Sensor Info check file.getName(): 	sensor_1_2018-09-06_22-59-23_gotoOPERATIONALafterCONFIGURATION.sensor_info
+[ApplicationSanityCheckIT sensor: 2] Sensor Info check file.getName(): 	sensor_2_2018-09-06_22-59-22_sensorINITIALIZATION.sensor_info
+[ApplicationSanityCheckIT sensor: 2] Sensor Info check file.getName(): 	sensor_2_2018-09-06_22-59-23_gotoMAINTENANCEafterINITIALIZATION.sensor_info
+[ApplicationSanityCheckIT sensor: 2] Sensor Info check file.getName(): 	sensor_2_2018-09-06_22-59-23_gotoOPERATIONALafterCONFIGURATION.sensor_info
+[ApplicationSanityCheckIT sensor: 3] Sensor Info check file.getName(): 	sensor_3_2018-09-06_22-59-22_sensorINITIALIZATION.sensor_info
+[ApplicationSanityCheckIT sensor: 3] Sensor Info check file.getName(): 	sensor_3_2018-09-06_22-59-23_gotoMAINTENANCEafterINITIALIZATION.sensor_info
+[ApplicationSanityCheckIT sensor: 3] Sensor Info check file.getName(): 	sensor_3_2018-09-06_22-59-23_gotoOPERATIONALafterCONFIGURATION.sensor_info
+[ApplicationSanityCheckIT sensor: 4] Sensor Info check file.getName(): 	sensor_4_2018-09-06_22-59-22_sensorINITIALIZATION.sensor_info
+[ApplicationSanityCheckIT sensor: 4] Sensor Info check file.getName(): 	sensor_4_2018-09-06_22-59-23_gotoMAINTENANCEafterINITIALIZATION.sensor_info
+[ApplicationSanityCheckIT sensor: 4] Sensor Info check file.getName(): 	sensor_4_2018-09-06_22-59-23_gotoOPERATIONALafterCONFIGURATION.sensor_info
+[ApplicationSanityCheckIT sensor: 5] Sensor Info check file.getName(): 	sensor_5_2018-09-06_22-59-22_sensorINITIALIZATION.sensor_info
+[ApplicationSanityCheckIT sensor: 5] Sensor Info check file.getName(): 	sensor_5_2018-09-06_22-59-23_gotoMAINTENANCEafterINITIALIZATION.sensor_info
+[ApplicationSanityCheckIT sensor: 5] Sensor Info check file.getName(): 	sensor_5_2018-09-06_22-59-23_gotoOPERATIONALafterCONFIGURATION.sensor_info
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 4.268
+[UUT_TCPclient 1]	  Local_1h_Watchdog: 4.248
+[UUT_TCPclient 3]	  Local_1h_Watchdog: 4.168
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 4.0680000000000005
+[UUT_TCPclient 5]	  Local_1h_Watchdog: 3.978
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 2.2680000000000002
+[UUT_TCPclient 1]	  Local_1h_Watchdog: 2.248
+[UUT_TCPclient 3]	  Local_1h_Watchdog: 2.168
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 2.068
+[UUT_TCPclient 5]	  Local_1h_Watchdog: 1.978
+[UUT_TCPclient 3]	  Local_1h_Watchdog: 1.318
+[UUT_TCPclient 5]	  Local_1h_Watchdog: 1.298
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 1.228
+[UUT_TCPclient 1]	  Local_1h_Watchdog: 1.218
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 1.208
+[UUT_TCPclient 3]	  Local_1h_Watchdog: 0.8180000000000001
+[UUT_TCPclient 5]	  Local_1h_Watchdog: 0.798
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 0.728
+[UUT_TCPclient 1]	  Local_1h_Watchdog: 0.718
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 0.708
+[UUT_TCPclient 1]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23800000000000002 [s]
+[UUT_TCPclient 4]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23800000000000002 [s]
+[UUT_TCPclient 5]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23800000000000002 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 0.245 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when Global_24h_Watchdog 165.824 [s]
+[TCPserver] Number of Active Threads: 0
+[TCPclient 0] Client Socket created on port = 8765
+[TCPclient 0] Client Socket created on port = 8765
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 0] Client Socket created on port = 8765
+[UUT_TCPclient 2]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23800000000000002 [s]
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 1
+[TCPclient 0] Client Socket created on port = 8765
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 2
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 1]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[TCPserver] Number of Active Threads: 3
+[TCPclient 5] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 5]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[UUT_TCPclient 3]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23800000000000002 [s]
+[TCPclient 2] Client Manager created with outputsteam and input stream
+[TCPclient 4] Client Manager created with outputsteam and input stream
+[TCPclient 2]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[TCPclient 4]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[Compute engine Runnable 2] ClientMessage_BootUp from sensor: 2 has been received.
+[Compute engine Runnable 2] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[Compute engine Runnable 4] ClientMessage_BootUp from sensor: 4 has been received.
+[ClientManager 2] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 2] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 2] ClientMessage_SensorInfo message from sensor: 2 has been received.
+[Compute engine Runnable 4] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[Compute engine Runnable 2] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[ClientManager 2] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 2] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 2] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 2] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.24 [s]
+[ClientManager 2] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 2] send go to OPERATIONAL to sensor: 2
+[TCPclient 0] Client Socket created on port = 8765
+[ClientManager 4] ServerMessage_SensorInfoQuerry has been received.
+[TCPserver] last ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 0.23900000000000002 [s]
+[TCPserver] last ComputeEngine_Runnable launched when Global_24h_Watchdog 165.808 [s]
+[TCPserver] Number of Active Threads: 4
+[TCPclient 3] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[ClientManager 4] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[TCPclient 3]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[Compute engine Runnable 2] ClientMessage_ACK from sensor: 2 has been received.
+[Compute engine Runnable 4] ClientMessage_SensorInfo message from sensor: 4 has been received.
+[Compute engine Runnable 4] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 1] ClientMessage_BootUp from sensor: 1 has been received.
+[ClientManager 4] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 4] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 4] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 4] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.23600000000000002 [s]
+[ClientManager 4] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[ClientManager 1] ServerMessage_SensorInfoQuerry has been received.
+[Compute engine Runnable 4] send go to OPERATIONAL to sensor: 4
+[ClientManager 1] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 1] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[Compute engine Runnable 5] ClientMessage_BootUp from sensor: 5 has been received.
+[Compute engine Runnable 5] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[Compute engine Runnable 4] ClientMessage_ACK from sensor: 4 has been received.
+[Compute engine Runnable 1] ClientMessage_SensorInfo message from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 3] ClientMessage_BootUp from sensor: 3 has been received.
+[ClientManager 1] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 1] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 1] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 1] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.234 [s]
+[ClientManager 1] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 1] send go to OPERATIONAL to sensor: 1
+[ClientManager 3] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 5] ServerMessage_SensorInfoQuerry has been received.
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[ClientManager 5] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 3] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 3] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 5] ClientMessage_SensorInfo message from sensor: 5 has been received.
+[Compute engine Runnable 5] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[ClientManager 5] ServerMessage_SensorInfoUpdate has been received.
+[Compute engine Runnable 5] send go to OPERATIONAL to sensor: 5
+[ClientManager 5] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 5] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 5] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.229 [s]
+[ClientManager 5] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 3] ClientMessage_SensorInfo message from sensor: 3 has been received.
+[Compute engine Runnable 3] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[ClientManager 3] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 3] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 3] sensor instance in Client_Sensors_LIST has been updated
+[Compute engine Runnable 3] send go to OPERATIONAL to sensor: 3
+[ClientManager 3] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.227 [s]
+[ClientManager 3] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 5] ClientMessage_ACK from sensor: 5 has been received.
+[Compute engine Runnable 3] ClientMessage_ACK from sensor: 3 has been received.
+[Compute engine Runnable 2] _1h_watchdog equals : 0.09759999999999999 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 2] Global_1h_Watchdog equals : 0.197 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 2] 1h_Watchdog global: 	0.197
+[Compute engine Runnable 2] 24h_Watchdog global: 	165.744
+[Compute engine Runnable 2] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.09759999999999999
+[Compute engine Runnable 2] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 2] Request_MeasurementData is sent to sensor ID: 2
+[ClientManager 2] ServerMessage_Request_MeasurementData has been received.
+[TCPclient 2] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 2] sensor: 	2 has the following number of measurements: 	1
+[ClientManager 2] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Processing 2] New folder for MeasurementData created
+[Compute engine Runnable 2] Local_1h_watchdog has been kicked for sensor: 2 and it is equal to: 7.2976
+[Compute engine Runnable 2] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 2] MeasurementData from sensor: 2 has been received.
+[ClientManager 2] ServerMessage_ACK has been received.
+[ClientManager 2] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.297 [s]
+[ClientManager 2] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 2] is being closed for sensor ID: 2
+[UUT_TCPclient 2]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.297 [s]"
+[TCPclient 2] ClientManager for the sensor closed successfully
+[TCPclient 2] Socket for the sensor closed successfully
+[Compute engine Runnable 2] ClientMessage_ACK from sensor: 2 has been received.
+[Compute engine Runnable 2] ClientMessage_ACK received when neither 1h_watchdog: 7.2976 [s] nor 24h_watchdog: 165.824 [s] is close to expire
+[Compute engine Runnable 4] _1h_watchdog equals : 0.098 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 4] Global_1h_Watchdog equals : 0.189 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 4] 1h_Watchdog global: 	0.189
+[Compute engine Runnable 4] 24h_Watchdog global: 	165.744
+[Compute engine Runnable 4] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.098
+[Compute engine Runnable 2] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 2] TCP connection with sensor: 2 is being closed
+[Compute engine Runnable 2] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 2] there are 23 measurement(s) more remaining to kick 24hWatchdog
+[Compute engine Runnable 4] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 4] Request_MeasurementData is sent to sensor ID: 4
+[ClientManager 4] ServerMessage_Request_MeasurementData has been received.
+[TCPclient 4] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 4] sensor: 	4 has the following number of measurements: 	1
+[ClientManager 4] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Processing 4] New folder for MeasurementData created
+[Compute engine Runnable 4] Local_1h_watchdog has been kicked for sensor: 4 and it is equal to: 7.298
+[Compute engine Runnable 4] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 4] MeasurementData from sensor: 4 has been received.
+[ClientManager 4] ServerMessage_ACK has been received.
+[ClientManager 4] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.298 [s]
+[ClientManager 4] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 4] is being closed for sensor ID: 4
+[UUT_TCPclient 4]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.298 [s]"
+[TCPclient 4] ClientManager for the sensor closed successfully
+[TCPclient 4] Socket for the sensor closed successfully
+[Compute engine Runnable 4] ClientMessage_ACK from sensor: 4 has been received.
+[Compute engine Runnable 4] ClientMessage_ACK received when neither 1h_watchdog: 7.298 [s] nor 24h_watchdog: 165.824 [s] is close to expire
+[Compute engine Runnable 4] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 4] TCP connection with sensor: 4 is being closed
+[Compute engine Runnable 4] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 4] there are 23 measurement(s) more remaining to kick 24hWatchdog
+[Compute engine Runnable 1] _1h_watchdog equals : 0.098 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 0.181 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] 1h_Watchdog global: 	0.181
+[Compute engine Runnable 1] 24h_Watchdog global: 	165.728
+[Compute engine Runnable 1] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.098
+[Compute engine Runnable 1] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 1] Request_MeasurementData is sent to sensor ID: 1
+[ClientManager 1] ServerMessage_Request_MeasurementData has been received.
+[TCPclient 1] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 1] sensor: 	1 has the following number of measurements: 	1
+[ClientManager 1] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Processing 1] New folder for MeasurementData created
+[Compute engine Runnable 1] Local_1h_watchdog has been kicked for sensor: 1 and it is equal to: 7.298
+[Compute engine Runnable 5] _1h_watchdog equals : 0.09759999999999999 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 5] Global_1h_Watchdog equals : 0.178 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 5] 1h_Watchdog global: 	0.178
+[Compute engine Runnable 5] 24h_Watchdog global: 	165.728
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 5] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.09759999999999999
+[ClientManager 1] ServerMessage_ACK has been received.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[ClientManager 1] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.298 [s]
+[Compute engine Runnable 3] _1h_watchdog equals : 0.09560000000000002 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 3] Global_1h_Watchdog equals : 0.177 when leaving _1h_Watchdog_close_to_expire()
+[ClientManager 1] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[Compute engine Runnable 3] 1h_Watchdog global: 	0.177
+[ClientManager 1] is being closed for sensor ID: 1
+[UUT_TCPclient 1]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.298 [s]"
+[Compute engine Runnable 3] 24h_Watchdog global: 	165.728
+[TCPclient 1] ClientManager for the sensor closed successfully
+[Compute engine Runnable 3] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.09560000000000002
+[TCPclient 1] Socket for the sensor closed successfully
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] ClientMessage_ACK received when neither 1h_watchdog: 7.298 [s] nor 24h_watchdog: 165.824 [s] is close to expire
+[Compute engine Runnable 5] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 5] Request_MeasurementData is sent to sensor ID: 5
+[ClientManager 5] ServerMessage_Request_MeasurementData has been received.
+[TCPclient 5] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 5] sensor: 	5 has the following number of measurements: 	1
+[ClientManager 5] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Processing 5] New folder for MeasurementData created
+[Compute engine Runnable 3] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 3] Request_MeasurementData is sent to sensor ID: 3
+[ClientManager 3] ServerMessage_Request_MeasurementData has been received.
+[Compute engine Runnable 5] Local_1h_watchdog has been kicked for sensor: 5 and it is equal to: 7.2976
+[TCPclient 3] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 3] sensor: 	3 has the following number of measurements: 	1
+[Compute engine Runnable 5] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 5] MeasurementData from sensor: 5 has been received.
+[ClientManager 3] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[ClientManager 5] ServerMessage_ACK has been received.
+[ClientManager 5] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.297 [s]
+[Compute engine Runnable 1] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 1] TCP connection with sensor: 1 is being closed
+[ClientManager 5] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[Compute engine Runnable 1] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[ClientManager 5] is being closed for sensor ID: 5
+[Compute engine Runnable 1] there are 23 measurement(s) more remaining to kick 24hWatchdog
+[UUT_TCPclient 5]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.297 [s]"
+[TCPclient 5] ClientManager for the sensor closed successfully
+[TCPclient 5] Socket for the sensor closed successfully
+[UUT_TCPclient 5]	  Local_1h_Watchdog: 7.297
+[Compute engine Processing 3] New folder for MeasurementData created
+[Compute engine Runnable 3] Local_1h_watchdog has been kicked for sensor: 3 and it is equal to: 7.2956
+[Compute engine Runnable 3] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 3] MeasurementData from sensor: 3 has been received.
+[ClientManager 3] ServerMessage_ACK has been received.
+[ClientManager 3] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.295 [s]
+[Compute engine Runnable 5] ClientMessage_ACK from sensor: 5 has been received.
+[Compute engine Runnable 5] ClientMessage_ACK received when neither 1h_watchdog: 7.2976 [s] nor 24h_watchdog: 165.824 [s] is close to expire
+[ClientManager 3] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 3] is being closed for sensor ID: 3
+[UUT_TCPclient 3]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.295 [s]"
+[TCPclient 3] ClientManager for the sensor closed successfully
+[TCPclient 3] Socket for the sensor closed successfully
+[Compute engine Runnable 5] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 5] TCP connection with sensor: 5 is being closed
+[Compute engine Runnable 5] [copmute time] it took: 0.07299999999999998 [s] to process all 1h watchog triggered messages (time_messages_processing)
+[Compute engine Runnable 5] 1hWatchdog has been kicked
+[Compute engine Runnable 5] 1hWatchdog has been kicked when it has: 0.17200000000000001 [s] left to expire
+[Compute engine Runnable 3] ClientMessage_ACK from sensor: 3 has been received.
+[Compute engine Runnable 3] ClientMessage_ACK received when neither 1h_watchdog: 7.2956 [s] nor 24h_watchdog: 165.808 [s] is close to expire
+[Compute engine Runnable 3] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 3] TCP connection with sensor: 3 is being closed
+[Compute engine Runnable 3] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 3] there are 23 measurement(s) more remaining to kick 24hWatchdog
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 6.715
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 6.505
+[UUT_TCPclient 1]	  Local_1h_Watchdog: 6.495
+[ApplicationSanityCheckIT sensor: 1] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-29.measurement_data
+[ApplicationSanityCheckIT sensor: 1] Sensor Info check file.getName(): 		sensor_1_2018-09-06_22-59-29_stayinOPERATIONAL.sensor_info
+[ApplicationSanityCheckIT sensor: 2] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-29.measurement_data
+[ApplicationSanityCheckIT sensor: 2] Sensor Info check file.getName(): 		sensor_2_2018-09-06_22-59-29_stayinOPERATIONAL.sensor_info
+[ApplicationSanityCheckIT sensor: 3] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-29.measurement_data
+[ApplicationSanityCheckIT sensor: 3] Sensor Info check file.getName(): 		sensor_3_2018-09-06_22-59-29_stayinOPERATIONAL.sensor_info
+[ApplicationSanityCheckIT sensor: 4] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-29.measurement_data
+[ApplicationSanityCheckIT sensor: 4] Sensor Info check file.getName(): 		sensor_4_2018-09-06_22-59-29_stayinOPERATIONAL.sensor_info
+[ApplicationSanityCheckIT sensor: 5] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-29.measurement_data
+[ApplicationSanityCheckIT sensor: 5] Sensor Info check file.getName(): 		sensor_5_2018-09-06_22-59-29_stayinOPERATIONAL.sensor_info
+[UUT_TCPclient 5]	  Local_1h_Watchdog: 5.295
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 4.715
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 4.515
+[UUT_TCPclient 1]	  Local_1h_Watchdog: 4.505
+[UUT_TCPclient 5]	  Local_1h_Watchdog: 3.325
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 2.755
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 2.605
+[UUT_TCPclient 1]	  Local_1h_Watchdog: 2.595
+[UUT_TCPclient 5]	  Local_1h_Watchdog: 1.455
+[UUT_TCPclient 1]	  Local_1h_Watchdog: 1.375
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 1.235
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 1.205
+[UUT_TCPclient 5]	  Local_1h_Watchdog: 0.965
+[UUT_TCPclient 1]	  Local_1h_Watchdog: 0.885
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 0.745
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 0.705
+[UUT_TCPclient 5]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23500000000000001 [s]
+[UUT_TCPclient 1]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23500000000000001 [s]
+[UUT_TCPclient 2]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23500000000000001 [s]
+[TCPclient 0] Client Socket created on port = 8765
+[TCPclient 0] Client Socket created on port = 8765
+[TCPclient 0] Client Socket created on port = 8765
+[TCPserver] 1st ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 0.372 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when Global_24h_Watchdog 158.624 [s]
+[TCPserver] Number of Active Threads: 0
+[UUT_TCPclient 4]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23500000000000001 [s]
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 0] Client Socket created on port = 8765
+[UUT_TCPclient 3]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23500000000000001 [s]
+[TCPclient 5] Client Manager created with outputsteam and input stream
+[TCPserver] Number of Active Threads: 1
+[TCPclient 2] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 0] Client Socket created on port = 8765
+[TCPserver] Number of Active Threads: 1
+[TCPclient 2]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 1
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 1]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[TCPclient 4] Client Manager created with outputsteam and input stream
+[TCPserver] last ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 0.37 [s]
+[TCPserver] last ComputeEngine_Runnable launched when Global_24h_Watchdog 158.624 [s]
+[TCPclient 4]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[Compute engine Runnable 5] ClientMessage_BootUp from sensor: 5 has been received.
+[Compute engine Runnable 5] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[TCPclient 5]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[ClientManager 5] ServerMessage_SensorInfoQuerry has been received.
+[Compute engine Runnable 5] ClientMessage_SensorInfo message from sensor: 5 has been received.
+[Compute engine Runnable 5] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 5] send go to OPERATIONAL to sensor: 5
+[ClientManager 5] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[ClientManager 5] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 5] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 5] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 5] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.37 [s]
+[ClientManager 5] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 5] ClientMessage_ACK from sensor: 5 has been received.
+[TCPserver] Number of Active Threads: 4
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[Compute engine Runnable 2] ClientMessage_BootUp from sensor: 2 has been received.
+[Compute engine Runnable 2] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 2] ServerMessage_SensorInfoQuerry has been received.
+[TCPclient 3] Client Manager created with outputsteam and input stream
+[ClientManager 2] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[TCPclient 3]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[Compute engine Runnable 4] ClientMessage_BootUp from sensor: 4 has been received.
+[Compute engine Runnable 1] ClientMessage_BootUp from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 1] ServerMessage_SensorInfoQuerry has been received.
+[Compute engine Runnable 2] ClientMessage_SensorInfo message from sensor: 2 has been received.
+[ClientManager 1] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 2] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 3] ClientMessage_BootUp from sensor: 3 has been received.
+[Compute engine Runnable 4] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 2] ServerMessage_SensorInfoUpdate has been received.
+[Compute engine Runnable 3] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 2] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 2] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 2] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.369 [s]
+[ClientManager 2] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 2] send go to OPERATIONAL to sensor: 2
+[ClientManager 4] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 3] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 4] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[ClientManager 3] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 1] ClientMessage_SensorInfo message from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 3] ClientMessage_SensorInfo message from sensor: 3 has been received.
+[Compute engine Runnable 3] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 1] send go to OPERATIONAL to sensor: 1
+[Compute engine Runnable 3] send go to OPERATIONAL to sensor: 3
+[Compute engine Runnable 2] ClientMessage_ACK from sensor: 2 has been received.
+[ClientManager 1] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 1] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 1] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 1] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.369 [s]
+[ClientManager 1] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 4] ClientMessage_SensorInfo message from sensor: 4 has been received.
+[Compute engine Runnable 4] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 4] send go to OPERATIONAL to sensor: 4
+[ClientManager 4] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 4] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 4] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 4] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.369 [s]
+[ClientManager 4] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 4] ClientMessage_ACK from sensor: 4 has been received.
+[ClientManager 3] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 3] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 3] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 3] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.369 [s]
+[ClientManager 3] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 3] ClientMessage_ACK from sensor: 3 has been received.
+[Compute engine Runnable 5] _1h_watchdog equals : 0.05952 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 5] Global_1h_Watchdog equals : 0.324 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 5] 1h_Watchdog global: 	0.324
+[Compute engine Runnable 5] 24h_Watchdog global: 	158.56
+[Compute engine Runnable 5] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.05952
+[Compute engine Runnable 5] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 5] Request_MeasurementData is sent to sensor ID: 5
+[ClientManager 5] ServerMessage_Request_MeasurementData has been received.
+[TCPclient 5] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 5] sensor: 	5 has the following number of measurements: 	2
+[ClientManager 5] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Runnable 2] _1h_watchdog equals : 0.05936000000000001 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 2] Global_1h_Watchdog equals : 0.302 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 2] 1h_Watchdog global: 	0.302
+[Compute engine Runnable 2] 24h_Watchdog global: 	158.544
+[Compute engine Runnable 2] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.05936000000000001
+[Compute engine Runnable 2] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 2] Request_MeasurementData is sent to sensor ID: 2
+[ClientManager 2] ServerMessage_Request_MeasurementData has been received.
+[Compute engine Runnable 1] _1h_watchdog equals : 0.05936000000000001 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 0.299 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] 1h_Watchdog global: 	0.299
+[Compute engine Runnable 1] 24h_Watchdog global: 	158.528
+[Compute engine Runnable 1] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.05936000000000001
+[TCPclient 2] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 2] sensor: 	2 has the following number of measurements: 	2
+[ClientManager 2] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Runnable 1] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 1] Request_MeasurementData is sent to sensor ID: 1
+[ClientManager 1] ServerMessage_Request_MeasurementData has been received.
+[TCPclient 1] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 1] sensor: 	1 has the following number of measurements: 	2
+[ClientManager 1] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Runnable 3] _1h_watchdog equals : 0.0592 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 3] Global_1h_Watchdog equals : 0.299 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 3] 1h_Watchdog global: 	0.299
+[Compute engine Runnable 3] 24h_Watchdog global: 	158.528
+[Compute engine Runnable 3] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.0592
+[Compute engine Runnable 4] _1h_watchdog equals : 0.05936000000000001 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 4] Global_1h_Watchdog equals : 0.299 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 4] 1h_Watchdog global: 	0.299
+[Compute engine Runnable 4] 24h_Watchdog global: 	158.528
+[Compute engine Runnable 4] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.05936000000000001
+[Compute engine Runnable 5] Local_1h_watchdog has been kicked for sensor: 5 and it is equal to: 7.25952
+[Compute engine Runnable 5] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 5] MeasurementData from sensor: 5 has been received.
+[Compute engine Runnable 2] Local_1h_watchdog has been kicked for sensor: 2 and it is equal to: 7.25936
+[Compute engine Runnable 2] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 2] MeasurementData from sensor: 2 has been received.
+[ClientManager 2] ServerMessage_ACK has been received.
+[ClientManager 2] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.259 [s]
+[ClientManager 2] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 2] is being closed for sensor ID: 2
+[UUT_TCPclient 2]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.259 [s]"
+[TCPclient 2] ClientManager for the sensor closed successfully
+[TCPclient 2] Socket for the sensor closed successfully
+[Compute engine Runnable 4] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 4] Request_MeasurementData is sent to sensor ID: 4
+[Compute engine Runnable 3] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 3] Request_MeasurementData is sent to sensor ID: 3
+[ClientManager 3] ServerMessage_Request_MeasurementData has been received.
+[Compute engine Runnable 1] Local_1h_watchdog has been kicked for sensor: 1 and it is equal to: 7.25936
+[TCPclient 3] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 3] sensor: 	3 has the following number of measurements: 	2
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[ClientManager 1] ServerMessage_ACK has been received.
+[ClientManager 3] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[ClientManager 1] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.259 [s]
+[ClientManager 1] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 1] is being closed for sensor ID: 1
+[UUT_TCPclient 1]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.259 [s]"
+[TCPclient 1] ClientManager for the sensor closed successfully
+[TCPclient 1] Socket for the sensor closed successfully
+[Compute engine Runnable 2] ClientMessage_ACK from sensor: 2 has been received.
+[Compute engine Runnable 2] ClientMessage_ACK received when neither 1h_watchdog: 7.25936 [s] nor 24h_watchdog: 158.624 [s] is close to expire
+[ClientManager 4] ServerMessage_Request_MeasurementData has been received.
+[ClientManager 5] ServerMessage_ACK has been received.
+[ClientManager 5] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.259 [s]
+[TCPclient 4] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 4] sensor: 	4 has the following number of measurements: 	2
+[ClientManager 5] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 5] is being closed for sensor ID: 5
+[UUT_TCPclient 5]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.259 [s]"
+[TCPclient 5] ClientManager for the sensor closed successfully
+[TCPclient 5] Socket for the sensor closed successfully
+[ClientManager 4] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Runnable 5] ClientMessage_ACK from sensor: 5 has been received.
+[Compute engine Runnable 5] ClientMessage_ACK received when neither 1h_watchdog: 7.25952 [s] nor 24h_watchdog: 158.624 [s] is close to expire
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] ClientMessage_ACK received when neither 1h_watchdog: 7.25936 [s] nor 24h_watchdog: 158.624 [s] is close to expire
+[Compute engine Runnable 3] Local_1h_watchdog has been kicked for sensor: 3 and it is equal to: 7.2592
+[Compute engine Runnable 3] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 3] MeasurementData from sensor: 3 has been received.
+[ClientManager 3] ServerMessage_ACK has been received.
+[ClientManager 3] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.259 [s]
+[ClientManager 3] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 3] is being closed for sensor ID: 3
+[UUT_TCPclient 3]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.259 [s]"
+[TCPclient 3] ClientManager for the sensor closed successfully
+[Compute engine Runnable 4] Local_1h_watchdog has been kicked for sensor: 4 and it is equal to: 7.25936
+[TCPclient 3] Socket for the sensor closed successfully
+[Compute engine Runnable 4] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 5] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 4] MeasurementData from sensor: 4 has been received.
+[Compute engine Runnable 5] TCP connection with sensor: 5 is being closed
+[ClientManager 4] ServerMessage_ACK has been received.
+[Compute engine Runnable 2] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 5] [copmute time] it took: 0.07500000000000001 [s] to process all 1h watchog triggered messages (time_messages_processing)
+[Compute engine Runnable 2] TCP connection with sensor: 2 is being closed
+[Compute engine Runnable 2] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 5] 1hWatchdog has been kicked
+[Compute engine Runnable 2] there are 22 measurement(s) more remaining to kick 24hWatchdog
+[Compute engine Runnable 5] 1hWatchdog has been kicked when it has: 0.297 [s] left to expire
+[ClientManager 4] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.259 [s]
+[ClientManager 4] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 4] is being closed for sensor ID: 4
+[UUT_TCPclient 4]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.259 [s]"
+[TCPclient 4] ClientManager for the sensor closed successfully
+[TCPclient 4] Socket for the sensor closed successfully
+[Compute engine Runnable 1] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 1] TCP connection with sensor: 1 is being closed
+[Compute engine Runnable 1] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 1] there are 22 measurement(s) more remaining to kick 24hWatchdog
+[Compute engine Runnable 3] ClientMessage_ACK from sensor: 3 has been received.
+[Compute engine Runnable 3] ClientMessage_ACK received when neither 1h_watchdog: 7.2592 [s] nor 24h_watchdog: 158.624 [s] is close to expire
+[Compute engine Runnable 4] ClientMessage_ACK from sensor: 4 has been received.
+[Compute engine Runnable 4] ClientMessage_ACK received when neither 1h_watchdog: 7.25936 [s] nor 24h_watchdog: 158.624 [s] is close to expire
+[Compute engine Runnable 3] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 3] TCP connection with sensor: 3 is being closed
+[Compute engine Runnable 3] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 3] there are 22 measurement(s) more remaining to kick 24hWatchdog
+[Compute engine Runnable 4] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 4] TCP connection with sensor: 4 is being closed
+[Compute engine Runnable 4] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 4] there are 22 measurement(s) more remaining to kick 24hWatchdog
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 6.859
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 6.4590000000000005
+[ApplicationSanityCheckIT sensor: 1] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-36.measurement_data
+[ApplicationSanityCheckIT sensor: 1] Sensor Info check file.getName(): 		sensor_1_2018-09-06_22-59-36_stayinOPERATIONAL.sensor_info
+[ApplicationSanityCheckIT sensor: 2] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-36.measurement_data
+[ApplicationSanityCheckIT sensor: 2] Sensor Info check file.getName(): 		sensor_2_2018-09-06_22-59-36_stayinOPERATIONAL.sensor_info
+[ApplicationSanityCheckIT sensor: 3] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-36.measurement_data
+[ApplicationSanityCheckIT sensor: 3] Sensor Info check file.getName(): 		sensor_3_2018-09-06_22-59-36_stayinOPERATIONAL.sensor_info
+[ApplicationSanityCheckIT sensor: 4] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-36.measurement_data
+[ApplicationSanityCheckIT sensor: 4] Sensor Info check file.getName(): 		sensor_4_2018-09-06_22-59-36_stayinOPERATIONAL.sensor_info
+[ApplicationSanityCheckIT sensor: 5] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-36.measurement_data
+[ApplicationSanityCheckIT sensor: 5] Sensor Info check file.getName(): 		sensor_5_2018-09-06_22-59-36_stayinOPERATIONAL.sensor_info
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 4.859
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 4.4590000000000005
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 2.869
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 2.459
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 1.289
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 1.239
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 0.789
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 0.739
+[UUT_TCPclient 1]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23900000000000002 [s]
+[TCPclient 0] Client Socket created on port = 8765
+[UUT_TCPclient 2]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23900000000000002 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 0.406 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when Global_24h_Watchdog 151.504 [s]
+[TCPserver] Number of Active Threads: 0
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[TCPclient 1]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[UUT_TCPclient 4]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23900000000000002 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 0.406 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when Global_24h_Watchdog 151.504 [s]
+[TCPserver] Number of Active Threads: 0
+[TCPclient 0] Client Socket created on port = 8765
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 4] Client Manager created with outputsteam and input stream
+[TCPclient 0] Client Socket created on port = 8765
+[TCPserver] Number of Active Threads: 2
+[UUT_TCPclient 3]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23900000000000002 [s]
+[TCPclient 2] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 4]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[TCPclient 2]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[TCPserver] Number of Active Threads: 3
+[TCPclient 0] Client Socket created on port = 8765
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 3] Client Manager created with outputsteam and input stream
+[UUT_TCPclient 5]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23900000000000002 [s]
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 3]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[TCPclient 0] Client Socket created on port = 8765
+[TCPserver] last ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 0.403 [s]
+[TCPserver] last ComputeEngine_Runnable launched when Global_24h_Watchdog 151.488 [s]
+[TCPserver] Number of Active Threads: 4
+[TCPclient 5] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[Compute engine Runnable 3] ClientMessage_BootUp from sensor: 3 has been received.
+[Compute engine Runnable 3] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[Compute engine Runnable 1] ClientMessage_BootUp from sensor: 1 has been received.
+[ClientManager 3] ServerMessage_SensorInfoQuerry has been received.
+[Compute engine Runnable 1] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[TCPclient 5]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[ClientManager 1] ServerMessage_SensorInfoQuerry has been received.
+[Compute engine Runnable 2] ClientMessage_BootUp from sensor: 2 has been received.
+[Compute engine Runnable 5] ClientMessage_BootUp from sensor: 5 has been received.
+[ClientManager 1] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 2] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 2] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 5] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 3] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[ClientManager 2] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[ClientManager 5] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 5] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[Compute engine Runnable 3] ClientMessage_SensorInfo message from sensor: 3 has been received.
+[Compute engine Runnable 3] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 2] ClientMessage_SensorInfo message from sensor: 2 has been received.
+[Compute engine Runnable 2] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[ClientManager 3] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 3] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 3] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 3] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.401 [s]
+[ClientManager 3] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[ClientManager 2] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 2] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 2] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 2] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.401 [s]
+[ClientManager 2] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 3] send go to OPERATIONAL to sensor: 3
+[Compute engine Runnable 5] ClientMessage_SensorInfo message from sensor: 5 has been received.
+[Compute engine Runnable 2] send go to OPERATIONAL to sensor: 2
+[Compute engine Runnable 5] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[ClientManager 5] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 5] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 5] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 5] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.401 [s]
+[ClientManager 5] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 5] send go to OPERATIONAL to sensor: 5
+[Compute engine Runnable 3] ClientMessage_ACK from sensor: 3 has been received.
+[Compute engine Runnable 2] ClientMessage_ACK from sensor: 2 has been received.
+[Compute engine Runnable 4] ClientMessage_BootUp from sensor: 4 has been received.
+[Compute engine Runnable 4] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[Compute engine Runnable 5] ClientMessage_ACK from sensor: 5 has been received.
+[Compute engine Runnable 1] ClientMessage_SensorInfo message from sensor: 1 has been received.
+[ClientManager 4] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 4] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 1] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[ClientManager 1] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 1] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 1] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 1] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.4 [s]
+[ClientManager 1] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 1] send go to OPERATIONAL to sensor: 1
+[Compute engine Runnable 4] ClientMessage_SensorInfo message from sensor: 4 has been received.
+[ClientManager 4] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 4] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 4] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 4] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.399 [s]
+[ClientManager 4] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 4] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 4] send go to OPERATIONAL to sensor: 4
+[Compute engine Runnable 4] ClientMessage_ACK from sensor: 4 has been received.
+[Compute engine Runnable 3] _1h_watchdog equals : 0.06448000000000001 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 3] Global_1h_Watchdog equals : 0.324 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 3] 1h_Watchdog global: 	0.324
+[Compute engine Runnable 3] 24h_Watchdog global: 	151.40800000000002
+[Compute engine Runnable 3] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.06448000000000001
+[Compute engine Runnable 2] _1h_watchdog equals : 0.06464000000000002 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 2] Global_1h_Watchdog equals : 0.323 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 2] 1h_Watchdog global: 	0.323
+[Compute engine Runnable 2] 24h_Watchdog global: 	151.40800000000002
+[Compute engine Runnable 2] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.06464000000000002
+[Compute engine Runnable 5] _1h_watchdog equals : 0.06432000000000002 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 5] Global_1h_Watchdog equals : 0.322 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 5] 1h_Watchdog global: 	0.322
+[Compute engine Runnable 5] 24h_Watchdog global: 	151.40800000000002
+[Compute engine Runnable 5] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.06432000000000002
+[Compute engine Runnable 3] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 3] Request_MeasurementData is sent to sensor ID: 3
+[ClientManager 3] ServerMessage_Request_MeasurementData has been received.
+[Compute engine Runnable 2] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 2] Request_MeasurementData is sent to sensor ID: 2
+[TCPclient 3] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 3] sensor: 	3 has the following number of measurements: 	3
+[ClientManager 3] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[ClientManager 2] ServerMessage_Request_MeasurementData has been received.
+[TCPclient 2] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 2] sensor: 	2 has the following number of measurements: 	3
+[ClientManager 2] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Runnable 3] Local_1h_watchdog has been kicked for sensor: 3 and it is equal to: 7.26448
+[Compute engine Runnable 3] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 3] MeasurementData from sensor: 3 has been received.
+[ClientManager 5] ServerMessage_Request_MeasurementData has been received.
+[TCPclient 5] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 5] sensor: 	5 has the following number of measurements: 	3
+[ClientManager 5] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Runnable 5] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 5] Request_MeasurementData is sent to sensor ID: 5
+[Compute engine Runnable 2] Local_1h_watchdog has been kicked for sensor: 2 and it is equal to: 7.26464
+[Compute engine Runnable 2] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 2] MeasurementData from sensor: 2 has been received.
+[ClientManager 2] ServerMessage_ACK has been received.
+[ClientManager 2] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.264 [s]
+[Compute engine Runnable 5] Local_1h_watchdog has been kicked for sensor: 5 and it is equal to: 7.2643200000000006
+[ClientManager 2] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 2] is being closed for sensor ID: 2
+[UUT_TCPclient 2]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.264 [s]"
+[TCPclient 2] ClientManager for the sensor closed successfully
+[TCPclient 2] Socket for the sensor closed successfully
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 7.264
+[Compute engine Runnable 2] ClientMessage_ACK from sensor: 2 has been received.
+[ClientManager 5] ServerMessage_ACK has been received.
+[Compute engine Runnable 2] ClientMessage_ACK received when neither 1h_watchdog: 7.26464 [s] nor 24h_watchdog: 151.504 [s] is close to expire
+[ClientManager 5] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.264 [s]
+[Compute engine Runnable 5] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[ClientManager 5] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 5] is being closed for sensor ID: 5
+[UUT_TCPclient 5]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.264 [s]"
+[Compute engine Runnable 5] MeasurementData from sensor: 5 has been received.
+[TCPclient 5] ClientManager for the sensor closed successfully
+[TCPclient 5] Socket for the sensor closed successfully
+[ClientManager 3] ServerMessage_ACK has been received.
+[ClientManager 3] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.264 [s]
+[ClientManager 3] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[Compute engine Runnable 3] ClientMessage_ACK from sensor: 3 has been received.
+[Compute engine Runnable 3] ClientMessage_ACK received when neither 1h_watchdog: 7.26448 [s] nor 24h_watchdog: 151.488 [s] is close to expire
+[ClientManager 3] is being closed for sensor ID: 3
+[UUT_TCPclient 3]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.264 [s]"
+[TCPclient 3] ClientManager for the sensor closed successfully
+[TCPclient 3] Socket for the sensor closed successfully
+[Compute engine Runnable 2] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 2] TCP connection with sensor: 2 is being closed
+[Compute engine Runnable 2] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 2] there are 21 measurement(s) more remaining to kick 24hWatchdog
+[Compute engine Runnable 5] ClientMessage_ACK from sensor: 5 has been received.
+[Compute engine Runnable 5] ClientMessage_ACK received when neither 1h_watchdog: 7.2643200000000006 [s] nor 24h_watchdog: 151.488 [s] is close to expire
+[Compute engine Runnable 3] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 3] TCP connection with sensor: 3 is being closed
+[Compute engine Runnable 3] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 3] there are 21 measurement(s) more remaining to kick 24hWatchdog
+[Compute engine Runnable 5] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 5] TCP connection with sensor: 5 is being closed
+[Compute engine Runnable 5] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 5] there are 21 measurement(s) more remaining to kick 24hWatchdog
+[Compute engine Runnable 1] _1h_watchdog equals : 0.06496 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 0.321 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] 1h_Watchdog global: 	0.321
+[Compute engine Runnable 1] 24h_Watchdog global: 	151.392
+[Compute engine Runnable 1] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.06496
+[Compute engine Runnable 4] _1h_watchdog equals : 0.06496 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 4] Global_1h_Watchdog equals : 0.321 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 4] 1h_Watchdog global: 	0.321
+[Compute engine Runnable 4] 24h_Watchdog global: 	151.392
+[Compute engine Runnable 4] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.06496
+[Compute engine Runnable 1] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 1] Request_MeasurementData is sent to sensor ID: 1
+[ClientManager 1] ServerMessage_Request_MeasurementData has been received.
+[TCPclient 1] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 1] sensor: 	1 has the following number of measurements: 	3
+[ClientManager 1] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Runnable 4] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 4] Request_MeasurementData is sent to sensor ID: 4
+[ClientManager 4] ServerMessage_Request_MeasurementData has been received.
+[TCPclient 4] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 4] sensor: 	4 has the following number of measurements: 	3
+[Compute engine Runnable 1] Local_1h_watchdog has been kicked for sensor: 1 and it is equal to: 7.26496
+[ClientManager 4] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[ClientManager 1] ServerMessage_ACK has been received.
+[ClientManager 1] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.264 [s]
+[ClientManager 1] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 1] is being closed for sensor ID: 1
+[UUT_TCPclient 1]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.264 [s]"
+[TCPclient 1] ClientManager for the sensor closed successfully
+[TCPclient 1] Socket for the sensor closed successfully
+[Compute engine Runnable 4] Local_1h_watchdog has been kicked for sensor: 4 and it is equal to: 7.26496
+[Compute engine Runnable 4] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 4] MeasurementData from sensor: 4 has been received.
+[ClientManager 4] ServerMessage_ACK has been received.
+[ClientManager 4] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.264 [s]
+[ClientManager 4] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 4] is being closed for sensor ID: 4
+[UUT_TCPclient 4]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.264 [s]"
+[TCPclient 4] ClientManager for the sensor closed successfully
+[TCPclient 4] Socket for the sensor closed successfully
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] ClientMessage_ACK received when neither 1h_watchdog: 7.26496 [s] nor 24h_watchdog: 151.504 [s] is close to expire
+[Compute engine Runnable 4] ClientMessage_ACK from sensor: 4 has been received.
+[Compute engine Runnable 4] ClientMessage_ACK received when neither 1h_watchdog: 7.26496 [s] nor 24h_watchdog: 151.504 [s] is close to expire
+[Compute engine Runnable 1] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 1] TCP connection with sensor: 1 is being closed
+[Compute engine Runnable 1] [copmute time] it took: 0.09200000000000003 [s] to process all 1h watchog triggered messages (time_messages_processing)
+[Compute engine Runnable 1] 1hWatchdog has been kicked
+[Compute engine Runnable 1] 1hWatchdog has been kicked when it has: 0.314 [s] left to expire
+[Compute engine Runnable 4] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 4] TCP connection with sensor: 4 is being closed
+[Compute engine Runnable 4] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 4] there are 21 measurement(s) more remaining to kick 24hWatchdog
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 6.674
+[ApplicationSanityCheckIT sensor: 1] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-43.measurement_data
+[ApplicationSanityCheckIT sensor: 1] Sensor Info check file.getName(): 		sensor_1_2018-09-06_22-59-43_stayinOPERATIONAL.sensor_info
+[ApplicationSanityCheckIT sensor: 2] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-43.measurement_data
+[ApplicationSanityCheckIT sensor: 2] Sensor Info check file.getName(): 		sensor_2_2018-09-06_22-59-43_stayinOPERATIONAL.sensor_info
+[ApplicationSanityCheckIT sensor: 3] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-43.measurement_data
+[ApplicationSanityCheckIT sensor: 3] Sensor Info check file.getName(): 		sensor_3_2018-09-06_22-59-43_stayinOPERATIONAL.sensor_info
+[ApplicationSanityCheckIT sensor: 4] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-43.measurement_data
+[ApplicationSanityCheckIT sensor: 4] Sensor Info check file.getName(): 		sensor_4_2018-09-06_22-59-43_stayinOPERATIONAL.sensor_info
+[ApplicationSanityCheckIT sensor: 5] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-43.measurement_data
+[ApplicationSanityCheckIT sensor: 5] Sensor Info check file.getName(): 		sensor_5_2018-09-06_22-59-43_stayinOPERATIONAL.sensor_info
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 5.284
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 4.674
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 3.2840000000000003
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 2.674
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 1.344
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 1.274
+[UUT_TCPclient 2]	  Local_1h_Watchdog: 0.844
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 0.774
+[UUT_TCPclient 2]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.234 [s]
+[UUT_TCPclient 3]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.234 [s]
+[UUT_TCPclient 4]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.234 [s]
+[TCPclient 0] Client Socket created on port = 8765
+[TCPserver] 1st ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 0.436 [s]
+[UUT_TCPclient 1]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.234 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when Global_24h_Watchdog 144.368 [s]
+[TCPserver] Number of Active Threads: 0
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] 1st ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 0.436 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when Global_24h_Watchdog 144.368 [s]
+[TCPserver] Number of Active Threads: 0
+[TCPclient 0] Client Socket created on port = 8765
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 4] Client Manager created with outputsteam and input stream
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 1
+[TCPclient 4]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[TCPclient 0] Client Socket created on port = 8765
+[TCPclient 2] Client Manager created with outputsteam and input stream
+[TCPclient 2]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[TCPclient 0] Client Socket created on port = 8765
+[UUT_TCPclient 5]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.234 [s]
+[TCPclient 1]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[TCPserver] Number of Active Threads: 3
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[Compute engine Runnable 2] ClientMessage_BootUp from sensor: 2 has been received.
+[TCPclient 0] Client Socket created on port = 8765
+[TCPserver] last ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 0.435 [s]
+[TCPserver] last ComputeEngine_Runnable launched when Global_24h_Watchdog 144.352 [s]
+[TCPserver] Number of Active Threads: 4
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 3] Client Manager created with outputsteam and input stream
+[TCPclient 5] Client Manager created with outputsteam and input stream
+[TCPclient 5]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[Compute engine Runnable 1] ClientMessage_BootUp from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[Compute engine Runnable 4] ClientMessage_BootUp from sensor: 4 has been received.
+[ClientManager 1] ServerMessage_SensorInfoQuerry has been received.
+[Compute engine Runnable 4] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[Compute engine Runnable 5] ClientMessage_BootUp from sensor: 5 has been received.
+[ClientManager 1] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 2] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[TCPclient 3]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[ClientManager 2] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 5] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 2] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[ClientManager 5] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[ClientManager 4] ServerMessage_SensorInfoQuerry has been received.
+[Compute engine Runnable 5] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[Compute engine Runnable 3] ClientMessage_BootUp from sensor: 3 has been received.
+[ClientManager 4] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 1] ClientMessage_SensorInfo message from sensor: 1 has been received.
+[Compute engine Runnable 3] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[Compute engine Runnable 1] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 4] ClientMessage_SensorInfo message from sensor: 4 has been received.
+[Compute engine Runnable 2] ClientMessage_SensorInfo message from sensor: 2 has been received.
+[Compute engine Runnable 4] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 1] send go to OPERATIONAL to sensor: 1
+[Compute engine Runnable 2] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 4] send go to OPERATIONAL to sensor: 4
+[Compute engine Runnable 2] send go to OPERATIONAL to sensor: 2
+[ClientManager 1] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 1] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 1] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 1] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.434 [s]
+[ClientManager 1] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[ClientManager 2] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 2] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 2] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 2] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.434 [s]
+[ClientManager 2] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 5] ClientMessage_SensorInfo message from sensor: 5 has been received.
+[Compute engine Runnable 5] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[ClientManager 4] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 4] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 4] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 4] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.434 [s]
+[ClientManager 4] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 4] ClientMessage_ACK from sensor: 4 has been received.
+[Compute engine Runnable 2] ClientMessage_ACK from sensor: 2 has been received.
+[Compute engine Runnable 5] send go to OPERATIONAL to sensor: 5
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[ClientManager 5] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 5] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 5] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 5] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.434 [s]
+[ClientManager 5] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[ClientManager 3] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 3] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 3] ClientMessage_SensorInfo message from sensor: 3 has been received.
+[Compute engine Runnable 3] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 3] send go to OPERATIONAL to sensor: 3
+[Compute engine Runnable 5] ClientMessage_ACK from sensor: 5 has been received.
+[ClientManager 3] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 3] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 3] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 3] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.434 [s]
+[ClientManager 3] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 3] ClientMessage_ACK from sensor: 3 has been received.
+[Compute engine Runnable 2] _1h_watchdog equals : 0.06976 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 2] Global_1h_Watchdog equals : 0.35100000000000003 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 4] _1h_watchdog equals : 0.06976 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 2] 1h_Watchdog global: 	0.35100000000000003
+[Compute engine Runnable 4] Global_1h_Watchdog equals : 0.35100000000000003 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 2] 24h_Watchdog global: 	144.256
+[Compute engine Runnable 4] 1h_Watchdog global: 	0.35100000000000003
+[Compute engine Runnable 2] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.06976
+[Compute engine Runnable 4] 24h_Watchdog global: 	144.256
+[Compute engine Runnable 4] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.06976
+[Compute engine Runnable 1] _1h_watchdog equals : 0.06976 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 0.35000000000000003 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] 1h_Watchdog global: 	0.35000000000000003
+[Compute engine Runnable 1] 24h_Watchdog global: 	144.256
+[Compute engine Runnable 1] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.06976
+[Compute engine Runnable 4] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 4] Request_MeasurementData is sent to sensor ID: 4
+[Compute engine Runnable 2] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 2] Request_MeasurementData is sent to sensor ID: 2
+[ClientManager 4] ServerMessage_Request_MeasurementData has been received.
+[ClientManager 2] ServerMessage_Request_MeasurementData has been received.
+[TCPclient 4] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 4] sensor: 	4 has the following number of measurements: 	4
+[TCPclient 2] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 2] sensor: 	2 has the following number of measurements: 	4
+[ClientManager 4] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[ClientManager 2] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Runnable 1] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 1] Request_MeasurementData is sent to sensor ID: 1
+[ClientManager 1] ServerMessage_Request_MeasurementData has been received.
+[TCPclient 1] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 1] sensor: 	1 has the following number of measurements: 	4
+[Compute engine Runnable 2] Local_1h_watchdog has been kicked for sensor: 2 and it is equal to: 7.26976
+[ClientManager 1] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Runnable 2] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 2] MeasurementData from sensor: 2 has been received.
+[Compute engine Runnable 4] Local_1h_watchdog has been kicked for sensor: 4 and it is equal to: 7.26976
+[ClientManager 2] ServerMessage_ACK has been received.
+[ClientManager 2] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.269 [s]
+[Compute engine Runnable 4] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 4] MeasurementData from sensor: 4 has been received.
+[ClientManager 4] ServerMessage_ACK has been received.
+[Compute engine Runnable 5] _1h_watchdog equals : 0.0696 when leaving _1h_Watchdog_close_to_expire()
+[ClientManager 2] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 4] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.269 [s]
+[Compute engine Runnable 1] Local_1h_watchdog has been kicked for sensor: 1 and it is equal to: 7.26976
+[Compute engine Runnable 5] Global_1h_Watchdog equals : 0.34900000000000003 when leaving _1h_Watchdog_close_to_expire()
+[ClientManager 2] is being closed for sensor ID: 2
+[UUT_TCPclient 2]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.269 [s]"
+[TCPclient 2] ClientManager for the sensor closed successfully
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[Compute engine Runnable 5] 1h_Watchdog global: 	0.34900000000000003
+[ClientManager 1] ServerMessage_ACK has been received.
+[Compute engine Runnable 5] 24h_Watchdog global: 	144.256
+[ClientManager 1] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.269 [s]
+[Compute engine Runnable 5] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.0696
+[ClientManager 4] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 4] is being closed for sensor ID: 4
+[UUT_TCPclient 4]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.269 [s]"
+[TCPclient 4] ClientManager for the sensor closed successfully
+[ClientManager 1] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[TCPclient 2] Socket for the sensor closed successfully
+[ClientManager 1] is being closed for sensor ID: 1
+[UUT_TCPclient 1]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.269 [s]"
+[TCPclient 4] Socket for the sensor closed successfully
+[TCPclient 1] ClientManager for the sensor closed successfully
+[TCPclient 1] Socket for the sensor closed successfully
+[Compute engine Runnable 2] ClientMessage_ACK from sensor: 2 has been received.
+[Compute engine Runnable 2] ClientMessage_ACK received when neither 1h_watchdog: 7.26976 [s] nor 24h_watchdog: 144.368 [s] is close to expire
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] ClientMessage_ACK received when neither 1h_watchdog: 7.26976 [s] nor 24h_watchdog: 144.368 [s] is close to expire
+[Compute engine Runnable 4] ClientMessage_ACK from sensor: 4 has been received.
+[Compute engine Runnable 3] _1h_watchdog equals : 0.0696 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 4] ClientMessage_ACK received when neither 1h_watchdog: 7.26976 [s] nor 24h_watchdog: 144.368 [s] is close to expire
+[Compute engine Runnable 5] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 5] Request_MeasurementData is sent to sensor ID: 5
+[ClientManager 5] ServerMessage_Request_MeasurementData has been received.
+[Compute engine Runnable 3] Global_1h_Watchdog equals : 0.34600000000000003 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 3] 1h_Watchdog global: 	0.34600000000000003
+[Compute engine Runnable 3] 24h_Watchdog global: 	144.256
+[Compute engine Runnable 3] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.0696
+[TCPclient 5] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 5] sensor: 	5 has the following number of measurements: 	4
+[ClientManager 5] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Runnable 5] Local_1h_watchdog has been kicked for sensor: 5 and it is equal to: 7.2696000000000005
+[Compute engine Runnable 2] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 2] TCP connection with sensor: 2 is being closed
+[Compute engine Runnable 2] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 2] there are 20 measurement(s) more remaining to kick 24hWatchdog
+[ClientManager 5] ServerMessage_ACK has been received.
+[Compute engine Runnable 5] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 5] MeasurementData from sensor: 5 has been received.
+[ClientManager 5] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.269 [s]
+[ClientManager 5] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 5] is being closed for sensor ID: 5
+[UUT_TCPclient 5]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.269 [s]"
+[TCPclient 5] ClientManager for the sensor closed successfully
+[TCPclient 5] Socket for the sensor closed successfully
+[Compute engine Runnable 1] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 4] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 1] TCP connection with sensor: 1 is being closed
+[Compute engine Runnable 4] TCP connection with sensor: 4 is being closed
+[Compute engine Runnable 1] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 4] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 1] there are 20 measurement(s) more remaining to kick 24hWatchdog
+[Compute engine Runnable 4] there are 20 measurement(s) more remaining to kick 24hWatchdog
+[Compute engine Runnable 3] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 3] Request_MeasurementData is sent to sensor ID: 3
+[ClientManager 3] ServerMessage_Request_MeasurementData has been received.
+[TCPclient 3] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 3] sensor: 	3 has the following number of measurements: 	4
+[ClientManager 3] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Runnable 3] Local_1h_watchdog has been kicked for sensor: 3 and it is equal to: 7.2696000000000005
+[Compute engine Runnable 5] ClientMessage_ACK from sensor: 5 has been received.
+[Compute engine Runnable 3] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 3] MeasurementData from sensor: 3 has been received.
+[Compute engine Runnable 5] ClientMessage_ACK received when neither 1h_watchdog: 7.2696000000000005 [s] nor 24h_watchdog: 144.352 [s] is close to expire
+[ClientManager 3] ServerMessage_ACK has been received.
+[ClientManager 3] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.269 [s]
+[ClientManager 3] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 3] is being closed for sensor ID: 3
+[UUT_TCPclient 3]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.269 [s]"
+[TCPclient 3] ClientManager for the sensor closed successfully
+[TCPclient 3] Socket for the sensor closed successfully
+[Compute engine Runnable 5] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 5] TCP connection with sensor: 5 is being closed
+[Compute engine Runnable 5] [copmute time] it took: 0.09499999999999997 [s] to process all 1h watchog triggered messages (time_messages_processing)
+[Compute engine Runnable 5] 1hWatchdog has been kicked
+[Compute engine Runnable 3] ClientMessage_ACK from sensor: 3 has been received.
+[Compute engine Runnable 5] 1hWatchdog has been kicked when it has: 0.341 [s] left to expire
+[Compute engine Runnable 3] ClientMessage_ACK received when neither 1h_watchdog: 7.2696000000000005 [s] nor 24h_watchdog: 144.352 [s] is close to expire
+[Compute engine Runnable 3] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 3] TCP connection with sensor: 3 is being closed
+[Compute engine Runnable 3] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 3] there are 20 measurement(s) more remaining to kick 24hWatchdog
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 7.079
+[ApplicationSanityCheckIT sensor: 1] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-50.measurement_data
+[ApplicationSanityCheckIT sensor: 1] Sensor Info check file.getName(): 		sensor_1_2018-09-06_22-59-50_stayinOPERATIONAL.sensor_info
+[ApplicationSanityCheckIT sensor: 2] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-50.measurement_data
+[ApplicationSanityCheckIT sensor: 2] Sensor Info check file.getName(): 		sensor_2_2018-09-06_22-59-50_stayinOPERATIONAL.sensor_info
+[ApplicationSanityCheckIT sensor: 3] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-50.measurement_data
+[ApplicationSanityCheckIT sensor: 3] Sensor Info check file.getName(): 		sensor_3_2018-09-06_22-59-50_stayinOPERATIONAL.sensor_info
+[ApplicationSanityCheckIT sensor: 4] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-50.measurement_data
+[ApplicationSanityCheckIT sensor: 4] Sensor Info check file.getName(): 		sensor_4_2018-09-06_22-59-50_stayinOPERATIONAL.sensor_info
+[ApplicationSanityCheckIT sensor: 5] Measurement Data check file.getName(): 	measurement_2018-09-06_22-59-50.measurement_data
+[ApplicationSanityCheckIT sensor: 5] Sensor Info check file.getName(): 		sensor_5_2018-09-06_22-59-50_stayinOPERATIONAL.sensor_info
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 5.079
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 3.079
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 1.319
+[UUT_TCPclient 4]	  Local_1h_Watchdog: 0.8190000000000001
+[UUT_TCPclient 1]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23900000000000002 [s]
+[UUT_TCPclient 2]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23900000000000002 [s]
+[UUT_TCPclient 4]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23900000000000002 [s]
+[UUT_TCPclient 5]	 runTheClient() is being called when Local_1h_Watchdog equals: 0.23900000000000002 [s]
+[TCPclient 0] Client Socket created on port = 8765
+[TCPserver] 1st ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 0.428 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when Global_24h_Watchdog 137.232 [s]
+[TCPserver] Number of Active Threads: 0
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 2] Client Manager created with outputsteam and input stream
+[TCPclient 0] Client Socket created on port = 8765
+[TCPserver] Number of Active Threads: 1
+[TCPclient 2]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[Compute engine Runnable 2] ClientMessage_BootUp from sensor: 2 has been received.
+[TCPclient 0] Client Socket created on port = 8765
+[Compute engine Runnable 2] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[TCPclient 5] Client Manager created with outputsteam and input stream
+[TCPclient 5]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[ClientManager 2] ServerMessage_SensorInfoQuerry has been received.
+[TCPclient 0] Client Socket created on port = 8765
+[ClientManager 2] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[TCPserver] Number of Active Threads: 1
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 1
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[TCPclient 1]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[TCPclient 4] Client Manager created with outputsteam and input stream
+[TCPclient 4]  Boot Up message send by the TCPClient - Client manager for the sensor is being launched
+[Compute engine Runnable 2] ClientMessage_SensorInfo message from sensor: 2 has been received.
+[Compute engine Runnable 2] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 2] send go to OPERATIONAL to sensor: 2
+[ClientManager 2] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 2] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 2] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 2] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.427 [s]
+[ClientManager 2] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 2] ClientMessage_ACK from sensor: 2 has been received.
+[Compute engine Runnable 5] ClientMessage_BootUp from sensor: 5 has been received.
+[Compute engine Runnable 1] ClientMessage_BootUp from sensor: 1 has been received.
+[Compute engine Runnable 5] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 5] ServerMessage_SensorInfoQuerry has been received.
+[Compute engine Runnable 4] ClientMessage_BootUp from sensor: 4 has been received.
+[ClientManager 5] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 4] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[Compute engine Runnable 1] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+[ClientManager 1] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 4] ServerMessage_SensorInfoQuerry has been received.
+[ClientManager 4] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[ClientManager 1] responds to ServerMessage_SensorInfoQuerry with ClientMessage_SensorInfo.
+[Compute engine Runnable 4] ClientMessage_SensorInfo message from sensor: 4 has been received.
+[Compute engine Runnable 4] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[Compute engine Runnable 1] ClientMessage_SensorInfo message from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[ClientManager 1] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 1] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 1] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 1] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.422 [s]
+[ClientManager 1] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 4] send go to OPERATIONAL to sensor: 4
+[ClientManager 4] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 4] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 4] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 4] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.422 [s]
+[ClientManager 4] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 1] send go to OPERATIONAL to sensor: 1
+[Compute engine Runnable 5] ClientMessage_SensorInfo message from sensor: 5 has been received.
+[Compute engine Runnable 4] ClientMessage_ACK from sensor: 4 has been received.
+[Compute engine Runnable 5] responds to ClientMessage_SensorInfo with ServerMessage_SensorInfoUpdate.
+[ClientManager 5] ServerMessage_SensorInfoUpdate has been received.
+[ClientManager 5] responds to ServerMessage_SensorInfoUpdate with ClientMessage_ACK.
+[TCPclient 5] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 5] Local_1h_Watchdog for the sensor has been synchronized and it equals: 0.422 [s]
+[ClientManager 5] ServerMessage_SensorInfoUpdate has the following SensorState: OPERATIONAL
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 5] send go to OPERATIONAL to sensor: 5
+[Compute engine Runnable 5] ClientMessage_ACK from sensor: 5 has been received.
+[Compute engine Runnable 2] _1h_watchdog equals : 0.06848000000000001 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 2] Global_1h_Watchdog equals : 0.35000000000000003 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 2] 1h_Watchdog global: 	0.35000000000000003
+[Compute engine Runnable 2] 24h_Watchdog global: 	137.136
+[Compute engine Runnable 2] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.06848000000000001
+[ClientManager 2] ServerMessage_Request_MeasurementData has been received.
+[Compute engine Runnable 2] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 2] Request_MeasurementData is sent to sensor ID: 2
+[TCPclient 2] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 2] sensor: 	2 has the following number of measurements: 	5
+[ClientManager 2] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Runnable 2] Local_1h_watchdog has been kicked for sensor: 2 and it is equal to: 7.26848
+[Compute engine Runnable 2] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 2] MeasurementData from sensor: 2 has been received.
+[ClientManager 2] ServerMessage_ACK has been received.
+[ClientManager 2] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.268 [s]
+[ClientManager 2] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 2] is being closed for sensor ID: 2
+[UUT_TCPclient 2]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.268 [s]"
+[TCPclient 2] ClientManager for the sensor closed successfully
+[TCPclient 2] Socket for the sensor closed successfully
+[Compute engine Runnable 2] ClientMessage_ACK from sensor: 2 has been received.
+[Compute engine Runnable 2] ClientMessage_ACK received when neither 1h_watchdog: 7.26848 [s] nor 24h_watchdog: 137.232 [s] is close to expire
+[Compute engine Runnable 2] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 2] TCP connection with sensor: 2 is being closed
+[Compute engine Runnable 2] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 2] there are 19 measurement(s) more remaining to kick 24hWatchdog
+[Compute engine Runnable 4] _1h_watchdog equals : 0.06832 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 4] Global_1h_Watchdog equals : 0.337 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 4] 1h_Watchdog global: 	0.337
+[Compute engine Runnable 4] 24h_Watchdog global: 	137.12
+[Compute engine Runnable 4] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.06832
+[Compute engine Runnable 1] _1h_watchdog equals : 0.06832 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] Global_1h_Watchdog equals : 0.336 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 1] 1h_Watchdog global: 	0.336
+[Compute engine Runnable 1] 24h_Watchdog global: 	137.12
+[Compute engine Runnable 1] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.06832
+[Compute engine Runnable 4] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 4] Request_MeasurementData is sent to sensor ID: 4
+[ClientManager 4] ServerMessage_Request_MeasurementData has been received.
+[TCPclient 4] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 4] sensor: 	4 has the following number of measurements: 	5
+[ClientManager 4] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Runnable 1] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 1] Request_MeasurementData is sent to sensor ID: 1
+[Compute engine Runnable 4] Local_1h_watchdog has been kicked for sensor: 4 and it is equal to: 7.26832
+[ClientManager 1] ServerMessage_Request_MeasurementData has been received.
+[TCPclient 1] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 1] sensor: 	1 has the following number of measurements: 	5
+[Compute engine Runnable 4] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 4] MeasurementData from sensor: 4 has been received.
+[ClientManager 1] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[ClientManager 4] ServerMessage_ACK has been received.
+[ClientManager 4] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.268 [s]
+[ClientManager 4] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 4] is being closed for sensor ID: 4
+[UUT_TCPclient 4]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.268 [s]"
+[TCPclient 4] ClientManager for the sensor closed successfully
+[TCPclient 4] Socket for the sensor closed successfully
+[Compute engine Runnable 1] Local_1h_watchdog has been kicked for sensor: 1 and it is equal to: 7.26832
+[Compute engine Runnable 4] ClientMessage_ACK from sensor: 4 has been received.
+[Compute engine Runnable 4] ClientMessage_ACK received when neither 1h_watchdog: 7.26832 [s] nor 24h_watchdog: 137.232 [s] is close to expire
+[Compute engine Runnable 1] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 1] MeasurementData from sensor: 1 has been received.
+[ClientManager 1] ServerMessage_ACK has been received.
+[Compute engine Runnable 5] _1h_watchdog equals : 0.06848000000000001 when leaving _1h_Watchdog_close_to_expire()
+[ClientManager 1] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.268 [s]
+[Compute engine Runnable 5] Global_1h_Watchdog equals : 0.333 when leaving _1h_Watchdog_close_to_expire()
+[Compute engine Runnable 5] 1h_Watchdog global: 	0.333
+[Compute engine Runnable 5] 24h_Watchdog global: 	137.12
+[Compute engine Runnable 5] 1h_Watchdog with delay for ServerMessage_Request_MeasurementData (Local_1h_watchdog): 	0.06848000000000001
+[ClientManager 1] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 1] is being closed for sensor ID: 1
+[UUT_TCPclient 1]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.268 [s]"
+[TCPclient 1] ClientManager for the sensor closed successfully
+[TCPclient 1] Socket for the sensor closed successfully
+[Compute engine Runnable 4] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 4] TCP connection with sensor: 4 is being closed
+[Compute engine Runnable 4] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 4] there are 19 measurement(s) more remaining to kick 24hWatchdog
+[Compute engine Runnable 1] ClientMessage_ACK from sensor: 1 has been received.
+[Compute engine Runnable 1] ClientMessage_ACK received when neither 1h_watchdog: 7.26832 [s] nor 24h_watchdog: 137.232 [s] is close to expire
+[Compute engine Runnable 5] responds to ClientMessage_ACK with ServerMessage_Request_MeasurementData.
+[Compute engine Runnable 5] Request_MeasurementData is sent to sensor ID: 5
+[ClientManager 5] ServerMessage_Request_MeasurementData has been received.
+[TCPclient 5] sensor instance in Client_Sensors_LIST has been updated
+[ClientManager 5] sensor: 	5 has the following number of measurements: 	5
+[ClientManager 5] responds to ServerMessage_Request_MeasurementData with ClientMessage_MeasurementData.
+[Compute engine Runnable 1] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 1] TCP connection with sensor: 1 is being closed
+[Compute engine Runnable 1] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 1] there are 19 measurement(s) more remaining to kick 24hWatchdog
+[Compute engine Runnable 5] Local_1h_watchdog has been kicked for sensor: 5 and it is equal to: 7.26848
+[Compute engine Runnable 5] responds to ClientMessage_MeasurementData with ServerMessage_ACK.
+[Compute engine Runnable 5] MeasurementData from sensor: 5 has been received.
+[ClientManager 5] ServerMessage_ACK has been received.
+[ClientManager 5] Local_1h_Watchdog for the sensor has been synchronized and it equals: 7.268 [s]
+[ClientManager 5] responds to ServerMessage_ACK with ClientMessage_ACK to end the server-client connection successfully.
+[ClientManager 5] is being closed for sensor ID: 5
+[UUT_TCPclient 5]	 closeTheClientManager() & closeTheClient() are being called when Local_1h_Watchdog equals: 7.268 [s]"
+[TCPclient 5] ClientManager for the sensor closed successfully
+[TCPclient 5] Socket for the sensor closed successfully
+[Compute engine Runnable 5] ClientMessage_ACK from sensor: 5 has been received.
+[Compute engine Runnable 5] ClientMessage_ACK received when neither 1h_watchdog: 7.26848 [s] nor 24h_watchdog: 137.232 [s] is close to expire
+[Compute engine Runnable 5] does not respond to ClientMessage_ACK.
+[Compute engine Runnable 5] TCP connection with sensor: 5 is being closed
+[Compute engine Runnable 5] Neither 1hWatchdog nor 24hWatchdog have not been kicked
+[Compute engine Runnable 5] there are 19 measurement(s) more remaining to kick 24hWatchdog
+[ApplicationSanityCheckIT] failed due to Watchdog expiration
+		Test Run 1 teardown section:
+
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0, Time elapsed: 36.368 sec <<< FAILURE! - in deliverables.ApplicationSanityCheckIT
+test_run_1(deliverables.ApplicationSanityCheckIT)  Time elapsed: 36.308 sec  <<< FAILURE!
+java.lang.AssertionError
+	at deliverables.ApplicationSanityCheckIT.test_run_1(ApplicationSanityCheckIT.java:378)
+
+
+Results :
+
+Failed tests: 
+  ApplicationSanityCheckIT.test_run_1:378
+
+Tests run: 1, Failures: 1, Errors: 0, Skipped: 0
+
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-failsafe-plugin:2.19.1:verify (integration-tests) @ UnitUnderTest ---
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 41.787 s
+[INFO] Finished at: 2018-09-06T22:59:58+02:00
+[INFO] ------------------------------------------------------------------------
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] Failed to execute goal org.apache.maven.plugins:maven-failsafe-plugin:2.19.1:verify (integration-tests) on project UnitUnderTest: There are test failures.
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] 
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] Please refer to E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target\failsafe-reports for the individual test results.
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] -> [Help 1]
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] 
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] 
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+Build step 'Invoke top-level Maven targets' marked build as failure
+Build did not succeed and the project is configured to only push after a successful build, so no pushing will occur.
+Finished: FAILURE

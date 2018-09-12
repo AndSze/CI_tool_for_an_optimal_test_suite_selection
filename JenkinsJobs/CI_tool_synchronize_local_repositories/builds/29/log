@@ -1,0 +1,43 @@
+Started by upstream project "[8mha:////4K2a1Cvzhfet/BSZHuoya5P0UDYDhEJJ1KC49INzxpPwAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzJEgZ5/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGQC0MYaa1AAAAA==[0mCI_tool_build_trigger_job" build number [8mha:////4L5Ed2cx47EkDB8NaGhCem8et2H7TeBL461r+vWECq17AAAAqh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgZF/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGWNLAMSDj5XWAAAA[0m39
+originally caused by:
+ Started by GitHub push by AndSze
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_synchronize_local_repositories
+[CI_tool_synchronize_local_repositories] $ cmd /c call C:\Users\Dell\AppData\Local\Temp\jenkins2932400208469775775.bat
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_synchronize_local_repositories>cd E:\Praca magisterska\CI_tool_diff_older_commit\master 
+
+E:\Praca magisterska\CI_tool_diff_older_commit\master>git checkout develop 
+Your branch is up to date with 'origin/develop'.
+Previous HEAD position was c01c082... CI tool validation for malfunctioning software
+Switched to branch 'develop'
+
+E:\Praca magisterska\CI_tool_diff_older_commit\master>git pull origin develop 
+From https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection
+ * branch            develop    -> FETCH_HEAD
+   830e640..eea755f  develop    -> origin/develop
+Updating 830e640..eea755f
+Fast-forward
+ .../UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+E:\Praca magisterska\CI_tool_diff_older_commit\master>exit 0 
+[CI_tool_synchronize_local_repositories] $ cmd /c call C:\Users\Dell\AppData\Local\Temp\jenkins8963383035878213150.bat
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_synchronize_local_repositories>cd E:\Praca magisterska\CI_tool_diff_newer_commit\master 
+
+E:\Praca magisterska\CI_tool_diff_newer_commit\master>git checkout develop 
+Your branch is up to date with 'origin/develop'.
+Switched to branch 'develop'
+
+E:\Praca magisterska\CI_tool_diff_newer_commit\master>git pull origin develop 
+From https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection
+ * branch            develop    -> FETCH_HEAD
+   830e640..eea755f  develop    -> origin/develop
+Updating 830e640..eea755f
+Fast-forward
+ .../UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+E:\Praca magisterska\CI_tool_diff_newer_commit\master>exit 0 
+Triggering a new build of [8mha:////4IwxdtnW96BpfkVlIrUOL4Sg1jk8EVGWIs1nx9M8xS+vAAAAwB+LCAAAAAAAAP9djbENwjAURD9BMAAlomGBuKOBVGlAAhoGsEz4Shw+/pb9g8garAENQzAOOxCJilxzp9PT3fMDoxhgXjWnyC4t2EUmTHd8Qlq3HgNZd96zIPw0SABuAWY9/g9dZI9XdvfvBJINjAldKdUWhk0ggcm2NlejyLhSHSRYVy67uWlvLv95/9d3YSGwUjUfVb7Rwkw6NE77Vip2OhbBeulqHZGwEM1e7MWQFoyiY2MF1Re4Ebpr8QAAAA==[0mCI_tool_run_python_script_to_select_optimal_test_suite
+Finished: SUCCESS

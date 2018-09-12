@@ -107,13 +107,13 @@
 						<exclude>"**/Test*.java"</exclude>
 					</excludes>
 					<includes>
-						<include>**/tcpClient/SendMessageTest.java</include>
-						<include>**/tcpClient/InitClientManagerTest.java</include>
-						<include>**/tcpClient/TCPclientTest.java</include>
-						<include>**/tcpServer/ComputeEngine_RunnableTest.java</include>
-						<include>**/tcpClient/InitClientTest.java</include>
-						<include>**/deliverables/UUT_TCPclientTest.java</include>
-						<include>**/tcpServer/StartServerTest.java</include>
+						<include>**/tcpServer/_1h_Watchdog_close_to_expireTest.java</include>
+						<include>**/tcpServer/RunTest.java</include>
+						<include>**/tcpServer/Run_ClientMessage_ACKTest.java</include>
+						<include>**/tcpServer/Run_ClientMessage_BootUpTest.java</include>
+						<include>**/tcpServer/Run_ClientMessage_MeasurementDataTest.java</include>
+						<include>**/tcpServer/Run_ClientMessage_MeasurementHistoryTest.java</include>
+						<include>**/tcpServer/Run_ClientMessage_SensorInfoTest.java</include>
 					</includes>
                  	<!--
                         Skips unit tests if the value of skip.unit.tests

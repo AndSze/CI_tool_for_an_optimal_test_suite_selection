@@ -1,0 +1,11 @@
+commit 1649648024938900c887a09fe9f82f375817f7c0
+tree 91a505d776dd1eee6d6bcffa0679b80a0d84ccca
+parent 1b117cf3fac9a5e6f170e724b74871ef81c17e0f
+author AndSze <andrzejszewczyk94@gmail.com> 2018-08-24 18:32:34 +0200
+committer AndSze <andrzejszewczyk94@gmail.com> 2018-08-24 18:32:34 +0200
+
+    attempt to trigger jenkins job by commit - 2
+
+
+
+:100644 100644 62492222ad2ebf5127d7df47d2d3ec1b87694c72 13b3428acd87c3f94042e61eed221c15ce682bfa M	JavaWorkspace_MT/UnitUnderTest/.settings/org.eclipse.jdt.core.prefs

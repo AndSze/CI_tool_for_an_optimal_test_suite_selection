@@ -1,0 +1,42 @@
+Started by upstream project "[8mha:////4K2a1Cvzhfet/BSZHuoya5P0UDYDhEJJ1KC49INzxpPwAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzJEgZ5/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGQC0MYaa1AAAAA==[0mCI_tool_build_trigger_job" build number [8mha:////4Lec9PHNhWjy/c2+N+P06d/rIu+6R1rbpo1cQmxfJC5BAAAAqh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgZF/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGWNzAMOuN3LWAAAA[0m37
+originally caused by:
+ Started by GitHub push by AndSze
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_synchronize_local_repositories
+[CI_tool_synchronize_local_repositories] $ cmd /c call C:\Users\Dell\AppData\Local\Temp\jenkins7597425126638207623.bat
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_synchronize_local_repositories>cd E:\Praca magisterska\CI_tool_diff_older_commit\master 
+
+E:\Praca magisterska\CI_tool_diff_older_commit\master>git checkout develop 
+Branch 'develop' set up to track remote branch 'develop' from 'origin'.
+Previous HEAD position was 2693f88... 06-09-2018 CI tool official dry run with malfunctioning software
+Switched to a new branch 'develop'
+
+E:\Praca magisterska\CI_tool_diff_older_commit\master>git pull origin develop 
+From https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection
+ * branch            develop    -> FETCH_HEAD
+   304c934..c01c082  develop    -> origin/develop
+Updating 304c934..c01c082
+Fast-forward
+ .../UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java    | 1 +
+ 1 file changed, 1 insertion(+)
+
+E:\Praca magisterska\CI_tool_diff_older_commit\master>exit 0 
+[CI_tool_synchronize_local_repositories] $ cmd /c call C:\Users\Dell\AppData\Local\Temp\jenkins861261340007114279.bat
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_synchronize_local_repositories>cd E:\Praca magisterska\CI_tool_diff_newer_commit\master 
+
+E:\Praca magisterska\CI_tool_diff_newer_commit\master>git checkout develop 
+error: pathspec 'develop' did not match any file(s) known to git.
+
+E:\Praca magisterska\CI_tool_diff_newer_commit\master>git pull origin develop 
+From https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection
+ * branch            develop    -> FETCH_HEAD
+ * [new branch]      develop    -> origin/develop
+Updating ebe0b17..c01c082
+Fast-forward
+ .../src/main/java/tcpServer/ComputeEngine_Runnable.java              | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
+
+E:\Praca magisterska\CI_tool_diff_newer_commit\master>exit 0 
+Triggering a new build of [8mha:////4IwxdtnW96BpfkVlIrUOL4Sg1jk8EVGWIs1nx9M8xS+vAAAAwB+LCAAAAAAAAP9djbENwjAURD9BMAAlomGBuKOBVGlAAhoGsEz4Shw+/pb9g8garAENQzAOOxCJilxzp9PT3fMDoxhgXjWnyC4t2EUmTHd8Qlq3HgNZd96zIPw0SABuAWY9/g9dZI9XdvfvBJINjAldKdUWhk0ggcm2NlejyLhSHSRYVy67uWlvLv95/9d3YSGwUjUfVb7Rwkw6NE77Vip2OhbBeulqHZGwEM1e7MWQFoyiY2MF1Re4Ebpr8QAAAA==[0mCI_tool_run_python_script_to_select_optimal_test_suite
+Finished: SUCCESS

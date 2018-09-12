@@ -1,0 +1,24 @@
+Started by upstream project "[8mha:////4HYQmhPcVq7t2kxxi2GfyfynQr5efZbffBnz5lfPLJ6MAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzJEgZ5/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGQC0MYaa1AAAAA==[0mCI_tool_build_trigger_job" build number [8mha:////4GD4bwVqx2t5ReoNOlrMpf1BPUxo+66agVTOT0BuF/rEAAAAqh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgZF/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGUMLANDRvtDWAAAA[0m18
+originally caused by:
+ Started by user [8mha:////4Dz0EODZKRNKj1K+yY+BaOdkcRlJ/ENdZ5yBBvLFeYjjAAAAmB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy2EgYe/dLi1CL9xLyU4qpUADhs7M7BAAAA[0mAndSze
+Building in workspace C:\Projects\Test_Integration_Jenkins\CI_tool\Jenkins\JenkinsHomeDir\workspace\CI_tool_synchronize_local_repositories
+[CI_tool_synchronize_local_repositories] $ cmd /c call C:\Users\w19220\AppData\Local\Temp\jenkins9118562472162608755.bat
+
+C:\Projects\Test_Integration_Jenkins\CI_tool\Jenkins\JenkinsHomeDir\workspace\CI_tool_synchronize_local_repositories>cd C:\Projects\Test_Integration_Jenkins\CI_tool\CI_tool_diff_newer_commit\master 
+
+C:\Projects\Test_Integration_Jenkins\CI_tool\CI_tool_diff_newer_commit\master>git fetch 
+From https://gitlab.com/AndSze/CI_tool_for_an_optimal_test_suite_selection
+   e6a9099..2836de9  documents  -> origin/documents
+
+C:\Projects\Test_Integration_Jenkins\CI_tool\CI_tool_diff_newer_commit\master>exit 0 
+[CI_tool_synchronize_local_repositories] $ cmd /c call C:\Users\w19220\AppData\Local\Temp\jenkins349499565425722700.bat
+
+C:\Projects\Test_Integration_Jenkins\CI_tool\Jenkins\JenkinsHomeDir\workspace\CI_tool_synchronize_local_repositories>cd C:\Projects\Test_Integration_Jenkins\CI_tool\CI_tool_diff_older_commit\master 
+
+C:\Projects\Test_Integration_Jenkins\CI_tool\CI_tool_diff_older_commit\master>git fetch 
+From https://gitlab.com/AndSze/CI_tool_for_an_optimal_test_suite_selection
+   e6a9099..2836de9  documents  -> origin/documents
+
+C:\Projects\Test_Integration_Jenkins\CI_tool\CI_tool_diff_older_commit\master>exit 0 
+Triggering a new build of [8mha:////4ASjQw/evWCLMdCZyWtM1EAS5sKgvxWY/ju3qq3fhZ2gAAAAwB+LCAAAAAAAAP9djbENwjAURD9BMAAlomGBuKOBVGlAAhoGsEz4Shw+/pb9g8garAENQzAOOxCJilxzp9PT3fMDoxhgXjWnyC4t2EUmTHd8Qlq3HgNZd96zIPw0SABuAWY9/g9dZI9XdvfvBJINjAldKdUWhk0ggcm2NlejyLhSHSRYVy67uWlvLv95/9d3YSGwUjUfVb7Rwkw6NE77Vip2OhbBeulqHZGwEM1e7MWQFoyiY2MF1Re4Ebpr8QAAAA==[0mCI_tool_run_python_script_to_select_optimal_test_suite
+Finished: SUCCESS
