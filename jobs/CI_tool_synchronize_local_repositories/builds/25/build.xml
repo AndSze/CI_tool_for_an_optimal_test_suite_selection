@@ -1,0 +1,32 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<build>
+  <actions>
+    <hudson.model.CauseAction>
+      <causeBag class="linked-hash-map">
+        <entry>
+          <hudson.model.Cause_-UpstreamCause>
+            <upstreamProject>CI_tool_build_trigger_job</upstreamProject>
+            <upstreamUrl>job/CI_tool_build_trigger_job/</upstreamUrl>
+            <upstreamBuild>35</upstreamBuild>
+            <upstreamCauses>
+              <hudson.model.Cause_-UserIdCause/>
+            </upstreamCauses>
+          </hudson.model.Cause_-UpstreamCause>
+          <int>1</int>
+        </entry>
+      </causeBag>
+    </hudson.model.CauseAction>
+  </actions>
+  <queueId>91</queueId>
+  <timestamp>1536270754596</timestamp>
+  <startTime>1536270754651</startTime>
+  <result>SUCCESS</result>
+  <duration>2373</duration>
+  <charset>windows-1250</charset>
+  <keepLog>false</keepLog>
+  <builtOn></builtOn>
+  <workspace>E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_synchronize_local_repositories</workspace>
+  <hudsonVersion>2.121.3</hudsonVersion>
+  <scm class="hudson.scm.NullChangeLogParser"/>
+  <culprits class="com.google.common.collect.EmptyImmutableSortedSet"/>
+</build>

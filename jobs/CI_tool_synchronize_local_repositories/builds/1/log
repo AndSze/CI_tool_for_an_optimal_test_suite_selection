@@ -1,0 +1,30 @@
+Started by upstream project "[8mha:////4MuHVOlvhDOr6u2K9Q6fnJxW37dsh4h3GWWeBr3bNQCMAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzJEgZ5/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGQC0MYaa1AAAAA==[0mCI_tool_build_trigger_job" build number [8mha:////4Ajjk54/SnHLiexa2rkJUgmAZpitGySg9W1Um2X6sb5cAAAAqh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgZF/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGUNDAHRpYqnWAAAA[0m11
+originally caused by:
+ Started by user [8mha:////4EdD9UM5KdDpn/jCiCpN2Fu0oJiFmCGa45AympJ/V112AAAAmB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy2EgYe/dLi1CL9xLyU4qpUADhs7M7BAAAA[0mAndSze
+Building in workspace C:\Projects\Test_Integration_Jenkins\CI_tool\Jenkins\workspace\CI_tool_synchronize_local_repositories
+[CI_tool_synchronize_local_repositories] $ sh -xe C:\Users\w19220\AppData\Local\Temp\jenkins8702162345155645338.sh
+The system cannot find the file specified
+FATAL: command execution failed
+java.io.IOException: CreateProcess error=2, The system cannot find the file specified
+	at java.lang.ProcessImpl.create(Native Method)
+	at java.lang.ProcessImpl.<init>(Unknown Source)
+	at java.lang.ProcessImpl.start(Unknown Source)
+Caused: java.io.IOException: Cannot run program "sh" (in directory "C:\Projects\Test_Integration_Jenkins\CI_tool\Jenkins\workspace\CI_tool_synchronize_local_repositories"): CreateProcess error=2, The system cannot find the file specified
+	at java.lang.ProcessBuilder.start(Unknown Source)
+	at hudson.Proc$LocalProc.<init>(Proc.java:249)
+	at hudson.Proc$LocalProc.<init>(Proc.java:218)
+	at hudson.Launcher$LocalLauncher.launch(Launcher.java:929)
+	at hudson.Launcher$ProcStarter.start(Launcher.java:449)
+	at hudson.tasks.CommandInterpreter.perform(CommandInterpreter.java:109)
+	at hudson.tasks.CommandInterpreter.perform(CommandInterpreter.java:66)
+	at hudson.tasks.BuildStepMonitor$1.perform(BuildStepMonitor.java:20)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.perform(AbstractBuild.java:744)
+	at hudson.model.Build$BuildExecution.build(Build.java:206)
+	at hudson.model.Build$BuildExecution.doRun(Build.java:163)
+	at hudson.model.AbstractBuild$AbstractBuildExecution.run(AbstractBuild.java:504)
+	at hudson.model.Run.execute(Run.java:1794)
+	at hudson.model.FreeStyleBuild.run(FreeStyleBuild.java:43)
+	at hudson.model.ResourceController.execute(ResourceController.java:97)
+	at hudson.model.Executor.run(Executor.java:429)
+Build step 'Execute shell' marked build as failure
+Finished: FAILURE

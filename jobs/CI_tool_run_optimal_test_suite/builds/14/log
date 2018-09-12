@@ -1,0 +1,516 @@
+Started by user unknown or anonymous
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_run_optimal_test_suite
+ > E:\Program Files\Git\bin\git.exe rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > E:\Program Files\Git\bin\git.exe config remote.origin.url https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git # timeout=10
+Fetching upstream changes from https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git
+ > E:\Program Files\Git\bin\git.exe --version # timeout=10
+using GIT_ASKPASS to set credentials Github-password
+ > E:\Program Files\Git\bin\git.exe fetch --tags --progress https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git +refs/heads/*:refs/remotes/origin/*
+ > E:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/master^{commit}" # timeout=10
+ > E:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/origin/master^{commit}" # timeout=10
+Checking out Revision aa327c29b3950686c56010309ad610c99f877559 (refs/remotes/origin/master)
+ > E:\Program Files\Git\bin\git.exe config core.sparsecheckout # timeout=10
+ > E:\Program Files\Git\bin\git.exe checkout -f aa327c29b3950686c56010309ad610c99f877559
+Commit message: "CI tool official dry run"
+ > E:\Program Files\Git\bin\git.exe rev-list --no-walk aa327c29b3950686c56010309ad610c99f877559 # timeout=10
+[CI_tool_run_optimal_test_suite] $ cmd.exe /C "mvn -f '"E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\updated_pom.xml"' clean test -P dev && exit %%ERRORLEVEL%%"
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< andsze:UnitUnderTest >------------------------
+[INFO] Building UnitUnderTest 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ UnitUnderTest ---
+[INFO] Deleting E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ UnitUnderTest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\src\main\resources
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-compiler-plugin:3.5:compile (default-compile) @ UnitUnderTest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 36 source files to E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target\classes
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ UnitUnderTest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\src\test\resources
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-compiler-plugin:3.5:testCompile (default-testCompile) @ UnitUnderTest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 50 source files to E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target\test-classes
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-surefire-plugin:2.19.1:test (default-test) @ UnitUnderTest ---
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running deliverables.UUT_TCPclientTest
+[TCPclient 0] Client_Sensors_LIST created
+		Test Run 1 Purpose:
+Verify that once the default constructor of the UUT_TCPclient class is called, all class attributes are updated based on the input arguments
+		Test Run 1 Logic:
+		Test Run 1 teardown section:
+
+		Test Run 2 Purpose:
+Verify that once the default constructor of the UUT_TCPclient class is called, the TCPclient class instance is created with a respective sensor_ID
+		Test Run 2 Logic:
+		Test Run 2 teardown section:
+
+		Test Run 3 Purpose:
+Verify that once the default constructor of the UUT_TCPclient class is called, the interfaces that parameterize times dependencies for the testing purposes are initiated to its default value
+		Test Run 3 Logic:
+		Test Run 3 teardown section:
+
+		Test Run 4 Purpose:
+Verify that once the default constructor of the UUT_TCPclient class is called, there is no attempt to set up connection via TCP, hence attributes of the TCPclass responsible for connection are not initialized
+		Test Run 4 Logic:
+		Test Run 4 teardown section:
+
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.468 sec - in deliverables.UUT_TCPclientTest
+Running tcpClient.InitClientManagerTest
+		Test Run 1 Purpose:
+Verify that once the initClientManager() function is called, ObjectOutputStream and ObjectInputStream is created based on the input and output streams of a client socket given as an input argument
+		Test Run 1 Logic:
+		Test Run 1 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+[Compute engine Runnable] Multithreaded Server Service has been started
+
+		Test Run 2 Purpose:
+Verify that once the initClientManager() function is called, the overloaded constructor of the ClientManager class is called - it is verified by proving that he isClientManagerRunning flag is set to true
+		Test Run 2 Logic:
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 2 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 3 Purpose:
+Verify that ConnectException is thrown if there was an attempt to call the initClientManager() function for a client socket that has not established TCP connection with TCPserver
+		Test Run 3 Logic:
+		Test Run 3 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.555 sec - in tcpClient.InitClientManagerTest
+Running tcpClient.InitClientTest
+		Test Run 1 Purpose:
+Verify that the Connect Exception is returned if there was an attempt to create the client without a server instance initialized previously
+		Test Run 1 Logic:
+		Test Run 1 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 2 Purpose:
+Verify that once the server is initialized at any registered port, the client can be created successfully at this port
+		Test Run 2 Logic:
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] Client_Sensors_LIST is updated with sensor instace with ID: 1
+[TCPclient 1] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 1]	 loop counter: 1	with the following sensor ID:	1
+		Test Run 2 teardown section:
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+Server Thread Stopped.
+Serversocket closed
+
+		Test Run 3 Purpose:
+Verify that once the server is initialized at any registered port, multiple client instances can be created successfully at the same port
+		Test Run 3 Logic:
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 0] Client Socket created on port = 9876
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 2] Client Manager created with outputsteam and input stream
+[TCPclient 2] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 2] Client_Sensors_LIST is updated with sensor instace with ID: 2
+[TCPclient 2] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 2]	 loop counter: 1	with the following sensor ID:	1
+[TCPclient 2]	 loop counter: 2	with the following sensor ID:	2
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 3] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 3] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 3] Client_Sensors_LIST is updated with sensor instace with ID: 3
+[TCPclient 3] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 3]	 loop counter: 1	with the following sensor ID:	1
+[TCPclient 3]	 loop counter: 2	with the following sensor ID:	2
+[TCPclient 3]	 loop counter: 3	with the following sensor ID:	3
+		Test Run 3 teardown section:
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPclient 2] Socket for the sensor closed successfully
+[TCPclient 3] Socket for the sensor closed successfully
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 4 Purpose:
+Verify that once multiple server instances are initialized at any different registered ports, multiple client instances can be created successfully at any port with a server instance initialized
+		Test Run 4 Logic:
+[TCPclient 0] Client Socket created on port = 9876
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 2] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 3] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 0] Client Socket created on port = 9889
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 0] Client Socket created on port = 9889
+[TCPclient 2] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 0] Client Socket created on port = 9889
+[TCPclient 3] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 4 teardown section:
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPclient 2] Socket for the sensor closed successfully
+[TCPclient 3] Socket for the sensor closed successfully
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 5 Purpose:
+Verify that the Connect Exception is returned if there was an attempt to create the client at an invalid address on local machine, or port that is not valid on remote machine
+		Test Run 5 Logic:
+		Test Run 5 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 6 Purpose:
+Verify that the Connect Exception caused by connection timeout is returned if there was an attempt to create the client at the IP address of the host, for which the connection cannot be established
+		Test Run 6 Logic:
+		Test Run 6 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 22.671 sec - in tcpClient.InitClientTest
+Running tcpClient.SendMessageTest
+		Test Run 1 Purpose:
+Verify that the sendMessage() function for the ClientManager class instance writes an object to the previously opened object output stream for a client socket
+		Test Run 1 Logic:
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 1 teardown section:
+Server Thread Stopped.
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+Serversocket closed
+
+		Test Run 2 Purpose:
+Verify that SocketException is thrown if there was an attempt to call the sendMessage() function for a client manager class instance that has its object output stream closed
+		Test Run 2 Logic:
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 2 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+Server Thread Stopped.
+Serversocket closed
+
+		Test Run 3 Purpose:
+Verify that IllegalArgumentException is thrown if there was an attempt to call the sendMessage() function for a client manager class instance without initializing its object output stream
+		Test Run 3 Logic:
+		Test Run 3 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.393 sec - in tcpClient.SendMessageTest
+Running tcpClient.TCPclientTest
+		Test Run 1 Purpose:
+Verify that the Connect Exception is returned if there was an attempt to call the overloaded constructor of the TCPclient without a server instance initialized previously
+		Test Run 1 Logic:
+		Test Run 1 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 2 Purpose:
+Verify that once the overloaded constructor of the TCPclient class is being called, the client socket is created at specific port and on given server host
+		Test Run 2 Logic:
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 1] Client_Sensors_LIST is updated with sensor instace with ID: 1
+[TCPclient 1] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 1]	 loop counter: 1	with the following sensor ID:	2
+[TCPclient 1]	 loop counter: 2	with the following sensor ID:	3
+[TCPclient 1]	 loop counter: 3	with the following sensor ID:	1
+		Test Run 2 teardown section:
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 3 Purpose:
+Verify that once the overloaded constructor of the TCPclient class is being called, the client manager for the TCPclient class instance is initialized with input and output streams
+		Test Run 3 Logic:
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 1] Client_Sensors_LIST is updated with sensor instace with ID: 1
+[TCPclient 1] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 1]	 loop counter: 1	with the following sensor ID:	2
+[TCPclient 1]	 loop counter: 2	with the following sensor ID:	3
+[TCPclient 1]	 loop counter: 3	with the following sensor ID:	1
+		Test Run 3 teardown section:
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 4 Purpose:
+Verify that once the overloaded constructor of the TCPclient class is being called, the clientRunning flag is set to true
+		Test Run 4 Logic:
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 1] Client_Sensors_LIST is updated with sensor instace with ID: 1
+[TCPclient 1] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 1]	 loop counter: 1	with the following sensor ID:	2
+[TCPclient 1]	 loop counter: 2	with the following sensor ID:	3
+[TCPclient 1]	 loop counter: 3	with the following sensor ID:	1
+		Test Run 4 teardown section:
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+Server Thread Stopped.
+Serversocket closed
+
+		Test Run 5 Purpose:
+Verify that once the overloaded constructor of the TCPclient class is being called with a unique senor ID , Client_Sensors_LIST is updated with the newly created SensorImpl class instance with specified sensorID
+		Test Run 5 Logic:
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 1] Client_Sensors_LIST is updated with sensor instace with ID: 1
+[TCPclient 1] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 1]	 loop counter: 1	with the following sensor ID:	2
+[TCPclient 1]	 loop counter: 2	with the following sensor ID:	3
+[TCPclient 1]	 loop counter: 3	with the following sensor ID:	1
+		Test Run 5 teardown section:
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 6 Purpose:
+Verify that once the overloaded constructor of the TCPclient class is being called with a senor ID that already exists for a sensor in Client_Sensors_LIST, the list is not being updated and no SensorImpl class instance is created
+		Test Run 6 Logic:
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 1] Client_Sensors_LIST is updated with sensor instace with ID: 1
+[TCPclient 1] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 1]	 loop counter: 1	with the following sensor ID:	2
+[TCPclient 1]	 loop counter: 2	with the following sensor ID:	3
+[TCPclient 1]	 loop counter: 3	with the following sensor ID:	1
+[TCPclient 0] Client Socket created on port = 9876
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] Client Manager created with outputsteam and input stream
+		Test Run 6 teardown section:
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 7 Purpose:
+Verify that once the default constructor of the TCPclient class is being called for the first time, Client_Sensors_LIST is created
+		Test Run 7 Logic:
+		Test Run 7 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 8 Purpose:
+Verify that once the default constructor of the TCPclient class is being called multiple times, Client_Sensors_LIST from first call of the constructor is used
+		Test Run 8 Logic:
+		Test Run 8 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 9 Purpose:
+Verify that once the default constructor of the TCPclient class is being called for the first time, instance of Local_1h_Watchdog is created.
+ Verify also that if the default constructor of the TCPclient class is called multiple times, Local_1h_Watchdog instance from first call of the constructor is used
+		Test Run 9 Logic:
+		Test Run 9 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.04 sec - in tcpClient.TCPclientTest
+Running tcpServer.ComputeEngine_RunnableTest
+		Test Run 1 Purpose:
+Verify that once the default constructor of the ComputeEngine_Runnable class is called, 
+outputStream and inputStream object streams are created for the purpose of setting up the TCP connection set TCPclient based on the client's socket that is 1st argument in the constructor call
+		Test Run 1 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 1 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 2 Purpose:
+Verify that once the default constructor of the ComputeEngine_Runnable class is called, 
+local_watchdog_scale_factor is updated in accordance with global_watchdog_scale_factor
+		Test Run 2 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 2 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 3 Purpose:
+Verify that once the default constructor of the ComputeEngine_Runnable class is called, 
+the isComputeEngine_Runnable_running flag is updated in accordance with 3rd input argument in the constructor call
+		Test Run 3 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 3 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 4 Purpose:
+Verify that once the default constructor of the ComputeEngine_Runnable class is called, 
+time left before expiration for Local_1h_watchdog and Local_24h_watchdog is updated accordingly to the time left before expiration for Global_1h_watchdog and Global_24h_watchdog
+		Test Run 4 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 4 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 5 Purpose:
+Verify that once the default constructor of the ComputeEngine_Runnable class is called, 
+delays_array and watchdog_thresholds_array are updated in accordance with global_watchdog_scale_factor
+		Test Run 5 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 5 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 6 Purpose:
+Verify that the Socket Exception is returned if there was an attempt to create a ComputeEngine_Runnable class instance with a socket that is closed
+		Test Run 6 Logic:
+Server Thread Started.
+		Test Run 6 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.791 sec - in tcpServer.ComputeEngine_RunnableTest
+Running tcpServer.StartServerTest
+		Test Run 1 Purpose:
+Verify that once the startServer function is called, there is a new server thread created
+		Test Run 1 Logic:
+		Test Run 1 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+		Test Run 2 Purpose:
+Verify that once the startServer function is called, the server thread starts and it has the RUNNABLE thread state. Verify also that once the server socket is closed, the server thread state changes to the TERMINATED thread state
+		Test Run 2 Logic:
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+Server Thread Stopped.
+		Test Run 2 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+		Test Run 3 Purpose:
+Verify that there is no ThreadPoolExecutor started for processing client messages unless there has been any output stream for the client socket created
+		Test Run 3 Logic:
+		Test Run 3 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+		Test Run 4 Purpose:
+Verify that once an output stream for the client socket is created, ThreadPoolExecutor is executed that launches the runnable ComputeEngine_Runnable class that handles communication via a TCP connection with sensors
+		Test Run 4 Logic:
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] 1st ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 36.0 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when Global_24h_Watchdog 864.0 [s]
+[TCPserver] last ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 36.0 [s]
+[TCPserver] last ComputeEngine_Runnable launched when Global_24h_Watchdog 864.0 [s]
+[TCPserver] Number of Active Threads: 0
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[Compute engine Runnable 1] ClientMessage_BootUp from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+		Test Run 4 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+Server Thread Stopped.
+		Test Run 5 Purpose:
+Verify that once an output stream for the client socket is created, all messages sent via this output stream are being handled in separated ThreadPoolExecutors
+		Test Run 5 Logic:
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] 1st ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 36.0 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when Global_24h_Watchdog 864.0 [s]
+[TCPserver] last ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 36.0 [s]
+[TCPserver] last ComputeEngine_Runnable launched when Global_24h_Watchdog 864.0 [s]
+[TCPserver] Number of Active Threads: 0
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 1
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+		Test Run 5 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+Server Thread Stopped.
+		Test Run 6 Purpose:
+Verify that there is a possibility to create up to 8 ThreadPoolExecutors to process client messages
+		Test Run 6 Logic:
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] 1st ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 36.0 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when Global_24h_Watchdog 864.0 [s]
+[TCPserver] last ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 36.0 [s]
+[TCPserver] last ComputeEngine_Runnable launched when Global_24h_Watchdog 864.0 [s]
+[TCPserver] Number of Active Threads: 0
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 1
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 2
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 3
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 4
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 5
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 6
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 7
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 8
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+		Test Run 6 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+Server Thread Stopped.
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.945 sec - in tcpServer.StartServerTest
+
+Results :
+
+Tests run: 37, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 34.900 s
+[INFO] Finished at: 2018-09-06T21:32:23+02:00
+[INFO] ------------------------------------------------------------------------
+Pushing HEAD to branch production at repo origin
+ > E:\Program Files\Git\bin\git.exe --version # timeout=10
+using GIT_ASKPASS to set credentials Github-password
+ > E:\Program Files\Git\bin\git.exe push https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git HEAD:production
+Finished: SUCCESS

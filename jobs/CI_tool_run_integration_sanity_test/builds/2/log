@@ -1,0 +1,36 @@
+Started by upstream project "[8mha:////4OkcOq2nM9LImFZxPglnJ8eVPMHRZDizPLUX/jzHaoHdAAAAsB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy5EgYV/az8JH1nz/iS/Pyc+KLSvPj8gpLM3MSc+JLU4pL44tLMklR9AG+UlqfZAAAA[0mCI_tool_run_optimal_test_suite" build number [8mha:////4GaTTBp/s9lOFgINOtDr9KUkZ+NEsrsuWrZP8EWLc1A9AAAAsB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLQIwSBlX9rPwkfWfP+JL8/Jz4otK8+PyCkszcxJz4ktTikvji0sySVH0jAAL0i8jaAAAA[0m2
+originally caused by:
+ Started by user [8mha:////4EdD9UM5KdDpn/jCiCpN2Fu0oJiFmCGa45AympJ/V112AAAAmB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy2EgYe/dLi1CL9xLyU4qpUADhs7M7BAAAA[0mAndSze
+Building in workspace C:\Projects\Test_Integration_Jenkins\CI_tool\Jenkins\workspace\CI_tool_run_integration_sanity_test
+[CI_tool_run_integration_sanity_test] $ cmd.exe /C "mvn -f C:\Projects\Test_Integration_Jenkins\CI_tool\master\JavaWorkspace_MT\UnitUnderTest\pom.xml clean verify -P integration-test && exit %%ERRORLEVEL%%"
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< andsze:UnitUnderTest >------------------------
+[INFO] Building UnitUnderTest 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[8mha:////4JhNr9f5fXnuM4nCi/n2AGJcIl/QHiyD8imrwPXFEtEYAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ UnitUnderTest ---
+[INFO] Deleting C:\Projects\Test_Integration_Jenkins\CI_tool\master\JavaWorkspace_MT\UnitUnderTest\target
+[INFO] 
+[8mha:////4JhNr9f5fXnuM4nCi/n2AGJcIl/QHiyD8imrwPXFEtEYAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ UnitUnderTest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] Copying 0 resource
+[INFO] 
+[8mha:////4JhNr9f5fXnuM4nCi/n2AGJcIl/QHiyD8imrwPXFEtEYAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-compiler-plugin:3.5:compile (default-compile) @ UnitUnderTest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 36 source files to C:\Projects\Test_Integration_Jenkins\CI_tool\master\JavaWorkspace_MT\UnitUnderTest\target\classes
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 1.730 s
+[INFO] Finished at: 2018-08-24T19:27:12+02:00
+[INFO] ------------------------------------------------------------------------
+[8mha:////4AXvsFKsceAtMQgpB4qciBP9aty1inxEgS/LiGR/VVkGAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.5:compile (default-compile) on project UnitUnderTest: Compilation failure -> [Help 1]
+[8mha:////4AXvsFKsceAtMQgpB4qciBP9aty1inxEgS/LiGR/VVkGAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] 
+[8mha:////4AXvsFKsceAtMQgpB4qciBP9aty1inxEgS/LiGR/VVkGAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[8mha:////4AXvsFKsceAtMQgpB4qciBP9aty1inxEgS/LiGR/VVkGAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[8mha:////4AXvsFKsceAtMQgpB4qciBP9aty1inxEgS/LiGR/VVkGAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] 
+[8mha:////4AXvsFKsceAtMQgpB4qciBP9aty1inxEgS/LiGR/VVkGAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[8mha:////4AXvsFKsceAtMQgpB4qciBP9aty1inxEgS/LiGR/VVkGAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+Build step 'Invoke top-level Maven targets' marked build as failure
+Finished: FAILURE

@@ -1,0 +1,12 @@
+commit 94eb99ae22d003a20d9f9144ec0fd3689cdf978c
+tree eced6be6655bca7d814483faea79f82f380fda16
+parent 66969fd481ada6f196a2578af91d5f410543133b
+author AndSze <andrzejszewczyk94@gmail.com> 2018-09-09 22:32:19 +0200
+committer AndSze <andrzejszewczyk94@gmail.com> 2018-09-09 22:32:19 +0200
+
+    Reverting changes from commit: CI tool validation for malfunctioning
+    software
+
+
+
+:100644 100644 080ac11529e8afbb5447abe908fc1063610e27fb 06e24bac1718352678ab28d651cacaf9547e175c M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java

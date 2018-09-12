@@ -1,0 +1,29 @@
+Started by upstream project "[8mha:////4FcV0BSA0fLAJfDImX4HnM0cio8KzN7KNbNRe+ezBQ2TAAAAuB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy1EgYd/az8JH1nz/iS/Pyc+OLKvOSMovy8zKrU+Jz85MSc+KLUgvzizJL8oszUYn0AxXsr3+EAAAA=[0mCI_tool_synchronize_local_repositories" build number [8mha:////4OsvzWpJBTm6P5i8Kt9v9JEz9vPV/AW5yrL31pTk6/RtAAAAuh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgY9/az8JH1nz/iS/Pyc+OLKvOSMovy8zKrU+Jz85MSc+KLUgvzizJL8oszUYn1DYwC4P/K64wAAAA==[0m13
+originally caused by:
+ Started by upstream project "[8mha:////4K2a1Cvzhfet/BSZHuoya5P0UDYDhEJJ1KC49INzxpPwAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzJEgZ5/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGQC0MYaa1AAAAA==[0mCI_tool_build_trigger_job" build number [8mha:////4N084xSXtuHtYN0v1gAAs06pbfQjz7z5qUqNA5hho30UAAAAqh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgZF/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGSNjAJtbQWzWAAAA[0m23
+ originally caused by:
+  Started by GitHub push by AndSze
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_run_python_script_to_select_optimal_test_suite
+[CI_tool_run_python_script_to_select_optimal_test_suite] $ cmd /c call C:\Users\Dell\AppData\Local\Temp\jenkins3975167349103915501.bat
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_run_python_script_to_select_optimal_test_suite>cd E:\Praca magisterska\CI_python_engine\PythonScripts 
+
+E:\Praca magisterska\CI_python_engine\PythonScripts>py OptimalTestSuiteSelector.py 
+
+
+1) Set HEAD of Git repository to commits under analysis: 
+
+	 commit_newer: 3a187929bb49322330a9aadcdc1dbaad446ca346
+	 commit_older: 9ab177a21a1acec9a08114cd410e0ba0aa536004
+
+
+Traceback (most recent call last):
+  File "OptimalTestSuiteSelector.py", line 25, in <module>
+    diff_data_head_to_commit = build_git_diff_log_file(commit_newer, commit_newer_id, commit_older_id)
+  File "E:\Praca magisterska\CI_python_engine\PythonScripts\OptimalTestSuiteSelector_AuxiliaryScripts.py", line 1083, in build_git_diff_log_file
+    diff_data_head_to_commit = diff_output_text.split('\n')
+AttributeError: 'Diff' object has no attribute 'split'
+
+E:\Praca magisterska\CI_python_engine\PythonScripts>exit 1 
+Build step 'Execute Windows batch command' marked build as failure
+Finished: FAILURE

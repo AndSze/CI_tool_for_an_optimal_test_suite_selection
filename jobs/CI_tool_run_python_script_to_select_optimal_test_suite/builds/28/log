@@ -1,0 +1,102 @@
+Started by upstream project "[8mha:////4FcV0BSA0fLAJfDImX4HnM0cio8KzN7KNbNRe+ezBQ2TAAAAuB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy1EgYd/az8JH1nz/iS/Pyc+OLKvOSMovy8zKrU+Jz85MSc+KLUgvzizJL8oszUYn0AxXsr3+EAAAA=[0mCI_tool_synchronize_local_repositories" build number [8mha:////4A1ftaoBHBHDHqHv3zvszwbAW2nO1vbp9Dln5qstcd3hAAAAuh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgY9/az8JH1nz/iS/Pyc+OLKvOSMovy8zKrU+Jz85MSc+KLUgvzizJL8oszUYn1jQwAWPMpm4wAAAA==[0m31
+originally caused by:
+ Started by upstream project "[8mha:////4K2a1Cvzhfet/BSZHuoya5P0UDYDhEJJ1KC49INzxpPwAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzJEgZ5/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGQC0MYaa1AAAAA==[0mCI_tool_build_trigger_job" build number [8mha:////4HITqRRax7/6gpDlwgcIrDZ82C8Q0uDQ9ytnPIEsrNvNAAAAqh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgZF/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGRNDADGdFdTWAAAA[0m41
+ originally caused by:
+  Started by GitHub push by AndSze
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_run_python_script_to_select_optimal_test_suite
+[CI_tool_run_python_script_to_select_optimal_test_suite] $ cmd /c call C:\Users\Dell\AppData\Local\Temp\jenkins4649990230547882802.bat
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_run_python_script_to_select_optimal_test_suite>cd E:\Praca magisterska\CI_python_engine\PythonScripts 
+
+E:\Praca magisterska\CI_python_engine\PythonScripts>py OptimalTestSuiteSelector.py 
+
+
+1) Set HEAD of Git repository to commits under analysis: 
+
+	 commit_newer: 03ab0dda172cf5f38421fdf89f43da1813fe08c9
+	 commit_older: 20e1f526840d611ae6bc939d35824aac6f9aba0a
+
+
+2) Generate git diff log between files in newer commit against older commit: 
+
+	 len(diff_data_head_to_commit): 17
+
+
+3) Based on git diff log create a lists of modified files or added files: 
+
+	 len(list_of_modified_files_to_be_processed): 1
+	 len(list_of_added_files_to_be_processed): 0
+
+
+4) Parse git diff log to separate file blocks (method body) for all changes (added/removed lines or added files): 
+
+	 len(resulted_array_of_all_changes_in_file_blocks): 1
+
+
+5) Parse git diff log to separate file blocks (method body) for methods with added lines: 
+
+	 len(resulted_array_of_added_lines_in_changed_file_blocks): 1
+
+
+6) Parse git diff log to separate file blocks (method body) for methods with removed lines: 
+
+	 len(resulted_array_of_removed_lines_in_changed_file_blocks): 1
+
+
+7) Parse git diff log to separate file blocks (method body) for methods that have been added: 
+
+	 len(resulted_array_of_added_lines_in_added_file_blocks): 0
+
+
+8) Parse file blocks (method body) for methods with added lines to separate names of the methods,
+   as an output the normalized path to the file that contains the methods is also returned: 
+
+	 [['src', 'main', 'java', 'tcpServer', 'ComputeEngine_Runnable.java'], 'private double _1h_Watchdog_close_to_expire()']
+
+
+9) Parse file blocks (method body) for methods with removed lines to separate names of the methods,
+   as an output the normalized path to the file that contains the methods is also returned: 
+
+	 [['src', 'main', 'java', 'tcpServer', 'ComputeEngine_Runnable.java'], 'private double _1h_Watchdog_close_to_expire()']
+
+
+10) Parse file blocks (method body) for methods that have been added to separate names of the methods,
+    as an output the normalized path to the file that contains the methods is also returned: 
+
+
+
+11) Concatenate the results from points 8., 9. and 10. (i.e. build single list of all methods that have been affected
+    with normalized path to the file that contains the methods): 
+
+	 [['src', 'main', 'java', 'tcpServer', 'ComputeEngine_Runnable.java'], 'private double _1h_Watchdog_close_to_expire()']
+
+
+12) Create list of the methods affected by changes in newer commit against older commit: 
+
+	 affected method: _1h_Watchdog_close_to_expire()
+
+
+13) Create lists of the methods that call the methods affected by changes in newer commit against older commit: 
+
+	package: tcpServer,	method name: run()
+
+
+14) Based on the lists of methods from points 12. and 13., create a list of unit tests that are
+    an optimal test suite for changes in newer commit against older commit (the list of tests is returned in format readable by pom.xml): 
+
+	 unit test to be executed: <include>**/tcpServer/_1h_Watchdog_close_to_expireTest.java</include>
+	 unit test to be executed: <include>**/tcpServer/RunTest.java</include>
+	 unit test to be executed: <include>**/tcpServer/Run_ClientMessage_ACKTest.java</include>
+	 unit test to be executed: <include>**/tcpServer/Run_ClientMessage_BootUpTest.java</include>
+	 unit test to be executed: <include>**/tcpServer/Run_ClientMessage_MeasurementDataTest.java</include>
+	 unit test to be executed: <include>**/tcpServer/Run_ClientMessage_MeasurementHistoryTest.java</include>
+	 unit test to be executed: <include>**/tcpServer/Run_ClientMessage_SensorInfoTest.java</include>
+
+
+15) Update pom.xml file with names of unit test to be executed:
+
+	 updated pom.xml with optimal test suite is saved in: E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\updated_pom.xml
+
+E:\Praca magisterska\CI_python_engine\PythonScripts>exit 0 
+Triggering a new build of [8mha:////4JDrvNGBUQdPuOp/kpdDattsvmBvuVZS5fHb8rvUXnMfAAAAsB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy5EgYV/az8JH1nz/iS/Pyc+KLSvPj8gpLM3MSc+JLU4pL44tLMklR9AG+UlqfZAAAA[0mCI_tool_run_optimal_test_suite
+Finished: SUCCESS

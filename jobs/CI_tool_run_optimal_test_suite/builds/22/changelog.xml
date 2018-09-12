@@ -1,0 +1,12 @@
+commit a12a46289b27a34612cca9a159e271d8f05776bf
+tree 77dd0724b2c239cb8bc12cbc1aebb48b9f849862
+parent 73f810d44a2afe6d465924e9d93dc00aef97af4d
+author AndSze <andrzejszewczyk94@gmail.com> 2018-09-06 23:16:13 +0200
+committer AndSze <andrzejszewczyk94@gmail.com> 2018-09-06 23:16:13 +0200
+
+    reverting changes from last commit
+
+
+
+:100644 100644 080ac11529e8afbb5447abe908fc1063610e27fb 06e24bac1718352678ab28d651cacaf9547e175c M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java
+:100644 100644 ae0e87e797fe4cab1ec78128f81ef6bf4d4b2ec0 88f05e8cac0b98b16abcfd3dc1755f2687d1884d M	JavaWorkspace_MT/UnitUnderTest/src/test/java/tcpServer/Run_ClientMessage_ACKTest.java

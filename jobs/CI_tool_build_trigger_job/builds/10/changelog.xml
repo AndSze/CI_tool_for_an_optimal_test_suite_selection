@@ -1,0 +1,11 @@
+commit 99e5d50327e74ec91d16d303aeddc3a110f9d3c1
+tree 28af39e1394ee701f618afe44ba15861d7b03631
+parent 1649648024938900c887a09fe9f82f375817f7c0
+author AndSze <andrzejszewczyk94@gmail.com> 2018-08-24 18:43:05 +0200
+committer AndSze <andrzejszewczyk94@gmail.com> 2018-08-24 18:43:05 +0200
+
+    attempt to trigger jenkins job by commit - 3
+
+
+
+:100644 100644 8c3871ceb1b5f3d709d4f2a33888c72202971aec c393682b500dd6df317cbbf550a289d67d9090a4 M	JavaWorkspace_MT/UnitUnderTest/pom.xml

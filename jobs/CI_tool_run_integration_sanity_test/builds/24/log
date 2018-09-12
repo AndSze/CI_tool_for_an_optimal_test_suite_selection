@@ -1,0 +1,66 @@
+Started by upstream project "[8mha:////4JDrvNGBUQdPuOp/kpdDattsvmBvuVZS5fHb8rvUXnMfAAAAsB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy5EgYV/az8JH1nz/iS/Pyc+KLSvPj8gpLM3MSc+JLU4pL44tLMklR9AG+UlqfZAAAA[0mCI_tool_run_optimal_test_suite" build number [8mha:////4OaegTGyyy655A+GioXW5L9Xc9yoIeLMz/QoernZ78TAAAAAsh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgY1/az8JH1nz/iS/Pyc+KLSvPj8gpLM3MSc+JLU4pL44tLMklR9Y0MApqOhn9sAAAA=[0m31
+originally caused by:
+ Started by upstream project "[8mha:////4IwxdtnW96BpfkVlIrUOL4Sg1jk8EVGWIs1nx9M8xS+vAAAAwB+LCAAAAAAAAP9djbENwjAURD9BMAAlomGBuKOBVGlAAhoGsEz4Shw+/pb9g8garAENQzAOOxCJilxzp9PT3fMDoxhgXjWnyC4t2EUmTHd8Qlq3HgNZd96zIPw0SABuAWY9/g9dZI9XdvfvBJINjAldKdUWhk0ggcm2NlejyLhSHSRYVy67uWlvLv95/9d3YSGwUjUfVb7Rwkw6NE77Vip2OhbBeulqHZGwEM1e7MWQFoyiY2MF1Re4Ebpr8QAAAA==[0mCI_tool_run_python_script_to_select_optimal_test_suite" build number [8mha:////4OHkffE5qjepkQE4da4Vlqd7yuC0u3c5yiLRKI1a8PXGAAAAwx+LCAAAAAAAAP9djTEKwkAURL8RPYCl2HiBLIjYiDY2CmrjAZaYfJKN3/3L7o+Ya3gNbTyEx/EOBlKZaWYYHjOvLwyCh2lRZYFtnLINTBgfOEPa1g49GXs5siC06kUAdw+TDv+HLlbP9+rhPhFEOxgS2lyKPfQrTwKjfZncEkWJzdVJvLH5spkbd+Y2rXd/XRMigbUq+aw2Oy3MpH1ltaulYKtD6o2TptYBCVPR7MRcE9KCQXSojKCazX/c9sVY8wAAAA==[0m24
+ originally caused by:
+  Started by upstream project "[8mha:////4FcV0BSA0fLAJfDImX4HnM0cio8KzN7KNbNRe+ezBQ2TAAAAuB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy1EgYd/az8JH1nz/iS/Pyc+OLKvOSMovy8zKrU+Jz85MSc+KLUgvzizJL8oszUYn0AxXsr3+EAAAA=[0mCI_tool_synchronize_local_repositories" build number [8mha:////4CKUHWCSPF0Av24W34LWrXoZs5NREb35NWDq+ichgr0QAAAAuh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgY9/az8JH1nz/iS/Pyc+OLKvOSMovy8zKrU+Jz85MSc+KLUgvzizJL8oszUYn0jcwBiqLKW4wAAAA==[0m27
+  originally caused by:
+   Started by upstream project "[8mha:////4K2a1Cvzhfet/BSZHuoya5P0UDYDhEJJ1KC49INzxpPwAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzJEgZ5/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGQC0MYaa1AAAAA==[0mCI_tool_build_trigger_job" build number [8mha:////4Lec9PHNhWjy/c2+N+P06d/rIu+6R1rbpo1cQmxfJC5BAAAAqh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgZF/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGWNzAMOuN3LWAAAA[0m37
+   originally caused by:
+    Started by GitHub push by AndSze
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_run_integration_sanity_test
+ > E:\Program Files\Git\bin\git.exe rev-parse --is-inside-work-tree # timeout=10
+Fetching changes from the remote Git repository
+ > E:\Program Files\Git\bin\git.exe config remote.origin.url https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git # timeout=10
+Fetching upstream changes from https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git
+ > E:\Program Files\Git\bin\git.exe --version # timeout=10
+using GIT_ASKPASS to set credentials Github-password
+ > E:\Program Files\Git\bin\git.exe fetch --tags --progress https://github.com/AndSze/CI_tool_for_an_optimal_test_suite_selection.git +refs/heads/*:refs/remotes/origin/*
+ > E:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/develop^{commit}" # timeout=10
+ > E:\Program Files\Git\bin\git.exe rev-parse "refs/remotes/origin/origin/develop^{commit}" # timeout=10
+Checking out Revision c01c08284c2c106bf6da4b430f3d69e2609823be (refs/remotes/origin/develop)
+ > E:\Program Files\Git\bin\git.exe config core.sparsecheckout # timeout=10
+ > E:\Program Files\Git\bin\git.exe checkout -f c01c08284c2c106bf6da4b430f3d69e2609823be
+Commit message: "CI tool validation for malfunctioning software"
+First time build. Skipping changelog.
+[CI_tool_run_integration_sanity_test] $ cmd.exe /C "mvn -f '"E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\pom.xml"' clean verify -P integration-test && exit %%ERRORLEVEL%%"
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< andsze:UnitUnderTest >------------------------
+[INFO] Building UnitUnderTest 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ UnitUnderTest ---
+[INFO] Deleting E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ UnitUnderTest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\src\main\resources
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-compiler-plugin:3.5:compile (default-compile) @ UnitUnderTest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 36 source files to E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target\classes
+[INFO] -------------------------------------------------------------
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] COMPILATION ERROR : 
+[INFO] -------------------------------------------------------------
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] /E:/Praca magisterska/CI_tool_source_code/JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java:[435,24] variable local_delay_factor is already defined in method _1h_Watchdog_close_to_expire(double,double,int)
+[INFO] 1 error
+[INFO] -------------------------------------------------------------
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 2.386 s
+[INFO] Finished at: 2018-09-09T21:46:28+02:00
+[INFO] ------------------------------------------------------------------------
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.5:compile (default-compile) on project UnitUnderTest: Compilation failure
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] /E:/Praca magisterska/CI_tool_source_code/JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java:[435,24] variable local_delay_factor is already defined in method _1h_Watchdog_close_to_expire(double,double,int)
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] 
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] -> [Help 1]
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] 
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] Re-run Maven using the -X switch to enable full debug logging.
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] 
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] For more information about the errors and possible solutions, please read the following articles:
+[8mha:////4B2hicBkUnPug52Dtn+fATtmF73CXHug+CqyeLZM8obNAAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEuhYV5Rf55ZekOlc7RKnPKH7IxMBQUcQgBdWQnJ9XnJ+TqucMoUEKGSCAEaSwAACsNFCqYAAAAA==[0m[ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+Build step 'Invoke top-level Maven targets' marked build as failure
+Build did not succeed and the project is configured to only push after a successful build, so no pushing will occur.
+Finished: FAILURE

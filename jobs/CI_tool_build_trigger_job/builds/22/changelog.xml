@@ -1,0 +1,13 @@
+commit 9ab177a21a1acec9a08114cd410e0ba0aa536004
+tree 9080c8216b27e5bf6d356c80b9bccdf968332f2b
+parent 7694a035745b2a521a0fc9735d0147bf59e167a9
+author AndSze <andrzejszewczyk94@gmail.com> 2018-09-06 21:46:43 +0200
+committer AndSze <andrzejszewczyk94@gmail.com> 2018-09-06 21:46:43 +0200
+
+    06-09-2018 CI tool official dry run
+
+
+
+:100644 100644 b28b26745353aa440a81dd78b3e4dc4823a8104c cd8269a21c8ca2bcd3d6700e3c71f18843346e42 M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpClient/ClientManager.java
+:100644 100644 17c647d2927df640a133a4cbb590c89a8b8dd938 75fbc234a07265ddbe39af24ea57d1091d698622 M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpClient/TCPclient.java
+:100644 100644 81a8abd632e9c774e4c4bf963930185e2a9b82b7 191ffe05e0abd4b40bba4e3139fc7445ca4a2cf5 M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java

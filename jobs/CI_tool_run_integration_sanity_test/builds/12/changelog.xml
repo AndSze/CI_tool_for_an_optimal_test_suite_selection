@@ -1,0 +1,33 @@
+commit 908e1cde20be4afa5176972d3f44090047cf7b4f
+tree f63b1e5465022c1d2d597ca2f51c4fbfc67c1512
+parent d78467e7c1425590f09ba5ee8bc37a9e7fd6f0f9
+author AndSze <andrzejszewczyk94@gmail.com> 2018-09-06 22:46:49 +0200
+committer AndSze <andrzejszewczyk94@gmail.com> 2018-09-06 22:46:49 +0200
+
+    06-09-2018 CI tool official dry run with malfunctioning software
+
+
+
+:100644 100644 06e24bac1718352678ab28d651cacaf9547e175c 080ac11529e8afbb5447abe908fc1063610e27fb M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java
+commit d78467e7c1425590f09ba5ee8bc37a9e7fd6f0f9
+tree 55d83cf10340331e64fad58d09832e3df1de199d
+parent 3a187929bb49322330a9aadcdc1dbaad446ca346
+author AndSze <andrzejszewczyk94@gmail.com> 2018-09-06 22:42:43 +0200
+committer AndSze <andrzejszewczyk94@gmail.com> 2018-09-06 22:42:43 +0200
+
+    reverting changes from last commit
+
+
+
+:100644 100644 e7f387d5c318b4f12f1be7c2abf52f58d98c476c 06e24bac1718352678ab28d651cacaf9547e175c M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java
+commit 3a187929bb49322330a9aadcdc1dbaad446ca346
+tree 62e38911eac5e222bd597be553a561be7575c14e
+parent 9ab177a21a1acec9a08114cd410e0ba0aa536004
+author AndSze <andrzejszewczyk94@gmail.com> 2018-09-06 22:32:47 +0200
+committer AndSze <andrzejszewczyk94@gmail.com> 2018-09-06 22:32:47 +0200
+
+    06-09-2018 CI tool official dry run with malfunctioning software
+
+
+
+:100644 100644 191ffe05e0abd4b40bba4e3139fc7445ca4a2cf5 e7f387d5c318b4f12f1be7c2abf52f58d98c476c M	JavaWorkspace_MT/UnitUnderTest/src/main/java/tcpServer/ComputeEngine_Runnable.java

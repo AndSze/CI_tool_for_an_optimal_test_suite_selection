@@ -1,0 +1,583 @@
+Started by upstream project "[8mha:////4IwxdtnW96BpfkVlIrUOL4Sg1jk8EVGWIs1nx9M8xS+vAAAAwB+LCAAAAAAAAP9djbENwjAURD9BMAAlomGBuKOBVGlAAhoGsEz4Shw+/pb9g8garAENQzAOOxCJilxzp9PT3fMDoxhgXjWnyC4t2EUmTHd8Qlq3HgNZd96zIPw0SABuAWY9/g9dZI9XdvfvBJINjAldKdUWhk0ggcm2NlejyLhSHSRYVy67uWlvLv95/9d3YSGwUjUfVb7Rwkw6NE77Vip2OhbBeulqHZGwEM1e7MWQFoyiY2MF1Re4Ebpr8QAAAA==[0mCI_tool_run_python_script_to_select_optimal_test_suite" build number [8mha:////4A8MQgwV2Oj4qqC4DWBJGVy9CMysYhlSKMmmFQrUyx79AAAAwB+LCAAAAAAAAP9djbENwjAURD9BMAAlomGBuIMCpUoDEtAwgGXCV+Lw8bfsH0TWYA1oGIJx2AEQFbnmTqenu/sLBjHAtGoOkV1asItMmG74gLRsPQay7rhlQfiplwBcAkw6/B86y26P7OqfCSQrGBK6Uqo19JtAAqN1bc5GkXGl2kmwrlx85sadufzn3V//DQKZqnmv8pUWZtKhcdq3UrHTsQjWy6fWEQkL0ezFngxpwSg6NlZQzd8anqiJ8gAAAA==[0m7
+originally caused by:
+ Started by upstream project "[8mha:////4FcV0BSA0fLAJfDImX4HnM0cio8KzN7KNbNRe+ezBQ2TAAAAuB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy1EgYd/az8JH1nz/iS/Pyc+OLKvOSMovy8zKrU+Jz85MSc+KLUgvzizJL8oszUYn0AxXsr3+EAAAA=[0mCI_tool_synchronize_local_repositories" build number [8mha:////4JQmMJENTHB7ApeXBZQS3UsdN37V5zb5D5SeCs23SsylAAAAuB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLQIwSBl39rPwkfWfP+JL8/Jz44sq85Iyi/LzMqtT4nPzkxJz4otSC/OLMkvyizNRifUsAEp576eIAAAA=[0m9
+ originally caused by:
+  Started by upstream project "[8mha:////4K2a1Cvzhfet/BSZHuoya5P0UDYDhEJJ1KC49INzxpPwAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzJEgZ5/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGQC0MYaa1AAAAA==[0mCI_tool_build_trigger_job" build number [8mha:////4PTf3hEeK0HWdTgHqzq2PrW2LWh3m2qqUy8YX9iWupoDAAAAqh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgZF/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGUNLAEbhuafWAAAA[0m19
+  originally caused by:
+   Started by GitHub push by AndSze
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_run_optimal_test_suite
+[CI_tool_run_optimal_test_suite] $ cmd.exe /C "mvn -f '"E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\updated_pom.xml"' clean test -P dev && exit %%ERRORLEVEL%%"
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------------< andsze:UnitUnderTest >------------------------
+[INFO] Building UnitUnderTest 0.0.1-SNAPSHOT
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-clean-plugin:2.5:clean (default-clean) @ UnitUnderTest ---
+[INFO] Deleting E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-resources-plugin:2.6:resources (default-resources) @ UnitUnderTest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\src\main\resources
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-compiler-plugin:3.5:compile (default-compile) @ UnitUnderTest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 36 source files to E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target\classes
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-resources-plugin:2.6:testResources (default-testResources) @ UnitUnderTest ---
+[INFO] Using 'UTF-8' encoding to copy filtered resources.
+[INFO] skip non existing resourceDirectory E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\src\test\resources
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-compiler-plugin:3.5:testCompile (default-testCompile) @ UnitUnderTest ---
+[INFO] Changes detected - recompiling the module!
+[INFO] Compiling 50 source files to E:\Praca magisterska\CI_tool_source_code\JavaWorkspace_MT\UnitUnderTest\target\test-classes
+[INFO] 
+[8mha:////4Klc1bZudqp5KcQg0IAG9SxakSZEyfYOHJDij/1MKt07AAAAYB+LCAAAAAAAAP9b85aBtbiIQSmjNKU4P0+vJLE4u1gvPjexLDVPzxdEGvvmZ+X75ZekLlOVfvTjc8FPJgaGiiIGKaiG5Py84vycVD1nCA1SyAABjCCFBQCV27OjYAAAAA==[0m[INFO] --- maven-surefire-plugin:2.19.1:test (default-test) @ UnitUnderTest ---
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/maven-surefire-common/2.19.1/maven-surefire-common-2.19.1.pom
+Progress (1): 2.8/7.3 kBProgress (1): 5.5/7.3 kBProgress (1): 7.3 kB                        Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/maven-surefire-common/2.19.1/maven-surefire-common-2.19.1.pom (7.3 kB at 12 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugin-tools/maven-plugin-annotations/3.3/maven-plugin-annotations-3.3.pom
+Progress (1): 1.6 kB                    Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugin-tools/maven-plugin-annotations/3.3/maven-plugin-annotations-3.3.pom (1.6 kB at 18 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugin-tools/maven-plugin-tools/3.3/maven-plugin-tools-3.3.pom
+Progress (1): 2.8/13 kBProgress (1): 5.5/13 kBProgress (1): 8.3/13 kBProgress (1): 11/13 kB Progress (1): 13 kB                      Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugin-tools/maven-plugin-tools/3.3/maven-plugin-tools-3.3.pom (13 kB at 147 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/24/maven-parent-24.pom
+Progress (1): 2.2/37 kBProgress (1): 5.0/37 kBProgress (1): 7.7/37 kBProgress (1): 11/37 kB Progress (1): 13/37 kBProgress (1): 16/37 kBProgress (1): 19/37 kBProgress (1): 21/37 kBProgress (1): 24/37 kBProgress (1): 27/37 kBProgress (1): 30/37 kBProgress (1): 32/37 kBProgress (1): 35/37 kBProgress (1): 37 kB                      Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/24/maven-parent-24.pom (37 kB at 335 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/apache/14/apache-14.pom
+Progress (1): 2.2/15 kBProgress (1): 5.0/15 kBProgress (1): 7.7/15 kBProgress (1): 11/15 kB Progress (1): 13/15 kBProgress (1): 15 kB                      Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/apache/14/apache-14.pom (15 kB at 163 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-booter/2.19.1/surefire-booter-2.19.1.pom
+Progress (1): 2.2/3.2 kBProgress (1): 3.2 kB                        Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-booter/2.19.1/surefire-booter-2.19.1.pom (3.2 kB at 38 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/reporting/maven-reporting-api/3.0/maven-reporting-api-3.0.pom
+Progress (1): 2.2/2.4 kBProgress (1): 2.4 kB                        Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/reporting/maven-reporting-api/3.0/maven-reporting-api-3.0.pom (2.4 kB at 27 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/maven-shared-components/15/maven-shared-components-15.pom
+Progress (1): 2.8/9.3 kBProgress (1): 5.5/9.3 kBProgress (1): 8.3/9.3 kBProgress (1): 9.3 kB                        Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/shared/maven-shared-components/15/maven-shared-components-15.pom (9.3 kB at 100 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/16/maven-parent-16.pom
+Progress (1): 0.1/23 kBProgress (1): 2.8/23 kBProgress (1): 5.6/23 kBProgress (1): 8.3/23 kBProgress (1): 11/23 kB Progress (1): 14/23 kBProgress (1): 16/23 kBProgress (1): 19/23 kBProgress (1): 22/23 kBProgress (1): 23 kB                      Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-parent/16/maven-parent-16.pom (23 kB at 250 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-plugin-api/2.2.1/maven-plugin-api-2.2.1.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-artifact/2.2.1/maven-artifact-2.2.1.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-booter/2.19.1/surefire-booter-2.19.1.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/maven-surefire-common/2.19.1/maven-surefire-common-2.19.1.jar
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/1.5.15/plexus-utils-1.5.15.jar
+Progress (1): 2.8/80 kBProgress (1): 5.5/80 kBProgress (1): 8.3/80 kBProgress (1): 11/80 kB Progress (1): 14/80 kBProgress (1): 16/80 kBProgress (1): 19/80 kBProgress (1): 22/80 kBProgress (1): 25/80 kBProgress (1): 27/80 kBProgress (1): 30/80 kBProgress (1): 33/80 kBProgress (1): 37/80 kBProgress (1): 41/80 kBProgress (1): 45/80 kBProgress (1): 49/80 kBProgress (1): 53/80 kBProgress (1): 57/80 kBProgress (1): 61/80 kBProgress (1): 66/80 kBProgress (1): 70/80 kBProgress (1): 74/80 kBProgress (1): 78/80 kBProgress (1): 80 kB                      Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-artifact/2.2.1/maven-artifact-2.2.1.jar (80 kB at 222 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-plugin-descriptor/2.2.1/maven-plugin-descriptor-2.2.1.jar
+Progress (1): 2.8/228 kBProgress (1): 5.5/228 kBProgress (1): 8.3/228 kBProgress (2): 8.3/228 kB | 2.8/46 kBProgress (2): 11/228 kB | 2.8/46 kB Progress (2): 11/228 kB | 5.5/46 kBProgress (2): 11/228 kB | 8.3/46 kBProgress (2): 11/228 kB | 11/46 kB Progress (3): 11/228 kB | 11/46 kB | 2.2/12 kBProgress (3): 11/228 kB | 11/46 kB | 5.0/12 kBProgress (3): 11/228 kB | 11/46 kB | 7.7/12 kBProgress (3): 11/228 kB | 11/46 kB | 10/12 kB Progress (3): 11/228 kB | 11/46 kB | 12 kB   Progress (4): 11/228 kB | 11/46 kB | 12 kB | 2.2/293 kBProgress (4): 11/228 kB | 11/46 kB | 12 kB | 5.0/293 kBProgress (4): 11/228 kB | 11/46 kB | 12 kB | 7.7/293 kBProgress (4): 11/228 kB | 11/46 kB | 12 kB | 10/293 kB Progress (4): 11/228 kB | 11/46 kB | 12 kB | 13/293 kBProgress (4): 14/228 kB | 11/46 kB | 12 kB | 13/293 kBProgress (4): 16/228 kB | 11/46 kB | 12 kB | 13/293 kBProgress (4): 19/228 kB | 11/46 kB | 12 kB | 13/293 kBProgress (4): 22/228 kB | 11/46 kB | 12 kB | 13/293 kBProgress (4): 25/228 kB | 11/46 kB | 12 kB | 13/293 kBProgress (4): 25/228 kB | 14/46 kB | 12 kB | 13/293 kBProgress (4): 25/228 kB | 16/46 kB | 12 kB | 13/293 kBProgress (4): 27/228 kB | 16/46 kB | 12 kB | 13/293 kBProgress (5): 27/228 kB | 16/46 kB | 12 kB | 13/293 kB | 4.1/39 kBProgress (5): 27/228 kB | 16/46 kB | 12 kB | 13/293 kB | 7.6/39 kBProgress (5): 27/228 kB | 16/46 kB | 12 kB | 13/293 kB | 12/39 kB Progress (5): 30/228 kB | 16/46 kB | 12 kB | 13/293 kB | 12/39 kBProgress (5): 30/228 kB | 16/46 kB | 12 kB | 13/293 kB | 16/39 kBProgress (5): 30/228 kB | 19/46 kB | 12 kB | 13/293 kB | 16/39 kBProgress (5): 33/228 kB | 19/46 kB | 12 kB | 13/293 kB | 16/39 kBProgress (5): 33/228 kB | 22/46 kB | 12 kB | 13/293 kB | 16/39 kBProgress (5): 33/228 kB | 25/46 kB | 12 kB | 13/293 kB | 16/39 kBProgress (5): 33/228 kB | 27/46 kB | 12 kB | 13/293 kB | 16/39 kBProgress (5): 33/228 kB | 30/46 kB | 12 kB | 13/293 kB | 16/39 kBProgress (5): 33/228 kB | 30/46 kB | 12 kB | 13/293 kB | 20/39 kBProgress (5): 33/228 kB | 30/46 kB | 12 kB | 13/293 kB | 24/39 kBProgress (5): 33/228 kB | 30/46 kB | 12 kB | 16/293 kB | 24/39 kBProgress (5): 33/228 kB | 30/46 kB | 12 kB | 16/293 kB | 28/39 kBProgress (5): 33/228 kB | 30/46 kB | 12 kB | 19/293 kB | 28/39 kBProgress (5): 33/228 kB | 30/46 kB | 12 kB | 19/293 kB | 32/39 kBProgress (5): 33/228 kB | 33/46 kB | 12 kB | 19/293 kB | 32/39 kB                                                                 Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-plugin-api/2.2.1/maven-plugin-api-2.2.1.jar (12 kB at 25 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-project/2.2.1/maven-project-2.2.1.jar
+Progress (4): 33/228 kB | 33/46 kB | 21/293 kB | 32/39 kBProgress (4): 33/228 kB | 33/46 kB | 21/293 kB | 36/39 kBProgress (4): 33/228 kB | 33/46 kB | 21/293 kB | 39 kB   Progress (4): 33/228 kB | 33/46 kB | 24/293 kB | 39 kBProgress (4): 37/228 kB | 33/46 kB | 24/293 kB | 39 kBProgress (4): 41/228 kB | 33/46 kB | 24/293 kB | 39 kBProgress (4): 45/228 kB | 33/46 kB | 24/293 kB | 39 kBProgress (4): 49/228 kB | 33/46 kB | 24/293 kB | 39 kBProgress (4): 49/228 kB | 33/46 kB | 27/293 kB | 39 kBProgress (4): 49/228 kB | 37/46 kB | 27/293 kB | 39 kBProgress (4): 49/228 kB | 41/46 kB | 27/293 kB | 39 kBProgress (4): 49/228 kB | 41/46 kB | 30/293 kB | 39 kBProgress (4): 49/228 kB | 45/46 kB | 30/293 kB | 39 kBProgress (4): 49/228 kB | 46 kB | 30/293 kB | 39 kB   Progress (4): 53/228 kB | 46 kB | 30/293 kB | 39 kBProgress (4): 57/228 kB | 46 kB | 30/293 kB | 39 kBProgress (4): 61/228 kB | 46 kB | 30/293 kB | 39 kBProgress (4): 66/228 kB | 46 kB | 30/293 kB | 39 kBProgress (4): 66/228 kB | 46 kB | 32/293 kB | 39 kBProgress (4): 70/228 kB | 46 kB | 32/293 kB | 39 kBProgress (4): 74/228 kB | 46 kB | 32/293 kB | 39 kBProgress (4): 78/228 kB | 46 kB | 32/293 kB | 39 kBProgress (4): 82/228 kB | 46 kB | 32/293 kB | 39 kBProgress (4): 86/228 kB | 46 kB | 32/293 kB | 39 kBProgress (4): 90/228 kB | 46 kB | 32/293 kB | 39 kBProgress (4): 94/228 kB | 46 kB | 32/293 kB | 39 kBProgress (4): 98/228 kB | 46 kB | 32/293 kB | 39 kBProgress (5): 98/228 kB | 46 kB | 32/293 kB | 39 kB | 2.2/156 kBProgress (5): 98/228 kB | 46 kB | 32/293 kB | 39 kB | 5.0/156 kBProgress (5): 98/228 kB | 46 kB | 36/293 kB | 39 kB | 5.0/156 kB                                                                Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-plugin-descriptor/2.2.1/maven-plugin-descriptor-2.2.1.jar (39 kB at 68 kB/s)
+Progress (4): 98/228 kB | 46 kB | 36/293 kB | 7.7/156 kBProgress (4): 98/228 kB | 46 kB | 40/293 kB | 7.7/156 kB                                                        Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-settings/2.2.1/maven-settings-2.2.1.jar
+Progress (4): 98/228 kB | 46 kB | 45/293 kB | 7.7/156 kBProgress (4): 98/228 kB | 46 kB | 49/293 kB | 7.7/156 kBProgress (4): 102/228 kB | 46 kB | 49/293 kB | 7.7/156 kBProgress (4): 106/228 kB | 46 kB | 49/293 kB | 7.7/156 kBProgress (4): 111/228 kB | 46 kB | 49/293 kB | 7.7/156 kBProgress (4): 115/228 kB | 46 kB | 49/293 kB | 7.7/156 kBProgress (4): 115/228 kB | 46 kB | 49/293 kB | 10/156 kB                                                         Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-booter/2.19.1/surefire-booter-2.19.1.jar (46 kB at 74 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-profile/2.2.1/maven-profile-2.2.1.jar
+Progress (3): 119/228 kB | 49/293 kB | 10/156 kBProgress (3): 123/228 kB | 49/293 kB | 10/156 kBProgress (3): 127/228 kB | 49/293 kB | 10/156 kBProgress (3): 131/228 kB | 49/293 kB | 10/156 kBProgress (3): 131/228 kB | 49/293 kB | 13/156 kBProgress (3): 135/228 kB | 49/293 kB | 13/156 kBProgress (3): 139/228 kB | 49/293 kB | 13/156 kBProgress (3): 143/228 kB | 49/293 kB | 13/156 kBProgress (3): 147/228 kB | 49/293 kB | 13/156 kBProgress (3): 147/228 kB | 53/293 kB | 13/156 kBProgress (3): 147/228 kB | 57/293 kB | 13/156 kBProgress (3): 147/228 kB | 61/293 kB | 13/156 kBProgress (3): 147/228 kB | 65/293 kB | 13/156 kBProgress (3): 147/228 kB | 65/293 kB | 16/156 kBProgress (3): 147/228 kB | 65/293 kB | 19/156 kBProgress (3): 147/228 kB | 69/293 kB | 19/156 kBProgress (3): 147/228 kB | 73/293 kB | 19/156 kBProgress (3): 147/228 kB | 77/293 kB | 19/156 kBProgress (3): 147/228 kB | 81/293 kB | 19/156 kBProgress (3): 147/228 kB | 81/293 kB | 21/156 kBProgress (3): 147/228 kB | 81/293 kB | 24/156 kBProgress (3): 147/228 kB | 81/293 kB | 27/156 kBProgress (3): 152/228 kB | 81/293 kB | 27/156 kBProgress (3): 152/228 kB | 85/293 kB | 27/156 kBProgress (3): 156/228 kB | 85/293 kB | 27/156 kBProgress (3): 156/228 kB | 90/293 kB | 27/156 kBProgress (3): 160/228 kB | 90/293 kB | 27/156 kBProgress (3): 160/228 kB | 94/293 kB | 27/156 kBProgress (3): 160/228 kB | 94/293 kB | 30/156 kBProgress (3): 164/228 kB | 94/293 kB | 30/156 kBProgress (3): 164/228 kB | 98/293 kB | 30/156 kBProgress (3): 164/228 kB | 98/293 kB | 32/156 kBProgress (3): 168/228 kB | 98/293 kB | 32/156 kBProgress (3): 172/228 kB | 98/293 kB | 32/156 kBProgress (3): 176/228 kB | 98/293 kB | 32/156 kBProgress (3): 180/228 kB | 98/293 kB | 32/156 kBProgress (3): 184/228 kB | 98/293 kB | 32/156 kBProgress (3): 188/228 kB | 98/293 kB | 32/156 kBProgress (3): 193/228 kB | 98/293 kB | 32/156 kBProgress (3): 197/228 kB | 98/293 kB | 32/156 kBProgress (3): 201/228 kB | 98/293 kB | 32/156 kBProgress (3): 205/228 kB | 98/293 kB | 32/156 kBProgress (4): 205/228 kB | 98/293 kB | 32/156 kB | 2.8/49 kBProgress (4): 209/228 kB | 98/293 kB | 32/156 kB | 2.8/49 kBProgress (4): 213/228 kB | 98/293 kB | 32/156 kB | 2.8/49 kBProgress (4): 213/228 kB | 98/293 kB | 32/156 kB | 5.5/49 kBProgress (4): 213/228 kB | 102/293 kB | 32/156 kB | 5.5/49 kBProgress (4): 213/228 kB | 102/293 kB | 32/156 kB | 8.3/49 kBProgress (4): 213/228 kB | 106/293 kB | 32/156 kB | 8.3/49 kBProgress (4): 217/228 kB | 106/293 kB | 32/156 kB | 8.3/49 kBProgress (4): 217/228 kB | 110/293 kB | 32/156 kB | 8.3/49 kBProgress (4): 221/228 kB | 110/293 kB | 32/156 kB | 8.3/49 kBProgress (4): 221/228 kB | 114/293 kB | 32/156 kB | 8.3/49 kBProgress (4): 221/228 kB | 114/293 kB | 32/156 kB | 11/49 kB Progress (4): 225/228 kB | 114/293 kB | 32/156 kB | 11/49 kBProgress (4): 225/228 kB | 114/293 kB | 32/156 kB | 14/49 kBProgress (4): 228 kB | 114/293 kB | 32/156 kB | 14/49 kB    Progress (4): 228 kB | 114/293 kB | 36/156 kB | 14/49 kBProgress (4): 228 kB | 114/293 kB | 36/156 kB | 16/49 kBProgress (4): 228 kB | 114/293 kB | 40/156 kB | 16/49 kBProgress (4): 228 kB | 114/293 kB | 40/156 kB | 19/49 kBProgress (4): 228 kB | 114/293 kB | 45/156 kB | 19/49 kBProgress (4): 228 kB | 114/293 kB | 45/156 kB | 22/49 kBProgress (4): 228 kB | 114/293 kB | 49/156 kB | 22/49 kBProgress (4): 228 kB | 114/293 kB | 49/156 kB | 25/49 kBProgress (4): 228 kB | 114/293 kB | 49/156 kB | 27/49 kBProgress (4): 228 kB | 114/293 kB | 49/156 kB | 30/49 kBProgress (4): 228 kB | 114/293 kB | 49/156 kB | 33/49 kBProgress (5): 228 kB | 114/293 kB | 49/156 kB | 33/49 kB | 4.1/35 kBProgress (5): 228 kB | 114/293 kB | 49/156 kB | 33/49 kB | 7.6/35 kBProgress (5): 228 kB | 114/293 kB | 49/156 kB | 33/49 kB | 12/35 kB Progress (5): 228 kB | 114/293 kB | 49/156 kB | 33/49 kB | 16/35 kBProgress (5): 228 kB | 114/293 kB | 49/156 kB | 37/49 kB | 16/35 kBProgress (5): 228 kB | 114/293 kB | 49/156 kB | 41/49 kB | 16/35 kBProgress (5): 228 kB | 114/293 kB | 49/156 kB | 45/49 kB | 16/35 kBProgress (5): 228 kB | 114/293 kB | 49/156 kB | 49 kB | 16/35 kB   Progress (5): 228 kB | 114/293 kB | 49/156 kB | 49 kB | 20/35 kBProgress (5): 228 kB | 114/293 kB | 49/156 kB | 49 kB | 24/35 kBProgress (5): 228 kB | 114/293 kB | 49/156 kB | 49 kB | 28/35 kBProgress (5): 228 kB | 114/293 kB | 49/156 kB | 49 kB | 32/35 kBProgress (5): 228 kB | 118/293 kB | 49/156 kB | 49 kB | 32/35 kBProgress (5): 228 kB | 118/293 kB | 49/156 kB | 49 kB | 35 kB   Progress (5): 228 kB | 122/293 kB | 49/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 126/293 kB | 49/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 131/293 kB | 49/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 131/293 kB | 53/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 131/293 kB | 57/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 131/293 kB | 61/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 131/293 kB | 65/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 135/293 kB | 65/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 139/293 kB | 65/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 143/293 kB | 65/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 147/293 kB | 65/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 147/293 kB | 69/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 147/293 kB | 73/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 147/293 kB | 77/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 147/293 kB | 81/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 151/293 kB | 81/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 155/293 kB | 81/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 159/293 kB | 81/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 163/293 kB | 81/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 163/293 kB | 85/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 163/293 kB | 90/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 163/293 kB | 94/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 163/293 kB | 98/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 167/293 kB | 98/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 171/293 kB | 98/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 176/293 kB | 98/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 180/293 kB | 98/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 184/293 kB | 98/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 188/293 kB | 98/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 192/293 kB | 98/156 kB | 49 kB | 35 kBProgress (5): 228 kB | 196/293 kB | 98/156 kB | 49 kB | 35 kB                                                             Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-utils/1.5.15/plexus-utils-1.5.15.jar (228 kB at 263 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-artifact-manager/2.2.1/maven-artifact-manager-2.2.1.jar
+Progress (4): 196/293 kB | 102/156 kB | 49 kB | 35 kBProgress (4): 196/293 kB | 106/156 kB | 49 kB | 35 kBProgress (4): 200/293 kB | 106/156 kB | 49 kB | 35 kBProgress (4): 204/293 kB | 106/156 kB | 49 kB | 35 kBProgress (4): 208/293 kB | 106/156 kB | 49 kB | 35 kBProgress (4): 212/293 kB | 106/156 kB | 49 kB | 35 kBProgress (4): 212/293 kB | 110/156 kB | 49 kB | 35 kB                                                     Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-settings/2.2.1/maven-settings-2.2.1.jar (49 kB at 56 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/backport-util-concurrent/backport-util-concurrent/3.1/backport-util-concurrent-3.1.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-profile/2.2.1/maven-profile-2.2.1.jar (35 kB at 40 kB/s)
+Progress (2): 212/293 kB | 114/156 kB                                     Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-plugin-registry/2.2.1/maven-plugin-registry-2.2.1.jar
+Progress (2): 212/293 kB | 118/156 kBProgress (2): 212/293 kB | 122/156 kBProgress (2): 212/293 kB | 126/156 kBProgress (2): 212/293 kB | 131/156 kBProgress (2): 217/293 kB | 131/156 kBProgress (2): 217/293 kB | 135/156 kBProgress (2): 221/293 kB | 135/156 kBProgress (2): 221/293 kB | 139/156 kBProgress (2): 225/293 kB | 139/156 kBProgress (2): 225/293 kB | 143/156 kBProgress (2): 229/293 kB | 143/156 kBProgress (2): 229/293 kB | 147/156 kBProgress (2): 229/293 kB | 151/156 kBProgress (2): 229/293 kB | 155/156 kBProgress (2): 229/293 kB | 156 kB    Progress (2): 233/293 kB | 156 kBProgress (2): 237/293 kB | 156 kBProgress (2): 241/293 kB | 156 kBProgress (2): 245/293 kB | 156 kBProgress (2): 249/293 kB | 156 kBProgress (3): 249/293 kB | 156 kB | 2.8/332 kBProgress (3): 253/293 kB | 156 kB | 2.8/332 kBProgress (3): 258/293 kB | 156 kB | 2.8/332 kBProgress (3): 258/293 kB | 156 kB | 5.5/332 kBProgress (3): 262/293 kB | 156 kB | 5.5/332 kBProgress (3): 262/293 kB | 156 kB | 8.3/332 kBProgress (4): 262/293 kB | 156 kB | 8.3/332 kB | 4.1/68 kBProgress (4): 262/293 kB | 156 kB | 8.3/332 kB | 8.2/68 kBProgress (4): 262/293 kB | 156 kB | 11/332 kB | 8.2/68 kB Progress (4): 262/293 kB | 156 kB | 11/332 kB | 12/68 kB Progress (4): 262/293 kB | 156 kB | 11/332 kB | 16/68 kBProgress (4): 262/293 kB | 156 kB | 14/332 kB | 16/68 kB                                                        Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-project/2.2.1/maven-project-2.2.1.jar (156 kB at 169 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-interpolation/1.11/plexus-interpolation-1.11.jar
+Progress (3): 262/293 kB | 16/332 kB | 16/68 kBProgress (3): 262/293 kB | 19/332 kB | 16/68 kBProgress (3): 262/293 kB | 19/332 kB | 20/68 kBProgress (3): 262/293 kB | 19/332 kB | 25/68 kBProgress (3): 262/293 kB | 19/332 kB | 29/68 kBProgress (3): 262/293 kB | 19/332 kB | 33/68 kBProgress (3): 262/293 kB | 22/332 kB | 33/68 kBProgress (3): 262/293 kB | 25/332 kB | 33/68 kBProgress (3): 266/293 kB | 25/332 kB | 33/68 kBProgress (3): 270/293 kB | 25/332 kB | 33/68 kBProgress (3): 274/293 kB | 25/332 kB | 33/68 kBProgress (3): 278/293 kB | 25/332 kB | 33/68 kBProgress (3): 278/293 kB | 27/332 kB | 33/68 kBProgress (4): 278/293 kB | 27/332 kB | 33/68 kB | 4.1/30 kBProgress (4): 278/293 kB | 27/332 kB | 33/68 kB | 8.2/30 kBProgress (4): 278/293 kB | 27/332 kB | 33/68 kB | 12/30 kB Progress (4): 278/293 kB | 27/332 kB | 33/68 kB | 16/30 kBProgress (4): 278/293 kB | 30/332 kB | 33/68 kB | 16/30 kBProgress (4): 278/293 kB | 33/332 kB | 33/68 kB | 16/30 kBProgress (4): 278/293 kB | 33/332 kB | 37/68 kB | 16/30 kBProgress (4): 278/293 kB | 33/332 kB | 41/68 kB | 16/30 kBProgress (4): 278/293 kB | 33/332 kB | 45/68 kB | 16/30 kBProgress (4): 278/293 kB | 33/332 kB | 49/68 kB | 16/30 kBProgress (4): 282/293 kB | 33/332 kB | 49/68 kB | 16/30 kBProgress (4): 286/293 kB | 33/332 kB | 49/68 kB | 16/30 kBProgress (4): 290/293 kB | 33/332 kB | 49/68 kB | 16/30 kBProgress (4): 293 kB | 33/332 kB | 49/68 kB | 16/30 kB    Progress (4): 293 kB | 33/332 kB | 49/68 kB | 20/30 kBProgress (4): 293 kB | 33/332 kB | 53/68 kB | 20/30 kBProgress (4): 293 kB | 33/332 kB | 53/68 kB | 25/30 kBProgress (4): 293 kB | 33/332 kB | 57/68 kB | 25/30 kBProgress (4): 293 kB | 33/332 kB | 57/68 kB | 29/30 kBProgress (4): 293 kB | 33/332 kB | 61/68 kB | 29/30 kBProgress (4): 293 kB | 33/332 kB | 61/68 kB | 30 kB   Progress (4): 293 kB | 33/332 kB | 66/68 kB | 30 kBProgress (4): 293 kB | 37/332 kB | 66/68 kB | 30 kBProgress (4): 293 kB | 37/332 kB | 68 kB | 30 kB   Progress (4): 293 kB | 41/332 kB | 68 kB | 30 kBProgress (4): 293 kB | 45/332 kB | 68 kB | 30 kBProgress (4): 293 kB | 49/332 kB | 68 kB | 30 kBProgress (4): 293 kB | 53/332 kB | 68 kB | 30 kBProgress (4): 293 kB | 57/332 kB | 68 kB | 30 kBProgress (4): 293 kB | 61/332 kB | 68 kB | 30 kBProgress (4): 293 kB | 66/332 kB | 68 kB | 30 kBProgress (5): 293 kB | 66/332 kB | 68 kB | 30 kB | 4.1/51 kBProgress (5): 293 kB | 66/332 kB | 68 kB | 30 kB | 7.7/51 kBProgress (5): 293 kB | 66/332 kB | 68 kB | 30 kB | 12/51 kB Progress (5): 293 kB | 70/332 kB | 68 kB | 30 kB | 12/51 kBProgress (5): 293 kB | 70/332 kB | 68 kB | 30 kB | 16/51 kBProgress (5): 293 kB | 74/332 kB | 68 kB | 30 kB | 16/51 kBProgress (5): 293 kB | 78/332 kB | 68 kB | 30 kB | 16/51 kBProgress (5): 293 kB | 82/332 kB | 68 kB | 30 kB | 16/51 kBProgress (5): 293 kB | 82/332 kB | 68 kB | 30 kB | 20/51 kBProgress (5): 293 kB | 82/332 kB | 68 kB | 30 kB | 24/51 kBProgress (5): 293 kB | 82/332 kB | 68 kB | 30 kB | 28/51 kBProgress (5): 293 kB | 82/332 kB | 68 kB | 30 kB | 32/51 kBProgress (5): 293 kB | 86/332 kB | 68 kB | 30 kB | 32/51 kBProgress (5): 293 kB | 90/332 kB | 68 kB | 30 kB | 32/51 kBProgress (5): 293 kB | 94/332 kB | 68 kB | 30 kB | 32/51 kBProgress (5): 293 kB | 98/332 kB | 68 kB | 30 kB | 32/51 kBProgress (5): 293 kB | 98/332 kB | 68 kB | 30 kB | 36/51 kBProgress (5): 293 kB | 98/332 kB | 68 kB | 30 kB | 40/51 kBProgress (5): 293 kB | 98/332 kB | 68 kB | 30 kB | 45/51 kBProgress (5): 293 kB | 98/332 kB | 68 kB | 30 kB | 49/51 kBProgress (5): 293 kB | 98/332 kB | 68 kB | 30 kB | 51 kB                                                           Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/maven-surefire-common/2.19.1/maven-surefire-common-2.19.1.jar (293 kB at 282 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-model/2.2.1/maven-model-2.2.1.jar
+Progress (4): 102/332 kB | 68 kB | 30 kB | 51 kBProgress (4): 106/332 kB | 68 kB | 30 kB | 51 kBProgress (4): 111/332 kB | 68 kB | 30 kB | 51 kBProgress (4): 115/332 kB | 68 kB | 30 kB | 51 kB                                                Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-artifact-manager/2.2.1/maven-artifact-manager-2.2.1.jar (68 kB at 65 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-core/2.2.1/maven-core-2.2.1.jar
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-plugin-registry/2.2.1/maven-plugin-registry-2.2.1.jar (30 kB at 28 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-plugin-parameter-documenter/2.2.1/maven-plugin-parameter-documenter-2.2.1.jar
+Progress (2): 119/332 kB | 51 kBProgress (2): 123/332 kB | 51 kBProgress (2): 127/332 kB | 51 kBProgress (2): 131/332 kB | 51 kB                                Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-interpolation/1.11/plexus-interpolation-1.11.jar (51 kB at 48 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/slf4j/slf4j-jdk14/1.5.6/slf4j-jdk14-1.5.6.jar
+Progress (1): 135/332 kBProgress (1): 139/332 kBProgress (1): 143/332 kBProgress (1): 147/332 kBProgress (2): 147/332 kB | 4.1/88 kBProgress (2): 147/332 kB | 7.7/88 kBProgress (2): 147/332 kB | 12/88 kB Progress (3): 147/332 kB | 12/88 kB | 2.8/178 kBProgress (3): 147/332 kB | 16/88 kB | 2.8/178 kBProgress (3): 147/332 kB | 16/88 kB | 5.5/178 kBProgress (3): 147/332 kB | 16/88 kB | 8.3/178 kBProgress (3): 152/332 kB | 16/88 kB | 8.3/178 kBProgress (3): 156/332 kB | 16/88 kB | 8.3/178 kBProgress (3): 160/332 kB | 16/88 kB | 8.3/178 kBProgress (3): 164/332 kB | 16/88 kB | 8.3/178 kBProgress (3): 164/332 kB | 16/88 kB | 11/178 kB Progress (3): 164/332 kB | 16/88 kB | 14/178 kBProgress (3): 164/332 kB | 16/88 kB | 16/178 kBProgress (3): 164/332 kB | 16/88 kB | 19/178 kBProgress (3): 164/332 kB | 16/88 kB | 22/178 kBProgress (3): 164/332 kB | 16/88 kB | 25/178 kBProgress (3): 164/332 kB | 16/88 kB | 27/178 kBProgress (4): 164/332 kB | 16/88 kB | 27/178 kB | 4.1/22 kBProgress (4): 164/332 kB | 20/88 kB | 27/178 kB | 4.1/22 kBProgress (4): 164/332 kB | 20/88 kB | 27/178 kB | 8.2/22 kBProgress (4): 164/332 kB | 24/88 kB | 27/178 kB | 8.2/22 kBProgress (4): 164/332 kB | 24/88 kB | 27/178 kB | 12/22 kB Progress (4): 164/332 kB | 28/88 kB | 27/178 kB | 12/22 kBProgress (4): 164/332 kB | 28/88 kB | 27/178 kB | 16/22 kBProgress (4): 164/332 kB | 32/88 kB | 27/178 kB | 16/22 kBProgress (4): 164/332 kB | 32/88 kB | 30/178 kB | 16/22 kBProgress (4): 164/332 kB | 32/88 kB | 33/178 kB | 16/22 kBProgress (4): 168/332 kB | 32/88 kB | 33/178 kB | 16/22 kBProgress (4): 172/332 kB | 32/88 kB | 33/178 kB | 16/22 kBProgress (4): 176/332 kB | 32/88 kB | 33/178 kB | 16/22 kBProgress (4): 180/332 kB | 32/88 kB | 33/178 kB | 16/22 kBProgress (4): 180/332 kB | 32/88 kB | 33/178 kB | 20/22 kBProgress (4): 180/332 kB | 32/88 kB | 33/178 kB | 22 kB   Progress (4): 180/332 kB | 32/88 kB | 37/178 kB | 22 kBProgress (4): 180/332 kB | 32/88 kB | 41/178 kB | 22 kBProgress (4): 180/332 kB | 32/88 kB | 45/178 kB | 22 kBProgress (5): 180/332 kB | 32/88 kB | 45/178 kB | 22 kB | 2.8/8.8 kBProgress (5): 180/332 kB | 32/88 kB | 49/178 kB | 22 kB | 2.8/8.8 kBProgress (5): 180/332 kB | 32/88 kB | 49/178 kB | 22 kB | 5.5/8.8 kBProgress (5): 180/332 kB | 36/88 kB | 49/178 kB | 22 kB | 5.5/8.8 kBProgress (5): 184/332 kB | 36/88 kB | 49/178 kB | 22 kB | 5.5/8.8 kBProgress (5): 184/332 kB | 40/88 kB | 49/178 kB | 22 kB | 5.5/8.8 kBProgress (5): 188/332 kB | 40/88 kB | 49/178 kB | 22 kB | 5.5/8.8 kBProgress (5): 188/332 kB | 45/88 kB | 49/178 kB | 22 kB | 5.5/8.8 kBProgress (5): 193/332 kB | 45/88 kB | 49/178 kB | 22 kB | 5.5/8.8 kBProgress (5): 193/332 kB | 45/88 kB | 49/178 kB | 22 kB | 8.3/8.8 kBProgress (5): 193/332 kB | 49/88 kB | 49/178 kB | 22 kB | 8.3/8.8 kBProgress (5): 197/332 kB | 49/88 kB | 49/178 kB | 22 kB | 8.3/8.8 kBProgress (5): 197/332 kB | 49/88 kB | 49/178 kB | 22 kB | 8.8 kB    Progress (5): 197/332 kB | 49/88 kB | 53/178 kB | 22 kB | 8.8 kBProgress (5): 197/332 kB | 49/88 kB | 57/178 kB | 22 kB | 8.8 kBProgress (5): 197/332 kB | 49/88 kB | 61/178 kB | 22 kB | 8.8 kBProgress (5): 197/332 kB | 49/88 kB | 66/178 kB | 22 kB | 8.8 kBProgress (5): 201/332 kB | 49/88 kB | 66/178 kB | 22 kB | 8.8 kBProgress (5): 205/332 kB | 49/88 kB | 66/178 kB | 22 kB | 8.8 kBProgress (5): 209/332 kB | 49/88 kB | 66/178 kB | 22 kB | 8.8 kBProgress (5): 213/332 kB | 49/88 kB | 66/178 kB | 22 kB | 8.8 kBProgress (5): 213/332 kB | 53/88 kB | 66/178 kB | 22 kB | 8.8 kBProgress (5): 213/332 kB | 57/88 kB | 66/178 kB | 22 kB | 8.8 kBProgress (5): 213/332 kB | 61/88 kB | 66/178 kB | 22 kB | 8.8 kBProgress (5): 213/332 kB | 65/88 kB | 66/178 kB | 22 kB | 8.8 kBProgress (5): 213/332 kB | 65/88 kB | 70/178 kB | 22 kB | 8.8 kBProgress (5): 213/332 kB | 65/88 kB | 74/178 kB | 22 kB | 8.8 kBProgress (5): 213/332 kB | 65/88 kB | 78/178 kB | 22 kB | 8.8 kBProgress (5): 213/332 kB | 65/88 kB | 82/178 kB | 22 kB | 8.8 kBProgress (5): 217/332 kB | 65/88 kB | 82/178 kB | 22 kB | 8.8 kBProgress (5): 221/332 kB | 65/88 kB | 82/178 kB | 22 kB | 8.8 kBProgress (5): 225/332 kB | 65/88 kB | 82/178 kB | 22 kB | 8.8 kBProgress (5): 229/332 kB | 65/88 kB | 82/178 kB | 22 kB | 8.8 kBProgress (5): 229/332 kB | 65/88 kB | 86/178 kB | 22 kB | 8.8 kBProgress (5): 229/332 kB | 65/88 kB | 90/178 kB | 22 kB | 8.8 kBProgress (5): 229/332 kB | 65/88 kB | 94/178 kB | 22 kB | 8.8 kBProgress (5): 229/332 kB | 65/88 kB | 98/178 kB | 22 kB | 8.8 kBProgress (5): 229/332 kB | 69/88 kB | 98/178 kB | 22 kB | 8.8 kBProgress (5): 229/332 kB | 73/88 kB | 98/178 kB | 22 kB | 8.8 kBProgress (5): 229/332 kB | 77/88 kB | 98/178 kB | 22 kB | 8.8 kBProgress (5): 229/332 kB | 81/88 kB | 98/178 kB | 22 kB | 8.8 kBProgress (5): 229/332 kB | 85/88 kB | 98/178 kB | 22 kB | 8.8 kBProgress (5): 229/332 kB | 88 kB | 98/178 kB | 22 kB | 8.8 kB   Progress (5): 229/332 kB | 88 kB | 102/178 kB | 22 kB | 8.8 kBProgress (5): 229/332 kB | 88 kB | 106/178 kB | 22 kB | 8.8 kBProgress (5): 229/332 kB | 88 kB | 111/178 kB | 22 kB | 8.8 kBProgress (5): 229/332 kB | 88 kB | 115/178 kB | 22 kB | 8.8 kBProgress (5): 233/332 kB | 88 kB | 115/178 kB | 22 kB | 8.8 kBProgress (5): 238/332 kB | 88 kB | 115/178 kB | 22 kB | 8.8 kBProgress (5): 242/332 kB | 88 kB | 115/178 kB | 22 kB | 8.8 kBProgress (5): 246/332 kB | 88 kB | 115/178 kB | 22 kB | 8.8 kBProgress (5): 246/332 kB | 88 kB | 119/178 kB | 22 kB | 8.8 kBProgress (5): 246/332 kB | 88 kB | 123/178 kB | 22 kB | 8.8 kBProgress (5): 246/332 kB | 88 kB | 127/178 kB | 22 kB | 8.8 kBProgress (5): 246/332 kB | 88 kB | 131/178 kB | 22 kB | 8.8 kBProgress (5): 250/332 kB | 88 kB | 131/178 kB | 22 kB | 8.8 kBProgress (5): 250/332 kB | 88 kB | 135/178 kB | 22 kB | 8.8 kBProgress (5): 254/332 kB | 88 kB | 135/178 kB | 22 kB | 8.8 kBProgress (5): 254/332 kB | 88 kB | 139/178 kB | 22 kB | 8.8 kBProgress (5): 258/332 kB | 88 kB | 139/178 kB | 22 kB | 8.8 kBProgress (5): 258/332 kB | 88 kB | 143/178 kB | 22 kB | 8.8 kBProgress (5): 262/332 kB | 88 kB | 143/178 kB | 22 kB | 8.8 kBProgress (5): 262/332 kB | 88 kB | 147/178 kB | 22 kB | 8.8 kBProgress (5): 262/332 kB | 88 kB | 152/178 kB | 22 kB | 8.8 kB                                                              Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-plugin-parameter-documenter/2.2.1/maven-plugin-parameter-documenter-2.2.1.jar (22 kB at 17 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/1.5.6/slf4j-api-1.5.6.jar
+Progress (4): 262/332 kB | 88 kB | 156/178 kB | 8.8 kBProgress (4): 262/332 kB | 88 kB | 160/178 kB | 8.8 kBProgress (4): 262/332 kB | 88 kB | 164/178 kB | 8.8 kBProgress (4): 262/332 kB | 88 kB | 168/178 kB | 8.8 kBProgress (4): 262/332 kB | 88 kB | 172/178 kB | 8.8 kBProgress (4): 262/332 kB | 88 kB | 176/178 kB | 8.8 kBProgress (4): 262/332 kB | 88 kB | 178 kB | 8.8 kB    Progress (4): 266/332 kB | 88 kB | 178 kB | 8.8 kBProgress (4): 270/332 kB | 88 kB | 178 kB | 8.8 kBProgress (4): 274/332 kB | 88 kB | 178 kB | 8.8 kBProgress (4): 275/332 kB | 88 kB | 178 kB | 8.8 kB                                                  Downloaded from central: https://repo.maven.apache.org/maven2/org/slf4j/slf4j-jdk14/1.5.6/slf4j-jdk14-1.5.6.jar (8.8 kB at 6.6 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/slf4j/jcl-over-slf4j/1.5.6/jcl-over-slf4j-1.5.6.jar
+Progress (3): 279/332 kB | 88 kB | 178 kBProgress (3): 283/332 kB | 88 kB | 178 kBProgress (3): 287/332 kB | 88 kB | 178 kBProgress (3): 291/332 kB | 88 kB | 178 kBProgress (3): 296/332 kB | 88 kB | 178 kBProgress (3): 300/332 kB | 88 kB | 178 kBProgress (3): 304/332 kB | 88 kB | 178 kBProgress (3): 308/332 kB | 88 kB | 178 kB                                         Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-model/2.2.1/maven-model-2.2.1.jar (88 kB at 63 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/reporting/maven-reporting-api/3.0/maven-reporting-api-3.0.jar
+Progress (2): 312/332 kB | 178 kBProgress (2): 316/332 kB | 178 kBProgress (2): 320/332 kB | 178 kBProgress (2): 324/332 kB | 178 kBProgress (2): 328/332 kB | 178 kBProgress (2): 332 kB | 178 kB    Progress (3): 332 kB | 178 kB | 4.1/22 kBProgress (3): 332 kB | 178 kB | 7.6/22 kBProgress (3): 332 kB | 178 kB | 12/22 kB Progress (3): 332 kB | 178 kB | 16/22 kBProgress (3): 332 kB | 178 kB | 20/22 kBProgress (3): 332 kB | 178 kB | 22 kB                                        Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-core/2.2.1/maven-core-2.2.1.jar (178 kB at 124 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-repository-metadata/2.2.1/maven-repository-metadata-2.2.1.jar
+Progress (3): 332 kB | 22 kB | 4.1/17 kBProgress (3): 332 kB | 22 kB | 8.2/17 kBProgress (3): 332 kB | 22 kB | 12/17 kB Progress (3): 332 kB | 22 kB | 16/17 kBProgress (3): 332 kB | 22 kB | 17 kB   Progress (4): 332 kB | 22 kB | 17 kB | 4.1/11 kB                                                Downloaded from central: https://repo.maven.apache.org/maven2/backport-util-concurrent/backport-util-concurrent/3.1/backport-util-concurrent-3.1.jar (332 kB at 228 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-error-diagnostics/2.2.1/maven-error-diagnostics-2.2.1.jar
+Progress (3): 22 kB | 17 kB | 7.6/11 kBProgress (3): 22 kB | 17 kB | 11 kB                                       Downloaded from central: https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/1.5.6/slf4j-api-1.5.6.jar (22 kB at 15 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-monitor/2.2.1/maven-monitor-2.2.1.jar
+Progress (3): 17 kB | 11 kB | 2.2/26 kBProgress (3): 17 kB | 11 kB | 5.0/26 kBProgress (3): 17 kB | 11 kB | 7.7/26 kBProgress (3): 17 kB | 11 kB | 10/26 kB Progress (3): 17 kB | 11 kB | 13/26 kB                                      Downloaded from central: https://repo.maven.apache.org/maven2/org/slf4j/jcl-over-slf4j/1.5.6/jcl-over-slf4j-1.5.6.jar (17 kB at 11 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugin-tools/maven-plugin-annotations/3.3/maven-plugin-annotations-3.3.jar
+Progress (2): 11 kB | 16/26 kBProgress (3): 11 kB | 16/26 kB | 1.6/13 kBProgress (3): 11 kB | 19/26 kB | 1.6/13 kB                                          Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/reporting/maven-reporting-api/3.0/maven-reporting-api-3.0.jar (11 kB at 7.3 kB/s)
+Progress (2): 21/26 kB | 1.6/13 kBProgress (2): 24/26 kB | 1.6/13 kBProgress (2): 24/26 kB | 5.7/13 kBProgress (2): 24/26 kB | 9.8/13 kBProgress (2): 24/26 kB | 13 kB    Progress (2): 26 kB | 13 kB   Progress (3): 26 kB | 13 kB | 4.1/10 kBProgress (3): 26 kB | 13 kB | 7.6/10 kBProgress (3): 26 kB | 13 kB | 10 kB    Progress (4): 26 kB | 13 kB | 10 kB | 2.8/14 kBProgress (4): 26 kB | 13 kB | 10 kB | 5.5/14 kBProgress (4): 26 kB | 13 kB | 10 kB | 8.3/14 kBProgress (4): 26 kB | 13 kB | 10 kB | 11/14 kB Progress (4): 26 kB | 13 kB | 10 kB | 14/14 kBProgress (4): 26 kB | 13 kB | 10 kB | 14 kB                                              Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-repository-metadata/2.2.1/maven-repository-metadata-2.2.1.jar (26 kB at 16 kB/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-error-diagnostics/2.2.1/maven-error-diagnostics-2.2.1.jar (13 kB at 8.3 kB/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/maven-monitor/2.2.1/maven-monitor-2.2.1.jar (10 kB at 6.6 kB/s)
+Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/plugin-tools/maven-plugin-annotations/3.3/maven-plugin-annotations-3.3.jar (14 kB at 8.8 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-junit4/2.19.1/surefire-junit4-2.19.1.pom
+Progress (1): 2.2/3.3 kBProgress (1): 3.3 kB                        Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-junit4/2.19.1/surefire-junit4-2.19.1.pom (3.3 kB at 38 kB/s)
+Downloading from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-junit4/2.19.1/surefire-junit4-2.19.1.jar
+Progress (1): 2.8/75 kBProgress (1): 5.5/75 kBProgress (1): 8.3/75 kBProgress (1): 11/75 kB Progress (1): 14/75 kBProgress (1): 16/75 kBProgress (1): 19/75 kBProgress (1): 22/75 kBProgress (1): 25/75 kBProgress (1): 27/75 kBProgress (1): 30/75 kBProgress (1): 33/75 kBProgress (1): 37/75 kBProgress (1): 41/75 kBProgress (1): 45/75 kBProgress (1): 49/75 kBProgress (1): 53/75 kBProgress (1): 57/75 kBProgress (1): 61/75 kBProgress (1): 66/75 kBProgress (1): 70/75 kBProgress (1): 74/75 kBProgress (1): 75 kB                      Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/maven/surefire/surefire-junit4/2.19.1/surefire-junit4-2.19.1.jar (75 kB at 446 kB/s)
+
+-------------------------------------------------------
+ T E S T S
+-------------------------------------------------------
+Running deliverables.UUT_TCPclientTest
+[TCPclient 0] Client_Sensors_LIST created
+		Test Run 1 Purpose:
+Verify that once the default constructor of the UUT_TCPclient class is called, all class attributes are updated based on the input arguments
+		Test Run 1 Logic:
+		Test Run 1 teardown section:
+
+		Test Run 2 Purpose:
+Verify that once the default constructor of the UUT_TCPclient class is called, the TCPclient class instance is created with a respective sensor_ID
+		Test Run 2 Logic:
+		Test Run 2 teardown section:
+
+		Test Run 3 Purpose:
+Verify that once the default constructor of the UUT_TCPclient class is called, the interfaces that parameterize times dependencies for the testing purposes are initiated to its default value
+		Test Run 3 Logic:
+		Test Run 3 teardown section:
+
+		Test Run 4 Purpose:
+Verify that once the default constructor of the UUT_TCPclient class is called, there is no attempt to set up connection via TCP, hence attributes of the TCPclass responsible for connection are not initialized
+		Test Run 4 Logic:
+		Test Run 4 teardown section:
+
+Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.495 sec - in deliverables.UUT_TCPclientTest
+Running tcpClient.InitClientManagerTest
+		Test Run 1 Purpose:
+Verify that once the initClientManager() function is called, ObjectOutputStream and ObjectInputStream is created based on the input and output streams of a client socket given as an input argument
+		Test Run 1 Logic:
+		Test Run 1 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+[Compute engine Runnable] Multithreaded Server Service has been started
+
+		Test Run 2 Purpose:
+Verify that once the initClientManager() function is called, the overloaded constructor of the ClientManager class is called - it is verified by proving that he isClientManagerRunning flag is set to true
+		Test Run 2 Logic:
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 2 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 3 Purpose:
+Verify that ConnectException is thrown if there was an attempt to call the initClientManager() function for a client socket that has not established TCP connection with TCPserver
+		Test Run 3 Logic:
+		Test Run 3 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.689 sec - in tcpClient.InitClientManagerTest
+Running tcpClient.InitClientTest
+		Test Run 1 Purpose:
+Verify that the Connect Exception is returned if there was an attempt to create the client without a server instance initialized previously
+		Test Run 1 Logic:
+		Test Run 1 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 2 Purpose:
+Verify that once the server is initialized at any registered port, the client can be created successfully at this port
+		Test Run 2 Logic:
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] Client_Sensors_LIST is updated with sensor instace with ID: 1
+[TCPclient 1] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 1]	 loop counter: 1	with the following sensor ID:	1
+		Test Run 2 teardown section:
+[TCPclient 1] Socket for the sensor closed successfully
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 3 Purpose:
+Verify that once the server is initialized at any registered port, multiple client instances can be created successfully at the same port
+		Test Run 3 Logic:
+[TCPclient 0] Client Socket created on port = 9876
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[TCPclient 0] Client Socket created on port = 9876
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 2] Client Manager created with outputsteam and input stream
+[TCPclient 2] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 2] Client_Sensors_LIST is updated with sensor instace with ID: 2
+[TCPclient 2] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 2]	 loop counter: 1	with the following sensor ID:	1
+[TCPclient 2]	 loop counter: 2	with the following sensor ID:	2
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 3] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 3] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 3] Client_Sensors_LIST is updated with sensor instace with ID: 3
+[TCPclient 3] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 3]	 loop counter: 1	with the following sensor ID:	1
+[TCPclient 3]	 loop counter: 2	with the following sensor ID:	2
+[TCPclient 3]	 loop counter: 3	with the following sensor ID:	3
+		Test Run 3 teardown section:
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPclient 2] Socket for the sensor closed successfully
+[TCPclient 3] Socket for the sensor closed successfully
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 4 Purpose:
+Verify that once multiple server instances are initialized at any different registered ports, multiple client instances can be created successfully at any port with a server instance initialized
+		Test Run 4 Logic:
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 2] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 0] Client Socket created on port = 9876
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 3] Client Manager created with outputsteam and input stream
+[TCPclient 0] Client Socket created on port = 9889
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 0] Client Socket created on port = 9889
+[TCPclient 2] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 0] Client Socket created on port = 9889
+[TCPclient 3] Client Manager created with outputsteam and input stream
+		Test Run 4 teardown section:
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPclient 2] Socket for the sensor closed successfully
+[TCPclient 3] Socket for the sensor closed successfully
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 5 Purpose:
+Verify that the Connect Exception is returned if there was an attempt to create the client at an invalid address on local machine, or port that is not valid on remote machine
+		Test Run 5 Logic:
+		Test Run 5 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 6 Purpose:
+Verify that the Connect Exception caused by connection timeout is returned if there was an attempt to create the client at the IP address of the host, for which the connection cannot be established
+		Test Run 6 Logic:
+		Test Run 6 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 22.64 sec - in tcpClient.InitClientTest
+Running tcpClient.SendMessageTest
+		Test Run 1 Purpose:
+Verify that the sendMessage() function for the ClientManager class instance writes an object to the previously opened object output stream for a client socket
+		Test Run 1 Logic:
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 1 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 2 Purpose:
+Verify that SocketException is thrown if there was an attempt to call the sendMessage() function for a client manager class instance that has its object output stream closed
+		Test Run 2 Logic:
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 2 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 3 Purpose:
+Verify that IllegalArgumentException is thrown if there was an attempt to call the sendMessage() function for a client manager class instance without initializing its object output stream
+		Test Run 3 Logic:
+		Test Run 3 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.401 sec - in tcpClient.SendMessageTest
+Running tcpClient.TCPclientTest
+		Test Run 1 Purpose:
+Verify that the Connect Exception is returned if there was an attempt to call the overloaded constructor of the TCPclient without a server instance initialized previously
+		Test Run 1 Logic:
+		Test Run 1 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 2 Purpose:
+Verify that once the overloaded constructor of the TCPclient class is being called, the client socket is created at specific port and on given server host
+		Test Run 2 Logic:
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 1] Client_Sensors_LIST is updated with sensor instace with ID: 1
+[TCPclient 1] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 1]	 loop counter: 1	with the following sensor ID:	2
+[TCPclient 1]	 loop counter: 2	with the following sensor ID:	3
+[TCPclient 1]	 loop counter: 3	with the following sensor ID:	1
+		Test Run 2 teardown section:
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+Server Thread Stopped.
+Serversocket closed
+
+		Test Run 3 Purpose:
+Verify that once the overloaded constructor of the TCPclient class is being called, the client manager for the TCPclient class instance is initialized with input and output streams
+		Test Run 3 Logic:
+[TCPclient 0] Client Socket created on port = 9876
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[TCPclient 1] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 1] Client_Sensors_LIST is updated with sensor instace with ID: 1
+[TCPclient 1] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 1]	 loop counter: 1	with the following sensor ID:	2
+[TCPclient 1]	 loop counter: 2	with the following sensor ID:	3
+[TCPclient 1]	 loop counter: 3	with the following sensor ID:	1
+		Test Run 3 teardown section:
+[TCPclient 1] Socket for the sensor closed successfully
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 4 Purpose:
+Verify that once the overloaded constructor of the TCPclient class is being called, the clientRunning flag is set to true
+		Test Run 4 Logic:
+[TCPclient 0] Client Socket created on port = 9876
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[TCPclient 1] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 1] Client_Sensors_LIST is updated with sensor instace with ID: 1
+[TCPclient 1] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 1]	 loop counter: 1	with the following sensor ID:	2
+[TCPclient 1]	 loop counter: 2	with the following sensor ID:	3
+[TCPclient 1]	 loop counter: 3	with the following sensor ID:	1
+		Test Run 4 teardown section:
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 5 Purpose:
+Verify that once the overloaded constructor of the TCPclient class is being called with a unique senor ID , Client_Sensors_LIST is updated with the newly created SensorImpl class instance with specified sensorID
+		Test Run 5 Logic:
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 1] Client_Sensors_LIST is updated with sensor instace with ID: 1
+[TCPclient 1] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 1]	 loop counter: 1	with the following sensor ID:	2
+[TCPclient 1]	 loop counter: 2	with the following sensor ID:	3
+[TCPclient 1]	 loop counter: 3	with the following sensor ID:	1
+		Test Run 5 teardown section:
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 6 Purpose:
+Verify that once the overloaded constructor of the TCPclient class is being called with a senor ID that already exists for a sensor in Client_Sensors_LIST, the list is not being updated and no SensorImpl class instance is created
+		Test Run 6 Logic:
+[TCPclient 0] Client Socket created on port = 9876
+[TCPclient 1] Client Manager created with outputsteam and input stream
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] updateClientSensorList() sensor instance has been added to Client_Sensors_LIST
+[TCPclient 1] Client_Sensors_LIST is updated with sensor instace with ID: 1
+[TCPclient 1] Client_Sensors_LIST has the following sensor instances:
+[TCPclient 1]	 loop counter: 1	with the following sensor ID:	2
+[TCPclient 1]	 loop counter: 2	with the following sensor ID:	3
+[TCPclient 1]	 loop counter: 3	with the following sensor ID:	1
+[TCPclient 0] Client Socket created on port = 9876
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPclient 1] Client Manager created with outputsteam and input stream
+		Test Run 6 teardown section:
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPclient 1] Socket for the sensor closed successfully
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+Server Thread Stopped.
+Serversocket closed
+
+		Test Run 7 Purpose:
+Verify that once the default constructor of the TCPclient class is being called for the first time, Client_Sensors_LIST is created
+		Test Run 7 Logic:
+		Test Run 7 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 8 Purpose:
+Verify that once the default constructor of the TCPclient class is being called multiple times, Client_Sensors_LIST from first call of the constructor is used
+		Test Run 8 Logic:
+		Test Run 8 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 9 Purpose:
+Verify that once the default constructor of the TCPclient class is being called for the first time, instance of Local_1h_Watchdog is created.
+ Verify also that if the default constructor of the TCPclient class is called multiple times, Local_1h_Watchdog instance from first call of the constructor is used
+		Test Run 9 Logic:
+		Test Run 9 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.028 sec - in tcpClient.TCPclientTest
+Running tcpServer.ComputeEngine_RunnableTest
+		Test Run 1 Purpose:
+Verify that once the default constructor of the ComputeEngine_Runnable class is called, 
+outputStream and inputStream object streams are created for the purpose of setting up the TCP connection set TCPclient based on the client's socket that is 1st argument in the constructor call
+		Test Run 1 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 1 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 2 Purpose:
+Verify that once the default constructor of the ComputeEngine_Runnable class is called, 
+local_watchdog_scale_factor is updated in accordance with global_watchdog_scale_factor
+		Test Run 2 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 2 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 3 Purpose:
+Verify that once the default constructor of the ComputeEngine_Runnable class is called, 
+the isComputeEngine_Runnable_running flag is updated in accordance with 3rd input argument in the constructor call
+		Test Run 3 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 3 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 4 Purpose:
+Verify that once the default constructor of the ComputeEngine_Runnable class is called, 
+time left before expiration for Local_1h_watchdog and Local_24h_watchdog is updated accordingly to the time left before expiration for Global_1h_watchdog and Global_24h_watchdog
+		Test Run 4 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 4 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 5 Purpose:
+Verify that once the default constructor of the ComputeEngine_Runnable class is called, 
+delays_array and watchdog_thresholds_array are updated in accordance with global_watchdog_scale_factor
+		Test Run 5 Logic:
+Server Thread Started.
+[Compute engine Runnable] Multithreaded Server Service has been started
+		Test Run 5 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+		Test Run 6 Purpose:
+Verify that the Socket Exception is returned if there was an attempt to create a ComputeEngine_Runnable class instance with a socket that is closed
+		Test Run 6 Logic:
+Server Thread Started.
+		Test Run 6 teardown section:
+Server Thread Stopped.
+Serversocket closed
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.8 sec - in tcpServer.ComputeEngine_RunnableTest
+Running tcpServer.StartServerTest
+		Test Run 1 Purpose:
+Verify that once the startServer function is called, there is a new server thread created
+		Test Run 1 Logic:
+		Test Run 1 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+		Test Run 2 Purpose:
+Verify that once the startServer function is called, the server thread starts and it has the RUNNABLE thread state. Verify also that once the server socket is closed, the server thread state changes to the TERMINATED thread state
+		Test Run 2 Logic:
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+Server Thread Stopped.
+		Test Run 2 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+		Test Run 3 Purpose:
+Verify that there is no ThreadPoolExecutor started for processing client messages unless there has been any output stream for the client socket created
+		Test Run 3 Logic:
+		Test Run 3 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+		Test Run 4 Purpose:
+Verify that once an output stream for the client socket is created, ThreadPoolExecutor is executed that launches the runnable ComputeEngine_Runnable class that handles communication via a TCP connection with sensors
+		Test Run 4 Logic:
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] 1st ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 36.0 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when Global_24h_Watchdog 864.0 [s]
+[TCPserver] last ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 36.0 [s]
+[TCPserver] last ComputeEngine_Runnable launched when Global_24h_Watchdog 864.0 [s]
+[TCPserver] Number of Active Threads: 0
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[Compute engine Runnable 1] ClientMessage_BootUp from sensor: 1 has been received.
+[Compute engine Runnable 1] responds to ClientMessage_BootUp with ServerMessage_SensorInfoQuerry.
+		Test Run 4 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+Server Thread Stopped.
+		Test Run 5 Purpose:
+Verify that once an output stream for the client socket is created, all messages sent via this output stream are being handled in separated ThreadPoolExecutors
+		Test Run 5 Logic:
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] 1st ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 36.0 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when Global_24h_Watchdog 864.0 [s]
+[TCPserver] last ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 36.0 [s]
+[TCPserver] last ComputeEngine_Runnable launched when Global_24h_Watchdog 864.0 [s]
+[TCPserver] Number of Active Threads: 0
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 1
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+		Test Run 5 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+Server Thread Stopped.
+		Test Run 6 Purpose:
+Verify that there is a possibility to create up to 8 ThreadPoolExecutors to process client messages
+		Test Run 6 Logic:
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] 1st ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 36.0 [s]
+[TCPserver] 1st ComputeEngine_Runnable launched when Global_24h_Watchdog 864.0 [s]
+[TCPserver] last ComputeEngine_Runnable launched when computing_time = Global_1h_Watchdog 36.0 [s]
+[TCPserver] last ComputeEngine_Runnable launched when Global_24h_Watchdog 864.0 [s]
+[TCPserver] Number of Active Threads: 0
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 1
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 2
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 3
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 4
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 5
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 6
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 7
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+[TCPserver] Number of Active Threads: 8
+[Compute engine Runnable] Multithreaded Server Service has been started
+[TCPserver] Server Thread Started.
+[TCPserver] waiting for the incoming request ...
+		Test Run 6 teardown section:
+[TCPserver] all attributes of the static TCPserver class are reinitialized to default values
+Server Thread Stopped.
+Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.94 sec - in tcpServer.StartServerTest
+
+Results :
+
+Tests run: 37, Failures: 0, Errors: 0, Skipped: 0
+
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time: 40.947 s
+[INFO] Finished at: 2018-09-06T20:48:25+02:00
+[INFO] ------------------------------------------------------------------------
+Triggering a new build of [8mha:////4CVmjY8/WKgB0+MRykK0UildHXnVlFnWRstFwebJZUqpAAAAtR+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzlEgZN/az8JH1nz/iS/Pyc+KLSvPjMvJLU9KLEksz8vPjixLzMksr4ktTiEn0A1siGYN4AAAA=[0mCI_tool_run_integration_sanity_test
+Finished: SUCCESS

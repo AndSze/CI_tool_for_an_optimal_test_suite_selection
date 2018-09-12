@@ -1,0 +1,119 @@
+Started by upstream project "[8mha:////4FcV0BSA0fLAJfDImX4HnM0cio8KzN7KNbNRe+ezBQ2TAAAAuB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy1EgYd/az8JH1nz/iS/Pyc+OLKvOSMovy8zKrU+Jz85MSc+KLUgvzizJL8oszUYn0AxXsr3+EAAAA=[0mCI_tool_synchronize_local_repositories" build number [8mha:////4C0YhCIWOtPhr7ANTDYw2aP1O/6FY+j7L6pVcYKof9J9AAAAuR+LCAAAAAAAAP9djbENwjAQRY8gGIAS0bBADA0NSpWGSIGGASwTTonDyWfZDiKMwRrQMATjsAORUpHf/F88vf/6wsQ7WFbN2bOJCzaeCeM9n5F2rUVH2lwOHBD6jCKAm4PFgP9DN8nznTzsJ4IogymhKUOVw7hxFGCW1+qqBClTimNw2pTbTjcf6NK+h7+2G1GAWNR8EmkmAzNJ35qicmz0HSVxoUg6tOx1YKfRi/XqBwJu+yPjAAAA[0m10
+originally caused by:
+ Started by upstream project "[8mha:////4K2a1Cvzhfet/BSZHuoya5P0UDYDhEJJ1KC49INzxpPwAAAAqB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAzJEgZ5/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGQC0MYaa1AAAAA==[0mCI_tool_build_trigger_job" build number [8mha:////4M3HjtolI0kRAj5jk8ZX5CIFH+XHuc1IE3s3eCqQEjzyAAAAqh+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAymEgZF/az8JH1nz/iS/Pyc+KTSzJyUeKBR6empRfEgGSMDACEKSPXWAAAA[0m20
+ originally caused by:
+  Started by GitHub push by AndSze
+Building in workspace E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_run_python_script_to_select_optimal_test_suite
+[CI_tool_run_python_script_to_select_optimal_test_suite] $ cmd /c call C:\Users\Dell\AppData\Local\Temp\jenkins9193032396579087082.bat
+
+E:\Jenkins\JenkinsHomeDirectory\workspace\CI_tool_run_python_script_to_select_optimal_test_suite>cd E:\Praca magisterska\CI_python_engine\PythonScripts 
+
+E:\Praca magisterska\CI_python_engine\PythonScripts>py OptimalTestSuiteSelector.py 
+
+
+1) Set HEAD of Git repository to commits under analysis: 
+
+	 commit_newer: e0e9acb5dadbc9955169ab1279202c4c50b29cde
+	 commit_older: 2452906d9417f6d3dc63a8d6861471b5dec18e50
+
+
+2) Generate git diff log between files in newer commit against older commit: 
+
+	 len(diff_data_head_to_commit): 56
+
+
+3) Based on git diff log create a lists of modified files or added files: 
+
+	 len(list_of_modified_files_to_be_processed): 3
+	 len(list_of_added_files_to_be_processed): 0
+
+
+4) Parse git diff log to separate file blocks (method body) for all changes (added/removed lines or added files): 
+
+	 len(resulted_array_of_all_changes_in_file_blocks): 3
+
+
+5) Parse git diff log to separate file blocks (method body) for methods with added lines: 
+
+	 len(resulted_array_of_added_lines_in_changed_file_blocks): 2
+
+
+6) Parse git diff log to separate file blocks (method body) for methods with removed lines: 
+
+	 len(resulted_array_of_removed_lines_in_changed_file_blocks): 1
+
+
+7) Parse git diff log to separate file blocks (method body) for methods that have been added: 
+
+	 len(resulted_array_of_added_lines_in_added_file_blocks): 0
+
+
+8) Parse file blocks (method body) for methods with added lines to separate names of the methods,
+   as an output the normalized path to the file that contains the methods is also returned: 
+
+	 [['src', 'main', 'java', 'tcpClient', 'ClientManager.java'], 'protected ClientManager()', 'public void sendMessage()']
+	 [['src', 'main', 'java', 'tcpServer', 'ComputeEngine_Runnable.java'], 'public ComputeEngine_Runnable()']
+
+
+9) Parse file blocks (method body) for methods with removed lines to separate names of the methods,
+   as an output the normalized path to the file that contains the methods is also returned: 
+
+	 [['src', 'main', 'java', 'tcpClient', 'TCPclient.java'], 'public TCPclient()']
+
+
+10) Parse file blocks (method body) for methods that have been added to separate names of the methods,
+    as an output the normalized path to the file that contains the methods is also returned: 
+
+
+
+11) Concatenate the results from points 8., 9. and 10. (i.e. build single list of all methods that have been affected
+    with normalized path to the file that contains the methods): 
+
+	 [['src', 'main', 'java', 'tcpClient', 'ClientManager.java'], 'protected ClientManager()', 'public void sendMessage()']
+	 [['src', 'main', 'java', 'tcpServer', 'ComputeEngine_Runnable.java'], 'public ComputeEngine_Runnable()']
+	 [['src', 'main', 'java', 'tcpClient', 'TCPclient.java'], 'public TCPclient()']
+
+
+12) Create list of the methods affected by changes in newer commit against older commit: 
+
+	 affected method: ClientManager()
+	 affected method: sendMessage()
+	 affected method: ComputeEngine_Runnable()
+	 affected method: TCPclient()
+
+
+13) Create lists of the methods that call the methods affected by changes in newer commit against older commit: 
+
+	package: tcpClient,	method name: messagesHandler()
+	package: tcpClient,	method name: initClient()
+	package: tcpClient,	method name: run()
+	package: tcpServer,	method name: startServer()
+	package: deliverables,	method name: UUT_TCPclient()
+
+
+14) Based on the lists of methods from points 12. and 13., create a list of unit tests that are
+    an optimal test suite for changes in newer commit against older commit (the list of tests is returned in format readable by pom.xml): 
+
+	 unit test to be executed: <include>**/tcpClient/ClientManagerTest.java</include>
+	 unit test to be executed: <include>**/tcpClient/SendMessageTest.java</include>
+	 unit test to be executed: <include>**/tcpServer/ComputeEngine_RunnableTest.java</include>
+	 unit test to be executed: <include>**/tcpClient/TCPclientTest.java</include>
+	 unit test to be executed: <include>**/tcpClient/MessagesHandlerTest.java</include>
+	 unit test to be executed: <include>**/tcpClient/MessagesHandler_ServerMessage_ACKTest.java</include>
+	 unit test to be executed: <include>**/tcpClient/MessagesHandler_ServerMessage_Request_MeasurementDataTest.java</include>
+	 unit test to be executed: <include>**/tcpClient/MessagesHandler_ServerMessage_Request_MeasurementHistoryTest.java</include>
+	 unit test to be executed: <include>**/tcpClient/MessagesHandler_ServerMessage_SensorInfoQuerryTest.java</include>
+	 unit test to be executed: <include>**/tcpClient/MessagesHandler_ServerMessage_SensorInfoUpdateTest.java</include>
+	 unit test to be executed: <include>**/tcpClient/InitClientTest.java</include>
+	 unit test to be executed: <include>**/tcpClient/RunTest.java</include>
+	 unit test to be executed: <include>**/tcpServer/StartServerTest.java</include>
+	 unit test to be executed: <include>**/deliverables/UUT_TCPclientTest.java</include>
+
+
+15) Update pom.xml file with names of unit test to be executed:
+
+	 updated pom.xml with optimal test suite is saved in: E:\Praca magisterska\master\JavaWorkspace_MT\UnitUnderTest\updated_pom.xml
+
+E:\Praca magisterska\CI_python_engine\PythonScripts>exit 0 
+Triggering a new build of [8mha:////4JDrvNGBUQdPuOp/kpdDattsvmBvuVZS5fHb8rvUXnMfAAAAsB+LCAAAAAAAAP9b85aBtbiIQTGjNKU4P08vOT+vOD8nVc83PyU1x6OyILUoJzMv2y+/JJUBAhiZGBgqihhk0NSjKDWzXb3RdlLBUSYGJk8GtpzUvPSSDB8G5tKinBIGIZ+sxLJE/ZzEvHT94JKizLx0a6BxUmjGOUNodHsLgAy5EgYV/az8JH1nz/iS/Pyc+KLSvPj8gpLM3MSc+JLU4pL44tLMklR9AG+UlqfZAAAA[0mCI_tool_run_optimal_test_suite
+Finished: SUCCESS
